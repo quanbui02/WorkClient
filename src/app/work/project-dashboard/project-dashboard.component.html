@@ -1,0 +1,63 @@
+<div class="vs-page-content app-order-client">
+  <div class="vs-page-content-header-area">
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <h1 class="__page-title">Project</h1>
+        <div class="p_filter">
+          <a class="created" (click)="onEdit(0)">
+            <i class="fa fa-folder-o" aria-hidden="true"></i>
+            <span>Thêm mới</span>
+          </a>
+          <!-- <div class="search_name" id="search_name" (click)="openSearchName()">
+            <i class="fa fa-search" aria-hidden="true"></i>
+            <input (blur)="closeSearchName()" id="input_search_name" type="search" placeholder="Tìm kiếm" name="search" class="__input vs-input" (keyup.enter)="onSearch()" [(ngModel)]="searchModel.key">
+          </div> -->
+          <div class="search_name" id="search_name" (click)="openSearchName()" [ngClass]="{'active': isSearch}">
+            <i class="fa fa-search" aria-hidden="true"></i>
+            <input (blur)="isSearch=false;searchModel.key = ''" id="input_search_name" type="search" placeholder="Tìm kiếm" name="search" class="__input vs-input" (keyup.enter)="onSearch()" [(ngModel)]="searchModel.key">
+          </div>
+          <div class="vs-overlay filter_task" vsOverlay>
+            <a class="vs-overlay-btn">
+              <svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20" aria-hidden="true" class="icon_component filter-item-icon-component icon_component--no-focus-style">
+                <path d="M17.8571 2.87669C18.107 3.41157 18.0246 4.04275 17.6457 4.49555L12.4892 10.6589V15.3856C12.4892 16.0185 12.097 16.5852 11.5048 16.8082L9.56669 17.5381C9.09976 17.7139 8.57627 17.6494 8.16598 17.3655C7.75569 17.0816 7.51084 16.6144 7.51084 16.1155V10.6589L2.35425 4.49555C1.97542 4.04275 1.89302 3.41157 2.14291 2.87669C2.39279 2.34182 2.92977 2 3.52013 2H16.4799C17.0702 2 17.6072 2.34182 17.8571 2.87669ZM16.4799 3.52012H3.52013L8.91611 9.96964C8.99036 10.0584 9.03096 10.1698 9.03096 10.2848V16.1155L10.969 15.3856V10.2848C10.969 10.1698 11.0096 10.0584 11.0839 9.96964L16.4799 3.52012Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
+              </svg>
+              Lọc
+            </a>
+            <div class="vs-overlay-popup">
+              <div class="search">
+                <p-dropdown (onHide)="onSearch()" appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" filter="true" [style]="{'width':'100%'}" [(ngModel)]="searchModel.isComplete" [options]="complete_options">
+                </p-dropdown>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="vs-page-content-body-area p_dashboard">
+    <div class="pd_ct">
+      <a [routerLink]="urlTask(item.id)" class="ct_item" *ngFor="let item of dataSource">
+        <div class="info">          
+          <img *ngIf="item.image" src="{{getImageAvatar(item.image)}}" width="24" height="24" />
+          <i *ngIf="!item.image" class="fa fa-folder" aria-hidden="true"></i>
+          <span>{{ (item.name.length>20)? (item.name | slice:0:20)+' ...':(item.name) }}</span>
+        </div>
+        <hr>
+        <div class="statistical">
+          <span pTooltip="Dự án nhỏ"><i class="fa fa-file" aria-hidden="true"></i> {{item.countChild}}</span>
+          <span pTooltip="Công việc"><i class="fa fa-file-text" aria-hidden="true"></i> {{item.countTask}}</span>
+        </div>
+      </a>
+      <a class="ct_add ct_item" (click)="onEdit(0)">
+        <!-- <i class="fa fa-plus" aria-hidden="true"></i> -->
+        <svg width="24" height="24" viewBox="0 0 24 24" role="presentation">
+          <g fill="currentColor">
+            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+          </g>
+        </svg>
+      </a>
+    </div>
+  </div>
+</div>
+<app-project-edit (closePopup)="onCloseForm()"></app-project-edit>

@@ -1,0 +1,10 @@
+<p-dialog #dialog [header]="FileName" styleClass="vs-modal force-full-width" positionBottom="0" positionTop="0" [(visible)]="showFileDialog" [style]="{'max-width': '100%','max-height': '100%'}" [contentStyle]="{'max-height': '100%'}" [modal]="true" [maximizable]="true" appendTo="body">
+    <div class="modal-body" style="display: block;height: calc(100vh - 20px);">
+        <div *ngIf="isImage" class="text-center">
+            <img src="{{FileUrl}}" />
+        </div>
+        <!-- <div [ngStyle]="{'height.px': screenHeight}">
+            <div id="file-viewer"></div>
+        </div> -->
+    </div>
+</p-dialog>

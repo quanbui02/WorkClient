@@ -1,0 +1,71 @@
+<ng-template ngFor let-child let-i="index" [ngForOf]="(root ? item : item.items)">
+  <li [ngClass]="[
+          isActive(i, child) ? 'activated' : '',
+          isActive(i, child) && level == 0 ? 'active-menuitem': '',
+          isNumber(level) ? 'menuitem-level-' + level : '',
+          child.items ? 'has-submenu' : '',
+          child.routerLink && child.routerLink !== '#' ? 'allow-click' : '',
+          (level === 2) && (pinnedMenuIds.includes(child.id)) ? 'pinned' : '',
+          1 > 0 ? 'menu-id-' + child.id : ''
+      ]" [class]="child.badgeStyleClass" *ngIf="!(child.visible === false)">
+
+    <i class="fa fa-thumb-tack pinned-icon" title="{{pinnedMenuIds.includes(child.id) ? 'Bỏ ghim' : 'Ghim'}}" *ngIf="level === 2" (click)="togglePin(child.id)"></i>
+
+    <!-- <a [routerLink]="['/work/group-task', child.id]" routerLinkActive="activated" (mouseenter)="onMouseEnter(i)" class="ripplelink menu_custom" [attr.tabindex]="!visible ? '-1' : null" [attr.target]="child.target"></a> -->
+    <a (click)="itemClick($event,child,i)" (mouseenter)="onMouseEnter(i)" class="ripplelink menu_custom" [attr.tabindex]="!visible ? '-1' : null" [attr.target]="child.target">
+      <!-- <div class="decoration" *ngIf="level === 2">
+        <i class="fa fa-cube decorated-icon"></i> 
+      </div> -->
+      <!-- <i class="fa fa-caret-right menuitem-toggle-icon" *ngIf="level === 1"></i> -->
+      <!-- <i class="main-icon" [ngClass]="child.icon"></i> -->
+      <span class="icon_menu icon_menu_parent">
+
+        <img *ngIf="child.image" src="{{getImageAvatar(child.image)}}" width="24" height="24" />
+
+        <svg *ngIf="!child.image" width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g fill="currentColor" fill-rule="evenodd">
+            <g id="Dribbble-Light-Preview" transform="translate(-300.000000, -1159.000000)">
+              <g id="icons" transform="translate(56.000000, 160.000000)">
+                <path d="M262,1007.0005 L246,1007.0005 L246,1002.0005 C246,1001.4485 246.448,1001.0005 247,1001.0005 L251,1001.0005 C251.552,1001.0005 252,1001.4485 252,1002.0005 L252,1003.0005 C252,1004.1055 252.895,1005.0005 254,1005.0005 L261,1005.0005 C261.552,1005.0005 262,1005.4485 262,1006.0005 L262,1007.0005 Z M262,1016.0005 C262,1016.5525 261.552,1017.0005 261,1017.0005 L247,1017.0005 C246.448,1017.0005 246,1016.5525 246,1016.0005 L246,1009.0005 L262,1009.0005 L262,1016.0005 Z M262,1003.0005 L255,1003.0005 C254.448,1003.0005 254,1002.5525 254,1002.0005 L254,1001.0005 C254,999.8955 253.105,999.0005 252,999.0005 L246,999.0005 C244.895,999.0005 244,999.8955 244,1001.0005 L244,1017.0005 C244,1018.1055 244.895,1019.0005 246,1019.0005 L262,1019.0005 C263.105,1019.0005 264,1018.1055 264,1017.0005 L264,1005.0005 C264,1003.8955 263.105,1003.0005 262,1003.0005 L262,1003.0005 Z" id="folder-[#1785]">
+                </path>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </span>
+      <!-- <span class="icon_menu icon_menu_child" *ngIf="level == 1">        
+        <svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g fill="currentColor" fill-rule="evenodd">
+            <g id="Dribbble-Light-Preview" transform="translate(-300.000000, -1159.000000)">
+              <g id="icons" transform="translate(56.000000, 160.000000)">
+                <path d="M262,1007.0005 L246,1007.0005 L246,1002.0005 C246,1001.4485 246.448,1001.0005 247,1001.0005 L251,1001.0005 C251.552,1001.0005 252,1001.4485 252,1002.0005 L252,1003.0005 C252,1004.1055 252.895,1005.0005 254,1005.0005 L261,1005.0005 C261.552,1005.0005 262,1005.4485 262,1006.0005 L262,1007.0005 Z M262,1016.0005 C262,1016.5525 261.552,1017.0005 261,1017.0005 L247,1017.0005 C246.448,1017.0005 246,1016.5525 246,1016.0005 L246,1009.0005 L262,1009.0005 L262,1016.0005 Z M262,1003.0005 L255,1003.0005 C254.448,1003.0005 254,1002.5525 254,1002.0005 L254,1001.0005 C254,999.8955 253.105,999.0005 252,999.0005 L246,999.0005 C244.895,999.0005 244,999.8955 244,1001.0005 L244,1017.0005 C244,1018.1055 244.895,1019.0005 246,1019.0005 L262,1019.0005 C263.105,1019.0005 264,1018.1055 264,1017.0005 L264,1005.0005 C264,1003.8955 263.105,1003.0005 262,1003.0005 L262,1003.0005 Z" id="folder-[#1785]">
+                </path>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </span> -->
+      <span class="menuitem-label">{{ (child.label.length>32)? (child.label | slice:0:32)+' ...':(child.label) }}</span>
+      <i class="fa fa-fw fa-angle-down menuitem-toggle-icon" *ngIf="child.items?.length > 0 && level === 0"></i>
+      <!-- <span class="menuitem-badge" *ngIf="child.badge">{{child.badge}}</span> -->
+    </a>
+    <!-- <a (click)="itemClick($event,child,i)" (mouseenter)="onMouseEnter(i)" class="ripplelink" *ngIf="child.routerLink && child.routerLink !== '#'" [routerLink]="child.routerLink" [attr.tabindex]="!visible ? '-1' : null" [attr.target]="child.target">
+      <div class="decoration" *ngIf="level === 2">
+        <i class="fa fa-cube decorated-icon"></i>
+      </div>
+      <i class="fa fa-caret-right menuitem-toggle-icon" *ngIf="level === 1"></i>
+      <i class="main-icon" [ngClass]="child.icon"></i><span class="menuitem-label">{{child.label}}</span>
+      <i class="fa fa-fw fa-angle-down menuitem-toggle-icon" *ngIf="child.items && level === 0"></i>
+      <span class="menuitem-badge" *ngIf="child.badge">{{child.badge}}</span>
+    </a> -->
+    <!-- <div class="layout-menu-tooltip">
+      <div class="layout-menu-tooltip-arrow"></div>
+      <div class="layout-menu-tooltip-text">{{child.label}}</div>
+    </div> -->
+    <div class="submenu-arrow" *ngIf="child.items"></div>
+    <ul task-submenu (onSelectMenu)="nodeSelect($event)" [item]="child" [level]="level + 1" *ngIf="child.items && level < 2" [ngClass]="[
+              isNumber(level) ? 'submenu-level-' + (level + 1) : ''
+          ]" (onTogglePin)="togglePin($event)" [pinnedMenuIds]="pinnedMenuIds" [visible]="isActive(i, child)" [reset]="reset" [parentActive]="isActive(i, child)" [@children]="((app.isSlim()|| app.isHorizontal()) && root ? (isActive(i, child) ? 'visible' : 'hidden') : isActive(i, child)) ? 'visibleAnimated' : 'hiddenAnimated'">
+    </ul>
+  </li>
+</ng-template>

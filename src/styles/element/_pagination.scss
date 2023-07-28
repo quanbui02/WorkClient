@@ -1,0 +1,35 @@
+/* Customize Paging */
+body .custom-paginator .ui-widget-header{
+    font-weight: normal;
+}
+
+body .custom-paginator .ui-paginator-element {
+    border: none;
+
+    &.ui-state-disabled {
+        background: none;
+        color     : #9e9e9e;
+    }
+}
+
+body .custom-paginator .ui-paginator-pages .ui-paginator-page {
+    border: none;
+}
+
+body .custom-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active {
+    border          : none;
+    background-color: #f3f3f3;
+    color           : #579cd8;
+
+    &:enabled:hover {
+        background-color: #ccc;
+    }
+
+    &:focus {
+        background-color: #f3f3f3;
+        border          : none;
+        box-shadow      : none;
+    }
+}
+
+/* End custom paging */

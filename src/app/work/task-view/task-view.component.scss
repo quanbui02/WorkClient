@@ -1,0 +1,264 @@
+.d-none{
+    display: none;
+}
+
+.__form-control-label {
+    font-weight: bold;
+    font-size: 12px;
+    color: #798498;
+    margin-bottom: 5px;
+}
+
+.form_input {
+    margin-bottom: 20px;
+}
+.task_reporter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.activity {
+    padding: 0 0.7em;
+    font-weight: bold;
+    font-size: 12px;
+    color: #798498;
+    margin-bottom: 15px;
+}
+
+.btn_activity {
+    padding: 8px 15px;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    font-weight: bold;
+    color: #8c97a1;
+}
+
+.show_activity_block {
+    padding: 0 0.7em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.activity_content {
+    padding: 0 0.7em;
+    margin-top: 20px;
+}
+.active_activity {
+    background-color: #0084ff !important;
+    color: #fff !important;
+}
+.btn_action {
+    .btn {
+        display: inline-block;
+        padding: 0px;
+        // border-radius: 5px;
+        font-size: 13px;
+        font-weight: bold;
+        background-color: #fff;
+        cursor: auto;
+        &_complete{
+            // border: 1px solid #14b545;
+            color: #14b545;
+        }
+        &_uncomplete{
+            // border: 1px solid #a3a3a3;
+            color: #a3a3a3;
+        }
+    }
+}
+.table_task_edit {
+    margin-bottom: 10px;
+    .detail_table_header {
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        font-size: 17px;
+        border: 1px solid #cccccc;
+        font-weight: bold;
+        cursor: pointer;
+        &:hover {
+            background-color: #f6f6f6;
+        }
+        a {
+            padding: 0px 5px;
+            color: #000;
+        }
+    }
+    
+    .detail_table_content {
+        padding: 10px 15px;
+        border: 1px solid #cccccc;
+        border-top: none;
+        .row>div {
+            margin: 5px 0;
+        }
+    }
+}
+.percent_box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    .input_percent {
+        border: none !important;
+        width: 20% !important;
+    }
+    p-slider {
+        width: 80%;
+    }
+}
+.asignee_option {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 4px 0;
+    .task_user_name_option {
+        color:#000;
+    }
+}
+.create_update_time {
+    p {
+        margin-bottom: 10px;
+        color: #7f899c;
+    }
+}
+/* The task_checkbox */
+.task_checkbox {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    input {   /* Hide the browser's default checkbox */
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+        &:checked {   /* When the checkbox is checked, add a blue background */
+            ~ .checkmark {
+                background-color: #14b545;
+                &:after {   /* Show the checkmark when checked */
+                    display: block;
+                  }
+              }
+        }
+    }
+    .checkmark {   /* Create a custom checkbox */
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 16px;
+        width: 16px;
+        background-color: #eee;
+        &:after {   /* Create the checkmark/indicator (hidden when not checked) */
+            content: "";
+            position: absolute;
+            display: none;
+            left: 5px;
+            top: 2px;
+            width: 3px;
+            height: 7px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+          }
+    }    
+    &:hover {  /* On mouse-over, add a grey background color */
+        input{
+            ~ .checkmark {
+                background-color: #ccc;
+              }
+        }
+    }
+}
+
+.color{
+    &_red {
+        color: #ff7c5c;
+    }
+    &_yellow {
+        color: #ffab00;
+    }
+    &_blue {
+        color: #2684ff;
+    }
+}
+.custom_i{
+    &_task {
+        background-color: #4bade8;
+        padding: 1px 2px;
+        border-radius: 2px;
+        color: #fff;
+        margin-right: 5px;
+    }
+    &_bug {
+        padding: 5px 5px;
+        background-color: #e5493a;
+        color: #fff;
+        font-size: 7px;
+        border-radius: 2px;
+        margin-right: 5px;
+    }
+}
+.__input-wrapper{
+    .name_task {
+        border: none !important;
+        font-size: 24px !important;
+        font-weight: bold;
+        margin-bottom: 10px;
+        resize: none;
+        padding: 7.5px;
+    }
+    .avatar_user {
+        width: 30px;
+        height: 30px;
+        margin-top: 0;;
+        border-radius: 50%;
+        border: 2px #eaeaea solid;
+    }
+    .option_custom{
+        margin-right: 10px;
+        font-size: 18px;
+        vertical-align: middle;
+    }
+    
+    .empty_select {
+        display: block;
+        color: #888897;
+        padding: 5px 5px;
+    }
+    .user_multil_selected {
+        display: inline-block;
+        margin-right: -15px;
+    }
+    .description_task {
+        border: none;
+    }
+    .dt{
+        &_block{
+            .btn_cancel {
+                display: inline-block;
+                padding: 8px 18px;
+                margin-top: 5px;
+                background: #e9e9e9;
+                font-weight: bold;
+                border-radius: 5px;
+                color: #8f8f8f;
+            }
+        }
+        &_content {
+            // cursor: pointer;
+            margin-bottom: 20px;
+            // &:hover{
+            //     background-color: #eef2f6;
+            // }
+        }
+    }
+}

@@ -1,0 +1,49 @@
+p-fileupload.vs-file-upload.style-1 .ui-fileupload .ui-fileupload-buttonbar {
+    justify-content: left;
+    flex-direction: unset;
+    display: unset;
+}
+
+.breadcrumb {
+    padding: .75rem 1rem;
+    margin-bottom: 1rem;
+    list-style: none;
+    background-color: #e9ecef;
+    border-radius: .125rem;
+}
+
+.breadcrumb-item {
+    float: left;
+}
+
+.breadcrumb-item.active {
+    font-weight: 600;
+}
+
+.breadcrumb-item+.breadcrumb-item::before {
+    display: inline-block;
+    padding-right: .5rem;
+    padding-left: .5rem;
+    color: #868e96;
+    content: "/";
+}
+
+.breadcrumb::after {
+    display: block;
+    clear: both;
+    content: "";
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+body .ui-fileupload .ui-fileupload-buttonbar {
+    padding: .75em 1.25em;
+    background-color: #f5f5f5;
+    border-bottom: 0 none;
+}

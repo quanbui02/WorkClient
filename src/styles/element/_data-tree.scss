@@ -1,0 +1,44 @@
+body .ui-tree .ui-treenode .ui-treenode-content {
+    padding-top: 2px;
+    padding-bottom: 6px;
+}
+
+.vs-data-tree {
+    &.hide-search-input {
+        .ui-tree-filter-container {
+            display: none;
+        }
+    }
+    .ui-tree {
+        border: 0;
+        width: auto;
+    }
+    .ui-treenode-content {
+        outline: none;
+        border: 1px solid transparent;
+    }
+    .ui-treenode-icon {
+        padding-left: 3px;
+        padding-right: 5px;
+    }
+}
+
+.vs-data-tree:not([selectionmode="checkbox"]) {
+    .ui-treenode-content.ui-treenode-content-selected {
+        border: 1px solid $vs-base-color;
+        background-color: rgba($vs-base-color, 0.2);
+    }
+    .ui-treenode .ui-treenode-content .ui-treenode-label.ui-state-highlight {
+        background-color: transparent;
+        color: inherit;
+    }
+}
+
+.vs-data-tree[selectionmode="checkbox"] {
+    .ui-treenode .ui-treenode-content {
+        padding: 0;
+        .ui-treenode-label {
+            padding: 5px;
+        }
+    }
+}

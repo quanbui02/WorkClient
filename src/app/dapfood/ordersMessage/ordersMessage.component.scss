@@ -1,0 +1,40 @@
+.image_name_user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    img {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+    }
+}
+.text_blue{    
+    color:#1ca7ff ;
+    font-weight: bold;
+}
+.text_black{
+    color:#000 ;
+    font-weight: bold;
+}
+.text_green{
+    color:#14b545 ;
+    font-weight: bold;
+}
+.text_red{
+    color:red ;
+    font-weight: bold;
+}
+.text_orange{
+    color:orange ;
+    font-weight: bold;
+}
+
+.btn_delete_filter_autocomplete{
+    background-color: #f44c4c;
+    color: #fff;
+    margin-left: 0 !important;
+}
+
+.current_table_btn{
+    background: #0084ff !important;
+}

@@ -1,0 +1,204 @@
+//.layout-wrapper .topbar {
+//    z-index: 1500;
+//}
+.layout-wrapper .topbar .topbar-right,
+.layout-wrapper .topbar .topbar-left {
+    background: $vs-topbar-bgc;
+}
+
+.layout-wrapper .topbar,
+.layout-wrapper .topbar .topbar-right,
+.layout-wrapper .topbar .topbar-left {
+    height: 50px;
+}
+
+.layout-wrapper .topbar .topbar-right {
+    padding: 5px 15px;
+}
+
+.layout-wrapper .topbar .topbar-left {
+    width: $vs-left-menu-width;
+
+    .topbar-logo {
+        margin: 10px;
+        //height: 45px;
+        margin-top: 5px;
+        height: auto;
+        width: 50%;
+    }
+
+    .topbar-title {
+        padding: 4px 13px 4px 0;
+        height: 40px;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        .topbar-description {
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .topbar-owner {
+            font-size: 10px;
+            margin-bottom: 0;
+        }
+    }
+}
+
+.layout-wrapper .topbar .topbar-right #menu-button {
+    left: $vs-left-menu-width;
+    top: 14px;
+    width: 24px;
+    height: 24px;
+    margin-left: -12px;
+
+    i {
+        font-size: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    i:before {
+        margin-top: -1px;
+        margin-left: -1px;
+    }
+}
+
+.layout-wrapper .topbar-items>li>a .topbar-badge {
+    background-color: $vs-barge-color;
+    font-weight: bold;
+}
+
+.layout-wrapper .layout-menu li a i:first-child {
+    width: 40px;
+    text-align: center;
+    font-size: 1.6em;
+    margin-right: 5px;
+}
+
+.layout-wrapper .layout-menu li a i:first-child,
+.layout-wrapper .layout-menu li.active-menuitem>a i:first-child {
+    color: #1ca7ff;
+}
+
+.layout-wrapper .layout-menu li a span {
+    line-height: 1.6em;
+}
+
+//profile image
+.layout-wrapper .topbar-items>li.profile-item a .profile-image {
+    border: 2px #fff solid;
+    border-radius: 50%;
+}
+
+@media (min-width: 1025px) {
+    .layout-wrapper .topbar-items>li>ul.subsystem {
+        width: 300px;
+
+        a.subsystem-item {
+            width: 50%;
+            display: inline-block;
+        }
+
+        &:before {
+            left: auto;
+            right: 3px;
+        }
+    }
+
+    .layout-wrapper .topbar-items {
+        margin: -5px 0 0;
+        display: flex;
+        flex-direction: row-reverse;
+        height: 50px;
+        align-items: center;
+
+        >li {
+            float: none;
+        }
+    }
+
+    .layout-wrapper .topbar-items>li.profile-item a {
+        top: 0;
+    }
+
+    .layout-wrapper .topbar-items>li .topbar-icon {
+        font-size: 20px;
+    }
+
+    .layout-wrapper .topbar-items>li.profile-item a .profile-image {
+        width: 32px;
+        height: 32px;
+        margin-top: 0;
+        margin-left: 8px;
+    }
+
+    .layout-wrapper .topbar-items>li.profile-item {
+        margin-left: 10px;
+
+        .profile-item-inner {
+            display: flex;
+            align-items: center;
+
+            .topbar-item-name {
+                float: none;
+            }
+        }
+
+        .topbar-item-name {
+            white-space: nowrap;
+        }
+
+        .topbar-item-role {
+            line-height: 20px;
+            white-space: nowrap;
+        }
+    }
+
+    .layout-wrapper .topbar-items>li.search-item {
+        .ui-inputtext {
+            width: 250px;
+        }
+    }
+}
+
+@media (max-width: 1024px) {
+    .layout-wrapper .topbar .topbar-right .topbar-items>li.profile-item {
+        >a {
+            padding-left: 50px;
+        }
+
+        &.active-top-menu>ul li a {
+            padding-left: 5px;
+        }
+    }
+
+    .layout-wrapper .topbar-items>li.profile-item {
+        >ul {
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .topbar-item-role {
+            opacity: 0.7;
+            font-size: 14px;
+        }
+
+        .profile-image-wrapper {
+            position: absolute;
+            top: 50%;
+            margin-top: -12px;
+            left: 15px;
+        }
+    }
+
+    .layout-wrapper .topbar-items>li.search-item {
+        .ui-inputtext {
+            width: 100%;
+            outline: none;
+        }
+    }
+}

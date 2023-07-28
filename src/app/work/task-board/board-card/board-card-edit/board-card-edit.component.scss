@@ -1,0 +1,122 @@
+:host {
+    display: flex;
+    flex: 1;
+}
+
+.issue-wrap {
+    touch-action: manipulation;
+    cursor: -webkit-grab;
+    cursor: grab;
+    margin-bottom: 10px;
+    width: 100%;
+    border-radius: 10px;
+    .issue {
+        display: flex;
+        flex-grow: 1;
+        flex-direction: column;
+        border-radius: 5px;
+        background-color: #fff;
+        transition-property: all;
+        transition-duration: .1s;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+        padding: 10px;
+        gap: 3px;
+        // box-shadow: var(--ds-shadow-raised, 0 1px 1px rgba(23, 43, 77, 0.2), 0 0 1px rgba(23, 43, 77, 0.2));
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        .image_task {
+            text-align: center;
+        }
+        .task_info_other {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 10px;
+            border-top: dashed 1px #e7e7e7;
+            .task_ident_pri {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                .task_pri {
+                    margin-top: 2px;
+                }
+                .avatar_user {
+                    width: 27px;
+                    height: 27px;
+                    margin-top: 0;
+                    // border: 2px #eaeaea solid;
+                    border-radius: 50%;
+                    border: solid 1px #e7e7e7;
+                }
+                .option_custom{
+                    font-size: 18px;
+                    vertical-align: middle;
+                }
+                
+            }
+        }
+        .task_name {
+            font-size: 14px;
+            padding-bottom: 0;
+            color: #344563;
+            line-height: 20px;
+            .text_id_task {
+                font-size: 12px;
+                color: #7a869a;
+            }
+            textarea {
+                border: none;
+                resize: none;
+                font-size: 14px;
+            }
+        }
+        
+    }
+}
+
+.bl{
+    &-red{
+        border-left: solid 2px #f72323;
+    }
+    &-green{
+        border-left: solid 2px #14b545;
+    }
+}
+
+.color{
+    &_red {
+        color: #ff7c5c;
+    }
+    &_yellow {
+        color: #ffab00;
+    }
+    &_blue {
+        color: #2684ff;
+    }
+    &_gray {
+        color: #c7c7c7;
+    }
+}
+.custom_i{
+    &_bug{
+        i{
+            font-size: 7px;
+            background-color: #e5493a;
+            padding: 5px;
+            border-radius: 2px;
+            color: #fff;
+            margin-right: 8px;
+        }
+    }
+    &_task{
+        i {
+            font-size: 10px;
+            background-color: #4bade8;
+            padding: 3px;
+            border-radius: 2px;
+            color: #fff;
+            margin-right: 8px;
+        }
+    }
+}

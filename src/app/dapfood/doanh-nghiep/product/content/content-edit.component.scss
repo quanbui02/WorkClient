@@ -1,0 +1,86 @@
+.app-content-edit {
+    .accordion {
+        width: 100%;
+    }
+    .ui-accordion {
+        .ui-accordion-content {
+            width: 100%!important;
+            padding: 0!important;
+        }
+    }
+}
+
+.countUnapproved {
+    background-color: #e65025;
+    font-weight: bold;
+    position: absolute;
+    right: 0;
+    top: 2px;
+    color: #ffffff;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    padding: 2px 4px;
+    display: block;
+    font-size: 12px;
+    line-height: 12px;
+}
+
+.box-copy {
+    position: absolute;
+    right: 18px;
+    background-color: transparent;
+    .vs-btn {
+        font-family: -apple-system, BlinkMacSystemFont, "Open Sans", Helvetica, Arial, sans-serif;
+        color: #0095da;
+    }
+}
+
+.ui-dialog-content {
+    padding: 0 15px!important;
+}
+
+.btn-tab-active {
+    font-weight: bold;
+    color: #1877f2;
+    height: 35px;
+    border: none;
+    border-bottom: #1877f2 2px solid;
+    background-color: transparent;
+    cursor: pointer;
+    position: relative;
+}
+
+.btn-tab {
+    font-weight: bold;
+    color: #9b9b9b;
+    height: 35px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    position: relative;
+}
+
+.vs-modal {
+    background-color: #f5f5f5;
+}
+
+.contents-item {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.btn-green {
+    background-color: rgb(10, 167, 10);
+}
+
+.text-readable {
+    background: transparent;
+    border: none;
+}
+
+.contents-share {
+    border-top: 1px solid #ccc;
+}

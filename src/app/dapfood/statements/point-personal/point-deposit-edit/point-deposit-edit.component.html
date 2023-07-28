@@ -1,0 +1,116 @@
+<p-dialog #dialog [header]="'Tạo lệnh nạp xu'" styleClass="vs-modal force-full-width" positionTop="50" [(visible)]="isShow" [style]="{'max-width': '800px'}" [contentStyle]="{'max-height': getMaxDialogHeight()}" [modal]="true" appendTo="body">
+    <div class="vs-form-container default-control-label-width vs-modal-content-panel">
+        <div class="vs-form-container default-control-label-width">
+            <div class="ui-g row">
+                <form action="" [formGroup]="formGroup">
+                    <div class="ui-g-6 ui-lg-6">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">
+                                Số xu cần nạp</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper" style="position: relative;">
+                                    <input type="text" [(ngModel)]="modelEdit.deal" formControlName="deal" mask="separator" thousandSeparator="." placeholder="Nhập số xu cần nạp" />
+                                    <div class="form-control-feedback" *ngIf="formGroup.controls['deal'].hasError('required') && formGroup.controls['deal'].touched">
+                                        Trường thông tin này là bắt buộc!</div>
+                                    <div class="form-control-feedback" *ngIf="formGroup.controls['deal'].hasError('min') && formGroup.controls['deal'].touched">
+                                        Số xu nạp phải lớn hơn 50.000</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui-g-6 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Thanh toán
+                            </div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <p-radioButton name="payment" value="1" [(ngModel)]="payment" formControlName="payment" label="Ngân Lượng"> </p-radioButton>
+                                    <p-radioButton name="payment" value="2" [(ngModel)]="payment" formControlName="payment" label="Thủ công" [style]="{'margin-left':'50px'}">
+                                    </p-radioButton>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui-g-6 ui-lg-12" *ngIf="payment == 2">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4"></div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <p-fieldset legend="Thanh toán thủ công">
+
+                                    <div class="ui-g-6 ui-lg-2 bold">Bước 1:</div>
+                                    <div class="ui-g-6 ui-lg-10">
+                                        <p class="fontS15 bold blueFont">Tạo lệnh nạp tiền.</p>
+                                        <p>Tạo lệnh nạp tiền trên dapfood </p>
+                                    </div>
+
+                                    <div class="ui-g-6 ui-lg-2 bold">Bước 2:</div>
+                                    <div class="ui-g-6 ui-lg-10">
+                                        <p class="fontS15 bold blueFont">Chuyển khoản theo thông tin dưới đây.
+                                        </p>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" border="1" style="width: 100%;text-align: left; line-height: 20px;border: #CCC;" cellpadding="5" cellspacing="0">
+                                                <tbody>
+                                                    <tr>
+                                                        <th>Số tài khoản:
+                                                        </th>
+                                                        <td>19036508364021
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Tên chủ tài khoản:
+                                                        </th>
+                                                        <td>Công ty Cổ phần dapfood.com
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Ngân hàng:
+                                                        </th>
+                                                        <td>Ngân hàng TMCP Kỹ Thương Việt Nam
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Chi nhánh:
+                                                        </th>
+                                                        <td>Chi Nhánh Hai Bà Trưng - Hà Nội
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Nội dung chuyển khoản:
+                                                        </th>
+                                                        <td>Mã của giao dịch này
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <p> </p>
+                                        </div>
+
+                                        <p class="fontS15">Khi giao dịch thành công hệ thống DapFood sẽ tự động cộng xu vào tài khoản cho bạn.
+                                        </p>
+
+                                    </div>
+                                </p-fieldset>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <p-footer>
+        <div class="ui-g row">
+            <div class="ui-g-12">
+                <button class="vs-btn vs-modal-btn vs-btn-action-edit" [disabled]="!formGroup.valid || isLoading" (click)="save()" type="button">
+                                        <span class="__icon fa fa-floppy-o"></span>
+                                        <span class="__label">Lưu</span>
+                                </button>
+                <button type="button" (click)="closePopupMethod(null)" class="vs-btn vs-modal-btn vs-btn-action-back">
+                                        <span class="__icon fa fa-times"></span>
+                                        <span class="__label">Đóng</span>
+                                </button>
+            </div>
+        </div>
+    </p-footer>
+</p-dialog>

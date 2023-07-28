@@ -1,0 +1,639 @@
+<app-task-header></app-task-header>
+
+<div class="task_screen_body task_list">
+  <div class="ui-g">
+    <div [class]='isShowDetail ? "box-left": "box-left-extend"'>
+
+      <div class="task-tab-content">
+        <div class="task-tab-content-toolbar">
+          <div class="ui-g">
+            <div class="ui-g-12 ui-md-12 ui-lg-12 __search-box-wrapper">
+
+              <div class="search_task">
+                <a class="add_btn" (click)="hideShowInputTask()">
+                  <svg viewBox="0 0 20 20" width="20" height="20" xmlns="http://www.w3.org/2000/svg"
+                    shape-rendering="geometricPrecision" text-rendering="geometricPrecision"
+                    image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 419 511.67">
+                    <path
+                      d="M314.98 303.62c57.47 0 104.02 46.59 104.02 104.03 0 57.47-46.58 104.02-104.02 104.02-57.47 0-104.02-46.58-104.02-104.02 0-57.47 46.58-104.03 104.02-104.03zM41.73 59.27h23.93v24.38H41.73c-4.54 0-8.7 1.76-11.8 4.61l-.45.49c-3.14 3.13-5.1 7.48-5.1 12.24v315.53c0 4.75 1.96 9.1 5.1 12.24 3.13 3.15 7.48 5.11 12.25 5.11h142.62c1.68 8.44 4.17 16.6 7.36 24.38H41.73c-11.41 0-21.86-4.71-29.42-12.26C4.72 438.44 0 427.99 0 416.52V100.99c0-11.48 4.7-21.92 12.25-29.47l.79-.72c7.5-7.13 17.62-11.53 28.69-11.53zm297.55 217.37V100.99c0-4.74-1.96-9.09-5.12-12.24-3.11-3.15-7.47-5.1-12.24-5.1h-23.91V59.27h23.91c11.45 0 21.86 4.72 29.42 12.26 7.61 7.56 12.32 18.02 12.32 29.46V283.6c-7.79-3.06-15.95-5.41-24.38-6.96zm-206.75-8.07c-7.13 0-12.92-5.79-12.92-12.92s5.79-12.93 12.92-12.93h142.83c7.13 0 12.92 5.8 12.92 12.93s-5.79 12.92-12.92 12.92H132.53zM89.5 241.22c7.98 0 14.44 6.46 14.44 14.44 0 7.97-6.46 14.43-14.44 14.43-7.97 0-14.44-6.46-14.44-14.43 0-7.98 6.47-14.44 14.44-14.44zm0 78.62c7.98 0 14.44 6.46 14.44 14.44 0 7.97-6.46 14.43-14.44 14.43-7.97 0-14.44-6.46-14.44-14.43 0-7.98 6.47-14.44 14.44-14.44zm43.04 27.35c-7.13 0-12.93-5.79-12.93-12.92s5.8-12.93 12.93-12.93h80.96a133.608 133.608 0 0 0-17.26 25.85h-63.7zM89.5 162.6c7.98 0 14.44 6.46 14.44 14.44 0 7.98-6.46 14.44-14.44 14.44-7.97 0-14.44-6.46-14.44-14.44 0-7.98 6.47-14.44 14.44-14.44zm43.03 27.37c-7.13 0-12.92-5.8-12.92-12.93s5.79-12.92 12.92-12.92h142.83c7.13 0 12.92 5.79 12.92 12.92s-5.79 12.93-12.92 12.93H132.53zM93 39.4h46.13C141.84 17.18 159.77 0 181.52 0c21.62 0 39.45 16.95 42.34 38.94l46.76.46c2.61 0 4.7 2.09 4.7 4.71v51.84c0 2.6-2.09 4.7-4.7 4.7H93.05c-2.56 0-4.71-2.1-4.71-4.7V44.11A4.638 4.638 0 0 1 93 39.4zm88.03-19.25c12.3 0 22.26 9.98 22.26 22.27 0 12.3-9.96 22.26-22.26 22.26-12.29 0-22.26-9.96-22.26-22.26 0-12.29 9.97-22.27 22.26-22.27zm118.39 346.9c-.04-4.59-.46-7.86 5.23-7.79l18.45.23c5.95-.04 7.53 1.86 7.46 7.43v25.16h25.02c4.59-.03 7.86-.46 7.78 5.24l-.22 18.44c.03 5.96-1.86 7.54-7.43 7.48h-25.15v25.14c.07 5.57-1.51 7.46-7.46 7.43l-18.45.22c-5.69.09-5.27-3.2-5.23-7.79v-25h-25.16c-5.59.06-7.47-1.52-7.44-7.48l-.22-18.44c-.09-5.7 3.2-5.27 7.79-5.24h25.03v-25.03z"
+                      fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" />
+                  </svg>
+                  Thêm mới
+                </a>
+                <div class="search_name" id="search_name" (click)="openSearchName()"
+                  [ngClass]="{'search_name_active': isSearch}">
+                  <i class="fa fa-search" aria-hidden="true"></i>
+                  <input (blur)="isSearch=false;searchModel.key = ''" id="input_search_name" type="search"
+                    placeholder="Tìm kiếm" name="search" class="__input vs-input" (keyup.enter)="onSearchCustom()"
+                    [(ngModel)]="searchModel.key">
+                </div>
+                <div class="vs-overlay" vsOverlay>
+                  <a class="vs-overlay-btn">
+                    <svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20" aria-hidden="true"
+                      class="icon_component filter-item-icon-component icon_component--no-focus-style">
+                      <path
+                        d="M17.8571 2.87669C18.107 3.41157 18.0246 4.04275 17.6457 4.49555L12.4892 10.6589V15.3856C12.4892 16.0185 12.097 16.5852 11.5048 16.8082L9.56669 17.5381C9.09976 17.7139 8.57627 17.6494 8.16598 17.3655C7.75569 17.0816 7.51084 16.6144 7.51084 16.1155V10.6589L2.35425 4.49555C1.97542 4.04275 1.89302 3.41157 2.14291 2.87669C2.39279 2.34182 2.92977 2 3.52013 2H16.4799C17.0702 2 17.6072 2.34182 17.8571 2.87669ZM16.4799 3.52012H3.52013L8.91611 9.96964C8.99036 10.0584 9.03096 10.1698 9.03096 10.2848V16.1155L10.969 15.3856V10.2848C10.969 10.1698 11.0096 10.0584 11.0839 9.96964L16.4799 3.52012Z"
+                        fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
+                    </svg>
+                    Lọc
+                  </a>
+                  <div class="vs-overlay-popup">
+                    <div class="overlay_search">
+                      <p-dropdown (onHide)="onSearchCustom()" appendTo="body"
+                        [emptyFilterMessage]="'Không tìm thấy kết quả'" [style]="{'width':'100%'}"
+                        [(ngModel)]="searchModel.type" [options]="type_options">
+                        <ng-template let-item pTemplate="selectedItem">
+                          <span *ngIf="item.value == 2" class="custom_i_bug"><i class="fa fa-circle"
+                              aria-hidden="true"></i></span>
+                          <span *ngIf="item.value == 1" class="custom_i_task"><i class="fa fa-check"
+                              aria-hidden="true"></i></span>
+                          <span>{{item.label}}</span>
+                        </ng-template>
+                        <ng-template let-type pTemplate="item">
+                          <span *ngIf="type.value == 2" class="custom_i_bug"><i class="fa fa-circle"
+                              aria-hidden="true"></i></span>
+                          <span *ngIf="type.value == 1" class="custom_i_task"><i class="fa fa-check"
+                              aria-hidden="true"></i></span>
+                          <span>{{type.label}}</span>
+                        </ng-template>
+                      </p-dropdown>
+                      <p-dropdown (onHide)="onSearchCustom()" appendTo="body"
+                        [emptyFilterMessage]="'Không tìm thấy kết quả'" [style]="{'width':'100%'}"
+                        [(ngModel)]="searchModel.idProjectCol" [options]="status_options">
+                      </p-dropdown>
+                      <p-dropdown (onHide)="onSearchCustom()" appendTo="body"
+                        [emptyFilterMessage]="'Không tìm thấy kết quả'" [style]="{'width':'100%'}"
+                        [(ngModel)]="searchModel.priority" [options]="priority_options">
+                        <ng-template let-item pTemplate="selectedItem">
+                          <i *ngIf="item.value == 5" class="fa fa-angle-double-up color_red option_custom"
+                            aria-hidden="true"></i>
+                          <i *ngIf="item.value == 4" class="fa fa-angle-up color_red option_custom"
+                            aria-hidden="true"></i>
+                          <span *ngIf="item.value == 3" class="color_yellow option_custom">=</span>
+                          <i *ngIf="item.value == 2" class="fa fa-angle-down color_blue option_custom"
+                            aria-hidden="true"></i>
+                          <i *ngIf="item.value == 1" class="fa fa-angle-double-down color_blue option_custom"
+                            aria-hidden="true"></i>
+                          <span>{{item.label}}</span>
+                        </ng-template>
+                        <ng-template let-priority pTemplate="item">
+                          <i *ngIf="priority.value == 5" class="fa fa-angle-double-up color_red option_custom"
+                            aria-hidden="true"></i>
+                          <i *ngIf="priority.value == 4" class="fa fa-angle-up color_red option_custom"
+                            aria-hidden="true"></i>
+                          <span *ngIf="priority.value == 3" class="color_yellow option_custom">=</span>
+                          <i *ngIf="priority.value == 2" class="fa fa-angle-down color_blue option_custom"
+                            aria-hidden="true"></i>
+                          <i *ngIf="priority.value == 1" class="fa fa-angle-double-down color_blue option_custom"
+                            aria-hidden="true"></i>
+                          <span>{{priority.label}}</span>
+                        </ng-template>
+                      </p-dropdown>
+                      <p-dropdown (onHide)="onSearchCustom()" appendTo="body"
+                        [emptyFilterMessage]="'Không tìm thấy kết quả'" [style]="{'width':'100%'}"
+                        [(ngModel)]="searchModel.star" [options]="star_options">
+                      </p-dropdown>
+                    </div>
+                  </div>
+                </div>
+                <div class="filter_member">
+                  <a *ngFor="let item of users_options; let i = index" class="user_filter"
+                    (click)="filterMemberProject(i, item.value)">
+                    <img class="avatar_user" [ngClass]="{'active': activeUser[i]}" src="{{getAvatarById(item.value)}}"
+                      pTooltip="{{item.label}}" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <a [class]='isShowDetail ? "btn_expand": "btn_expand btn_rotate"'
+            (click)="isShowDetail = !isShowDetail; itemSelected = 0"><i class="fa fa-angle-right"></i></a>
+        </div>
+        <div class="task-tab-content-body ">
+          <div class="ui-g">
+            <div class="ui-md-12 __page-title-wrapper">
+              <div class="task_list_all" style="margin-top: 10px;">
+                <h3 class="title">Công việc</h3>
+                <div class="input_task_box" [ngClass]="{'input_task_box_show': isAdd}">
+                  <div class="group_task_box">
+                    <div class="option_type_input">
+                      <a class="type">
+                        <i *ngIf="typeTask == 1" class="fa fa-check type_task" aria-hidden="true" pTooltip="Task"></i>
+                        <i *ngIf="typeTask == 2" class="fa fa-circle type_bug" aria-hidden="true" pTooltip="Bug"></i>
+                        <div class="tdhl_type_block">
+                          <p-dropdown [dropdownIcon]="'none'" [style]="{'border': 'none'}" appendTo="body"
+                            [emptyFilterMessage]="'Không tìm thấy kết quả'" [style]="{'width':'100%'}"
+                            [(ngModel)]="typeTask" [options]="typeEdit_options">
+                            <ng-template let-item pTemplate="selectedItem">
+                              <span *ngIf="item.value == 2" class="custom_i_bug"><i class="fa fa-circle"
+                                  aria-hidden="true" pTooltip="Bug"></i></span>
+                              <span *ngIf="item.value == 1" class="custom_i_task"><i class="fa fa-check"
+                                  aria-hidden="true" pTooltip="Task"></i></span>
+                            </ng-template>
+                            <ng-template let-type pTemplate="item">
+                              <span *ngIf="type.value == 2" class="custom_i_bug"><i class="fa fa-circle"
+                                  aria-hidden="true"></i></span>
+                              <span *ngIf="type.value == 1" class="custom_i_task"><i class="fa fa-check"
+                                  aria-hidden="true"></i></span>
+                              <span>{{type.label}}</span>
+                            </ng-template>
+                          </p-dropdown>
+                        </div>
+                      </a>
+                    </div>
+                    <div class="input_box" [ngClass]="{'input_task_show': isAdd}">
+                      <input id="input_task" type="text" placeholder="Nhập tên công việc và enter để thêm mới ..."
+                        class="__input vs-input input_task" (keyup.enter)="onCreated()" [(ngModel)]="nameTask">
+                      <a class="add_btn" (click)="onCreated()"><span>Thêm</span></a>
+                    </div>
+                  </div>
+                  <div class="close_input_box">
+                    <a class="close_btn" (click)="closeCreate()"><span>Đóng</span></a>
+                  </div>
+                </div>
+                <div cdkDropList [cdkDropListData]="dataSource" class="example-list" (cdkDropListDropped)="drop($event)"
+                  [ngClass]="{'border-empty': dataSource.length == 0}">
+                  <div class=" example-box" [ngClass]="{
+                    'bl-red': item.endDate && curDate > item.endDate, 
+                    'bl-green': item.idStatus == statusType.Done || (!item.project.isWorkFolow && item.percent == 100), 
+                    'bl-yellow': item.idStatus == statusType.InProgress || (!item.project.isWorkFolow && item.percent > 0 && item.percent < 100), 
+                    'bl-grey': item.idStatus == statusType.ToDo || (!item.project.isWorkFolow && item.percent == 0), 
+                    'item-select': itemSelected == item.id}" *ngFor="let item of dataSource" cdkDrag
+                    (click)="getDetail(item)">
+                    <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+                    <div class="drop_card">
+                      <label class="task_checkbox" *ngIf="!item.project.isWorkFolow">
+                        <!-- [ngClass]="{'visibility-hidden': item.project.isWorkFolow}" -->
+                        <input type="checkbox" checked="checked" [(ngModel)]="item.completed"
+                          (click)="onChangeComplete(item.id)">
+                        <span class="checkmark"></span>
+                      </label>
+                      <div class="task_name">
+                        <span *ngIf="item.type == 2" class="custom_i_bug"><i class="fa fa-circle"
+                            aria-hidden="true"></i></span>
+                        <span *ngIf="item.type == 1" class="custom_i_task_list"><i class="fa fa-check"
+                            aria-hidden="true"></i></span>
+                        <span>{{item.name}}</span>
+                        <span *ngIf="CheckDayExpirationSoon(item.endDate)" class="task_noti" pTooltip="Sắp hết hạn"><i
+                            class="fa fa-exclamation" aria-hidden="true"></i></span>
+                        <span *ngIf="item.endDate && this.curDate > item.endDate" class="task_out_of_date"> Quá
+                          hạn</span>
+                        <span *ngIf="item.startDate" class="task_start_date"> bắt đầu {{item.startDate | date
+                          :'dd/MM':'UTC'}}</span>
+                      </div>
+                      <div class="task_project" *ngIf="this.myTask">
+                        <img *ngIf="item.project.name" src="{{getAvatarProject(item.project.image)}}"
+                          alt="{{item.project.name}}">
+                        <span>{{item.project.name}}</span>
+                      </div>
+                      <div class="task_date">{{item.endDate | date :'dd/MM/yy':'UTC'}}</div>
+                      <div class="task_assign">
+                        <!-- <img *ngIf="item.assignee.userId > 0 && !item.assignee?.avatar" class="avatar_user" src="/assets/images/avatar.jpg" /> -->
+                        <img *ngIf="item.assignee.userId > 0" class="avatar_user"
+                          src="{{getAvatar(item.assignee?.avatar)}}" />
+                        <span *ngIf="item.assignee.userId > 0" class="task_user_name"> {{item.assignee.name ?
+                          item.assignee.name : item.assignee.userName}}</span>
+                      </div>
+                      <div class="task_priority">
+                        <i *ngIf="item.priority == 5" class="fa fa-angle-double-up color_red" aria-hidden="true"
+                          pTooltip="Ưu tiên rất cao"></i>
+                        <i *ngIf="item.priority == 4" class="fa fa-angle-up color_red" aria-hidden="true"
+                          pTooltip="Ưu tiên cao"></i>
+                        <span *ngIf="item.priority == 3" class="color_yellow" pTooltip="Ưu tiên trung bình">=</span>
+                        <i *ngIf="item.priority == 2" class="fa fa-angle-down color_blue" aria-hidden="true"
+                          pTooltip="Ưu tiên thấp"></i>
+                        <i *ngIf="item.priority == 1" class="fa fa-angle-double-down color_blue" aria-hidden="true"
+                          pTooltip="Ưu tiên rất thấp"></i>
+                      </div>
+                      <div class="task_star">
+                        <a *ngIf="!item.star" (click)="onChangeStar(item.id)"><i class="fa fa-star-o"
+                            aria-hidden="true"></i></a>
+                        <a *ngIf="item.star" (click)="onChangeStar(item.id)"><i class="fa fa-star"
+                            aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="basics-paging paging-right custom-task-list-paging">
+                  <p-paginator [rows]="limit_unfinished" [totalRecords]="total_unfinished"
+                    [rowsPerPageOptions]="listItemNumberPerPageCustom"
+                    (onPageChange)="paginateUnfinished($event)"></p-paginator>
+                </div>
+              </div>
+              <div class="task_list_all">
+                <h3 class="title">Hoàn thành</h3>
+                <div cdkDropList [cdkDropListData]="dataSourceFinish" class="example-list"
+                  (cdkDropListDropped)="dropFinish($event)" [ngClass]="{'border-empty': dataSourceFinish.length == 0}">
+                  <div class=" example-box" [ngClass]="{
+                    'bl-grey': item.idStatus == statusType.ToDo || (!item.project.isWorkFolow && item.percent == 0), 
+                    'bl-yellow': item.idStatus == statusType.InProgress || (!item.project.isWorkFolow && item.percent > 0 && item.percent < 100), 
+                    'bl-green': item.idStatus == statusType.Done || (!item.project.isWorkFolow && item.percent == 100), 
+                    'bl-red': item.endDate && curDate > item.endDate, 
+                    'item-select': itemSelected == item.id}" *ngFor="let item of dataSourceFinish" cdkDrag
+                    (click)="getDetail(item)">
+                    <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+                    <div class="drop_card">
+                      <label class="task_checkbox" *ngIf="!item.project.isWorkFolow"
+                        [ngClass]="{'input_task_box_show': isAdd, 'visibility-hidden': item.project.isWorkFolow}">
+                        <input type="checkbox" checked="checked" [(ngModel)]="item.completed"
+                          (click)="onChangeComplete(item.id)">
+                        <span class="checkmark"></span>
+                      </label>
+                      <div class="task_name">
+                        <span *ngIf="item.type == 2" class="custom_i_bug"><i class="fa fa-circle"
+                            aria-hidden="true"></i></span>
+                        <span *ngIf="item.type == 1" class="custom_i_task_list"><i class="fa fa-check"
+                            aria-hidden="true"></i></span>
+                        <span class="task_name_finish">{{item.name}}</span>
+                        <span *ngIf="item.endDate && curDate > item.endDate" class="task_out_of_date"> Quá hạn</span>
+                        <span *ngIf="item.startDate" class="task_start_date"> bắt đầu {{item.startDate | date
+                          :'dd/MM':'UTC'}}</span>
+                      </div>
+                      <div class="task_project" *ngIf="this.myTask">
+                        <img *ngIf="item.project.name" src="{{getAvatarProject(item.project.image)}}"
+                          alt="{{item.project.name}}">
+                        <span>{{item.project.name}}</span>
+                      </div>
+                      <div class="task_date">{{item.endDate | date :'dd/MM/yy':'UTC'}}</div>
+                      <div class="task_date color_green_imp">{{item.completedDate | date :'dd/MM/yy':'UTC'}}</div>
+                      <div class="task_assign">
+                        <img *ngIf="item.assignee.userId > 0 && !item.assignee?.avatar" class="avatar_user"
+                          src="/assets/images/avatar.jpg" />
+                        <img *ngIf="item.assignee.userId > 0 && item.assignee?.avatar" class="avatar_user"
+                          src="{{getImageAvatar(item.assignee.avatar)}}" />
+                        <span *ngIf="item.assignee.userId > 0" class="task_user_name"> {{item.assignee.name ?
+                          item.assignee.name : item.assignee.userName}}</span>
+                      </div>
+                      <div class="task_priority">
+                        <i *ngIf="item.priority == 5" class="fa fa-angle-double-up color_red" aria-hidden="true"
+                          pTooltip="Ưu tiên rất cao"></i>
+                        <i *ngIf="item.priority == 4" class="fa fa-angle-up color_red" aria-hidden="true"
+                          pTooltip="Ưu tiên cao"></i>
+                        <span *ngIf="item.priority == 3" class="color_yellow" pTooltip="Ưu tiên trung bình">=</span>
+                        <i *ngIf="item.priority == 2" class="fa fa-angle-down color_blue" aria-hidden="true"
+                          pTooltip="Ưu tiên thấp"></i>
+                        <i *ngIf="item.priority == 1" class="fa fa-angle-double-down color_blue" aria-hidden="true"
+                          pTooltip="Ưu tiên rất thấp"></i>
+                      </div>
+                      <div class="task_star">
+                        <a *ngIf="!item.star" (click)="onChangeStar(item.id)"><i class="fa fa-star-o"
+                            aria-hidden="true"></i></a>
+                        <a *ngIf="item.star" (click)="onChangeStar(item.id)"><i class="fa fa-star"
+                            aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="basics-paging paging-right custom-task-list-paging">
+                  <p-paginator [rows]="limit_finished" [totalRecords]="total_finished"
+                    [rowsPerPageOptions]="listItemNumberPerPageCustom"
+                    (onPageChange)="paginateFinished($event)"></p-paginator>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div [class]='!isShowDetail ? "box-right": "box-right-extend"'>
+      <div class="task_detail">
+        <form action="" [formGroup]="formGroup">
+          <div class="task_detail_content_header">
+            <div class="task_detail_header_left">
+              <a class="status">
+                <span *ngIf="!modelEdit.idProjectCol">Thiết lập</span>
+                <span *ngIf="modelEdit.idProjectCol">{{getStatusTask(modelEdit.idProjectCol)}}</span>
+                <div class="status_select">
+                  <p-dropdown (onChange)="onSave()" [dropdownIcon]="'none'" [style]="{'border': 'none'}" appendTo="body"
+                    [emptyFilterMessage]="'Không tìm thấy kết quả'" formControlName="idProjectCol"
+                    [style]="{'width':'100%'}" [(ngModel)]="modelEdit.idProjectCol" [options]="statusEdit_options">
+                  </p-dropdown>
+                </div>
+              </a>
+              <a class="priority">
+                <i *ngIf="modelEdit.priority == 5" class="fa fa-angle-double-up color_red" aria-hidden="true"
+                  pTooltip="Ưu tiên rất cao"></i>
+                <i *ngIf="modelEdit.priority == 4" class="fa fa-angle-up color_red" aria-hidden="true"
+                  pTooltip="Ưu tiên cao"></i>
+                <span *ngIf="modelEdit.priority == 3" class="color_yellow type_medium"
+                  pTooltip="Ưu tiên trung bình">=</span>
+                <i *ngIf="modelEdit.priority == 2" class="fa fa-angle-down color_blue" aria-hidden="true"
+                  pTooltip="Ưu tiên thấp"></i>
+                <i *ngIf="modelEdit.priority == 1" class="fa fa-angle-double-down color_blue" aria-hidden="true"
+                  pTooltip="Ưu tiên rất thấp"></i>
+                <div class="tdhl_priority_block">
+                  <p-dropdown formControlName="priority" [dropdownIcon]="'none'" (onChange)="onSave()"
+                    [style]="{'border': 'none'}" appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'"
+                    [(ngModel)]="modelEdit.priority" [options]="priorityEdit_options">
+                    <ng-template let-item pTemplate="selectedItem">
+                      <i *ngIf="item.value == 5" class="fa fa-angle-double-up color_red option_custom"
+                        aria-hidden="true"></i>
+                      <i *ngIf="item.value == 4" class="fa fa-angle-up color_red option_custom" aria-hidden="true"></i>
+                      <span *ngIf="item.value == 3" class="color_yellow option_custom">=</span>
+                      <i *ngIf="item.value == 2" class="fa fa-angle-down color_blue option_custom"
+                        aria-hidden="true"></i>
+                      <i *ngIf="item.value == 1" class="fa fa-angle-double-down color_blue option_custom"
+                        aria-hidden="true"></i>
+                    </ng-template>
+                    <ng-template let-priority pTemplate="item">
+                      <i *ngIf="priority.value == 5" class="fa fa-angle-double-up color_red option_custom"
+                        aria-hidden="true"></i>
+                      <i *ngIf="priority.value == 4" class="fa fa-angle-up color_red option_custom"
+                        aria-hidden="true"></i>
+                      <span *ngIf="priority.value == 3" class="color_yellow option_custom">=</span>
+                      <i *ngIf="priority.value == 2" class="fa fa-angle-down color_blue option_custom"
+                        aria-hidden="true"></i>
+                      <i *ngIf="priority.value == 1" class="fa fa-angle-double-down color_blue option_custom"
+                        aria-hidden="true"></i>
+                      <span>{{priority.label}}</span>
+                    </ng-template>
+                  </p-dropdown>
+                </div>
+              </a>
+              <a class="type">
+                <i *ngIf="modelEdit.type == 1" class="fa fa-check type_task" aria-hidden="true" pTooltip="Task"></i>
+                <i *ngIf="modelEdit.type == 2" class="fa fa-circle type_bug" aria-hidden="true" pTooltip="Bug"></i>
+                <div class="tdhl_type_block">
+                  <p-dropdown [dropdownIcon]="'none'" (onChange)="onSave()" [style]="{'border': 'none'}" appendTo="body"
+                    [emptyFilterMessage]="'Không tìm thấy kết quả'" formControlName="type" [style]="{'width':'100%'}"
+                    [(ngModel)]="modelEdit.type" [options]="typeEdit_options">
+                    <ng-template let-item pTemplate="selectedItem">
+                      <span *ngIf="item.value == 2" class="custom_i_bug"><i class="fa fa-circle" aria-hidden="true"
+                          pTooltip="Bug"></i></span>
+                      <span *ngIf="item.value == 1" class="custom_i_task"><i class="fa fa-check" aria-hidden="true"
+                          pTooltip="Task"></i></span>
+                    </ng-template>
+                    <ng-template let-type pTemplate="item">
+                      <span *ngIf="type.value == 2" class="custom_i_bug"><i class="fa fa-circle"
+                          aria-hidden="true"></i></span>
+                      <span *ngIf="type.value == 1" class="custom_i_task"><i class="fa fa-check"
+                          aria-hidden="true"></i></span>
+                      <span>{{type.label}}</span>
+                    </ng-template>
+                  </p-dropdown>
+                </div>
+              </a>
+
+              <div class="vs-overlay" vsOverlay>
+                <a class="percent">
+                  <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                  <span>{{modelEdit.percent }}%</span>
+                </a>
+                <div class="vs-overlay-popup">
+                  <div class="percent_box">
+                    <input class="input_percent" type="number" min="0" max="100" [(ngModel)]="modelEdit.percent"
+                      rows="3" formControlName="percent" placeholder="(%)" (blur)="onSave()">
+                    <p-slider [style]="{'width':'200px'}" formControlName="percent" (onSlideEnd)="onSave()"
+                      [(ngModel)]="modelEdit.percent"></p-slider>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="task_detail_header_right">
+              <div class="check_complete" *ngIf="!modelEdit.project?.isWorkFolow">
+                <label class="check_complete_custom">Hoàn thành
+                  <input type="checkbox" [checked]="modelEdit.completed" (change)="onChangeComplete(modelEdit.id)" />
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <a class="zoom_btn" (click)="getDetailZoom()">
+                <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <g fill="currentColor" fill-rule="evenodd">
+                    <path fill-rule="evenodd"
+                      d="M4 9a5 5 0 1110 0A5 5 0 014 9zm5-7a7 7 0 104.2 12.6.999.999 0 00.093.107l3 3a1 1 0 001.414-1.414l-3-3a.999.999 0 00-.107-.093A7 7 0 009 2zM8 6.5a1 1 0 112 0V8h1.5a1 1 0 110 2H10v1.5a1 1 0 11-2 0V10H6.5a1 1 0 010-2H8V6.5z" />
+                  </g>
+                </svg>
+              </a>
+              <div class="menu_icon">
+                <button *ngIf="modelEdit.id > 0" type="button" (click)="onDelete(modelEdit.id)"
+                  class="vs-btn vs-modal-btn vs-btn-action-remove">
+                  <span class="__icon fa fa-trash"></span>
+                  <span class="__label">Xóa</span>
+                </button>
+                <!-- <svg width="24" height="24" viewBox="0 0 24 24" role="presentation">
+                  <g fill="currentColor" fill-rule="evenodd">
+                    <circle cx="5" cy="12" r="2"></circle>
+                    <circle cx="12" cy="12" r="2"></circle>
+                    <circle cx="19" cy="12" r="2"></circle>
+                  </g>
+                </svg>
+                 -->
+                <!-- <p-menu #menu [popup]="true" [model]="items"></p-menu>
+    <button type="button" pButton icon="pi pi-bars" label="Show" (click)="menu.toggle($event)"></button> -->
+
+              </div>
+            </div>
+          </div>
+          <div class="task_detail_content">
+            <div class="ui-g row">
+              <div class="ui-g-12 ui-lg-12">
+                <div class="breadcum">
+                  <span>Dự án: {{modelEdit.project?.name}}</span>
+                </div>
+              </div>
+              <div class="ui-g-12 ui-lg-12">
+                <div class="vs-form-control ui-g">
+                  <div class="__form-control-inputs ui-g-12 ui-md-12">
+                    <div class="__input-wrapper input_task_edit">
+                      <textarea autosize class="input_task_name" type="text" mouv [(ngModel)]="modelEdit.name"
+                        formControlName="name" placeholder="Tên công việc" (blur)="onSave()"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="ui-g-12 ui-lg-12" *ngIf="modelEdit.user?.name">
+                <div class="created_info">
+                  <span>Tạo bởi {{modelEdit.user?.name}}</span>
+                </div>
+              </div>
+              <div class="ui-g-6 ui-lg-6 row_edit_task">
+                <div class="vs-form-control ui-g">
+                  <div class="__form-control-label ui-g-12 ui-md-12">Người thực hiện</div>
+                  <div class="__form-control-inputs ui-g-12 ui-md-12">
+                    <div class="__input-wrapper">
+                      <p-dropdown [dropdownIcon]="'none'" (onChange)="onSave()" [showClear]="true"
+                        [style]="{'border': '1px dashed #ccc','width':'100%'}" placeholder="..."
+                        formControlName="idAssignee" appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'"
+                        [style]="{'width':'100%'}" [(ngModel)]="modelEdit.idAssignee" [options]="users_options">
+                        <ng-template let-item pTemplate="selectedItem">
+                          <div class="asignee_option">
+                            <img *ngIf="!item.avatar" class="avatar_user" src="/assets/images/avatar.jpg" />
+                            <img *ngIf="item.avatar" class="avatar_user" src="{{getImageAvatar(item.avatar)}}" />
+                            <span class="name_option"> {{item.label}}</span>
+                          </div>
+                        </ng-template>
+                        <ng-template let-user pTemplate="item">
+                          <div class="asignee_option">
+                            <img *ngIf="!user.avatar" class="avatar_user" src="/assets/images/avatar.jpg" />
+                            <img *ngIf="user.avatar" class="avatar_user" src="{{getImageAvatar(user.avatar)}}" />
+                            <span class="name_option"> {{user.label}}</span>
+                          </div>
+                        </ng-template>
+                      </p-dropdown>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="ui-g-6 ui-lg-6 row_edit_task">
+                <div class="vs-form-control ui-g">
+                  <div class="__form-control-label ui-g-12 ui-md-12">Người tham gia</div>
+                  <div class="__form-control-inputs ui-g-12 ui-md-12">
+                    <div class="__input-wrapper">
+                      <p-multiSelect [dropdownIcon]="'none'" [selectionLimit]="5" (onPanelHide)="onSave()"
+                        [style]="{'border': '1px dashed #ccc','width':'100%'}" placeholder="Chọn tài khoản"
+                        [options]="users_options" formControlName="participant" [(ngModel)]="participant">
+                        <ng-template let-item pTemplate="selectedItems">
+                          <div *ngFor="let val of item"
+                            class="ui-multiselected-item-token ui-corner-all user_item_option user_multil_selected">
+                            <img class="avatar_user" src="{{getAvatarById(val)}}"
+                              style="width:30px; height: 30px;vertical-align:middle;margin-right:.5em"
+                              pTooltip="{{getUserNameById(val)}}" />
+                          </div>
+                          <span *ngIf="!item || item.length === 0"
+                            class="ui-multiselected-empty-token ui-corner-all empty_select">
+                            <svg viewBox="0 0 24 24">
+                              <path
+                                d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V8c0-.55-.45-1-1-1s-1 .45-1 1v2H2c-.55 0-1 .45-1 1s.45 1 1 1h2v2c0 .55.45 1 1 1s1-.45 1-1v-2h2c.55 0 1-.45 1-1s-.45-1-1-1H6zm9 4c-2.67 0-8 1.34-8 4v1c0 .55.45 1 1 1h14c.55 0 1-.45 1-1v-1c0-2.66-5.33-4-8-4z">
+                              </path>
+                            </svg>
+                          </span>
+                        </ng-template>
+                        <ng-template let-user pTemplate="item">
+                          <img *ngIf="!user.avatar" class="avatar_user" src="/assets/images/avatar.jpg"
+                            style="width:30px;display:inline-block;vertical-align:middle" />
+                          <img *ngIf="user.avatar" class="avatar_user" src="{{getImageAvatar(user.avatar)}}"
+                            style="width:30px;display:inline-block;vertical-align:middle" />
+                          <div style="font-size:14px;float:right;margin-top:4px">{{user.label}}</div>
+                        </ng-template>
+                      </p-multiSelect>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="ui-g-4 ui-lg-4 row_edit_task">
+                <div class="vs-form-control ui-g">
+                  <div class="__form-control-label ui-g-12 ui-md-12">Ngày bắt đầu</div>
+                  <div class="__form-control-inputs ui-g-12 ui-md-12">
+                    <div class="__input-wrapper">
+                      <p-calendar (onClose)="onSave()" psDateOnly [style]="{'border': 'none','width':'100%'}"
+                        [inputStyle]="{'width':'100%', 'border':'1px dashed #ccc'}" formControlName="startDate"
+                        class="maxWidth" [(ngModel)]="startDate" dateFormat="dd/mm/yy" [showIcon]="false"
+                        class="maxWidth" placeholder=".../.../..." utc="true" [locale]="vi" showButtonBar="true">
+                      </p-calendar>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="ui-g-4 ui-lg-4 row_edit_task">
+                <div class="vs-form-control ui-g">
+                  <div class="__form-control-label ui-g-12 ui-md-12">Ngày kết thúc</div>
+                  <div class="__form-control-inputs ui-g-12 ui-md-12">
+                    <div class="__input-wrapper">
+                      <p-calendar (onClose)="onSave()" psDateOnly [style]="{'border': 'none','width':'100%'}"
+                        [inputStyle]="{'width':'100%', 'border':'1px dashed #ccc'}" formControlName="endDate"
+                        class="maxWidth" [(ngModel)]="endDate" dateFormat="dd/mm/yy" [showIcon]="false" class="maxWidth"
+                        placeholder=".../.../..." utc="true" [locale]="vi" showButtonBar="true">
+                      </p-calendar>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="ui-g-4 ui-lg-4 row_edit_task">
+                <div class="vs-form-control ui-g">
+                  <div class="__form-control-label ui-g-12 ui-md-12">Ngày hoàn thành</div>
+                  <div class="__form-control-inputs ui-g-12 ui-md-12">
+                    <div class="__input-wrapper">
+                      <p-calendar [disabled]="true" [style]="{'border': 'none','width':'100%'}"
+                        [inputStyle]="{'width':'100%', 'border':'1px dashed #ccc'}" formControlName="completedDate"
+                        class="maxWidth" [(ngModel)]="modelEdit.completedDate" dateFormat="dd/mm/yy" [showIcon]="false"
+                        class="maxWidth" placeholder=".../.../..." utc="true" [locale]="vi" showButtonBar="true">
+                      </p-calendar>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="ui-g-12 ui-lg-12">
+                <div class="vs-form-control ui-g">
+                  <div class="__form-control-label ui-g-12 ui-md-12">Mô tả</div>
+                  <div class="__form-control-inputs ui-g-12 ui-md-12">
+                    <div class="__input-wrapper">
+                      <textarea (blur)="onSave()" class="b-none" type="text" [(ngModel)]="modelEdit.description" rows="4" formControlName="description" placeholder="Mô tả"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+              <div class="ui-g-12 ui-lg-12 row_edit_task">
+                <div class="vs-form-control ui-g">
+                  <div class="__form-control-label ui-g-12 ui-md-12">Mô tả</div>
+                  <div class="__form-control-inputs ui-g-12 ui-md-12">
+                    <div class="__input-wrapper">
+                      <div *ngIf="!isEdit && modelEdit.detail" class="dt_content box_html_content"
+                        [innerHtml]="modelEdit.detail" (click)="isEdit=true"></div>
+                      <div *ngIf="!isEdit && !modelEdit.detail" class="dt_content" (click)="isEdit=true"
+                        style="color: #ccc;border: 1px dashed #ccc;">Nhập mô tả ...</div>
+                      <div class="dt_block" *ngIf="isEdit==true">
+                        <!-- (onSelectionChange)="onSave()" -->
+                        <p-editor autosize formControlName="detail" [(ngModel)]="modelEdit.detail"
+                          [style]="{'height':'100px'}"></p-editor>
+                        <div class="ui-g-12">
+                          <div class="btn_task">
+                            <button class="vs-btn vs-modal-btn vs-btn-action-edit" [disabled]="!formGroup.valid"
+                              (click)="onSave()" type="button">
+                              <span class="__icon fa fa-floppy-o"></span>
+                              <span class="__label">Lưu</span>
+                            </button>
+                            <button class="vs-btn" (click)="isEdit=false" type="button">
+                              <span class="__icon fa fa-times"></span>
+                              <span class="__label">Hủy</span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="ui-g-12 ui-lg-12 row_edit_task">
+                <div class="vs-form-control ui-g">
+                  <div class="__form-control-label ui-g-12 ui-md-12">File đính kèm</div>
+                  <div class="__form-control-inputs ui-g-12 ui-md-12">
+                    <div class="__input-wrapper">
+                      <app-multi-file-upload2 (onItemSelected)="onSave()" style="width: 100%;"
+                        formControlName="attachment" [(ngModel)]="modelEdit.attachment" [chooseLabel]="'Chọn ảnh'"
+                        [viewOnly]="false">
+                      </app-multi-file-upload2>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ui-g-12 ui-lg-12 row_edit_task">
+                <div class="activity">Hoạt động</div>
+                <div class="show_activity_block">
+                  <span class="show_activity">Hiển thị: </span>
+                  <a [ngClass]="{'active_activity': activityType == 1}" class="btn_activity"
+                    (click)="activityType = 1">Bình luận</a>
+                  <a [ngClass]="{'active_activity': activityType == 2}" class="btn_activity"
+                    (click)="activityType = 2">Lịch sử</a>
+                  <!-- <a [ngClass]="{'active_activity': activityType == 3}" class="btn_activity" id="history" (click)="activityType = 3">Lịch sử</a> -->
+                </div>
+                <div class="activity_content">
+                  <app-comment *ngIf="activityType == 1" [idTask]="modelEdit.id"></app-comment>
+                  <app-log-work *ngIf="activityType == 2" [idTask]="modelEdit.id" [idProject]="idProject"
+                    [myTask]="false"></app-log-work>
+                </div>
+              </div>
+            </div>
+            <!-- </p-fieldset> -->
+            <!-- </form> -->
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>

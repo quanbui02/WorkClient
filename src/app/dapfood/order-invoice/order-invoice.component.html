@@ -1,0 +1,371 @@
+<div class="vs-page-content app-order-client">
+    <div class="vs-page-content-header-area">
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-7 ui-lg-9 __page-title-wrapper">
+                <h1 class="__page-title">Quản lý đơn hàng xuất hóa đơn</h1>
+            </div>
+
+            <div class="ui-g-12 ui-md-5 ui-lg-3 __search-box-wrapper">
+                <div class="__search-box">
+                    <input type="search" placeholder="Nhập thông tin tìm kiếm" name="search" class="__input vs-input" (keyup.enter)="onSearch()" [(ngModel)]="searchModel.key">
+                    <span class="__toggle-search-adv" (click)="toggleSearch()">
+                        <span [hidden]="!openSearchAdv" class="fa fa-angle-double-down"></span>
+                        <span [hidden]="openSearchAdv" class="fa fa-angle-double-up "></span>
+                    </span>
+                    <span class="__search-btn" (click)="onSearch()">
+                        <i class="fa fa-search"></i>
+                    </span>
+                </div>
+
+            </div>
+        </div>
+        <div class="ui-g" [hidden]="!openSearchAdv">
+            <div class="ui-g-12 __search-filter-wrapper">
+                <p-calendar class="maxWidth" [(ngModel)]="searchModel.fromDate" dateFormat="dd/mm/yy" [showIcon]="true" class="maxWidth" placeholder="Từ ngày" utc="true" [locale]="vi">
+                </p-calendar>
+
+                <p-calendar class="maxWidth" [(ngModel)]="searchModel.toDate" dateFormat="dd/mm/yy" [showIcon]="true" class="maxWidth" placeholder="Đến ngày" utc="true" [locale]="vi">
+                </p-calendar>
+
+                <input type="search" placeholder="Nhập tên, sđt, tên, sđt khách hàng, mã ship vv... " name="search" class="__input vs-input" (keyup.enter)="onSearch()" [(ngModel)]="searchModel.ctv">
+
+                <p-dropdown [showClear]="true" placeholder="-- Tỉnh/thành phố --" appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" filter="true" [style]="{'width':'100%'}" [(ngModel)]="searchModel.idProvince" [options]="list_units" (onChange)="loadShops()">
+                </p-dropdown>
+
+                <p-dropdown [showClear]="true" placeholder="-- Cửa hàng --" appendTo="body" [emptyFilterMessage]="'Chọn tỉnh/thành phố để xem cửa hàng'" filter="true" [style]="{'width':'100%'}" [(ngModel)]="searchModel.idShop" [options]="list_shops" (onChange)="onSearch()">
+                </p-dropdown>
+
+                <p-dropdown [showClear]="true" placeholder="-- Loại thanh toán --" appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" filter="true" [style]="{'width':'100%'}" [(ngModel)]="searchModel.paymentChannel" [options]="paymentChannel_options">
+                </p-dropdown>
+
+                <p-dropdown [showClear]="true" placeholder="-- Loại đơn --" appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" filter="true" [style]="{'width':'100%'}" [(ngModel)]="searchModel.orderType" [options]="orderType_options" (onChange)="onSearch()">
+                </p-dropdown>
+
+                <p-dropdown [showClear]="true" placeholder="-- KOL --" appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" filter="true" [style]="{'width':'100%'}" [(ngModel)]="searchModel.idUserKol" [options]="kol_options">
+                </p-dropdown>
+
+                <p-dropdown [showClear]="true" placeholder="-- Loại --" appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" filter="true" [style]="{'width':'100%'}" [(ngModel)]="searchModel.isShip" [options]="orderTypeShip_options" (onChange)="onSearch()">
+                </p-dropdown>
+
+                <button class="vs-btn vs-modal-btn vs-btn-action-edit" type="button" (click)="onSearch()">
+                    <span class="__icon fa fa-search"></span>
+                    <span class="__label">Tìm kiếm</span>
+                </button>
+            </div>
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                    <p-selectButton [options]="list_status_invoice" [(ngModel)]="this.searchModel.invoiceType" (click)="onSearchType()"></p-selectButton>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="vs-page-content-body-area">
+        <div class="vs-data-table-area">
+            <div class="ui-g vs-data-table-area-inner">
+                <div class="ui-g-12 ui-lg-12 __main-table-area">
+                    <div class="ui-g __top-table-header">
+                    </div>
+
+                    <div class="ui-g __top-table-action">
+                        <div class="ui-g-6 __left-content">
+                            <!-- <button type="button" class="vs-btn vs-top-table-btn vs-btn-action-data" (click)="exportExcel()">
+                                <span class="__icon fa fa-download"></span>
+                                <span class="__label">Xuất danh sách</span>
+                            </button> -->
+                            <button type="button" class="vs-btn vs-top-table-btn vs-btn-action-data" (click)="SynInfoTemplate()">
+                                <span class="__icon fa fa-refresh"></span>
+                                <span class="__label">Đồng bộ mẫu hóa đơn</span>
+                            </button>
+                            <button type="button" class="vs-btn vs-top-table-btn vs-btn-action-data ml2" (click)="showCreateMultiInvoice()" [hidden]="isShowInvoice" [ngClass]="isMultiEdit ? 'enbale' : 'disable'">
+                                <span class="__icon fa fa-list"></span>
+                                <span class="__label">Tạo hóa đơn lẻ<span *ngIf="this.ids.length > 0">({{this.ids.length}})</span></span>
+                            </button>
+                            <button type="button" class="vs-btn vs-top-table-btn vs-btn-action-data ml2" (click)="showCreateMultiInvoiceGroup()" [hidden]="isShowInvoiceGroup" [ngClass]="isMultiEdit ? 'enbale' : 'disable'">
+                                <span class="__icon fa fa-list"></span>
+                                <span class="__label">Tạo hóa đơn gộp<span *ngIf="this.ids.length > 0">({{this.ids.length}})</span></span>
+                            </button>
+                        </div>
+                        <div class="ui-g-6 __right-content">
+                            <ul class="__action-tabs">
+                                <li #columnListContainer class="__tab-item-wrapper __toggle-column-wrapper">
+                                    <div class="__tab-item" (click)="toggleColumnList()">
+                                        <span class="__icon pi pi-th-large"></span>
+                                        <span class="__label">Chọn cột</span>
+                                    </div>
+                                    <div class="__column-list" [hidden]="!openColumnList">
+                                        <div *ngFor="let col of cols" class="__column-item">
+                                            <p-checkbox binary="true" [(ngModel)]="col.visible" name="groupname" label="{{col.header}}"></p-checkbox>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    <div class="ui-g vs-table-wrapper" id="table">
+                        <p-table #mainTable [frozenValue]="dataTotal" (onHeaderCheckboxToggle)="onCheckAll()" [columns]="cols" selectionMode="multiple" [rows]="limit" [scrollable]="true" scrollHeight="auto" [value]="dataSource" [(selection)]="selectedItems" [totalRecords]="total" class="vs-table responsive-table" [customSort]="true" (onSort)="onSort($event)" [paginator]="true" [loading]="isLoading" [lazy]="true" (onPage)="onPage($event)" [resizableColumns]="true" dataKey="id" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
+                            <ng-template pTemplate="colgroup" let-columns>
+                                <colgroup>
+                                    <col [style.width]="'40px'">
+                                    <col [style.width]="'40px'">
+                                    <ng-container *ngFor="let col of columns" [ngSwitch]="col.field">
+                                        <ng-container *ngSwitchDefault>
+                                            <col [hidden]="!col.visible" [style.width]="col.width" pResizableColumn [pSortableColumn]="col.sort ? col.field : ''">
+                                        </ng-container>
+                                    </ng-container>
+
+                                </colgroup>
+                            </ng-template>
+
+                            <ng-template pTemplate="frozenrows" let-rowData let-columns="columns">
+                                <tr style="background-color:lightskyblue">
+                                    <th></th>
+                                    <th></th>
+                                    <td class="ui-text-right" *ngFor="let col of columns" [hidden]="!col.visible">
+                                        <b>{{rowData[col.field] | mask :'separator':'.'}}</b>
+                                    </td>
+
+                                </tr>
+                            </ng-template>
+
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th>
+                                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                    </th>
+                                    <th class="align-center">STT</th>
+                                    <ng-container *ngFor="let col of columns;">
+                                        <th class="ui-resizable-column" [hidden]="!col.visible" pResizableColumn [pSortableColumn]="col.sort ? col.field : ''" class="ui-resizable-column">
+                                            {{col.header}}
+                                            <span *ngIf="col.sort">
+                                                <p-sortIcon [field]="col.field"></p-sortIcon>
+                                            </span>
+                                        </th>
+                                    </ng-container>
+
+                                </tr>
+                            </ng-template>
+
+                            <ng-template pTemplate="body" let-item let-columns="columns" let-rowIndex="rowIndex">
+                                <tr align="center" [pSelectableRow]="item">
+                                    <td class="vs-hidden-print">
+                                        <p-tableCheckbox [value]="item" [disabled]="false"></p-tableCheckbox>
+                                    </td>
+                                    <td>{{rowIndex + 1}}</td>
+                                    <ng-container *ngFor="let col of columns;let i = index;" [ngSwitch]="col.field">
+                                        <td class="ui-resizable-column" [hidden]="!col.visible" [class.align-left]="!col.align || col.align === 'left'" [class.align-center]="col.align === 'center'" [class.align-right]="col.align === 'right'">
+                                            <ng-container *ngSwitchCase="'code'">
+                                                <div *ngIf="item.code">{{item.code}}
+                                                    <div *ngIf="item.codeShip" class="mt5 ui-button-raised ui-button-danger ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                                                        <span class="ui-button-text ui-clickable p2x">{{item.codeShip}}</span>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="!item.code">
+                                                    {{item.id}}
+                                                </div>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'name'">
+                                                <b>{{item.name}}</b> - {{item.phone}}
+                                                <div style="margin-top:5px;"><b class="fa fa-map-marker"></b>
+                                                    {{item.fullAddress}}</div>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'listNameProduct'">
+                                                <span style="white-space: break-spaces;">{{item.listNameProduct}}</span>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'idInvoice'">
+                                                <a (click)="onClickDownloadPdf(item.idInvoice)">{{item.idInvoice}} </a>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'deliveryDate'">
+                                                <span *ngIf="item.deliveryDate" pTooltip="Cập nhật">{{item.deliveryDate
+                                                    | date :'HH:mm dd/MM/yyyy':'UTC'}}</span>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'createdDate'">
+                                                <span pTooltip="Cập nhật">{{item.createdDate| date :'HH:mm
+                                                    dd/MM/yyyy':'UTC'}}</span>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'updatedDate'">
+                                                <span pTooltip="Cập nhật">{{item.updatedDate| date :'HH:mm
+                                                    dd/MM/yyyy':'UTC'}}</span>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'completedDate'">
+                                                <span>{{item.completedDate | date :'HH:mm dd/MM/yyyy':'UTC'}}</span>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'total'">
+                                                {{item.total | mask :'separator':'.'}}
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'ship'">
+                                                {{item.ship | mask :'separator':'.'}}
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'totalBill'">
+                                                <div>Hàng: {{item.total | mask :'separator':'.'}}</div>
+                                                <div> +Ship: {{item.ship | mask :'separator':'.'}}</div>
+                                                <div *ngIf="item.discount" style="color:red ;"> -KM: {{item.discount |
+                                                    mask :'separator':'.'}}</div>
+                                                <div><b>Tổng</b> = {{item.totalBill | mask :'separator':'.'}}</div>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'totalReward'">
+                                                {{item.totalReward | mask :'separator':'.'}}
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'systemFee'">
+                                                {{item.systemFee | mask :'separator':'.'}}
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'phone'">
+                                                {{item.phone}}
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'paymentChannel'">
+                                                <span *ngIf="item.paymentChannel === 0">COD</span>
+                                                <span *ngIf="item.paymentChannel === 1">Ví Bapi</span>
+                                                <span *ngIf="item.paymentChannel >= 2">Online</span>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'isInvoice'">
+                                                <span *ngIf="!item.isInvoice">Xuất gộp</span>
+                                                <span *ngIf="item.isInvoice">Xuất lẻ</span>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'ctvName'">
+                                                {{item.ctvName}}
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'ctvPhone'">
+                                                <div class="image_name_user">
+                                                    <img src="{{getAvatar(item.avatar)}}" alt="">
+                                                    <div>
+                                                        <b class="name-emp">{{item.ctvName}}</b>
+                                                        <p class="phone-emp">{{item.ctvPhone}}</p>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'dayNumber'">
+                                                {{item.dayNumber}}
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'isPrepay'">
+                                                <span *ngIf="item.isPrepay == true" class="__icon fa fa-check" pTooltip="Đã thanh toán"></span>
+                                                <div *ngIf="item.paymentChannel >= 1 && item.isPaid == true" class="alepay-success">
+                                                    <span *ngIf="item.paymentChannel == 1">Bapi</span>
+                                                    <span *ngIf="item.paymentChannel == 2">Momo</span>
+                                                    <span *ngIf="item.paymentChannel == 3">Zalo</span>
+                                                    <span *ngIf="item.paymentChannel == 4">VnPay</span>
+                                                </div>
+
+                                                <div *ngIf="item.alepayCode">
+                                                    {{item.alepayCode}}
+                                                </div>
+                                            </ng-container>
+                                            <span class="ui-resizable-column" *ngSwitchDefault class="break-word">{{item[col.field]}}</span>
+                                        </td>
+                                    </ng-container>
+
+
+                                </tr>
+                            </ng-template>
+
+                            <ng-template pTemplate="paginatorleft" let-state>
+                                <div class="vs-table-paginator">
+                                    Hiển thị
+
+                                    <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" (onChange)="onChangeRowLimit()" [options]="listItemNumberPerPage" [(ngModel)]="limit">
+                                    </p-dropdown>
+                                    / trang
+                                    <span class="__total-record"> - Có {{total}} mục trong danh sách</span>
+                                </div>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="pagePrint">
+    <div *ngFor="let item of listOrdersPrint" class="pageBreak" style="page-break-after : always !important;">
+        <table style="width: 100%;border:0px;">
+            <tr>
+                <td style="width: 100px;text-align:center;">
+                    <img src="{{getImageAvatar(item.client.avatar)}}" width="80" height="80" class="">
+                </td>
+                <td style="vertical-align: top;">
+                    <div style="display: inline-block;vertical-align: top;">
+                        <div style="text-transform:uppercase;font-size: 15px;font-weight: bold;margin-bottom: 3px;">
+                            {{item.client.name}}</div>
+                        <div style="margin-bottom: 3px"><b>Địa chỉ:</b> {{item.client.name}}</div>
+                        <div style="margin-bottom: 3px"><b>Email:</b> {{item.client.email}} - <b>Số điện thoại:</b>
+                            {{item.client.phone}}</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center;padding-top:5px; padding-bottom:5px;">
+                    <div style="font-size: 16px;text-transform: uppercase;font-weight: bold;">Hóa đơn bán lẻ -
+                        {{item.code}}</div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div style="padding-top:2px; padding-bottom:3px;">Khách hàng: {{item.name}}</div>
+                    <div style="padding-top:2px; padding-bottom:3px;">Địa chỉ: {{item.addressFull}}</div>
+                    <div style="padding-top:2px; padding-bottom:3px;">Điện thoại: {{item.phone}}</div>
+                    <div style="padding-top:2px; padding-bottom:3px;">Người bán: {{item.userSell}} - {{item.createdDate
+                        | date :'HH:mm dd/MM/yyyy':'UTC'}}</div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <table style="width: 100%;border: 1px solid #000;border-collapse: collapse;border-spacing:1px;margin-top:10px;">
+                        <tr style="border: 1px solid black;">
+                            <td style="border: 1px solid black;padding: 5px;text-align: center;width: 40px;">
+                                <b>STT</b>
+                            </td>
+                            <td style="border: 1px solid black;padding: 5px;text-align: center;">
+                                <b>Tên sản phẩm</b>
+                            </td>
+                            <td style="border: 1px solid black;padding: 5px;text-align: center;">
+                                <b>CK</b>
+                            </td>
+                            <td style="border: 1px solid black;padding: 5px;text-align: center;">
+                                <b>Thành tiền</b>
+                            </td>
+                        </tr>
+                        <tbody *ngFor="let itemDetail of item.orderDetails;index as i">
+                            <tr style="border: 1px solid black;">
+                                <td style="border: 1px solid black;padding: 5px;text-align: center;" rowspan="2">
+                                    {{i+1}}
+                                </td>
+                                <td style="border: 1px solid black;padding: 5px;" colspan="3">
+                                    {{itemDetail.code}} - {{itemDetail.name}}
+                                </td>
+                            </tr>
+                            <tr style="border: 1px solid black;">
+                                <td style="border: 1px solid black;padding: 5px;">
+                                    <i>{{itemDetail.quantity}} x {{itemDetail.priceProduct | mask :'separator':','}}</i>
+                                </td>
+                                <td style="border: 1px solid black;padding: 5px;text-align: right;">
+                                    0
+                                </td>
+                                <td style="border: 1px solid black;padding: 5px;text-align: right;">
+                                    {{itemDetail.priceProduct | mask :'separator':','}}
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr style="border: 1px solid black;">
+                                <td colspan="4" style="border: 1px solid black;padding: 5px;text-align: right;">
+                                    <b>Tổng cộng: {{item.total | mask :'separator':','}} VND</b>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center;">
+                    Xin chân trọng cảm ơn quý khách !
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<app-create-invoice (closePopup)="onCloseForm()"></app-create-invoice>
+<!-- <app-order-history (closePopup)="onCloseForm($event)"></app-order-history> -->
+<!-- <app-orders-multi-action (closePopup)="onCloseFormIds($event)"></app-orders-multi-action>
+<app-orders-multi-ship (closePopup)="onCloseFormIds($event)"></app-orders-multi-ship>
+<app-orders-detail-ship (closePopup)="onCloseForm($event)"></app-orders-detail-ship> -->

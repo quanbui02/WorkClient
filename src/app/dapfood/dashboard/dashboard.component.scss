@@ -1,0 +1,189 @@
+.app-dashboard {
+    margin: 15px 10px;
+    .overview-box {
+        // background-image:url(/assets/images/graph-blue.svg) ;
+        // background-size: 100px 82px;
+        .overview-box-title {
+            span {
+                font-weight: 500;
+                font-size: 14px;
+                padding-left: 10px;
+            }
+        }
+    }
+}
+.userAction{font-weight: bold;color: #0082ec;}
+.app-dashboard2 {
+    // height: calc(100vh - 170px);
+    // display: flex;
+    flex-direction: column;
+    .vs-page-content-body-area {
+        flex: 1 1;
+        overflow: auto;
+    }
+    .vs-data-table-area,
+    .vs-data-table-area-inner,
+    .vs-data-table-area .__main-table-area {
+        height: 100%;
+    }
+    .vs-data-table-area .__main-table-area {
+        display: flex;
+        flex-direction: column;
+    }
+    p-table.vs-table {
+        &,
+        .ui-table,
+        .ui-table-scrollable-view {
+            height: 100%;
+        }
+        .ui-table {
+            display: flex;
+            flex-direction: column;
+        }
+        .ui-table-scrollable-wrapper {
+            flex: 1 1;
+            overflow: hidden;
+        }
+        .ui-table-scrollable-view {
+            display: flex;
+            flex-direction: column;
+        }
+        .ui-table-scrollable-body {
+            flex: 1 10;
+        }
+    }
+}
+ul.lstStatus li {
+    border-bottom: 1px solid #CCC;
+    border-right: 1px solid #CCC;
+    border-left: 1px solid #CCC;
+    padding: 6px 0px;
+    font-weight: bold;
+    list-style: none;
+}
+ul.lstStatus {
+    padding-left: 0px;
+}
+ul.lstStatus li span:nth-child(1) {
+    padding: 10px;
+    width: 35px;
+    color: red;
+    text-align: center;
+    border-radius: 50%;
+    font-size: 15px;
+}
+ul.lstStatus li span:nth-child(2) {
+    font-weight: bold;
+}
+ul.lstStatus li span:nth-child(3) {
+    padding: 10px;
+    color: white;
+    background: #e4a41b;
+    text-align: center;
+    border-radius:50%;
+    min-width: 40px;
+    float: right;
+    margin-right: 5px;
+}
+ul.lstStatusOrder li:hover {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+ul.lstStatusOrder li {
+    border-bottom: 1px solid #CCC;
+    border-right: 1px solid #CCC;
+    border-left: 1px solid #CCC;
+    border-top: 1px solid #CCC;
+    padding: 5px 0px;
+    list-style: none;
+    background: #fff;
+    margin-bottom: 5px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    -box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    display: table;
+    width: 100%;
+}
+ul.lstStatusOrder {
+    padding-left: 0px;
+    margin-bottom: -1px;
+    margin-top: -8px;
+}
+ul.lstStatusOrder li span:nth-child(1) {
+    padding: 5px;
+    color: red;
+    font-size: 13px;
+}
+
+ul.lstStatusOrder li span:nth-child(2) {
+    text-align: center;
+    float: right;
+    margin-right: 5px;
+}
+.show-status{
+    width: 100%;
+    display: block;
+    line-height: 15px;
+    padding: 5px 5px;
+    margin-bottom: 5px;
+}
+.show-status .status-name{
+    font-weight: bold;
+    color: #0082ec;
+}
+.show-status .status-name i{
+    color:#474747;
+    font-size: 11px;
+    font-weight: 100;
+    font-style: italic;
+}
+.show-status div:nth-child(1){
+    font-size: 12px;
+    float: left;
+    max-width: 70%;
+}
+.show-status div:nth-child(2){
+    font-size: 12px;
+    float: right;
+}
+.lstStatusOrder a {
+    background-image: linear-gradient(
+      to right,
+      #0406a5,
+      #1322aa 50%,
+      rgb(196, 16, 16) 50%
+    );
+    background-size: 200% 100%;
+    background-position: -100%;
+    display: inline-block;
+    padding: 2px 0;
+    position: relative;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: all 0.3s ease-in-out;
+  }
+  
+.lstStatusOrder a:before{
+    content: '';
+    background: #f84712;
+    display: block;
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .lstStatusOrder a:hover {
+   background-position: 0;
+  }
+  
+  .lstStatusOrder a:hover::before{
+    width: 100%;
+  }
+.ui-card-title{
+    font-size: 1.1em !important;
+}
+.order{
+    padding-left: 0px;
+    font-size: 13px;
+}

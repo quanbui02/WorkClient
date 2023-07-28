@@ -1,0 +1,737 @@
+<p-dialog #dialog [header]="modelEdit.id > 0 ? 'Đơn hàng #' + (modelEdit.code? modelEdit.code : modelEdit.id) + ' - ' + modelEdit.status: 'Tạo đơn mới:'" styleClass="vs-modal force-full-width" [maximizable]="true" positionTop="50" [(visible)]="isShow" [style]="{'max-width': '80%'}" [contentStyle]="{'max-height': getMaxDialogHeight()}" [modal]="true" appendTo="body">
+
+    <div class="vs-form-container default-control-label-width">
+        <div class="ui-g-7 ui-lg-7 vs-modal-content-panel">
+            <div class="ui-g row">
+                <form action="" [formGroup]="formGroup">
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Họ và tên</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper required" style="position: relative;">
+                                    <input type="text" [readonly]="isView" [(ngModel)]="modelEdit.name" formControlName="name" placeholder="Họ và tên" />
+                                    <div class="form-control-feedback" *ngIf="formGroup.controls['name'].hasError('required') && formGroup.controls['name'].touched">
+                                        Trường thông tin này là bắt buộc!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">SĐT</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper required " style="position: relative">
+                                    <input class="sdthover" type="text" [readonly]="isView" data-toggle="tooltip" title="Liên hệ khách hàng!" [(ngModel)]="modelEdit.phone" (click)="callOmiCall(modelEdit.phone)" formControlName="phone" placeholder="Số điện thoại" />
+
+                                    <div class="form-control-feedback" *ngIf="formGroup.controls['phone'].hasError('required') && formGroup.controls['phone'].touched">
+                                        Trường thông tin này là bắt buộc!</div>
+                                    <div class="form-control-feedback" *ngIf="formGroup.controls['phone'].hasError('pattern') && formGroup.controls['phone'].touched">
+                                        Số điện thoại không hợp lệ!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-3">
+                                Địa chỉ</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-3">
+                                <div class="__input-wrapper required" style="position: relative;">
+                                    <p-dropdown [disabled]="isView" [baseZIndex]="15000" formControlName="idProvince" [(ngModel)]="modelEdit.idProvince" [showClear]="true" filter="true" placeholder="-- Tỉnh/TP --" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="province_options" [style]="{'width':'100%', 'min-width':'0'}" appendTo="body" (onChange)="onLoadDistricts()"></p-dropdown>
+                                    <div class="form-control-feedback" *ngIf="formGroup.controls['idProvince'].hasError('required') && formGroup.controls['idProvince'].touched">
+                                        Trường thông tin này là bắt buộc!</div>
+                                </div>
+                            </div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-3">
+                                <div class="__input-wrapper required" style="position: relative;">
+                                    <p-dropdown [disabled]="isView" [baseZIndex]="15000" formControlName="idDistrict" [(ngModel)]="modelEdit.idDistrict" [showClear]="true" filter="true" placeholder="-- Quận/Huyện --" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="distric_options" [style]="{'width':'100%', 'min-width':'0'}" appendTo="body" (onChange)="onLoadWards()"></p-dropdown>
+                                    <div class="form-control-feedback" *ngIf="formGroup.controls['idDistrict'].hasError('required') && formGroup.controls['idDistrict'].touched">
+                                        Trường thông tin này là bắt buộc!</div>
+                                </div>
+                            </div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-3">
+                                <div class="__input-wrapper required" style="position: relative;">
+                                    <p-dropdown [disabled]="!(!modelEdit.codeShip && (modelEdit.idStatus === 1 || modelEdit.idStatus == 1000 || modelEdit.idStatus == 2 || modelEdit.idStatus == 20))" [baseZIndex]="15000" [(ngModel)]="modelEdit.idWard" formControlName="idWard" [showClear]="true" filter="true" placeholder="-- Xã/Phường --" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="ward_options" [style]="{'width':'100%', 'min-width':'0'}" appendTo="body"></p-dropdown>
+                                    <div class="form-control-feedback" *ngIf="formGroup.controls['idWard'].hasError('required') && formGroup.controls['idWard'].touched">
+                                        Trường thông tin này là bắt buộc!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Số nhà</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper required" style="position: relative;">
+                                    <input type="text" [readonly]="!(!modelEdit.codeShip && (modelEdit.idStatus === 1 || modelEdit.idStatus == 1000 || modelEdit.idStatus == 2 || modelEdit.idStatus == 20))" [(ngModel)]="modelEdit.address" formControlName="address" placeholder="Số nhà/đường/ngõ/nghách" />
+                                    <div class="form-control-feedback" *ngIf="formGroup.controls['address'].hasError('required') && formGroup.controls['address'].touched">
+                                        Trường thông tin này là bắt buộc!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Ghi chú giao hàng</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <textarea type="text" [readonly]="!(!modelEdit.codeShip && (modelEdit.idStatus === 1 || modelEdit.idStatus == 1000 || modelEdit.idStatus == 2 || modelEdit.idStatus == 20))" [(ngModel)]="modelEdit.note" rows="3" formControlName="note" placeholder="Ghi chú"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Thời gian giao hàng</div>
+                            <div class="ui-g-12 ui-md-8">
+                                <div class="__input-wrapper" style="margin-left: -8px; position: relative;">
+                                    <p-calendar formControlName="deliveryDate" [disabled]="!(!modelEdit.codeShip && (modelEdit.idStatus === 1 || modelEdit.idStatus == 1000 || modelEdit.idStatus == 2 || modelEdit.idStatus == 20))" [hourFormat]="24" [stepHour]="1" [baseZIndex]="15000" [showTime]="true" [showIcon]="true" placeholder="Thời gian nhận hàng" appendTo="body" [(ngModel)]="modelEdit.deliveryDate">
+                                    </p-calendar>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Thông tin đặt hàng</div>
+                            <div class="ui-g-12 ui-md-8">
+                                <div class="ui-g-6 ui-md-6">
+                                    <div class="__input-wrapper" style="margin-left: -8px; position: relative;">
+                                        <div>Người đặt: <b>{{modelEdit.nameCTV}}</b></div>
+                                        <div>SĐT: <i>{{modelEdit.phoneCTV}}</i></div>
+                                    </div>
+                                </div>
+                                <div class="ui-g-6 ui-md-6">
+                                    <div *ngIf="crrUser?.isOmiCall" class="ui-g-2" style="text-align: left;width: 150px;">
+                                        <button class="vs-btn vs-modal-btn vs-btn-action-edit" [disabled]="!formGroup.valid || dataSource.length === 0" (click)="callOmiCall(modelEdit.phoneCTV)" type="button">
+                                            <span class="__icon fa fa-volume-control-phone"></span>
+                                            <span class="__label">Gọi điện</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Thanh toán</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <p-radioButton name="isVerified" value="1" [(ngModel)]="paymentChannel" formControlName="paymentChannel" [disabled]="isView" (onClick)="changeOder()" label="Ví Điểm"></p-radioButton>
+                                    <p-radioButton name="isVerified" value="0" [(ngModel)]="paymentChannel" formControlName="paymentChannel" [disabled]="isView" (onClick)="changeOder()" label="Thanh toán khi nhận hàng" [style]="{'margin-left':'20px'}">
+                                    </p-radioButton>
+                                    <p-radioButton name="isVerified" value="2" [(ngModel)]="paymentChannel" formControlName="paymentChannel" [disabled]="isView" (onClick)="changeOder()" label="Ví Momo" [style]="{'margin-left':'20px'}">
+                                    </p-radioButton>
+                                    <p-radioButton name="isVerified" value="3" [(ngModel)]="paymentChannel" formControlName="paymentChannel" [disabled]="isView" (onClick)="changeOder()" label="Ví Zalo Pay" [style]="{'margin-left':'20px'}">
+                                    </p-radioButton>
+                                    <p-radioButton name="isVerified" value="4" [(ngModel)]="paymentChannel" formControlName="paymentChannel" [disabled]="isView" (onClick)="changeOder()" label="Ví VNPay" [style]="{'margin-left':'20px'}">
+                                    </p-radioButton>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 ui-lg-12" *ngIf="modelEdit.promotion && modelEdit.promotion.idPromotion">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Chương trình thưởng</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8" style="background: #eeeeee;">
+                                <div class="__input-wrapper">
+                                    {{modelEdit.promotion?.name}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Chương trình khuyến mãi</div>
+                            <div class="ui-g-12 ui-md-8" style="background: #eeeeee;padding: 5px 10px;">
+                                <div class="__input-wrapper" *ngIf="modelEdit.promotionUsers && modelEdit.promotionUsers.idPromotionUser">
+                                    {{modelEdit.promotionUsers?.name}}
+                                </div>
+                                <div class="__input-wrapper" *ngIf="modelEdit.promotionUserShip && modelEdit.promotionUserShip.idPromotionUserShip">
+                                    {{modelEdit.promotionUserShip?.name}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="ui-g row">
+                <div class="ui-g-12 ui-lg-12">
+                    <div class="ui-g" id="table">
+                        <p-table #mainTable [columns]="cols" selectionMode="multiple" [rows]="limit" [scrollable]="false" scrollHeight="auto" [value]="dataSource" [(selection)]="selectedItems" [totalRecords]="total" class="vs-table responsive-table" [customSort]="false" [loading]="isLoading" [lazy]="false" [resizableColumns]="true" dataKey="id" [style]="{'min-height': '200px'}">
+                            <ng-template pTemplate="colgroup" let-columns>
+                                <colgroup>
+                                    <ng-container *ngFor="let col of columns" [ngSwitch]="col.field">
+                                        <ng-container *ngSwitchDefault>
+                                            <col [hidden]="!col.visible" [style.width]="col.width">
+                                        </ng-container>
+                                    </ng-container>
+                                </colgroup>
+                            </ng-template>
+
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <ng-container *ngFor="let col of columns;">
+                                        <th class="ui-resizable-column" [hidden]="!col.visible"> {{col.header}}</th>
+                                    </ng-container>
+                                    <th *ngIf="!isView" class="align-center" style="width: 10%;"></th>
+                                </tr>
+                            </ng-template>
+
+                            <ng-template pTemplate="body" let-item let-columns="columns" let-rowIndex="rowIndex">
+                                <tr align="center">
+                                    <ng-container *ngFor="let col of columns;let i = index;" [ngSwitch]="col.field">
+                                        <td class="ui-resizable-column" [hidden]="!col.visible" [class.align-left]="!col.align || col.align === 'left'" [class.align-center]="col.align === 'center'" [class.align-right]="col.align === 'right'">
+
+                                            <ng-container *ngSwitchCase="'image'">
+                                                <vs-view-image [(file)]="item.image" [height]="'80'">
+                                                </vs-view-image>
+                                            </ng-container>
+
+                                            <ng-container *ngSwitchCase="'price'">
+                                                {{item.price | mask :'separator':'.'}}
+                                            </ng-container>
+
+                                            <ng-container *ngSwitchCase="'quantity'">
+                                                <input [readonly]="isView" type="number" min="1" step="1" (change)="changeOder()" [(ngModel)]="item.quantity" style="width: 100%" />
+                                            </ng-container>
+
+                                            <ng-container *ngSwitchCase="'totalBill'">
+                                                {{item.price * item.quantity | mask :'separator':'.'}}
+                                            </ng-container>
+
+                                            <ng-container *ngSwitchCase="'reward'">
+                                                <div *ngIf="!isView">
+                                                    {{item.reward * item.quantity | mask :'separator':'.'}}
+                                                </div>
+                                                <div *ngIf="isView">
+                                                    {{item.reward | mask :'separator':'.'}}
+                                                </div>
+                                            </ng-container>
+
+                                            <span *ngSwitchDefault class="break-word">{{item[col.field]}}</span>
+                                        </td>
+                                    </ng-container>
+                                    <td *ngIf="!isView" style="width: 10%;">
+                                        <button type="button" class="vs-btn icon-only vs-btn-red" (click)="onRemove(rowIndex)" pTooltip="Xoá">
+                                            <span class="__icon fa fa-trash"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="modelEdit.idStatus === 31 && item.rating">
+                                    <td class="ui-resizable-column">
+                                        <vs-view-image *ngIf="item.commentImages" [(file)]="item.commentImages" [height]="'80'">
+                                        </vs-view-image>
+                                    </td>
+                                    <td class="ui-resizable-column" *ngIf="item.rating">
+                                        <div><span *ngFor="let item of [].constructor(item.rating); let i = index"><i class="fa fa-star" style="color: #ffeb3b;font-size: 14px;"></i> </span></div>
+                                        <div>{{item.dateRating | date :'dd/MM/yyyy HH:mm' }}</div>
+                                    </td>
+                                    <td class="ui-resizable-column" colspan="5">
+                                        <blockquote> {{item.comment}} </blockquote>
+                                    </td>
+                                </tr>
+                            </ng-template>
+
+                            <ng-template pTemplate="footer">
+                                <tr align="right" style="line-height: 30px">
+                                    <th class="ui-resizable-column align-right" colspan="5">Tổng tiền hàng</th>
+                                    <th class="ui-resizable-column align-right" style="width: 10%;">
+                                        {{modelEdit.total | mask :'separator':'.'}}</th>
+                                    <th *ngIf="isVerified == 1" class="ui-resizable-column align-right" style="width: 10%;font-weight: normal;">
+                                        {{modelEdit.productReward + modelEdit.prepayReward | mask :'separator':'.'}}
+                                    </th>
+                                    <th *ngIf="isVerified == 0" class="ui-resizable-column align-right" style="width: 10%;font-weight: normal;">
+                                        {{modelEdit.productReward | mask :'separator':'.'}}</th>
+                                    <th class="ui-resizable-column align-right" style="width: 10%;" *ngIf="!isView">
+                                    </th>
+                                </tr>
+                                <tr align="right" style="line-height: 30px">
+                                    <th class="ui-resizable-column align-right" colspan="5" style="font-weight: normal;">Phí vận chuyển thu khách</th>
+                                    <th class="ui-resizable-column align-right" style="width: 10%;font-weight: normal;">
+                                        {{modelEdit.ship | mask :'separator':'.'}}</th>
+                                    <th class="ui-resizable-column align-right" style="width: 10%;"></th>
+                                    <th class="ui-resizable-column align-right" style="width: 10%;" *ngIf="!isView">
+                                    </th>
+                                </tr>
+                                <tr align="right" style="line-height: 30px">
+                                    <th class="ui-resizable-column align-right" colspan="5" style="font-weight: normal;">
+                                        Tổng hoa hồng
+                                    </th>
+                                    <th class="ui-resizable-column align-right" style="width: 10%;font-weight: normal;">
+                                        {{modelEdit.totalReward | mask :'separator':'.'}}</th>
+                                    <th class="ui-resizable-column align-right" style="width: 10%;"></th>
+                                    <th class="ui-resizable-column align-right" style="width: 10%;" *ngIf="!isView">
+                                    </th>
+                                </tr>
+                                <tr align="right" style="line-height: 30px">
+                                    <th class="ui-resizable-column align-right" colspan="5" style="font-weight: normal;">
+                                        Giảm giá
+                                    </th>
+                                    <th class="ui-resizable-column align-right" style="width: 10%;font-weight: normal;">
+                                        {{(modelEdit.discount + modelEdit.discountShip) | mask :'separator':'.'}}</th>
+                                    <th class="ui-resizable-column align-right" style="width: 10%;"></th>
+                                    <th class="ui-resizable-column align-right" style="width: 10%;" *ngIf="!isView">
+                                    </th>
+                                </tr>
+                                <tr align="right" style="line-height: 30px">
+                                    <th class="ui-resizable-column align-right" colspan="5">Tổng tiền thanh toán
+                                    </th>
+                                    <th class="ui-resizable-column align-right" style="width: 10%;">
+                                        {{modelEdit.totalBill | mask :'separator':'.'}}</th>
+                                    <th class="ui-resizable-column align-right" style="width: 10%;"></th>
+                                    <th class="ui-resizable-column align-right" style="width: 10%;" *ngIf="!isView">
+                                    </th>
+                                </tr>
+                            </ng-template>
+
+                        </p-table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui-g row" style="display: none;">
+                <div class="ui-g-12 ui-lg-12">
+                    <div style="margin-top: 20px;width: 100%;">
+                        <p-fieldset legend="Dịch vụ vận chuyển">
+
+
+                            <div class="ui-g-6 ui-lg-6">
+                                <div class="vs-form-control ui-g">
+                                    <div class="__form-control-label ui-g-12 ui-md-4">Phí dịch vụ</div>
+                                    <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                        <div class="__input-wrapper required" style="position: relative;">
+                                            <input type="text" [readonly]="isView" [(ngModel)]="modelEdit.shipRoot" mask="separator" thousandSeparator="." placeholder="" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ui-g-6 ui-lg-6">
+                                <div class="vs-form-control ui-g">
+                                    <button class="vs-btn vs-modal-btn vs-btn-action-edit" *ngIf="(modelEdit.idStatus == 1 || modelEdit.idStatus == 1000) && crrUser?.idClient > 0" (click)="GetShipFeeLogistics()" type="button">
+                                        <span class="__icon fa fa-search"></span>
+                                        <span class="__label">Tính phí vận chuyển</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </p-fieldset>
+                    </div>
+                </div>
+            </div>
+            <div class="ui-g row">
+                <div class="ui-g-12 ui-lg-12">
+                    <form action="" [formGroup]="formGroup">
+                        <div style="margin-top: 20px;width: 100%;">
+                            <p-fieldset legend="Thiết lập cửa hàng">
+                                <div class="ui-g row">
+                                    <div class="ui-g-6 ui-lg-6">
+                                        <div class="vs-form-control ui-g">
+                                            <div class="__form-control-label ui-g-12 ui-md-3">Vị trí cửa hàng</div>
+                                            <div class="__form-control-inputs ui-g-12 ui-md-9">
+                                                <div class="__input-wrapper" style="position: relative;">
+                                                    <p-dropdown [baseZIndex]="15000" [disabled]="!(!modelEdit.codeShip && (modelEdit.idStatus === 1 || modelEdit.idStatus == 1000))" [(ngModel)]="modelEdit.idShopDistrict" formControlName="idShopDistrict" [showClear]="true" filter="true" placeholder="-- Đổi vị trí --" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="distric_options" [style]="{'width':'100%', 'min-width':'0'}" appendTo="body" (onChange)="ChangeShopDistrict()"></p-dropdown>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ui-g-6 ui-lg-6">
+                                        <div class="vs-form-control ui-g">
+                                            <div class="__form-control-inputs ui-g-12 ui-md-9">
+                                                <div class="__input-wrapper" style="width: 100%;">
+                                                    <p-dropdown [baseZIndex]="15000" [disabled]="!(!modelEdit.codeShip && (modelEdit.idStatus === 1 || modelEdit.idStatus == 1000))" [(ngModel)]="modelEdit.idShopWard" formControlName="idShopWard" [showClear]="true" filter="true" placeholder="-- Đổi vị trí --" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="shopward_options" [style]="{'width':'100%', 'min-width':'0'}" appendTo="body" (onChange)="GetShops()"></p-dropdown>
+                                                </div>
+                                            </div>
+                                            <div class="__form-control-label ui-g-12 ui-md-3">
+                                                <button disabled="disabled" class="vs-btn vs-modal-btn vs-btn-action-edit" *ngIf="(modelEdit.idStatus == 1 || modelEdit.idStatus == 1000) && crrUser?.idClient > 0 && modelEdit.idShop > 0" (click)="GetShopChangeMap()" type="button">
+                                                    <span class="__icon fa fa-motorcycle"></span>
+                                                    <span class="__label">Tính khoảng cách</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ui-g-12 ui-lg-12">
+                                        <div class="vs-form-control ui-g">
+                                            <!-- <div class="__form-control-label ui-g-12 ui-md-3">Cửa hàng </div> -->
+                                            <div class="__form-control-inputs ui-g-12">
+                                                <div class="__input-wrapper width">
+                                                    <p-dropdown [baseZIndex]="15000" [(ngModel)]="modelEdit.idShop" [disabled]="!(!modelEdit.codeShip && (modelEdit.idStatus === 1 || modelEdit.idStatus == 1000))" [autoWidth]="false" formControlName="idShop" [showClear]="true" [filter]="true" placeholder="-- Cửa hàng --" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="listShops_option" [style]="{'width':'100%', 'min-width':'0'}" appendTo="body">
+                                                    </p-dropdown>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </p-fieldset>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class=" ui-g-5 ui-lg-5" style="margin-top: -15px;">
+            <div class="ui-g row">
+                <div class="ui-g-12 ui-lg-12">
+                    <form [formGroup]="formGroup" action="">
+                        <div>
+                            <p-fieldset legend="Trạng thái tác nghiệp">
+                                <div class="ui-g row">
+                                    <div class="ui-g-12 ui-lg-12">
+                                        <div class="vs-form-control ui-g">
+                                            <div class="__form-control-label ui-g-12 ui-md-3">
+                                                Tác nghiệp</div>
+                                            <div class="__form-control-inputs ui-g-12 ui-md-9">
+                                                <div class="__input-wrapper required" style="position: relative;">
+                                                    <p-dropdown [baseZIndex]="15000" formControlName="idAction" [(ngModel)]="modelUpdateAction.idAction" [showClear]="true" placeholder="-- Tác nghiệp --" filter="true" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="actions_options" [style]="{'width':'100%', 'min-width':'0'}" appendTo="body">
+                                                    </p-dropdown>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ui-g-12 ui-lg-12">
+                                        <div class="vs-form-control ui-g">
+                                            <div class="__form-control-label ui-g-12 ui-md-3">
+                                                Ghi chú</div>
+                                            <div class="__form-control-inputs ui-g-12 ui-md-9">
+                                                <div class="__input-wrapper" style="position: relative;">
+                                                    <textarea type="text" [(ngModel)]="modelUpdateAction.namePopup" rows="3" formControlName="namePopup" placeholder="Ghi chú tác nghiệp"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ui-g-12 ui-lg-12" style="text-align:right;">
+                                        <button class="vs-btn vs-modal-btn vs-btn-action-edit" [authorize]="{'dapfood.api': { ordersController: 8 }}" *ngIf="this.actions_options && this.actions_options.length > 0" (click)="UpdateActionOrder()" type="button">
+                                            <span class="__icon fa fa-floppy-o"></span>
+                                            <span class="__label">Cập nhật tác nghiệp</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="ui-g row" style="margin-top: 15px;">
+                                    <div class="ui-g-12 ui-lg-12" *ngIf="detailCall.length > 0">
+                                        <div class="ui-table">
+                                            <table>
+                                                <thead class="ui-table-thead">
+                                                    <tr style="background-color: #1ca7ff;">
+                                                        <th width="20%">Thời gian</th>
+                                                        <th width="20%"> Trạng thái</th>
+                                                        <th width="20%">Ghi chú</th>
+                                                        <th>Nội dung cuộc gọi</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="ui-table-tbody">
+                                                    <tr *ngFor="let item of detailCall">
+                                                        <td style="text-align: center;">
+                                                            {{item.startTime | date :'dd/MM/yyyy hh:mm:ss'}}
+                                                        </td>
+                                                        <td *ngIf="item && item.endCause" [ngSwitch]="item.endCause">
+                                                            <span *ngSwitchCase="'BUSY'">Máy bận</span>
+                                                            <span *ngSwitchCase="'NO_ANSWER'">Hết thời gian đổ
+                                                                chuông</span>
+                                                            <span *ngSwitchCase="'TRIAL_REJECTIO'">Chưa gọi vào số tổng
+                                                                đài</span>
+                                                            <span *ngSwitchCase="'LIMITATION_DECLINE'">Quá thời
+                                                                lượng</span>
+                                                            <span *ngSwitchCase="'ALLOTTED_TIMEOUT'">Cuộc gọi đạt giới
+                                                                hạn</span>
+                                                            <span *ngSwitchCase="'CANCEL'">Không thành công</span>
+                                                            <span *ngSwitchCase="'BYE'">Thành công</span>
+                                                        </td>
+                                                        <td>{{item.note}}
+                                                        </td>
+                                                        <td>
+                                                            <audio *ngIf="item.callTransactions?.recordingFile" style="width: 100%;" controls class="audio-call">
+                                                                <source src="{{item.callTransactions?.recordingFile}}">
+                                                            </audio>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ui-g row">
+                                    <p-accordion *ngIf="this.list_actions && this.list_actions.length > 0">
+                                        <p-accordionTab header="{{this.list_actions[0].userAction}} - {{this.list_actions[0].name}} - {{this.list_actions[0].createdDate | date :'HH:mm dd/MM/yyyy':'UTC'}}">
+                                            <div class="ui-table">
+                                                <table>
+                                                    <thead class="ui-table-thead">
+                                                        <tr style="background-color: #1ca7ff;">
+                                                            <th style="width: 30px;">
+                                                                STT</th>
+                                                            <th width="150px">
+                                                                Thành viên
+                                                            </th>
+                                                            <th>
+                                                                Tác nghiệp
+                                                            </th>
+                                                            <th> Nội dung
+                                                            </th>
+                                                            <!-- <th width="100px">
+                                                                Thời gian
+                                                            </th> -->
+                                                            <!-- <th width="40%"> Audio</th> -->
+                                                            <th width="50px" *ngIf="crrUser?.isOmiCall">
+                                                                tác vụ</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="ui-table-tbody" *ngFor="let item of list_actions;let i = index">
+                                                        <tr>
+                                                            <td style="text-align: center;">
+                                                                {{i+1}}</td>
+                                                            <td><span class="userAction">{{item.userAction}}</span>
+                                                            </td>
+                                                            <td>
+                                                                {{item.name}} <br>
+                                                                {{item.createdDate | date :'HH:mm dd/MM/yyyy':'UTC'}}
+                                                            </td>
+                                                            <td>
+                                                                <div class="break-word" style="line-height: 20px;white-space: break-spaces;">
+                                                                    {{item.note}}
+                                                                </div>
+                                                            </td>
+                                                            <!-- <td style="text-align: center;">
+                                                                {{item.createdDate | date :'HH:mm dd/MM/yyyy':'UTC'}}
+                                                            </td> -->
+
+                                                            <td align="center" *ngIf="crrUser?.isOmiCall">
+                                                                <a class="expand-row" *ngIf="!hideme[i]" (click)="showOmicallsLogOrderAction(i, item.id)">
+                                                                    <span class="fa fa-angle-double-down icon_action_order"></span>
+
+                                                                </a>
+                                                                <a class="expand-row" *ngIf="hideme[i]" (click)="hideme[i] = !hideme[i]">
+                                                                    <span class="fa fa-angle-double-up icon_action_order"></span>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr [hidden]="!hideme[i]" class="" *ngIf="crrUser?.isOmiCall">
+                                                            <td align="center">
+                                                            </td>
+                                                            <td colspan="4" class="p-0">
+                                                                <div class="ui-table">
+                                                                    <table>
+                                                                        <thead class="ui-table-thead">
+                                                                            <tr style="background-color: #1ca7ff;">
+                                                                                <th width="20%">Thời gian</th>
+                                                                                <th width="20%">Trạng thái</th>
+                                                                                <th>Nội dung cuộc gọi</th>
+                                                                                <th>Ghi chú</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody class="ui-table-tbody">
+                                                                            <tr *ngFor="let itemOmicallLog of omicallLogs[i]">
+                                                                                <td style="text-align: center;">
+                                                                                    {{itemOmicallLog.startTime | date :'dd/MM/yyyy hh:mm:ss'}}
+                                                                                </td>
+                                                                                <td *ngIf="itemOmicallLog && itemOmicallLog.endCause" [ngSwitch]="itemOmicallLog.endCause">
+                                                                                    <span *ngSwitchCase="'BUSY'">Máy bận</span>
+                                                                                    <span *ngSwitchCase="'NO_ANSWER'">Hết thời gian đổ chuông</span>
+                                                                                    <span *ngSwitchCase="'TRIAL_REJECTIO'">Số điện thoại chưa gọi vào số tổng đài</span>
+                                                                                    <span *ngSwitchCase="'LIMITATION_DECLINE'">Quá thời lượng cho phép gọi ra</span>
+                                                                                    <span *ngSwitchCase="'ALLOTTED_TIMEOUT'">Cuộc gọi đạt giới hạn thời lượng</span>
+                                                                                    <span *ngSwitchCase="'CANCEL'">Cuộc gọi không thành công</span>
+                                                                                    <span *ngSwitchCase="'BYE'">Cuộc gọi thành công</span>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <audio *ngIf="itemOmicallLog.callTransactions?.recordingFile" style="width: 100%;" controls class="audio-call">
+                                                                                        <source src="{{itemOmicallLog.callTransactions?.recordingFile}}">
+                                                                                    </audio>
+                                                                                </td>
+                                                                                <td>{{itemOmicallLog.note}}
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </p-accordionTab>
+                                    </p-accordion>
+                                </div>
+                            </p-fieldset>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="ui-g row">
+                <div class="ui-g-12 ui-lg-12">
+                    <form [formGroup]="formGroup" action="">
+                        <div style="margin-top: 20px;width: 100%;">
+                            <p-fieldset legend="Trạng thái đơn hàng">
+                                <div class="ui-g row">
+                                    <div class="ui-g-12 ui-lg-12">
+                                        <div class="vs-form-control ui-g">
+                                            <div class="__form-control-label ui-g-12 ui-md-3">
+                                                Trạng thái</div>
+                                            <div class="__form-control-inputs ui-g-12 ui-md-9">
+                                                <div class="__input-wrapper required" style="position: relative;">
+                                                    <p-dropdown [baseZIndex]="15000" formControlName="idStatus" [(ngModel)]="modelUpdateAction.idStatus" [showClear]="true" filter="true" placeholder="-- Trạng thái --" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="status_options" [style]="{'width':'100%', 'min-width':'0'}" appendTo="body">
+                                                    </p-dropdown>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ui-g-12 ui-lg-12">
+                                        <div class="vs-form-control ui-g">
+                                            <div class="__form-control-label ui-g-12 ui-md-3">
+                                                Ghi chú</div>
+                                            <div class="__form-control-inputs ui-g-12 ui-md-9">
+                                                <div class="__input-wrapper" style="position: relative;">
+                                                    <textarea type="text" [(ngModel)]="modelUpdateAction.notePopup" rows="3" formControlName="notePopup" placeholder="Ghi chú trạng thái"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ui-g-12 ui-lg-12" style="text-align:right;">
+                                        <button class="vs-btn vs-modal-btn vs-btn-action-edit" [authorize]="{'dapfood.api': { ordersController: 8 }}" *ngIf="this.status_options && this.status_options.length > 0" (click)="UpdateStatusOrder()" type="button">
+                                            <span class="__icon fa fa-floppy-o"></span>
+                                            <span class="__label">Cập nhật trạng thái</span>
+                                        </button>
+                                    </div>
+                                    <div class="ui-g-12 ui-lg-12">
+                                        <p-accordion *ngIf="this.list_status && this.list_status.length > 0">
+                                            <p-accordionTab [selected]="true" header="{{this.list_status[0].userAction}} - {{this.list_status[0].name}} - {{this.list_status[0].createdDate | date :'HH:mm dd/MM/yyyy':'UTC'}}">
+                                                <div class="ui-table">
+                                                    <table>
+                                                        <thead class="ui-table-thead">
+                                                            <tr style="background-color: #1ca7ff;">
+                                                                <th style="width: 30px;"> STT</th>
+                                                                <th width="150px">Thành viên</th>
+                                                                <th width="120px">Tác nghiệp</th>
+                                                                <th>Nội dung</th>
+                                                                <th width="100px">Thời gian</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="ui-table-tbody">
+                                                            <tr *ngFor="let item of list_status;let i = index">
+                                                                <td style="text-align: center;">
+                                                                    {{i+1}}
+                                                                </td>
+                                                                <td><span class="userAction">{{item.userAction}}</span>
+                                                                </td>
+                                                                <td>{{item.name}}
+                                                                </td>
+                                                                <td>
+                                                                    <div class="break-word" style="line-height: 20px;white-space: break-spaces;">
+                                                                        {{item.note}}
+                                                                    </div>
+                                                                </td>
+                                                                <td style="text-align: center;">{{item.createdDate | date :'HH:mm dd/MM/yyyy':'UTC'}}
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </p-accordionTab>
+                                        </p-accordion>
+                                    </div>
+                                </div>
+                            </p-fieldset>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="ui-g row">
+                <div class="ui-g row" style="margin-top: 15px;">
+                    <div class="ui-g-12 ui-lg-12" *ngIf="omicallOrderLogs.length > 0">
+                        <p-accordion>
+                            <p-accordionTab [selected]="true" header="Lịch sử chăm sóc khách hàng">
+                                <div class="ui-table">
+                                    <table>
+                                        <thead class="ui-table-thead">
+                                            <tr style="background-color: #1ca7ff;">
+                                                <th width="20%">Nhân viên</th>
+                                                <th width="25%">Trạng thái</th>
+                                                <th>Ghi chú</th>
+                                                <th width="25%">Nội dung cuộc gọi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="ui-table-tbody">
+                                            <tr *ngFor="let item of omicallOrderLogs">
+                                                <td style="text-align: center;">
+                                                    {{item.userSip?.name}}
+                                                    ({{item.sipNumber}})
+                                                </td>
+                                                <td *ngIf="item && item.endCause" [ngSwitch]="item.endCause">
+                                                    <span *ngSwitchCase="'BUSY'">Máy bận ({{item.startTime | date
+                                                        :'hh:mm:ss dd/MM/yyyy':'UTC'}})</span>
+                                                    <span *ngSwitchCase="'NO_ANSWER'">Hết thời gian đổ chuông
+                                                        ({{item.startTime
+                                                        | date :'hh:mm:ss dd/MM/yyyy':'UTC'}})</span>
+                                                    <span *ngSwitchCase="'TRIAL_REJECTIO'">Chưa gọi vào số tổng đài
+                                                        ({{item.startTime | date :'hh:mm:ss dd/MM/yyyy':'UTC'}})</span>
+                                                    <span *ngSwitchCase="'LIMITATION_DECLINE'">Quá thời lượng
+                                                        ({{item.startTime
+                                                        | date :'hh:mm:ss dd/MM/yyyy':'UTC'}})</span>
+                                                    <span *ngSwitchCase="'ALLOTTED_TIMEOUT'">Đạt giới hạn thời lượng
+                                                        ({{item.startTime | date :'hh:mm:ss dd/MM/yyyy':'UTC'}})</span>
+                                                    <span *ngSwitchCase="'CANCEL'">Không thành công ({{item.startTime |
+                                                        date
+                                                        :'hh:mm:ss dd/MM/yyyy':'UTC'}})</span>
+                                                    <span *ngSwitchCase="'BYE'">Thành công ({{item.startTime | date
+                                                        :'hh:mm:ss dd/MM/yyyy':'UTC'}})</span>
+                                                </td>
+                                                <td>{{item.note}}
+                                                </td>
+                                                <td>
+                                                    <audio *ngIf="item.callTransactions?.recordingFile" style="width: 100%;" controls class="audio-call">
+                                                        <source src="{{item.callTransactions?.recordingFile}}">
+                                                    </audio>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </p-accordionTab>
+                        </p-accordion>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p-footer>
+        <div class="ui-g row">
+            <div *ngIf="crrUser?.isOmiCall" class="ui-g-2" style="text-align: left;">
+                <button class="vs-btn vs-modal-btn vs-btn-action-edit" [disabled]="!formGroup.valid || dataSource.length === 0" (click)="callOmiCall(modelEdit.phoneCTV)" type="button">
+                    <span class="__icon fa fa-volume-control-phone"></span>
+                    <span class="__label">Gọi điện</span>
+                </button>
+            </div>
+            <div class="ui-g-12">
+                <p-progressSpinner *ngIf="isLoading" [style]="{width: '30px', height: '30px', margin:'-11px 8px'}" strokeWidth="8" fill="#EEEEEE" animationDuration=".5s">
+                </p-progressSpinner>
+                <span id="lstButton" *ngFor="let status of this.lstStatus">
+                    <span *ngIf="status.id == enumOrderStatus.HuyDon">
+                        <button class="vs-btn vs-modal-btn vs-btn-red" *ngIf="ShowButtonByStatus(modelEdit,status.id) && crrUser?.idClient > 0" (click)="Actions(status.id)" type="button">
+                            <span class="__icon fa fa-refresh"></span>
+                            <span class="__label">{{status.name}}</span>
+                        </button>
+                    </span>
+                    <span *ngIf="status.id != enumOrderStatus.HuyDon">
+                        <button class="vs-btn vs-modal-btn vs-btn-action-edit" *ngIf="ShowButtonByStatus(modelEdit,status.id) && crrUser?.idClient > 0" (click)="Actions(status.id)" type="button">
+                            <span class="__icon fa fa-refresh"></span>
+                            <span class="__label">{{status.name}}</span>
+                        </button>
+                    </span>
+                </span>
+                <button class="vs-btn vs-modal-btn vs-btn-action-edit vs-btn-green" [disabled]="!formGroup.valid || dataSource.length === 0" *ngIf="!modelEdit.codeShip && (modelEdit.idStatus === 1 || modelEdit.idStatus == 1000 || modelEdit.idStatus == 2 || modelEdit.idStatus == 20)" [authorize]="{'dapfood.api': { ordersController: 8 }}" (click)="onUpdateOrder()" type="button">
+                    <span class="__icon fa fa-floppy-o"></span>
+                    <span class="__label">Cập nhật</span>
+                </button>
+                <button type="button" (click)="closePopupMethod(null)" class="vs-btn vs-modal-btn vs-btn-action-back">
+                    <span class="__icon fa fa-times"></span>
+                    <span class="__label">Đóng</span>
+                </button>
+            </div>
+        </div>
+    </p-footer>
+</p-dialog>

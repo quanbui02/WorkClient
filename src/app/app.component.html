@@ -1,0 +1,43 @@
+<div *ngIf="pageLoaded" class="layout-wrapper vs-page-wrapper" (click)="_commonService.onLayoutClick()" [ngClass]="{'menu-layout-static': !isOverlay(),
+                'menu-layout-overlay': isOverlay(),
+                'layout-menu-overlay-active': overlayMenuActive,
+                'menu-layout-horizontal': isHorizontal(),
+                'menu-layout-slim': isSlim(),
+                'layout-menu-static-inactive': staticMenuDesktopInactive,
+                'layout-menu-static-desktop-active': !staticMenuDesktopInactive,
+                'layout-menu-static-active': staticMenuMobileActive}">
+
+    <app-topbar></app-topbar>
+    <!-- [style.display]="pageLoaded ? '' : 'none'" -->
+    <div class="layout-menu-container vs-left-menu-area" [ngClass]="{'layout-menu-dark':darkMenu}" (click)="onMenuClick($event)">
+        <p-scrollPanel class="menu-scroll-content-area" #layoutMenuScroller [style]="{width: '100%',height: '100%'}">
+            <div class="menu-scroll-content">
+                <app-inline-profile *ngIf="profileMode=='inline'&&!isHorizontal()"></app-inline-profile>
+                <app-menu [model]="appMenuModel" (onMouseOverPinnedMenu)="onMouseOverPinnedMenu()" (onMouseLeavePinnedMenu)="onMouseLeavePinnedMenu()" [showPinnedMenu]="showPinnedMenu" [reset]="resetMenu"></app-menu>
+            </div>
+        </p-scrollPanel>
+        <div class="search-area">
+            <p-autoComplete [(ngModel)]="searchMenuInput" [suggestions]="searchMenuResult" (completeMethod)="onSearchMenu($event)" [autoHighlight]="true" [placeholder]="'Tìm kiếm chức năng'" [delay]="200" [scrollHeight]="'400px'" class="search-input" [readonly]="!(appMenuModel && appMenuModel.length)" (onSelect)="onSelectMenuSuggestion($event)" (onBlur)="onBlurSearchMenuInput($event)" (onFocus)="onFocusSearchMenuInput($event)" field="label">
+                <ng-template let-item pTemplate="item">
+                    <div innerHTML="{{ item.label | highlight : searchMenuInput}}"></div>
+                </ng-template>
+            </p-autoComplete>
+            <button pButton type="button" icon="fa fa-search" class="search-btn">
+            </button>
+        </div>
+    </div>
+
+    <div class="layout-main vs-page-content-area">
+        <router-outlet></router-outlet>
+    </div>
+
+    <div class="layout-mask"></div>
+    <!--
+    <app-footer></app-footer> -->
+</div>
+
+<p-toast [position]="'bottom-right'" [autoZIndex]="true"></p-toast>
+
+<p-confirmDialog [autoZIndex]="true" appendTo="body"></p-confirmDialog>
+<app-change-password #changePassword></app-change-password>
+<app-profile #profile></app-profile>

@@ -1,0 +1,120 @@
+<!--  -->
+<div class="app-product-index">
+    <div class="vs-page-content-header-area">
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-7 ui-lg-9 __page-title-wrapper">
+                <h1 class="__page-title">Thiết lập địa chỉ</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="vs-page-content-body-area">
+        <div class="vs-data-table-area">
+            <div class="ui-g vs-data-table-area-inner">
+                <div class="ui-g-12 ui-lg-12 __main-table-area">
+
+                    <div class="vs-form-container default-control-label-width vs-modal-content-panel" style="background-color: #FFF; padding: 10px 0;">
+                        <form action="" [formGroup]="formGroup">
+                            <div class="vs-form-container default-control-label-width">
+                                <div class="ui-g row">
+                                    <!-- <div class="ui-g-3">
+                                            <div style="width: 150px;">
+                                                <vs-thumbnail [(ngModel)]="modelEdit.avatar" formControlName="avatar">
+                                                </vs-thumbnail>
+                                            </div>
+                                        </div> -->
+                                    <div class="ui-g-12">
+                                        <div class="ui-g-6 ui-lg-12">
+                                            <div class="vs-form-control ui-g">
+                                                <div class="__form-control-label ui-g-12 ui-md-4">Tên doanh nghiệp</div>
+                                                <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                                    <div class="__input-wrapper required">
+                                                        <input type="text" formControlName="name" [(ngModel)]="modelEdit.name" placeholder="Nhập tên doanh nghiệp" />
+                                                        <div class="form-control-feedback" *ngIf="formGroup.controls['name'].hasError('required') && formGroup.controls['name'].touched">
+                                                            Trường thông tin này là bắt buộc!</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="ui-g-12 ui-lg-12">
+                                            <div class="vs-form-control ui-g">
+                                                <div class="__form-control-label ui-g-12 ui-md-4">SĐT</div>
+                                                <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                                    <div class="__input-wrapper required" style="position: relative;">
+                                                        <input type="text" [(ngModel)]="modelEdit.phone" formControlName="phone" placeholder="Số điện thoại" />
+                                                        <div class="form-control-feedback" *ngIf="formGroup.controls['phone'].hasError('required') && formGroup.controls['phone'].touched">
+                                                            Trường thông tin này là bắt buộc!</div>
+                                                        <div class="form-control-feedback" *ngIf="formGroup.controls['phone'].hasError('pattern') && formGroup.controls['phone'].touched">
+                                                            Số điện thoại không hợp lệ!</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="ui-g-12 ui-lg-12">
+                                            <div class="vs-form-control ui-g">
+                                                <div class="__form-control-label ui-g-12 ui-md-3">
+                                                    Địa chỉ</div>
+                                                <div class="__form-control-inputs ui-g-12 ui-md-3">
+                                                    <div class="__input-wrapper required" style="position: relative;">
+                                                        <p-dropdown [baseZIndex]="15000" formControlName="idProvince" [(ngModel)]="modelEdit.idProvince" [showClear]="true" filter="true" placeholder="-- Tỉnh/TP --" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="province_options" [style]="{'width':'100%', 'min-width':'0'}"
+                                                            appendTo="body" (onChange)="onLoadDistricts()">
+                                                        </p-dropdown>
+                                                        <div class="form-control-feedback" *ngIf="formGroup.controls['idProvince'].hasError('required') && formGroup.controls['idProvince'].touched">
+                                                            Trường thông tin này là bắt buộc!</div>
+                                                    </div>
+                                                </div>
+                                                <div class="__form-control-inputs ui-g-12 ui-md-3">
+                                                    <div class="__input-wrapper required" style="position: relative;">
+                                                        <p-dropdown [baseZIndex]="15000" formControlName="idDistrict" [(ngModel)]="modelEdit.idDistrict" [showClear]="true" filter="true" placeholder="-- Quận/Huyện --" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="distric_options" [style]="{'width':'100%', 'min-width':'0'}"
+                                                            appendTo="body" (onChange)="onLoadWards()">
+                                                        </p-dropdown>
+                                                        <div class="form-control-feedback" *ngIf="formGroup.controls['idDistrict'].hasError('required') && formGroup.controls['idDistrict'].touched">
+                                                            Trường thông tin này là bắt buộc!</div>
+                                                    </div>
+                                                </div>
+                                                <div class="__form-control-inputs ui-g-12 ui-md-3">
+                                                    <div class="__input-wrapper required" style="position: relative;">
+                                                        <p-dropdown [baseZIndex]="15000" [(ngModel)]="modelEdit.idWard" formControlName="idWard" [showClear]="true" filter="true" placeholder="-- Xã/Phường --" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="ward_options" [style]="{'width':'100%', 'min-width':'0'}"
+                                                            appendTo="body"></p-dropdown>
+                                                        <div class="form-control-feedback" *ngIf="formGroup.controls['idWard'].hasError('required') && formGroup.controls['idWard'].touched">
+                                                            Trường thông tin này là bắt buộc!</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="ui-g-6 ui-lg-12">
+                                            <div class="vs-form-control ui-g">
+                                                <div class="__form-control-label ui-g-12 ui-md-4">Số nhà</div>
+                                                <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                                    <div class="__input-wrapper required">
+                                                        <input type="text" formControlName="address" [(ngModel)]="modelEdit.address" placeholder="Địa chỉ" />
+                                                        <div class="form-control-feedback" *ngIf="formGroup.controls['address'].hasError('required') && formGroup.controls['address'].touched">
+                                                            Trường thông tin này là bắt buộc!</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="ui-g row">
+                            <div class="ui-g-12 align-center">
+                                <p-progressSpinner *ngIf="isLoading" [style]="{width: '30px', height: '30px', margin:'-11px 8px'}" strokeWidth="8" fill="#EEEEEE" animationDuration=".5s">
+                                </p-progressSpinner>
+                                <button class="vs-btn vs-modal-btn vs-btn-action-edit" [disabled]="isLoading || !formGroup.valid" (click)="save()" type="button">
+                                    <span class="__icon fa fa-floppy-o"></span>
+                                    <span class="__label">Lưu lại</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

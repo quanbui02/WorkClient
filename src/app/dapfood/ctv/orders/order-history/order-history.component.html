@@ -1,0 +1,64 @@
+<p-dialog #dialog [header]="'Trạng thái đơn hàng: ' + item.idRef | translate" styleClass="vs-modal force-full-width" [(visible)]="isShow" positionTop="50" [style]="{'max-width': '1100px'}" [contentStyle]="{'max-height': getMaxDialogHeight()}" [modal]="true"
+    appendTo="body">
+    <div class="vs-form-container default-control-label-width vs-modal-content-panel">
+        <div class="vs-data-table-area">
+            <div class="ui-g vs-data-table-area-inner">
+                <div class="ui-g-12 ui-lg-12 __main-table-area">
+
+                    <div class="ui-g vs-table-wrapper" id="table">
+                        <p-table #mainTable [columns]="cols" [scrollable]="true" scrollHeight="auto" [value]="dataSource" class="vs-table responsive-table" [loading]="isLoading" [lazy]="false" [resizableColumns]="true">
+                            <ng-template pTemplate="colgroup" let-columns>
+                                <colgroup>
+                                    <ng-container *ngFor="let col of columns" [ngSwitch]="col.field">
+                                        <ng-container *ngSwitchDefault>
+                                            <col [hidden]="!col.visible" [style.width]="col.width">
+                                        </ng-container>
+                                    </ng-container>
+                                </colgroup>
+                            </ng-template>
+
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th class="align-center">STT</th>
+                                    <ng-container *ngFor="let col of columns;">
+                                        <th class="ui-resizable-column" [hidden]="!col.visible" pResizableColumn class="ui-resizable-column"> {{col.header}}</th>
+                                    </ng-container>
+                                </tr>
+                            </ng-template>
+
+                            <ng-template pTemplate="body" let-item let-columns="columns" let-rowIndex="rowIndex">
+                                <tr align="center" [pSelectableRow]="item" [pSelectableRowIndex]="rowIndex">
+                                    <td>{{rowIndex + 1}}</td>
+                                    <ng-container *ngFor="let col of columns;let i = index;" [ngSwitch]="col.field">
+                                        <td class="ui-resizable-column" [hidden]="!col.visible" [class.align-left]="!col.align || col.align === 'left'" [class.align-center]="col.align === 'center'" [class.align-right]="col.align === 'right'">
+                                            <ng-container *ngSwitchCase="'level'">
+                                                {{item.level | phantram}}
+                                            </ng-container>
+
+                                            <ng-container *ngSwitchCase="'createdDate'">
+                                                {{item.createdDate | date :'HH:mm dd/MM/yyyy':'UTC'}}
+                                            </ng-container>
+
+                                            <span *ngSwitchDefault class="break-word">{{item[col.field]}}</span>
+                                        </td>
+                                    </ng-container>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p-footer>
+        <div class="ui-g row">
+            <div class="ui-g-12">
+                <button type="button" (click)="closePopupMethod(null)" class="vs-btn vs-modal-btn vs-btn-action-back">
+                    <span class="__icon fa fa-times"></span>
+                    <span class="__label">Đóng</span>
+                </button>
+            </div>
+        </div>
+    </p-footer>
+</p-dialog>

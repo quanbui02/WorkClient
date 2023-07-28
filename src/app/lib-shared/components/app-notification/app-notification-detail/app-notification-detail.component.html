@@ -1,0 +1,56 @@
+<div class="modal-header ">
+    <h6 class="modal-title text-uppercase ">{{notificationItem.message.title}}</h6>
+    <button type="button " class="close " aria-label="Close " (click)="onReturn()">
+        <span aria-hidden="true ">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="box-notify">
+        <div>
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <label for="example-search-input">
+                        Người gửi
+                    </label>
+                </div>
+                <div class="col-md-12">
+                    <span></span>>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <label>Thời gian gửi</label>
+                </div>
+                <div class="col-md-12">
+
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <label>Ngày thi đến</label>
+                </div>
+                <div class="col-md-12">
+
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <label>Đính kèm</label>
+                </div>
+                <div class="col-md-12 mb10">
+                    <vs-single-file-upload [(ngModel)]="notificationItem.message.attachment"></vs-single-file-upload>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer pull-right ">
+    <button class="btn btn-primary" type="button">
+        Lưu
+    </button>
+    <button class="btn btn-default" type="button" aria-label="Close">
+        Thoát
+    </button>
+</div>

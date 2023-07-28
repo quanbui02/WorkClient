@@ -1,0 +1,287 @@
+<p-dialog #dialog [header]="'Thông tin ship đơn hàng: ' + shipCode" styleClass="vs-modal force-full-width" [(visible)]="isShow" [maximizable]="true" [closeOnEscape]="false" [focusOnShow]="true" positionTop="50" [style]="{'width': '90%','height': '90%','min-height':'500px'}" [contentStyle]="{'max-height': getMaxDialogHeight()}" [modal]="true" appendTo="body">
+    <div class="vs-form-container default-control-label-width vs-modal-content-panel">
+        <div class="ui-g row">
+            <div class="ui-g-12 ui-lg-12">
+                <div class="ui-g-8 ui-lg-8">
+                    <div class="vs-page-content-body-area">
+                        <div class="vs-data-table-area">
+                            <div class="ui-g vs-data-table-area-inner">
+                                <div class="__main-table-area">
+                                    <div class="ui-g __top-table-header">
+                                    </div>
+                                    <div class="ui-g vs-table-wrapper" id="tablePopup">
+                                        <p-table #mainTablePopup [columns]="cols" scrollHeight="auto" [value]="dataSource" dataKey="id" class="vs-table responsive-table" [lazy]="false">
+                                            <ng-template pTemplate="header" let-columns>
+                                                <tr>
+                                                    <th class="align-center" width="30px"></th>
+                                                    <ng-container *ngFor="let col of columns;">
+                                                        <th [hidden]="!col.visible" [width]="col.width"> {{col.header}}</th>
+                                                    </ng-container>
+                                                </tr>
+                                            </ng-template>
+
+                                            <ng-template pTemplate="body" let-item let-columns="columns" let-rowIndex="rowIndex" let-expanded="expanded">
+                                                <tr align="center" [pSelectableRow]="item" [pSelectableRowIndex]="rowIndex">
+                                                    <td>
+                                                        <a [pRowToggler]="item">
+                                                            <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
+                                                        </a>
+                                                    </td>
+                                                    <ng-container *ngFor="let col of columns;let i = index;" [ngSwitch]="col.field">
+                                                        <td class="ui-resizable-column" [hidden]="!col.visible" [class.align-left]="!col.align || col.align === 'left'" [class.align-center]="col.align === 'center'" [class.align-right]="col.align === 'right'">
+
+                                                            <ng-container *ngSwitchCase="'name'">
+                                                                <b>{{item.name}}</b>
+                                                                <div style="margin-top:5px;"><span class="fa fa-map-marker" style="font-size: 16px;"></span>
+                                                                    <span class="main-text"> {{item.fullAddress}}</span>
+                                                                </div>
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'createdDate'">
+                                                                <span>{{item.createdDate | date :'HH:mm dd/MM/yyyy':'UTC'}}</span>
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'completedDate'">
+                                                                <span>{{item.completedDate | date :'HH:mm dd/MM/yyyy':'UTC'}}</span>
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'total'">
+                                                                {{item.total | mask :'separator':'.'}}
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'ship'">
+                                                                {{item.ship | mask :'separator':'.'}}
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'discount'">
+                                                                <span style="color: red;">{{item.discount | mask :'separator':'.'}}</span>
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'totalBill'">
+                                                                <b>{{item.totalBill | mask :'separator':'.'}}</b>
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'paymentChannel'">
+                                                                <span *ngIf="item.paymentChannel === 0">COD</span>
+                                                                <span *ngIf="item.paymentChannel === 1">Ví Bapi</span>
+                                                                <span *ngIf="item.paymentChannel >= 2">Online</span>
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'isPrepay'">
+                                                                <span *ngIf="item.isPrepay == true" class="__icon fa fa-check" pTooltip="Đã thanh toán"></span>
+                                                                <div *ngIf="item.paymentChannel >= 1 && item.isPaid == true" class="alepay-success" [pTooltip]="item.alepayMessage">
+                                                                    <span *ngIf="item.paymentChannel == 1">Bapi</span>
+                                                                    <span *ngIf="item.paymentChannel == 2">Momo</span>
+                                                                    <span *ngIf="item.paymentChannel == 3">Zalo</span>
+                                                                    <span *ngIf="item.paymentChannel == 4">VnPay</span>
+                                                                </div>
+
+                                                                <div *ngIf="item.alepayCode">
+                                                                    {{item.alepayCode}}
+                                                                </div>
+                                                                <span *ngIf="item.paymentChannel >= 2 && item.isPaid == false" class="alepay-erorr" [pTooltip]="item.alepayMessage">(Pending)</span>
+                                                            </ng-container>
+                                                            <span class="ui-resizable-column" *ngSwitchDefault class="break-word">{{item[col.field]}}</span>
+                                                        </td>
+                                                    </ng-container>
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="rowexpansion" let-item let-columns="columns">
+                                                <tr>
+                                                    <td [attr.colspan]="columns.length + 1">
+                                                        <div class="ui-g ui-fluid" style="font-size:16px;padding:10px 0px;">
+                                                            <div class="ui-g-12 ui-md-3" style="text-align:center">
+                                                                <div>
+                                                                    <h2 style="margin-bottom: 10px;"><i class="fa fa-user"></i> {{item.ctvName}}</h2>
+                                                                </div>
+                                                                <div><i class="fa fa-phone"></i> {{item.ctvPhone}}</div>
+                                                            </div>
+                                                            <div class="ui-g-12 ui-md-9">
+                                                                <div class="ui-g">
+                                                                    <div class="ui-g-6">
+                                                                        <span style="white-space: pre;">{{item.listNameProduct}}</span>
+                                                                    </div>
+                                                                    <div class="ui-g-3">
+                                                                        <i class="fa fa-refresh"></i> <span class=" " [innerHTML]="GetStatus(item)" [pTooltip]="item.reason"></span>
+                                                                    </div>
+                                                                    <div class="ui-g-3">
+                                                                        <i class="fa fa-volume-control-phone"></i> <span class=" " [innerHTML]="GetActions(item)" [pTooltip]="item.reason"></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="footer">
+                                                <tr>
+                                                    <td colspan="6" style="text-align: center;"><b>Tổng</b></td>
+                                                    <td style="text-align: right;font-weight: bold;">{{this.totalMoneyProduct | mask :'separator':'.'}}</td>
+                                                    <td style="text-align: right;font-weight: bold;">{{this.totalMoneyShip | mask :'separator':'.'}}</td>
+                                                    <td style="text-align: right;font-weight: bold;color:red">{{this.totalDiscount | mask :'separator':'.'}}</td>
+                                                    <td style="text-align: right;font-weight: bold;">{{this.totalOrders | mask :'separator':'.'}}</td>
+                                                </tr>
+                                            </ng-template>
+                                        </p-table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g-4 ui-lg-4">
+                    <div class="vs-form-container default-control-label-width">
+                        <div class="lstPath" *ngIf="ordersShip" style="margin-bottom: 10px;">
+                            <ul>
+                                <li>
+                                    <div>
+                                        <span class="namehot"><span style="color: #7A8189;">Mã đơn hàng: </span><span style="color:red;">{{this.ordersShip._id}}</span></span>
+                                        <ul class="lstInfo">
+                                            <li>
+                                                Phí ship: <span class="moneyInfo">{{this.ordersShip.total_price | mask :'separator':'.'}}</span>
+                                            </li>
+                                            <li>
+                                                Tài khoản: <span class="moneyInfo">{{this.ordersShip.user_id}}</span>
+                                            </li>
+                                            <li>
+                                                Tài xế: <span class="moneyInfo">{{this.ordersShip.supplier_name}} - {{this.ordersShip.supplier_id}}</span>
+                                            </li>
+                                            <li>
+                                                Trạng thái: <span class="moneyInfo">{{this.ordersShip.status}} - {{getNameShipStatus(this.ordersShip.status)}}</span>
+                                            </li>
+                                            <li>
+                                                Link: <span class="moneyInfo"><a href="{{this.ordersShip.shared_link}}" target="_blank">{{this.ordersShip.shared_link}}</a></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <form action="" [formGroup]="formGroup">
+                            <div *ngIf="ordersShip">
+                                <div *ngIf="ordersShip.distance > 0">
+                                    <h4>Lộ trình <b style="color: #7e4040;font-weight: 600;font-size: 14px;">{{ordersShip.path.length - 1}}</b> điểm giao : <b style="color: #7e4040;font-weight: 600;font-size: 14px;">{{ordersShip.distance}} km</b></h4>
+                                </div>
+                                <div *ngIf="ordersShip.distance == 0">
+                                    <h4>Dịch vụ bị từ trối, hãy chọn lại đơn hàng. </h4>
+                                </div>
+                            </div>
+                            <div *ngIf="this.ordersShip && (this.ordersShip.status === 'CANCELLED' || this.ordersShip.status === 'ACCEPTED' || this.ordersShip.status === 'CONFIRMING' || this.ordersShip.status === 'IDLE' || this.ordersShip.status === 'PAYING')">
+                                <textarea row="8" type="textarea" [ngStyle]="{'width':'100%', 'min-width':'0','height': '75px'}" [(ngModel)]="modelEdit.noteCancel" formControlName="noteCancel" placeholder="Ghi chú hủy đơn"></textarea>
+                                <button class="vs-btn vs-modal-btn vs-btn-red" [authorize]="{'dapfood.api': { ahamoveController: 8 }}" (click)="CancelShip(shipCode)" type="button">
+                                    <span class="__icon fa fa-refresh"></span>
+                                    <span class="__label">Hủy đơn Shipper</span>
+                                </button>
+                            </div>
+                        </form>
+                        <div *ngIf="ordersShip">
+                            <div>
+                                <p-accordion>
+                                    <p-accordionTab header="{{ordersShip.service_id}}">
+                                        <span>{{ordersShip.service?.name}}</span>
+                                    </p-accordionTab>
+                                </p-accordion>
+                            </div>
+                            <div class="lstPath">
+                                <ul>
+                                    <li *ngFor="let item of ordersShip.path; let i = index" [attr.data-index]="i">
+                                        <div *ngIf="i === 0" class="hot-home">
+                                            <span class="namehot"><span class="fa fa-home" style="color:red"></span>{{item.name}} - {{item.mobile}}</span>
+                                            <ul class="lstInfo">
+                                                <li>
+                                                    {{item.address}}
+                                                </li>
+                                                <li *ngIf="item.cod >0">
+                                                    Thu hộ: <span class="moneyInfo">{{item.cod | mask :'separator':'.'}}</span>
+                                                </li>
+                                                <li *ngIf="item.tracking_number">
+                                                    Mã đơn: <span class="moneyInfo">{{item.tracking_number}}</span>
+                                                </li>
+                                                <li *ngIf="item.remarks && item.remarks != 'null'">
+                                                    Ghi chú: {{item.remarks}}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div *ngIf="i > 0">
+                                            <span class="namehot"><span class="fa fa-map-marker" style="color:green"></span>{{item.name}} - {{item.mobile}}</span>
+                                            <ul class="lstInfo">
+                                                <li>
+                                                    {{item.address}}
+                                                </li>
+                                                <li *ngIf="item.cod >0">
+                                                    Thu hộ: <span class="moneyInfo">{{item.cod | mask :'separator':'.'}}</span>
+                                                </li>
+                                                <li *ngIf="item.tracking_number">
+                                                    Mã đơn: <span class="moneyInfo">{{item.tracking_number}}</span>
+                                                </li>
+                                                <li *ngIf="item.remarks">
+                                                    Ghi chú: {{item.remarks}}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="lstPath" style="display: inline-block;width: 100%;">
+                                <div class="list-m">
+                                    <div>
+                                        Phí giao hàng
+                                    </div>
+                                    <div>
+                                        {{ordersShip.distance_price | mask :'separator':'.'}}
+                                    </div>
+                                </div>
+                                <div class="list-m">
+                                    <div>
+                                        Phí điểm dừng
+                                    </div>
+                                    <div>
+                                        {{ordersShip.stoppoint_price | mask :'separator':'.'}}
+                                    </div>
+                                </div>
+                                <div class="list-m">
+                                    <div>
+                                        Voucher
+                                    </div>
+                                    <div>
+                                        {{ordersShip.voucher_discount | mask :'separator':'.'}}
+                                    </div>
+                                </div>
+                                <div class="list-m">
+                                    <div class="line-h">
+                                        <span>Tổng thanh toán</span><br>
+                                        <i>(Đã bao gồm VAT)</i>
+                                    </div>
+                                    <div class="line-h">
+                                        <span>{{ordersShip.total_pay | mask :'separator':'.'}}</span>
+                                    </div>
+                                </div>
+                                <div class="list-m">
+                                    <div>
+                                        <b>Khác</b><br>
+                                        <i>COD</i>
+                                    </div>
+                                    <div>
+                                        <br>{{getTotalCOD() | mask :'separator':'.'}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="lstPath">
+                                <ul>
+                                    <li *ngFor="let item of ordersShip.items; let i = index" [attr.data-index]="i">
+                                        <div>
+                                            {{item.name}} x {{item.number}}
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p-footer>
+        <div class="ui-g row">
+            <div class="ui-g-12">
+                <button type="button" (click)="closePopupMethod(null)" class="vs-btn vs-modal-btn vs-btn-action-back">
+                    <span class="__icon fa fa-times"></span>
+                    <span class="__label">Đóng</span>
+                </button>
+            </div>
+        </div>
+    </p-footer>
+</p-dialog>

@@ -1,0 +1,15 @@
+.countUnapproved {
+    background-color: #e65025;
+    font-weight: bold;
+    position: absolute;
+    top: 0;
+    right: -5px;
+    color: #ffffff;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    padding: 2px 4px;
+    display: block;
+    font-size: 12px;
+    line-height: 12px;
+}

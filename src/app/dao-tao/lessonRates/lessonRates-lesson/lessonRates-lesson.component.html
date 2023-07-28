@@ -1,0 +1,64 @@
+<p-dialog #dialog [header]="'Đánh giá của bài giảng'" styleClass="vs-modal force-full-width" positionTop="50"
+  [(visible)]="isShow" [style]="{'max-width': '80%'}" [contentStyle]="{'max-height': getMaxDialogHeight()}"
+  [modal]="true" appendTo="body">
+  <div class="vs-form-container default-control-label-width vs-modal-content-panel app-foods-edit">
+
+    <div class="vs-data-table-area">
+      <div class="ui-g vs-table-wrapper" id="table" style="height: calc(100vh - 260px)">
+        <p-table #mainTable selectionMode=" multiple" [rows]="limit" [scrollable]="true" scrollHeight="auto"
+          [value]="dataSource" [totalRecords]="total" class="vs-table responsive-table" [customSort]="true"
+          [paginator]="true" [loading]="isLoading" [lazy]="true" (onPage)="onPage($event)" [resizableColumns]="true"
+          dataKey="id">
+          <ng-template pTemplate="body" let-item let-columns="columns" let-rowIndex="rowIndex">
+            <div class="lesson_comment_block">
+              <img src="{{getImageAvatar(item.userRating.avatar)}}" alt="" class="lesson_comment_avatar">
+              <div class="rating_comment_content">
+                <h3 class="comment_name">{{item.userRating.name}}</h3>
+                <div class="comment_rating">
+                  <span *ngIf="item.rating >= 1"><i class="__icon fa fa-star"></i></span>
+                  <span *ngIf="item.rating < 1"><i class="__icon fa fa-star-o"></i></span>
+                  <span *ngIf="item.rating >= 2"><i class="__icon fa fa-star"></i></span>
+                  <span *ngIf="item.rating < 2"><i class="__icon fa fa-star-o"></i></span>
+                  <span *ngIf="item.rating >= 3"><i class="__icon fa fa-star"></i></span>
+                  <span *ngIf="item.rating < 3"><i class="__icon fa fa-star-o"></i></span>
+                  <span *ngIf="item.rating >= 4"><i class="__icon fa fa-star"></i></span>
+                  <span *ngIf="item.rating < 4"><i class="__icon fa fa-star-o"></i></span>
+                  <span *ngIf="item.rating >= 5"><i class="__icon fa fa-star"></i></span>
+                  <span *ngIf="item.rating < 5"><i class="__icon fa fa-star-o"></i></span>
+                  <span class="comment_time">{{item.createdDate | date :'HH:mm dd/MM/yyyy':'UTC'}}</span>
+                </div>
+                <div class="comment_content">
+                  {{item.comment}}
+                </div>
+              </div>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="paginatorleft" let-state>
+            <div class="vs-table-paginator">Hiển thị
+              <p-dropdown [emptyFilterMessage]="'Không tìm thấy kết quả'" (onChange)="onChangeRowLimit()"
+                [options]="listItemNumberPerPage" [(ngModel)]="limit">
+              </p-dropdown>
+              / trang
+              <span class="__total-record"> - Có {{total}} mục trong danh sách</span>
+            </div>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+    <!-- <p-paginator [rows]="limit" [totalRecords]="total" [rowsPerPageOptions]="listItemNumberPerPage" (onPageChange)="onChangeRowLimit($event)"></p-paginator> -->
+  </div>
+  <p-footer>
+    <div class="ui-g row">
+      <div class="ui-g-12">
+        <!-- <button class="vs-btn vs-modal-btn vs-btn-action-edit" [disabled]="!formGroup.valid" (click)="save()" type="button">
+          <span class="__icon fa fa-floppy-o"></span>
+          <span class="__label">Lưu</span>
+        </button> -->
+        <button type="button" (click)="closePopupMethod(null)" class="vs-btn vs-modal-btn vs-btn-action-back">
+          <span class="__icon fa fa-times"></span>
+          <span class="__label">Đóng</span>
+        </button>
+      </div>
+    </div>
+  </p-footer>
+</p-dialog>

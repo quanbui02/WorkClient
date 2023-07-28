@@ -1,0 +1,203 @@
+<div class="app-admin-phe-duyet-product">
+    <div class="vs-page-content-header-area">
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-7 ui-lg-9 __page-title-wrapper">
+                <h1 class="__page-title">Phê duyệt sản phẩm</h1>
+            </div>
+
+            <div class="ui-g-12 ui-md-5 ui-lg-3 __search-box-wrapper">
+                <div class="__search-box">
+                    <input type="search" placeholder="Nhập từ khóa" name="search" class="__input vs-input" (keyup.enter)="onSearch()" [(ngModel)]="searchModel.key">
+
+                    <span class="__toggle-search-adv" (click)="toggleSearch()">
+                        <span [hidden]="openSearchAdv" class="fa fa-angle-double-down"></span>
+                    <span [hidden]="!openSearchAdv" class="fa fa-angle-double-up "></span>
+                    </span>
+
+                    <span class="__search-btn" (click)="onSearch()">
+                        <i class="fa fa-search"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui-g" [hidden]="openSearchAdv">
+            <div class="ui-g-12 __search-filter-wrapper">
+                <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" filter="true" [style]="{'width':'100%'}" [(ngModel)]="searchModel.idClient" [options]="clients_options" (onChange)="onSearch()">
+                </p-dropdown>
+                <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" filter="true" [style]="{'width':'100%'}" [(ngModel)]="searchModel.idCategory" [options]="categories_options">
+                </p-dropdown>
+
+                <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" filter="true" [style]="{'width':'100%'}" [(ngModel)]="searchModel.adminApprove" [options]="trangThai_options">
+                </p-dropdown>
+
+                <button class="vs-btn vs-modal-btn vs-btn-action-edit" type="button" (click)="onSearch()">
+                    <span class="__icon fa fa-search"></span>
+                    <span class="__label">Tìm kiếm</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="vs-page-content-body-area">
+        <div class="vs-data-table-area">
+            <div class="ui-g vs-data-table-area-inner">
+                <div class="ui-g-12 ui-lg-12 __main-table-area">
+
+                    <div class="ui-g __top-table-action">
+                        <div class="ui-g-10 __left-content">
+                            <button type="button" class="vs-btn vs-top-table-btn vs-btn-action-data" (click)="exportExcel()">
+                                <span class="__icon fa fa-download"></span>
+                                <span class="__label">Xuất danh sách</span>
+                            </button>
+
+                            <button type="button" class="vs-btn vs-top-table-btn vs-btn-action-print" [hidden]="!isMultiEdit">
+                                <span class="__icon fa fa-print"></span>
+                                <span class="__label">In danh sách</span>
+                            </button>
+
+                        </div>
+                    </div>
+
+                    <div class="ui-g vs-table-wrapper" id="table">
+                        <p-table #mainTable [columns]="cols" selectionMode="multiple" [rows]="limit" [scrollable]="true" scrollHeight="auto" [value]="dataSource" [(selection)]="selectedItems" [totalRecords]="total" class="vs-table responsive-table" [customSort]="false" (onSort)="onSort($event)"
+                            [paginator]="true" [loading]="isLoading" [lazy]="true" (onPage)="onPage($event)" [resizableColumns]="true" dataKey="id">
+                            <ng-template pTemplate="colgroup" let-columns>
+                                <colgroup>
+                                    <col [style.width]="'40px'">
+                                    <ng-container *ngFor="let col of columns" [ngSwitch]="col.field">
+                                        <ng-container *ngSwitchDefault>
+                                            <col [hidden]="!col.visible" [style.width]="col.width" pResizableColumn [pSortableColumn]="col.sort ? col.field : ''">
+                                        </ng-container>
+                                    </ng-container>
+                                    <col [style.width]="'80px'">
+                                    <col [style.width]="'80px'">
+                                    <col [style.width]="'150px'">
+                                </colgroup>
+                            </ng-template>
+                            <ng-template pTemplate="frozenrows" let-rowData let-columns="columns">
+                                <tr style="background-color:lightskyblue">
+                                    <th></th>
+                                    <td class="ui-text-right" *ngFor="let col of columns" [hidden]="!col.visible">
+                                        <b>{{rowData[col.field] | mask :'separator':'.'}}</b>
+                                    </td>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th class="align-center">STT</th>
+                                    <ng-container *ngFor="let col of columns;">
+                                        <th class="ui-resizable-column" [hidden]="!col.visible" pResizableColumn [pSortableColumn]="col.sort ? col.field : ''" class="ui-resizable-column">
+                                            {{col.header}}
+                                            <span *ngIf="col.sort">
+                                                    <p-sortIcon [field]="col.field"></p-sortIcon>
+                                                </span>
+                                        </th>
+                                    </ng-container>
+                                    <th class="align-center">Thao tác</th>
+                                    <th class="align-center">Thao tác</th>
+                                    <th class="align-center">Bài đăng</th>
+                                </tr>
+                            </ng-template>
+
+
+                            <ng-template pTemplate="body" let-item let-columns="columns" let-rowIndex="rowIndex">
+                                <tr align="center">
+                                    <!-- <td class="vs-hidden-print">
+                                        <label class="vs-custom-checkbox">
+                                            <input class="__checkbox" type="checkbox" [(ngModel)]="item.checked"
+                                                [disabled]="true">
+                                            <span class="__mark"></span>
+                                        </label>
+                                    </td> -->
+
+                                    <td>{{rowIndex + 1}}</td>
+
+                                    <ng-container *ngFor="let col of columns;let i = index;" [ngSwitch]="col.type">
+                                        <td class="ui-resizable-column" [hidden]="!col.visible" [class.align-left]="!col.align || col.align === 'left'" [class.align-center]="col.align === 'center'" [class.align-right]="col.align === 'right'">
+                                            <ng-container *ngSwitchCase="'separator'">
+                                                {{item[col.field] | mask :'separator':'.'}}
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'%'">
+                                                {{item[col.field] | phantram}}
+                                            </ng-container>
+                                            <!-- <ng-container *ngSwitchCase="'clientName'">
+                                                {{item.idClientNavigation?.name}}
+                                            </ng-container> -->
+                                            <ng-container *ngSwitchCase="'name'">
+                                                <a (click)="onEdit(item)">{{item.name}}</a>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'rate'">
+                                                <button type="button" class="vs-btn icon-only vs-btn-action-restore rate" (click)="onRate(item)" pTooltip="Thiết lập">
+                                                    <span class="__icon fa fa-edit"></span>
+                                                </button>
+                                                <a (click)="onRate(item)" class="rate-labe">{{item.rate}}</a>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'rank'">
+                                                <button type="button" class="vs-btn icon-only vs-btn-action-restore rate" (click)="onRate(item)" pTooltip="Thiết lập">
+                                                    <span class="__icon fa fa-edit"></span>
+                                                </button>
+                                                <a (click)="onRate(item)" class="rate-labe">{{item.rank}}</a>
+                                            </ng-container>
+                                            <span *ngSwitchDefault class="break-word">
+                                                <ng-container *ngIf="(col.field==='image'); else elseNotDone">
+                                                    <vs-view-image [(file)]="item[col.field]" [height]="'80'">
+                                                    </vs-view-image>
+                                                </ng-container>
+                                                <ng-template #elseNotDone>
+                                                    {{item[col.field]}}
+                                                </ng-template>
+                                            </span>
+                                        </td>
+                                    </ng-container>
+                                    <td class="vs-hidden-print">
+                                        <button type="button" class="vs-btn icon-only vs-btn-action-edit" style="position: relative;" (click)="onContent(item)" pTooltip="Nội dung" tooltipPosition="left">
+                                            <span class="__icon fa fa-book"></span>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <span class="don-thanhcong" *ngIf="item.isAdminApprove">Đã duyệt</span>
+                                        <span class="don-danggiao" *ngIf="item.statusApprove == 1">Chờ duyệt</span>
+                                        <span class="don-nguyhiem" *ngIf="item.statusApprove == 3" [pTooltip]="item.messageApprove">Không duyệt</span>
+                                    </td>
+                                    <td>
+                                        <button *ngIf="item.statusApprove != 2" type="button" class="vs-btn vs-btn-icon-green" [authorize]="{'dapfood.api': { productsController: 0 }}" (click)="onAdminApprove(item,2)" pTooltip="Cấu hình sản phẩm">
+                                            <span class="__icon fa fa-check"></span> Duyệt
+                                        </button>
+
+                                        <button *ngIf="item.statusApprove != 3" type="button" class="vs-btn vs-btn-icon-red" [authorize]="{'dapfood.api': { productsController: 0 }}" (click)="onAdminApprove(item,3)" pTooltip="Cấu hình sản phẩm">
+                                            <span class="__icon fa fa-times"></span> Không duyệt
+                                        </button>
+                                        <!-- <p-inputSwitch [(ngModel)]="item.isAdminApprove" (onChange)="onAdminApprove(item,$event)" pTooltip="Phê duyệt">
+                                        </p-inputSwitch> -->
+                                        <!-- <p-checkbox [(ngModel)]="item.isAdminApprove" (onChange)="onAdminApprove(item,$event)" binary="true" pTooltip="Phê duyệt">
+                                        </p-checkbox> -->
+                                    </td>
+                                </tr>
+                            </ng-template>
+
+                            <ng-template pTemplate="paginatorleft" let-state>
+                                <div class="vs-table-paginator">
+                                    Hiển thị
+
+                                    <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" (onChange)="onChangeRowLimit()" [options]="listItemNumberPerPage" [(ngModel)]="limit">
+                                    </p-dropdown>
+                                    / trang
+                                    <span class="__total-record"> - Có {{total}} mục trong danh sách</span>
+                                </div>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-admin-approve-comment (closePopup)="onCloseForm({})" [isView]="true"></app-admin-approve-comment>
+<app-admin-approve-product-rate (closePopup)="onCloseForm({})" [isView]="true"></app-admin-approve-product-rate>
+<app-admin-product-edit (closePopup)="onCloseForm({})" [isView]="true"></app-admin-product-edit>
+<app-content-view (closePopup)="onCloseForm({})"></app-content-view>

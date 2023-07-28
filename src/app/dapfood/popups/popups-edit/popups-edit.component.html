@@ -1,0 +1,112 @@
+﻿<p-dialog #dialog header="Thêm/Sửa thông báo" styleClass="vs-modal force-full-width" positionTop="50" [(visible)]="isShow" [style]="{'max-width': '1100px'}" [contentStyle]="{'max-height': getMaxDialogHeight()}" [modal]="true" appendTo="body">
+    <div class="vs-form-container default-control-label-width vs-modal-content-panel app-popups-edit">
+
+        <div class="vs-form-container default-control-label-width">
+            <div class="ui-g row">
+                <form action="" [formGroup]="formGroup">
+
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-3">Loại</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-3">
+                                <div class="__input-wrapper" style="position: relative;">
+                                    <p-dropdown [baseZIndex]="15000" formControlName="type" [(ngModel)]="modelEdit.type" [showClear]="true" filter="true" placeholder="-- Loại --" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="type_options" [style]="{'width':'100%', 'min-width':'0'}"
+                                        appendTo="body"></p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Name</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <input type="text" [(ngModel)]="modelEdit.name" formControlName="name" placeholder="Name" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Ảnh</div>
+                            <div class="__input-wrapper">
+                                <vs-single-fsfile-upload [chooseLabel]="'Chọn ảnh'" formControlName="image" [(ngModel)]="modelEdit.image"></vs-single-fsfile-upload>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">ObjectId</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <input type="text" [(ngModel)]="modelEdit.objectId" formControlName="objectId" placeholder="ObjectId" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 ui-lg-6">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Từ ngày</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <p-calendar formControlName="startDate" [baseZIndex]="15000" [showIcon]="true" psDateOnly placeholder="dd/mm/yyyy" dateFormat="dd/mm/yy" appendTo="body" [(ngModel)]="modelEdit.startDate">
+                                    </p-calendar>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 ui-lg-6">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Đến ngày</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <p-calendar class="maxWidth" [(ngModel)]="modelEdit.endDate" formControlName="endDate" dateFormat="dd/mm/yy" [showIcon]="true" class="maxWidth" psDateOnly placeholder="Đến ngày" utc="true" psDateOnly [locale]="vi">
+                                    </p-calendar>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-6 ui-lg-6">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Sort</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <input type="text" [(ngModel)]="modelEdit.sort" formControlName="sort" placeholder="Sort" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-6 ui-lg-6">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Trạng thái sử dụng</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <p-inputSwitch [(ngModel)]="modelEdit.isActive" formControlName="isActive" pTooltip="Sử dụng">
+                                    </p-inputSwitch>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <p-footer>
+        <div class="ui-g row">
+            <div class="ui-g-12">
+                <button class="vs-btn vs-modal-btn vs-btn-action-edit" [disabled]="!formGroup.valid" (click)="save()" type="button">
+                    <span class="__icon fa fa-floppy-o"></span>
+                    <span class="__label">Lưu</span>
+                </button>
+                <button type="button" (click)="closePopupMethod(null)" class="vs-btn vs-modal-btn vs-btn-action-back">
+                    <span class="__icon fa fa-times"></span>
+                    <span class="__label">Đóng</span>
+                </button>
+            </div>
+        </div>
+    </p-footer>
+</p-dialog>

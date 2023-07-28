@@ -1,0 +1,69 @@
+.app-feedback-edit {
+    p-calendar .ui-inputtext {
+        width: unset!important;
+    }
+}
+
+.d-none{
+    display: none;
+}
+
+.btn_hide_show_html {
+    border: none;
+    padding: 10px 20px;
+    background-color: #0095da;
+    color: #fff;
+    cursor: pointer;
+}
+
+.lesson_comment_block {
+    display: flex;
+    gap: 10px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #c9c9c9;
+    margin-bottom: 15px;
+    img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+}
+
+.comment_name {
+    margin-bottom: 5px;
+}
+
+.comment_rating{
+    .fa {
+        font-size: 13px;
+    }
+    .fa-star-o {
+        color: #ffbe05;
+    }
+    .fa-star {
+        color: #ffbe05;
+    }
+    
+}
+
+.comment_time {
+    font-size: 12px;
+    margin-left: 10px;
+    color: #c1c1c1;
+}
+
+.comment_rating {
+    margin-bottom: 5px;
+}
+
+.ui-paginator .ui-paginator-next {
+    margin-left: 0px !important;
+}
+
+.ui-paginator .ui-paginator-pages .ui-paginator-page {
+    margin-top: -6px !important;
+}
+
+.ui-paginator .ui-paginator-prev {
+    margin-right: 0px !important;
+}

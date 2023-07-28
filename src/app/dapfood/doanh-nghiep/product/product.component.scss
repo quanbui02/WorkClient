@@ -1,0 +1,260 @@
+.ul-link {
+    line-height: 15px;
+    list-style: decimal;
+    padding-left: 20px;
+    margin: 0;
+}
+
+.countUnapprovedList {
+    background-color: #e65025;
+    font-weight: bold;
+    position: absolute;
+    top: -15px;
+    right: 0px;
+    color: #ffffff;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    padding: 2px 4px;
+    display: block;
+    font-size: 12px;
+    line-height: 12px;
+}
+
+.countUnapproved {
+    background-color: #e65025;
+    font-weight: bold;
+    position: absolute;
+    top: 0;
+    right: -5px;
+    color: #ffffff;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    padding: 2px 4px;
+    display: block;
+    font-size: 12px;
+    line-height: 12px;
+}
+
+.__page-title {
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 5px;
+    line-height: 30px;
+    text-indent: 5px;
+}
+
+.producttns-addcontainer {
+    float: left;
+    height: 180px;
+    min-width: 300px;
+    width: 18%;
+    margin: 10px;
+    a {
+        color: blue;
+        text-decoration: underline;
+        font-style: italic;
+        line-height: 14px;
+        font-size: 14px;
+    }
+}
+
+.producttns-null {
+    border-style: dashed;
+    border-width: 2px;
+    border-color: #CCC;
+    height: 150px;
+    cursor: pointer;
+    text-align: center;
+    span.fa-plus {
+        margin: 55px 155px 5px 155px;
+        color: #CCC;
+        font-size: 20px;
+    }
+    span {
+        color: #CCC;
+        font-size: 16px;
+    }
+}
+
+.producttns-guide {
+    height: 30px;
+    text-align: center;
+    padding-top: 10px;
+    a {
+        text-decoration: underline;
+    }
+}
+
+.producttns-item {
+    width: 18%;
+    min-width: 300px;
+    height: 120px;
+    float: left;
+    margin: 10px;
+    background-color: white;
+    position: relative;
+    &:hover {
+        .overlay {
+            display: block;
+        }
+    }
+    img {
+        width: 120px;
+        height: 120px;
+    }
+    .overlay {
+        display: none;
+        background-color: #292b2c4d;
+        position: absolute;
+        width: 120px;
+        height: 120px;
+        top: 0;
+        left: 0;
+        .vs-btn {
+            float: right;
+            &:hover {
+                color: #fff;
+            }
+        }
+        .download {
+            background-color: #f0f8ff85;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 40px;
+            .fa-download {
+                margin: -6px;
+            }
+        }
+    }
+    .content {
+        height: 120px;
+        width: calc(100% - 120px);
+        padding: 10px;
+    }
+    .float-left {
+        float: left;
+    }
+    .right {
+        position: absolute;
+        right: 0px;
+        width: 24px;
+    }
+}
+
+p {
+    margin-bottom: 5px;
+}
+
+.green {
+    color: #46b752;
+}
+
+.red {
+    color: red;
+}
+
+.product-action {
+    margin-top: 5px;
+    width: 100%;
+    display: inline-block;
+    .action {
+        display: inline-block;
+        width: 50%;
+        text-align: center;
+    }
+    .__icon {
+        font-size: 14px!important;
+        color: #0095da;
+    }
+    .vs-btn {
+        border: 0;
+        background-color: transparent;
+        padding: 0;
+        width: 100%;
+    }
+    p {
+        margin-top: 5px;
+        margin-bottom: 0px;
+        color: #838586;
+    }
+}
+
+.mt15 {
+    margin-top: 15px;
+}
+
+.step {}
+
+.step-box {
+    background-color: white;
+    height: 200px;
+    border-radius: 15px;
+    padding: 10px 0px 0px 5px;
+}
+
+@media (max-width: 640px) {
+    .step-box-4 {
+        margin-top: 15px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .step-box-3 {
+        margin-top: 15px;
+    }
+}
+
+.step-box-title {
+    color: black;
+    font-weight: bold;
+    text-align: left;
+    width: 100%;
+    line-height: 18px;
+    max-width: calc(100% - 100px);
+    a {
+        color: blue;
+        text-decoration: underline;
+        font-style: italic;
+        line-height: 14px;
+    }
+    .title {
+        font-size: 16px;
+        font-weight: bold!important;
+        text-transform: uppercase;
+    }
+}
+
+.step-box-stats {
+    width: 100%;
+    a {
+        color: blue;
+        text-decoration: underline;
+        font-style: italic;
+    }
+}
+
+.step-icon {
+    min-width: 75px;
+}
+
+.btn-hide {
+    right: 22px;
+    position: absolute!important;
+    background-color: #0084ff!important;
+    padding-left: 10px!important;
+}
+
+.app-dashboard {
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+
+.btn-selected {
+    background-color: #ccc!important;
+}
+
+.pd0 {
+    padding: 0!important;
+}

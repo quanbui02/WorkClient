@@ -1,0 +1,83 @@
+<p-dialog #dialog [header]="'Thành viên sử dụng khuyến mãi'" styleClass="vs-modal force-full-width" [(visible)]="isShow" positionTop="50" [style]="{'max-width': '1100px'}" [contentStyle]="{'max-height': getMaxDialogHeight()}" [modal]="true"
+    appendTo="body">
+    <div class="vs-form-container default-control-label-width vs-modal-content-panel">
+        <div class="vs-data-table-area">
+            <div class="ui-g vs-data-table-area-inner">
+                <div class="ui-g-12 ui-lg-12 __main-table-area">
+                    <div class="ui-g vs-table-wrapper" id="table">
+                        <p-dataView #dv [paginator]="true" [rows]="10" [value]="lstUserUsed" [totalRecords]="countUserUsed" filterBy="userName">
+                            <p-header>
+                                <div>Tổng số <b style="color: red;">{{countUserUsed}}</b> thành viên</div>
+                                <table style="width: 100%;margin-top: 5px;">
+                                    <tr>
+                                        <td style="width: 80%;">
+                                            <input type="search" style="width: 100%;" pInputText placeholder="Tìm theo số điện thoại"  (keyup)="dv.filter($event.target.value, 'contains')" />
+                                        </td>
+                                        <td style="width: 20%;">
+                                            <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </p-header>
+                            <ng-template let-obj pTemplate="listItem">
+                                <div style="padding: 5px 5px ;border-bottom: 1px solid #CCC ; width: 100%;">
+                                    <div style="height: 20px;line-height: 20px;">
+                                        Mã đơn hàng: <b>{{obj.id}}</b>
+                                    </div>
+                                    <div style="height: 20px;line-height: 20px;">
+                                       Thành viên: <b>{{obj.userName}}</b>
+                                    </div>
+                                    <div style="height: 20px;line-height: 20px;">
+                                        Tiền đơn: <b>{{obj.totalBill | mask :'separator':'.'}} đ</b>
+                                    </div>
+                                    <div style="height: 20px;line-height: 20px;">
+                                        <span *ngIf="obj.mode == 1">Giảm giá:</span><span *ngIf="obj.mode == 2">Thưởng:</span> <b>{{obj.discount | mask :'separator':'.'}} đ</b>
+                                    </div>
+                                    <div style="height: 20px;line-height: 20px;">
+                                       Ngày sử dụng: <b>{{obj.createdDate | date :'HH:mm dd/MM/yyyy'}}</b>
+                                    </div>
+                                    <div style="height: 20px;line-height: 20px;">
+                                       Trạng thái đơn hàng: <b>{{obj.name}}</b>
+                                    </div>
+                                </div>
+                            </ng-template>
+                            <ng-template let-obj pTemplate="gridItem">
+                                <div style="padding: 5px 5px ;border: 1px solid #CCC ; width: 30%;margin-left: 1%;margin-top: 2px;">
+                                    <div style="height: 25px;line-height: 25px;margin: -5px;text-align: center;background: #c7c793;border-bottom: 1px solid #CCC;margin-bottom: 5px;">
+                                       Thành viên: <b style="color: #0033eb;">{{obj.userName}}</b>
+                                    </div>
+                                    <div style="height: 20px;line-height: 20px;">
+                                       Mã đơn hàng: <b>{{obj.id}}</b>
+                                    </div>
+                                    <div style="height: 20px;line-height: 20px;">
+                                        Tiền đơn: <b>{{obj.totalBill | mask :'separator':'.'}} đ</b>
+                                    </div>
+                                    <div style="height: 20px;line-height: 20px;">
+                                       <span *ngIf="obj.mode == 1">Giảm giá:</span><span *ngIf="obj.mode == 2">Thưởng:</span> <b>{{obj.discount | mask :'separator':'.'}} đ</b>
+                                    </div>
+                                    <div style="height: 20px;line-height: 20px;">
+                                      Ngày sử dụng: <b>{{obj.createdDate | date :'HH:mm dd/MM/yyyy'}}</b>
+                                    </div>
+                                    <div style="line-height: 20px;">
+                                       Trạng thái đơn hàng: <b>{{obj.name}}</b>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </p-dataView>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p-footer>
+        <div class="ui-g row">
+            <div class="ui-g-12">
+                <button type="button" (click)="closePopupMethod(null)" class="vs-btn vs-modal-btn vs-btn-action-back">
+                    <span class="__icon fa fa-times"></span>
+                    <span class="__label">Đóng</span>
+                </button>
+            </div>
+        </div>
+    </p-footer>
+</p-dialog>

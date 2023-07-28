@@ -1,0 +1,18 @@
+.vs-status {
+    color: #fff;
+    display: inline-block;
+    font-size: 12px;
+    border-radius: 2px;
+    padding: 5px 7px;
+}
+
+@each $status,
+$value in (doing: $vs-status-doing, response: $vs-status-response, done: $vs-status-done, waiting: $vs-status-waiting, valid: $vs-status-valid, expire: $vs-status-expire, lock: $vs-status-lock, cancel: $vs-status-cancel, info: $vs-info-color, leave: $vs-status-leave, pause: $vs-status-pause, stop: $vs-status-stop, back: $vs-config-color) {
+    // color
+    .vs-status-#{$status} {
+        background: $value;
+    }
+    .text-status-#{$status} {
+        color: $value;
+    }
+}

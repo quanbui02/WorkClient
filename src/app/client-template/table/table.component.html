@@ -1,0 +1,168 @@
+<div class="vs-page-content-header-area">
+    <div class="ui-g">
+        <div class="ui-g-12 ui-md-7 ui-lg-9 __page-title-wrapper">
+            <h1 class="__page-title">Danh sách đăng ký học phần theo lớp hành chính</h1>
+        </div>
+        <div class="ui-g-12 ui-md-5 ui-lg-3 __search-box-wrapper">
+            <div class="__search-box">
+                <input type="search" placeholder="Nhập từ khóa" name="search" class="__input vs-input" (keyup.enter)="onSearch()" [(ngModel)]="query">
+                <span class="__toggle-search-adv" (click)="toggleSearch()">
+                    <span [hidden]="openSearchAdv" class="fa fa-angle-double-down"></span>
+                <span [hidden]="!openSearchAdv" class="fa fa-angle-double-up "></span>
+                </span>
+                <span class="__search-btn" (click)="onSearch()">
+                    <i class="fa fa-search"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="ui-g __search-filter-wrapper pb-5" [hidden]="!openSearchAdv">
+        <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" [(ngModel)]="searchModel.termStatus" [options]="termStatus" class="mx-5 mb-10">
+        </p-dropdown>
+        <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" [(ngModel)]="searchModel.year" [options]="years" class="mx-5 mb-10">
+        </p-dropdown>
+        <button class="vs-btn vs-modal-btn vs-btn-action-edit mx-5 mb-10" type="button">
+            <span class="__icon fa fa-search text-align-center"></span>
+            <span class="__label">Tìm kiếm</span>
+        </button>
+    </div>
+</div>
+<div class="vs-page-content-body-area">
+    <div class="vs-data-table-area">
+        <div class="ui-g vs-data-table-area-inner">
+            <div class="ui-g-12 ui-md-3 ui-lg-2 __left-table-sidebar-wrapper" [hidden]="!openLeftTableSidebar">
+                <div class="__left-table-sidebar">
+                    <div class="__sidebar-header">
+                        Danh sách đào tạo
+                    </div>
+                    <div class="__sidebar-body">
+                        <div style="height: 100px; padding: 20px">
+                            Nội dung bất kỳ trong dây
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui-g-12 __table-wrapper" [ngClass]="[openLeftTableSidebar? 'ui-md-9 ui-lg-10' : 'ui-md-12 ui-lg-12']">
+                <div class="ui-g __top-table-header">
+                    <div class="ui-g-12 ui-md-6 ui-lg-4 __left-content">
+                        <span (click)="toggleLeftTableSidebar()" class="__toggle-left-table-sidebar" [ngClass]="[openLeftTableSidebar? 'fa fa-arrow-circle-o-left' : 'fa fa-arrow-circle-o-right']">
+                        </span>
+                        <span class="__total-record">Có {{total}} bản ghi</span>
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-8 __right-content">
+                        <ul class="__action-tabs">
+                            <li class="__tab-item-wrapper">
+                                <div class="__tab-item">
+                                    <span class="__icon pi pi-share-alt"></span>
+                                    <span class="__label">Các hoạt động</span>
+                                </div>
+                            </li>
+                            <li class="__tab-item-wrapper __toggle-column-wrapper">
+                                <div class="__tab-item" (click)="toggleColumnList()">
+                                    <span class="__icon pi pi-th-large"></span>
+                                    <span class="__label">Chọn cột</span>
+                                </div>
+                                <div class="__column-list" [hidden]="!openColumnList">
+                                    <div *ngFor="let col of cols" class="__column-item">
+                                        <p-checkbox binary="true" [(ngModel)]="col.visible" name="groupname" label="{{col.header}}"></p-checkbox>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="__tab-item-wrapper">
+                                <div class="__tab-item">
+                                    <span class="__icon pi pi-cog"></span>
+                                    <span class="__label">Thiết lập</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="ui-g __top-table-action">
+                    <div class="ui-g-12 ui-lg-8 __left-content">
+                        <button type="button" class="vs-btn vs-top-table-btn vs-btn-action-edit">
+                            <span class="__icon fa fa-plus"></span>
+                            <span class="__label">Thêm mới</span>
+                        </button>
+                        <button type="button" class="vs-btn vs-btn-icon-green">
+                            <span class="__icon fa fa-check"></span>
+                            <span class="__label">Duyệt đăng ký</span>
+                        </button>
+                        <button type="button" class="vs-btn vs-top-table-btn vs-btn-action-restore">
+                            <span class="__icon fa fa-undo"></span>
+                            <span class="__label">Khôi phục</span>
+                        </button>
+                    </div>
+                    <div class="ui-g-12 ui-lg-4 __right-content __change-view">
+                        <button type="button" class="vs-btn">
+                            <span class="__label">View 1</span>
+                        </button>
+                        <button type="button" class="vs-btn activated">
+                            <span class="__label">View 2</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="ui-g">
+                    <p-table [columns]="cols" selectionMode="multiple" [paginator]="true" [rows]="limit" [value]="dataSource" [totalRecords]="total" class="vs-table responsive-table" [customSort]="true" (onSort)="onSort($event)" (onPage)="onPage($event)" [loading]="isLoading"
+                        [responsive]="true" [lazy]="true">
+                        <ng-template pTemplate="header" let-columns>
+                            <tr align="center">
+                                <th style="width: 3em">
+                                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                </th>
+                                <th *ngFor="let col of columns;let i = index" [hidden]="!cols[i].visible" [pSortableColumn]="cols[i].sort ? col.field : ''" [style.width]="col.width">
+                                    {{col.header}}
+                                    <span *ngIf="col.sort">
+                                        <p-sortIcon [field]="col.field"></p-sortIcon>
+                                    </span>
+                                </th>
+                                <th style="width:150px;" class="ui-text-center">
+                                    Thao tác
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-item let-columns="columns" let-rowIndex="rowIndex">
+                            <tr align="center">
+                                <td>
+                                    <p-tableCheckbox [value]="item"></p-tableCheckbox>
+                                </td>
+                                <td *ngFor="let col of columns;let i = index;" [ngSwitch]="col.field" [hidden]="!cols[i].visible">
+                                    <span *ngSwitchDefault>{{item[col.field]}}</span>
+
+                                    <span *ngSwitchCase="'trangThai'">
+                                        <span class="ui-button-success" *ngIf="item.trangThai === 1">Đã duyệt</span>
+                                    <span class="ui-button-success" *ngIf="item.trangThai === 0">Chưa duyệt</span>
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <div class="vs-table-row-actions ui-text-center">
+                                        <button type="button" class="vs-btn icon-only vs-btn-action-edit" pTooltip="Thông tin cá nhân">
+                                            <span class="__icon fa fa-pencil-square-o"></span>
+                                        </button>
+                                        <button type="button" class="vs-btn icon-only vs-btn-action-edit" pTooltip="Thông tin cá nhân">
+                                            <span class="__icon fa fa-floppy-o"></span>
+                                        </button>
+                                        <button type="button" class="vs-btn icon-only vs-btn-action-edit" pTooltip="Thông tin cá nhân">
+                                            <span class="__icon fa fa-files-o"></span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="paginatorleft" let-state>
+                            <div class="vs-table-paginator">
+                                Hiển thị
+                                <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="listItemNumberPerPage" [(ngModel)]="selectedItemNumberPerPage">
+                                </p-dropdown>
+                                / trang
+                            </div>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,271 @@
+<div class="vs-page-content app-order-client">
+    <div class="vs-page-content-header-area">
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-7 ui-lg-9 __page-title-wrapper">
+                <h1 class="__page-title">Phiếu yêu cầu Cửa hàng</h1>
+            </div>
+
+            <div class="ui-g-12 ui-md-5 ui-lg-3 __search-box-wrapper">
+                <div class="__search-box">
+                    <input type="search" placeholder="Nhập thông tin tìm kiếm" name="search" class="__input vs-input" (keyup.enter)="onSearch()" [(ngModel)]="searchModel.key">
+                    <span class="__toggle-search-adv" (click)="toggleSearch()">
+                        <span [hidden]="openSearchAdv" class="fa fa-angle-double-down"></span>
+                    <span [hidden]="!openSearchAdv" class="fa fa-angle-double-up "></span>
+                    </span>
+                    <span class="__search-btn" (click)="onSearch()">
+                        <i class="fa fa-search"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui-g" [hidden]="!openSearchAdv">
+            <div class="ui-g-12 __search-filter-wrapper">
+                <p-calendar class="maxWidth" [(ngModel)]="searchModel.fromDate" dateFormat="dd/mm/yy" [showIcon]="true" class="maxWidth" psDateOnly placeholder="Từ ngày" utc="true" psDateOnly [locale]="vi">
+                </p-calendar>
+
+                <p-calendar class="maxWidth" [(ngModel)]="searchModel.toDate" dateFormat="dd/mm/yy" [showIcon]="true" class="maxWidth" psDateOnly placeholder="Đến ngày" utc="true" psDateOnly [locale]="vi">
+                </p-calendar>
+
+                <input type="search" placeholder="Tìm kiếm vv... " name="search" class="__input vs-input" (keyup.enter)="onSearch()" [(ngModel)]="searchModel.ctv">
+
+                <p-dropdown [showClear]="true" placeholder="-- Trạng thái --" appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" filter="true" [style]="{'width':'100%'}" [(ngModel)]="searchModel.status" [options]="status_options" (onChange)="onSearch()">
+                </p-dropdown>
+
+                <p-dropdown [showClear]="true" placeholder="-- Loại đơn --" appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" filter="true" [style]="{'width':'100%'}" [(ngModel)]="searchModel.orderType" [options]="orderType_options" (onChange)="onSearch()">
+                </p-dropdown>
+
+                <button class="vs-btn vs-modal-btn vs-btn-action-edit" type="button" (click)="onSearch()">
+                    <span class="__icon fa fa-search"></span>
+                    <span class="__label">Tìm kiếm</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="vs-page-content-body-area">
+        <div class="vs-data-table-area">
+            <div class="ui-g vs-data-table-area-inner">
+                <div class="ui-g-12 ui-lg-12 __main-table-area">
+                    <div class="ui-g __top-table-header">
+                    </div>
+
+                    <div class="ui-g __top-table-action">
+                        <div class="ui-g-6 __left-content">
+                            <button type="button" class="vs-btn vs-top-table-btn vs-btn-action-data" (click)="exportExcel()">
+                                <span class="__icon fa fa-download"></span>
+                                <span class="__label">Xuất danh sách</span>
+                            </button>
+
+                            <button type="button" class="vs-btn vs-top-table-btn vs-btn-action-edit" (click)="onEdit(-1)">
+                                <span class="__icon fa fa-plus"></span>
+                                <span class="__label">Tạo phiếu </span>
+                            </button>
+                            
+                            <button type="button" class="vs-btn vs-top-table-btn vs-btn-action-print ml2" (click)="onPrintOrder()" [hidden]="!isMultiEdit">
+                                <span class="__icon fa fa-print"></span>
+                                <span class="__label">In danh sách <span *ngIf="this.ids.length > 0">({{this.ids.length}})</span></span>
+                            </button>
+                        </div>
+
+                        <div class="ui-g-6 __right-content">
+                            <ul class="__action-tabs">
+                                <li #columnListContainer class="__tab-item-wrapper __toggle-column-wrapper">
+                                    <div class="__tab-item" (click)="toggleColumnList()">
+                                        <span class="__icon pi pi-th-large"></span>
+                                        <span class="__label">Chọn cột</span>
+                                    </div>
+                                    <div class="__column-list" [hidden]="!openColumnList">
+                                        <div *ngFor="let col of cols" class="__column-item">
+                                            <p-checkbox binary="true" [(ngModel)]="col.visible" name="groupname" label="{{col.header}}"></p-checkbox>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    <div class="ui-g vs-table-wrapper" id="table">
+                        <p-table #mainTable [frozenValue]="dataTotal" (onHeaderCheckboxToggle)="onCheckAll()" [columns]="cols" selectionMode="multiple" [rows]="limit" [scrollable]="true" scrollHeight="auto" [value]="dataSource" [(selection)]="selectedItems" [totalRecords]="total" class="vs-table responsive-table"
+                        [customSort]="true" (onSort)="onSort($event)" [paginator]="true" [loading]="isLoading" [lazy]="true" (onPage)="onPage($event)" [resizableColumns]="true" dataKey="id" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
+
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th style="width: 40px;"><p-tableHeaderCheckbox></p-tableHeaderCheckbox></th>
+                                    <th class="align-center" style="width: 40px;">STT</th>
+                                    <ng-container *ngFor="let col of columns;">
+                                        <th class="ui-resizable-column" [hidden]="!col.visible" pResizableColumn [pSortableColumn]="col.sort ? col.field : ''" class="ui-resizable-column">
+                                            {{col.header}}
+                                            <span *ngIf="col.sort">
+                                                <p-sortIcon [field]="col.field"></p-sortIcon>
+                                            </span>
+                                        </th>
+                                    </ng-container>
+                                    <th class="ui-text-center">
+                                        Thao tác
+                                    </th>
+                                </tr>
+                            </ng-template>
+
+                            <ng-template pTemplate="body" let-item let-columns="columns" let-rowIndex="rowIndex">
+                                <tr align="center" [pSelectableRow]="item" [ngClass]="{'input': item['type'] == 1,'output': item['type'] == 2}">
+                                    <td class="vs-hidden-print" style="width: 40px;">
+                                        <p-tableCheckbox [value]="item" [disabled]="false"></p-tableCheckbox>
+                                    </td>
+                                    <td style="width: 40px;">{{rowIndex + 1}}</td>
+                                    <ng-container *ngFor="let col of columns;let i = index;" [ngSwitch]="col.field">
+                                        <td class="ui-resizable-column" [hidden]="!col.visible" [class.align-left]="!col.align || col.align === 'left'" [class.align-center]="col.align === 'center'" [class.align-right]="col.align === 'right'">
+                                            <ng-container *ngSwitchCase="'code'" style="width: 40px;">
+                                                <div *ngIf="item.code">{{item.code}}
+                                                </div>
+                                                <div *ngIf="!item.code">
+                                                    {{item.id}}
+                                                </div>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'name'">
+                                                <b>{{item.name}}</b>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'createdDate'">
+                                                <span pTooltip="Cập nhật: {{getTimeAgo(item.createdDate)}}">{{item.createdDate | date :'HH:mm dd/MM/yyyy':'UTC'}}</span>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'total'">
+                                                {{item.total | mask :'separator':'.'}}
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'phone'">
+                                                {{item.phone}}
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'nameShopOperation'">
+                                                <div class="opera">{{item.nameShopOperation}}</div>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'idInOutStatus'">
+                                                {{getNameStatus(item.idInOutStatus)}}
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'status'">
+                                                <div class="actions">
+                                                    <button type="button" class="vs-btn icon-only vs-btn-action-restore" (click)="onUpdateOrderStatus(item)" pTooltip="Cập nhật trạng thái đơn hàng">
+                                                        <span class="__icon fa fa-refresh"></span>
+                                                    </button>
+                                                </div>
+                                                <span class=" " [innerHTML]="GetStatus(item)" [pTooltip]="item.reason"></span>
+                                            </ng-container>
+                                            <span class="ui-resizable-column" *ngSwitchDefault class="break-word">{{item[col.field]}}</span>
+                                        </td>
+                                    </ng-container>
+
+                                    <td class="vs-hidden-print">
+                                        <div class="vs-table-row-actions ui-text-right">
+                                            <div class="vs-table-row-actions ui-text-center">
+                                                <button type="button" class="vs-btn vs-btn-green" (click)="onEdit(item.id)" pTooltip="Tác nghiệp đơn hàng" tooltipPosition="left">
+                                                    <span class="__icon fa fa-edit"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-template>
+
+                            <ng-template pTemplate="paginatorleft" let-state>
+                                <div class="vs-table-paginator">
+                                    Hiển thị
+
+                                    <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" (onChange)="onChangeRowLimit()" [options]="listItemNumberPerPage" [(ngModel)]="limit">
+                                    </p-dropdown>
+                                    / trang
+                                    <span class="__total-record"> - Có {{total}} mục trong danh sách</span>
+                                </div>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="pagePrint">
+    <div *ngFor="let item of listOrdersPrint" class="pageBreak" style="page-break-after : always !important;">
+        <table style="width: 100%;border:0px;">
+            <tr>
+                <td style="width: 100px;text-align:center;">
+                    <img src="{{getImageAvatar(item.client.avatar)}}" width="80" height="80" class="">
+                </td>
+                <td style="vertical-align: top;">
+                    <div style="display: inline-block;vertical-align: top;">
+                        <div style="text-transform:uppercase;font-size: 15px;font-weight: bold;margin-bottom: 3px;">{{item.client.name}}</div>
+                        <div style="margin-bottom: 3px"><b>Địa chỉ:</b> {{item.client.name}}</div>
+                        <div style="margin-bottom: 3px"><b>Email:</b> {{item.client.email}} - <b>Số điện thoại:</b> {{item.client.phone}}</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center;padding-top:5px; padding-bottom:5px;">
+                    <div style="font-size: 16px;text-transform: uppercase;font-weight: bold;">Hóa đơn bán lẻ - {{item.code}}</div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div style="padding-top:2px; padding-bottom:3px;">Khách hàng: {{item.name}}</div>
+                    <div style="padding-top:2px; padding-bottom:3px;">Địa chỉ: {{item.addressFull}}</div>
+                    <div style="padding-top:2px; padding-bottom:3px;">Điện thoại: {{item.phone}}</div>
+                    <div style="padding-top:2px; padding-bottom:3px;">Người bán: {{item.userSell}} - {{item.createdDate | date :'HH:mm dd/MM/yyyy':'UTC'}}</div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <table style="width: 100%;border: 1px solid #000;border-collapse: collapse;border-spacing:1px;margin-top:10px;">
+                        <tr style="border: 1px solid black;">
+                            <td style="border: 1px solid black;padding: 5px;text-align: center;width: 40px;">
+                                <b>STT</b>
+                            </td>
+                            <td style="border: 1px solid black;padding: 5px;text-align: center;">
+                                <b>Tên sản phẩm</b>
+                            </td>
+                            <td style="border: 1px solid black;padding: 5px;text-align: center;">
+                                <b>CK</b>
+                            </td>
+                            <td style="border: 1px solid black;padding: 5px;text-align: center;">
+                                <b>Thành tiền</b>
+                            </td>
+                        </tr>
+                        <tbody *ngFor="let itemDetail of item.orderDetails;index as i">
+                            <tr style="border: 1px solid black;">
+                                <td style="border: 1px solid black;padding: 5px;text-align: center;" rowspan="2">
+                                    {{i+1}}
+                                </td>
+                                <td style="border: 1px solid black;padding: 5px;" colspan="3">
+                                    {{itemDetail.code}} - {{itemDetail.name}}
+                                </td>
+                            </tr>
+                            <tr style="border: 1px solid black;">
+                                <td style="border: 1px solid black;padding: 5px;">
+                                    <i>{{itemDetail.quantity}} x {{itemDetail.priceProduct | mask :'separator':','}}</i>
+                                </td>
+                                <td style="border: 1px solid black;padding: 5px;text-align: right;">
+                                    0
+                                </td>
+                                <td style="border: 1px solid black;padding: 5px;text-align: right;">
+                                    {{itemDetail.priceProduct | mask :'separator':','}}
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr style="border: 1px solid black;">
+                                <td colspan="4" style="border: 1px solid black;padding: 5px;text-align: right;">
+                                    <b>Tổng cộng: {{item.total | mask :'separator':','}} VND</b>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center;">
+                    Xin chân trọng cảm ơn quý khách !
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- <app-order-client-edit (closePopup)="onCloseForm($event)"></app-order-client-edit> -->
+
+<app-shop-in-outs-edit (closePopup)="onCloseForm($event)"></app-shop-in-outs-edit>

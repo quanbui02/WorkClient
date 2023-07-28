@@ -1,0 +1,298 @@
+input[type="text"],
+input[type="search"],
+input[type="email"],
+input[type="url"],
+input[type="password"],
+input[type="tel"],
+input[type="number"],
+input[type="date"],
+textarea {
+    padding-left: 8px;
+    padding-right: 8px;
+    height: 30px;
+    outline: none;
+    font-size: $vs-general-font-size;
+    border: 1px solid #dfe7ef;
+    border-radius: 0;
+    &[readonly] {
+        background: #eeeeee;
+    }
+    &.full-width {
+        width: 100%;
+    }
+}
+
+input[type="number"] {
+    padding-right: 0;
+}
+
+textarea {
+    padding: 6px 12px;
+    height: auto;
+    resize: vertical;
+}
+
+body .ui-radiobutton-label:hover,
+body .ui-chkbox-label:hover {
+    cursor: pointer;
+}
+
+.vs-form-control {
+    .__form-control-label {
+        // background-color: #dddddd;
+        font-size: 12px;
+        height: 30px;
+        line-height: 30px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        &.no-bgc {
+            background-color: transparent;
+        }
+    }
+    .__form-control-inputs {
+        display: flex;
+        padding: 0;
+        >div {
+            margin-right: 10px;
+            flex: 1 1;
+        }
+        >div:last-of-type {
+            margin-right: 0;
+        }
+        input[type="text"],
+        input[type="search"],
+        input[type="email"],
+        input[type="url"],
+        input[type="password"],
+        input[type="number"],
+        input[type="tel"],
+        input[type="date"],
+        textarea {
+            width: 100%;
+        }
+        .ui-dropdown {
+            min-width: 0;
+        }
+        .__radio-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+        }
+    }
+}
+
+.vs-form-container {
+    .vs-form-control {
+        margin-bottom: 5px;
+        .__form-control-label {
+            margin-bottom: 5px;
+        }
+        .__form-control-inputs {
+            margin-bottom: 5px;
+            align-items: center;
+            .__input-wrapper.required {
+                position: relative;
+                &:after {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    display: block;
+                    border: 6px solid $vs-required-input-color;
+                    width: 0;
+                    height: 0;
+                    border-bottom-color: transparent;
+                    border-left-color: transparent;
+                }
+            }
+        }
+    }
+    &.default-control-label-width {
+        .vs-form-control {
+            display: flex;
+            @media (min-width: 40.063em) {
+                flex-wrap: nowrap;
+                .__form-control-label {
+                    min-width: 160px;
+                    width: 160px;
+                }
+                .__form-control-inputs {
+                    flex-grow: 1;
+                }
+            }
+        }
+    }
+}
+
+// checkbox
+// ----------------
+.vs-custom-checkbox {
+    display: inline-block;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    input {
+        display: none;
+    }
+    .__mark {
+        display: block;
+        border-radius: 2px;
+        border: 1px solid #cccccc;
+        background-color: #ffffff;
+        width: 16px;
+        height: 16px;
+        text-align: center;
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+        transition: border-color 0.3s, background-color 0.3s, box-shadow 0.3s;
+        &:before {
+            content: "\e909";
+            font-family: 'primeicons';
+            font-size: 14px;
+            line-height: 14px;
+            display: block;
+            opacity: 0;
+        }
+    }
+    input:disabled+.__mark {
+        cursor: default;
+        background-color: #eeeeee;
+        color: #777777;
+    }
+    input:checked+.__mark {
+        border: 1px solid $vs-theme-blue-color;
+        background-color: $vs-theme-blue-color;
+        color: #fff;
+        &:before {
+            opacity: 1;
+        }
+    }
+}
+
+body .ui-chkbox .ui-chkbox-box {
+    width: 16px;
+    height: 16px;
+}
+
+body .ui-chkbox .ui-chkbox-box .ui-chkbox-icon {
+    font-size: 14px;
+    line-height: 14px;
+}
+
+// radio
+// ----------------
+body .ui-radiobutton .ui-radiobutton-box {
+    width: 16px;
+    height: 16px;
+}
+
+// input wrapper
+// -----------------
+.vs-input-wrapper {
+    &.required {
+        position: relative;
+        &:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: block;
+            border: 6px solid $vs-required-input-color;
+            width: 0;
+            height: 0;
+            border-bottom-color: transparent;
+            border-left-color: transparent;
+        }
+    }
+}
+
+// input-with-icon
+// -----------------
+.vs-input {
+    &.input-with-icon {
+        position: relative;
+        .__input {
+            padding-right: 30px;
+        }
+        .__icon {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 30px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            justify-content: center;
+        }
+    }
+}
+
+// radio button
+// -----------------
+.ui-radiobutton-icon {
+    margin: 0;
+}
+
+body .ui-radiobutton {
+    vertical-align: top;
+}
+
+body .ui-radiobutton .ui-radiobutton-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+// autocomplete
+// ------------------
+body .ui-autocomplete.ui-autocomplete-multiple .ui-autocomplete-multiple-container {
+    padding: 0 8px;
+    border-radius: 0;
+    flex: 1 1;
+    min-width: 250px;
+    min-height: 30px;
+}
+
+body .ui-autocomplete .ui-autocomplete-dropdown {
+    width: 24px;
+    height: 24px;
+    border-radius: 0;
+}
+
+body .ui-autocomplete.ui-autocomplete-multiple .ui-autocomplete-multiple-container .ui-autocomplete-token {
+    font-size: $vs-general-font-size;
+    border-radius: 2px;
+    padding: 2px 20px 2px 6px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+body .ui-autocomplete.ui-autocomplete-multiple .ui-autocomplete-multiple-container .ui-autocomplete-input-token {
+    padding: 0;
+    height: 18px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    line-height: 28px;
+}
+
+body .ui-autocomplete.ui-autocomplete-multiple .ui-autocomplete-multiple-container .ui-autocomplete-input-token input {
+    font-size: $vs-general-font-size;
+    height: 18px;
+    border: 0;
+}
+
+p-autocomplete {
+    .ui-autocomplete {
+        display: flex;
+    }
+    &.ui-inputwrapper-filled {
+        .ui-autocomplete-input-token {
+            input {
+                width: 70px;
+            }
+        }
+    }
+}

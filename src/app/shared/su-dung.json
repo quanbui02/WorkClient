@@ -1,0 +1,12 @@
+{
+    "data": [
+        {
+            "label": "Sử dụng",
+            "value": true
+        },
+        {
+            "label": "Không sử dụng",
+            "value": false
+        }
+    ]
+}

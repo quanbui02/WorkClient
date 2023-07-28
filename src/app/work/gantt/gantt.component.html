@@ -1,0 +1,78 @@
+<app-task-header></app-task-header>
+
+<div class="task_screen_body">
+
+   <!-- [resources]="resources" [resourceFields]="resourceFields" viewType="ResourceView"  (toolbarClick)="toolbarClick($event)" (endEdit)="endEdit($event)"-->
+   <!-- [enableContextMenu]="true" -->
+   <ejs-gantt [allowSorting]='true' id="ganttTasks" #ganttTasks [dataSource]="data" [allowUnscheduledTasks]="true"
+      [taskFields]="taskSettings" [rowHeight]="45" [gridLines]="gridLines" [allowSelection]='true'
+      [editDialogFields]="editDialogFields" [enableContextMenu]="true" [allowResizing]='true'
+      [splitterSettings]="splitterSettings" [timelineSettings]="timelineSettings" [labelSettings]="labelSettings"
+      [allowSorting]='true' [filterSettings]="filterSettings" [allowFiltering]='true' timezone="asia/ho_chi_minh"
+      durationUnit="day" dateFormat="dd/MM/yyyy" [editSettings]="editSettings" [toolbar]="toolbar"
+      allowParentDependency='false' allowExcelExport='true' [resources]="resources" [resourceFields]="resourceFields"
+      [contextMenuItems]="contextMenuItems" (contextMenuClick)="contextMenuClick($event)"
+      (contextMenuOpen)="contextMenuOpen($event)" (rowDataBound)="rowDataBound($event)"
+      (queryCellInfo)="queryCellInfo($event)" (queryTaskbarInfo)="queryTaskbarInfo($event)"
+      (toolbarClick)="toolbarClick($event)" (taskbarEditing)="taskbarEditing($event)" (cellEdit)="cellEdit($event)"
+      (actionComplete)="actionComplete($event)" [collapseAllParentTasks]='true' height="calc(100vh - 140px)">
+      <!-- <ejs-gantt [allowSorting]='true' id="ganttTasks" #ganttTasks [dataSource]="data" [taskFields]="taskSettings"> -->
+      <e-columns>
+
+         <e-column field='taskName' width='250' textAlign='Left'>
+            <ng-template #headerTemplate>
+               <img class="taskName" width="20" height="20" /> Tên Công việc
+            </ng-template>
+            <ng-template #template let-data textAlign='Left'>
+               <div>
+                  <img src="{{ getAvatar(data.taskData) }}" style="height:20px;width:20px; margin-right: 5px;" />
+                  <div style="display: inline-block; width: 100%; position: relative; text-align: left;">{{
+                     data.ganttProperties.taskName
+                     }}
+                  </div>
+                  <!-- <div style="display: inline-block; width: 100%; position: relative;">{{
+                           data.ganttProperties.taskName.length > 25 ? data.ganttProperties.taskName.substring(0, 25) +
+                           '...' :
+                           data.ganttProperties.taskName
+                           }}
+                        </div> -->
+               </div>
+            </ng-template>
+         </e-column>
+         <e-column field='StartDate' textAlign='center'>
+            <ng-template #headerTemplate>
+               <img class="startDate" width="20" height="20" /> Ngày bắt đầu
+            </ng-template>
+         </e-column>
+         <e-column field='EndDate' textAlign='center'>
+            <ng-template #headerTemplate>
+               <img class="endDate" width="20" height="20" /> Ngày kết thúc
+            </ng-template>
+         </e-column>
+         <e-column field='Duration' textAlign='center'>
+            <ng-template #headerTemplate>
+               <img class="duration" width="20" height="20" /> Khoảng thời gian
+            </ng-template>
+         </e-column>
+         <e-column field='Progress' textAlign='center'>
+            <ng-template #headerTemplate>
+               <img class="progressTemplate" width="20" height="20" /> Tiến độ
+            </ng-template>
+         </e-column>
+         <e-column field='resources' width='200'>
+            <ng-template #headerTemplate>
+               <img class="resource" width="20" height="20" /> Người thực hiện
+            </ng-template>
+         </e-column>
+         <e-column field='taskID' width='1'>
+            <ng-template #headerTemplate>
+               Id
+            </ng-template>
+         </e-column>
+      </e-columns>
+      <ng-template #labelSettingsRightLabel let-data>
+         <div style="display:inline-flex" innerHtml="{{ customFunction(data) }}"></div>
+      </ng-template>
+   </ejs-gantt>
+
+</div>

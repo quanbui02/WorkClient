@@ -1,0 +1,234 @@
+{
+    "GRID": {
+        "FUNCTION": "Chức năng",
+        "SUMMARY_TOTAL": "{0} bản ghi",
+        "SETTINGS": "Thiết lập",
+        "ACTIVITIES": "Quá trình xử lý",
+        "VIEW_DETAIL": "Xem chi tiết",
+        "SELECT_ALL": "Chọn tất cả",
+        "DE_SELECT_ALL": "Bỏ chọn tất cả",
+        "FORWARD": "Chuyển xử lý",
+        "APPROVE": "Ký duyệt",
+        "REQUEST_APPROVE": "Trình ký",
+        "END_STEP": "Kết thúc bước",
+        "DELETE": "Xóa",
+        "PREVIEW": "Xem trước"
+    },
+    "WORKFLOW1": {
+        "MENU": {
+            "DASHBOARD": " Bàn làm việc",
+            "CORE": "Quy trình chính",
+            "INTEGRATIONS": "Quy trình tích hợp"
+        },
+        "CORE_LIST": {
+            "TITLE": "Danh sách quy trình",
+            "CODE": "Mã",
+            "NAME": "Tên quy trình",
+            "VERSION": "Phiên bản",
+            "SERVICECODE": "Mã dịch vụ",
+            "CREATETIME": "Ngày tạo"
+        },
+        "INTEGRATIONS": {
+            "TITLE": "Danh sách dịch vụ tích hợp",
+            "POPUP_EDIT": "Thông tin tích hợp",
+            "SERVICE": "Dịch vụ",
+            "ENTITY": "Thực thể",
+            "SERVICE_ENDPOINT": "Truy cập"
+        }
+    },
+    "ADMIN1": {
+        "MENU": {
+            "MASTERDATA": "Danh mục dữ liệu",
+            "SERVICE": "Danh mục hệ thống"
+        }
+    },
+    "FORM": {
+        "ADD": "Thêm mới",
+        "EDIT": "Sửa",
+        "DELETE": "Xóa",
+        "SEARCH": "Tìm kiếm",
+        "ADVANCE_SEARCH": "Tìm nâng cao",
+        "SAVE": "Lưu",
+        "SELECT": "Chọn",
+        "CANCEL": "Đóng",
+        "YES": "Đồng ý",
+        "NO": "Hủy",
+        "CLOSE": "Đóng",
+        "COMPLETED_TASK": "Kết thúc công việc",
+        "SEND_COMMENT": "Gửi ý kiến",
+        "NEXT_WORKFLOW_STEP": "Chuyển xử lý"
+    },
+    "CONFIRM": {
+        "DEFAULT_DELETE_CONFIRM_TITLE": "Xác nhận xóa",
+        "DEFAULT_DELETE_CONFIRM": "Bạn có chắc chắn muốn xóa bản ghi này?",
+        "DEFAULT_DELETE_SUCCESS": "Xóa dữ liệu thành công!",
+        "DEFAULT_DELETE_FAILED": "Xóa dữ liệu thất bại",
+        "ACCEPT_LABEL": "Đồng ý",
+        "REJECT_LABEL": "Hủy"
+    },
+    "SINGLE": {
+        "ID": "ID",
+        "NAME": "Tên danh mục",
+        "CODE": "Mã danh mục",
+        "USED": "Sử dụng",
+        "SORT": "Thứ tự",
+        "DESCRIPTION": "Mô tả",
+        "GROUPCATEGORYID": "Mã nhóm danh mục"
+    },
+    "MASTERDATA": {
+        "CODE": "Mã",
+        "NAME": "Tên",
+        "DESCRIPTION": "Mô tả",
+        "ENABLED": "Sử dụng",
+        "TYPE": "Loại",
+        "ORDERNO": "Thứ tự"
+    },
+    "MASTERDATA1": {
+        "ID": "ID",
+        "CODE": "Mã",
+        "NAME": "Tên",
+        "TEMPLATECATEGORY": "Nhóm",
+        "FILEID": "File id ",
+        "ENABLED": "Đã tạo",
+        "ISDELETED": "Đã xóa",
+        "CREATED": "Ngày tạo",
+        "MODIFIED": "Ngày xóa",
+        "CREATEDBY": "Người tạo",
+        "MODIFIEDBY": "Người xóa"
+    },
+    "SERVICE": {
+        "ID": "ID",
+        "CODE": "Mã",
+        "NAME": "Tên",
+        "AUTHORIZATIONENDPOINT": "Ủy quyền",
+        "INTEGRATIONENDPOINT": "Tích hợp ",
+        "SERVICEENDPOINT": "Hệ thống",
+        "ISACTIVE": "Đã mở",
+        "DISPLAYNAME": "Tên hiển thị",
+        "ISDELETED": "Đã xóa",
+        "CREATED": "Ngày tạo",
+        "MODIFIED": "Ngày sửa đổi",
+        "CREATEDBY": "Người tạo",
+        "MODIFIEDBY": "Người sửa"
+    },
+    "VILLAGE": {
+        "ID": "ID",
+        "NAME": "Tên",
+        "CODE": "Mã",
+        "LOCATION": "Địa điểm",
+        "TYPE": "Kiểu",
+        "AREA": "Khu vực ",
+        "USED": "Sử dụng",
+        "NAMEDISTRICTCATEGORIES": "Huyện",
+        "GID": "GID"
+    },
+    "POSITION": {
+        "ID": "ID",
+        "NAME": "Tên danh mục",
+        "CODE": "Mã",
+        "SORT": "Thứ tự",
+        "DESCRIPTION": "Mô tả ",
+        "USED": "Sử dụng",
+        "ALLOWANCEFACTOR": "Phụ cấp",
+        "GID": "GID",
+        "TYPE": "Kiểu "
+    },
+    "DISTRICT": {
+        "ID": "ID",
+        "NAME": "Tên huyện",
+        "CODE": "Mã",
+        "LOCATION": "Địa điểm",
+        "TYPE": "Kiểu",
+        "DISTANCETOCENTER": "Khoảng cách đến trung tâm ",
+        "USED": "Sử dụng",
+        "NAMEPROVINCECATEGORIES": "Thành phố",
+        "GID": "GID"
+    },
+    "PROVINCE": {
+        "ID": "ID",
+        "NAME": "Tên Thành phố",
+        "CODE": "Mã",
+        "LOCATION": "Địa điểm",
+        "TYPE": "Kiểu",
+        "AREA": "Khu vực ",
+        "USED": "Sử dụng",
+        "GID": "GID"
+    },
+    "NATIONAL": {
+        "ID": "ID",
+        "NAME": "Tên quốc gia",
+        "CODE": "Mã",
+        "USED": "Sử dụng",
+        "GID": "GID"
+    },
+    "GROUP": {
+        "ID": "ID",
+        "NAME": "Tên nhóm",
+        "CODE": "Mã Nhóm",
+        "GID": "GID"
+    },
+    "FILE": {
+        "ID": "ID",
+        "NAME": "Tên TTHC",
+        "CODE": "Mã",
+        "SORT": "Thứ tự",
+        "DESCRIPTION": "Mô tả",
+        "GROUPFILECATEGORYID": "Nhóm danh mục ",
+        "USED": "Sử dụng",
+        "GID": "GID"
+    },
+    "INDICATORGROUP": {
+        "CODE": "Mã",
+        "NAME": "Tên",
+        "INDICATORNAME": "Tiêu chí",
+        "DESCRIPTION": "Mô tả",
+        "ENABLED": "Sử dụng"
+    },
+    "TASKACTIVITY": {
+        "TaskId": "Mã công việc",
+        "ActivityType": "Thao tác",
+        "CreatedBy": "Người thực hiện",
+        "Created": "Thời gian",
+        "ActivityData": "Thông tin thực hiện",
+        "FolderId": "File đính kèm"
+    },
+    "MESSAGE": {
+        "HTTP_UNKNOW_ERROR": "Vui lòng liên hệ với quản trị hệ thống để biết thêm chi tiết",
+        "HTTP_UNKNOW_ERROR_HEADER": "Có lỗi xảy ra",
+        "COMMON_ERROR": "Vui lòng liên hệ với quản trị hệ thống để biết thêm chi tiết",
+        "COMMON_ERROR_HEADER": "Có lỗi xảy ra",
+        "INSERT_DATA_FAILED": "Thêm mới dữ liệu thất bại",
+        "UPDATE_DATA_FAILED": "Cập nhật dữ liệu thất bại",
+        "INSERT_DATA_SUCCESS": "Thêm mới dữ liệu thành công",
+        "UPDATE_DATA_SUCCESS": "Cập nhật dữ liệu thành công",
+        "COMMON_SUCCESS_HEADER": "Thành công",
+        "NOT_FOUND_ERROR": "Không tìm thấy dữ liệu được yêu cầu",
+        "UNAUTHORIZED_ERROR": "Tài khoản của bạn không hợp lệ, vui lòng đăng nhập tài khoản khác",
+        "ACCESS_DENINED_ERROR": "Bạn không có quyền truy cập dữ liệu này",
+        "INTERNAL_SERVER_ERROR": "Dịch vụ đang bị gián đoạn, vui lòng thử lại sau ít phút",
+        "CONFLICT_ERROR": "Xung đột dữ liệu",
+        "DELETE_DATA_SUCCESS": "Xóa dữ liệu thành công"
+    },
+    "VALIDATE": {
+        "REQUIRED": "Trường dữ liệu này không được để trống"
+    },
+    "DROPDOWN": {
+        "ALL": "--- Tất cả ---",
+        "DEFAULT_CHOOSE": "Chọn"
+    },
+    "STATUS": {
+        "TEXT": "Trạng thái",
+        "ENABLED": "Sử dụng",
+        "DISABLED": "Không sử dụng"
+    },
+    "FORMAT": {
+        "DATE_PRIMENG_CALENDAR": "dd/mm/yy"
+    },
+    "FILE_UPLOAD": {
+        "CHOOSE": "Chọn",
+        "CANCEL": "Hủy"
+    },
+    "WORKFLOW": {
+        "SELECT_WORKFLOW": "Chọn quy trình"
+    }
+}

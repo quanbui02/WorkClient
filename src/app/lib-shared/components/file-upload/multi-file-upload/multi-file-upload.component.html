@@ -1,0 +1,5 @@
+<p-fileUpload [multiple]="true" (onError)="onError($event)" [uploadLabel]="'Tải file'" [cancelLabel]="'Hủy tải lên'" [chooseLabel]="chooseLabel" [mode]="'basic'" [auto]="auto" (onUpload)="onUploadEvent($event)" url="{{apiUrl}}" [maxFileSize]="maxFileSize"
+    name="files">
+</p-fileUpload>
+<vs-list-file [(ngModel)]="filesUploaded" (onRemoved)="onFileUploadRemoved($event)">
+</vs-list-file>

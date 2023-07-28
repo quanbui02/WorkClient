@@ -1,0 +1,256 @@
+<div class="app-point-admin-index">
+    <div class="vs-page-content-header-area">
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-7 ui-lg-9 __page-title-wrapper">
+                <h1 class="__page-title">Quản lý xu thưởng (admin)</h1>
+            </div>
+
+            <div class="ui-g-12 ui-md-5 ui-lg-3 __search-box-wrapper">
+                <div class="__search-box">
+                    <input type="search" placeholder="Nhập nội dung tìm kiếm" name="search" class="__input vs-input" (keyup.enter)="onSearch()" [(ngModel)]="searchModel.key">
+                    <span class="__toggle-search-adv" (click)="toggleSearch()">
+                        <span [hidden]="openSearchAdv" class="fa fa-angle-double-down"></span>
+                    <span [hidden]="!openSearchAdv" class="fa fa-angle-double-up "></span>
+                    </span>
+                    <span class="__search-btn" (click)="onSearch()">
+                        <i class="fa fa-search"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui-g" [hidden]="!openSearchAdv">
+            <div class="ui-g-12 __search-filter-wrapper">
+                <p-calendar class="maxWidth" [(ngModel)]="fromDate" dateFormat="dd/mm/yy" class="maxWidth" psDateOnly [showIcon]="true" placeholder="Từ ngày" utc="true" psDateOnly [locale]="vi"></p-calendar>
+
+                <p-calendar class="maxWidth" [(ngModel)]="toDate" dateFormat="dd/mm/yy" class="maxWidth" psDateOnly [showIcon]="true" placeholder="Đến ngày" utc="true" psDateOnly [locale]="vi"></p-calendar>
+                <p-autoComplete [(ngModel)]="searchModel.user" [suggestions]="users" (completeMethod)="autoComplete($event)" [size]="30" placeholder="Nhập tên người dùng" field="name" [minLength]="1" (onSelect)="onSelect($event)">
+                </p-autoComplete>
+                <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" filter="true" (onChange)="onSearch()" [style]="{'width':'100%'}" [(ngModel)]="searchModel.dealType" [options]="dealType_options">
+                </p-dropdown>
+                <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" filter="true" (onChange)="onSearch()" [style]="{'width':'100%'}" [(ngModel)]="searchModel.payment" [options]="payment_options">
+                </p-dropdown>
+                <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" filter="true" (onChange)="onSearch()" [style]="{'width':'100%'}" [(ngModel)]="searchModel.status" [options]="trangThai_options">
+                </p-dropdown>
+                <button class="vs-btn vs-modal-btn vs-btn-action-edit" type="button" (click)="onSearch()">
+                    <span class="__icon fa fa-search"></span>
+                    <span class="__label">Tìm kiếm</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="vs-page-content-body-area">
+        <div class="vs-data-table-area">
+            <div class="ui-g vs-data-table-area-inner">
+                <div class="ui-g-12 ui-lg-12 __main-table-area">
+                    <div class="ui-g __top-table-action">
+                        <div class="ui-g-6 __left-content">
+                            <button class="vs-btn vs-top-table-btn vs-btn-action-edit" type="button" (click)="onEdit(0)">
+                                <span class="__icon fa fa-plus"></span>
+                                <span class="__label">Chuyển xu</span>
+                            </button>
+                            <button type="button" class="vs-btn vs-top-table-btn vs-btn-action-data" (click)="exportExcel()">
+                                <span class="__icon fa fa-download"></span>
+                                <span class="__label">Xuất danh sách</span>
+                            </button>
+                        </div>
+
+                        <div class="ui-g-6 __right-content">
+                            <ul class="__action-tabs">
+                                <li #columnListContainer class="__tab-item-wrapper __toggle-column-wrapper">
+                                    <div class="__tab-item" (click)="toggleColumnList()">
+                                        <span class="__icon pi pi-th-large"></span>
+                                        <span class="__label">Chọn cột</span>
+                                    </div>
+                                    <div class="__column-list" [hidden]="!openColumnList">
+                                        <div *ngFor="let col of cols" class="__column-item">
+                                            <p-checkbox binary="true" [(ngModel)]="col.visible" name="groupname" label="{{col.header}}"></p-checkbox>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    <div class="ui-g vs-table-wrapper" id="table">
+                        <p-table #mainTable [columns]="cols" selectionMode="multiple" [rows]="limit" [scrollable]="true" scrollHeight="auto" [value]="dataSource" [(selection)]="selectedItems" [totalRecords]="total" class="vs-table responsive-table" [customSort]="false" [paginator]="true"
+                            [loading]="isLoading" [lazy]="true" (onPage)="onPage($event)" [resizableColumns]="true" dataKey="id">
+                            <ng-template pTemplate="colgroup" let-columns>
+                                <colgroup>
+                                    <col [style.width]="'40px'">
+                                    <ng-container *ngFor="let col of columns" [ngSwitch]="col.field">
+                                        <ng-container *ngSwitchDefault>
+                                            <col [hidden]="!col.visible" [style.width]="col.width" pResizableColumn>
+                                        </ng-container>
+                                    </ng-container>
+                                </colgroup>
+                            </ng-template>
+
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th class="align-center">STT</th>
+                                    <ng-container *ngFor="let col of columns;">
+                                        <th class="ui-resizable-column" [hidden]="!col.visible" pResizableColumn class="ui-resizable-column"> {{col.header}}</th>
+                                    </ng-container>
+                                    <th class="ui-text-center" style="width: 120px;">
+                                        Thao tác
+                                    </th>
+                                </tr>
+                            </ng-template>
+
+                            <ng-template pTemplate="body" let-item let-columns="columns" let-rowIndex="rowIndex">
+                                <tr align="center">
+                                    <td>{{rowIndex + 1}}</td>
+
+                                    <ng-container *ngFor="let col of columns;let i = index;" [ngSwitch]="col.field">
+                                        <td class="ui-resizable-column" [hidden]="!col.visible" [class.align-left]="!col.align || col.align === 'left'" [class.align-center]="col.align === 'center'" [class.align-right]="col.align === 'right'">
+
+                                            <ng-container *ngSwitchCase="'name'">
+                                                {{item.userName}} ({{item.name}}){{item.phone?' - '+item.phone:''}}<br> {{item.idClient?'DN':'CTV'}}
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'negativeDeal'">
+                                                <span *ngIf="item.negativeDeal<0">
+                                                    {{item.negativeDeal | mask :'separator':'.'}}</span>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'deal'">
+                                                <span *ngIf="item.deal>0">
+                                                    {{item.deal | mask :'separator':'.'}}</span>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'tax'">
+                                                <span>{{item.tax | mask :'separator':'.'}}</span>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'fee'">
+                                                <span>{{item.fee | mask :'separator':'.'}}</span>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'createdDate'">
+                                                {{item.createdDate | date :'HH:mm dd/MM/yyyy':'UTC'}}
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'updatedDate'">
+                                                {{item.updatedDate | date :'HH:mm dd/MM/yyyy':'UTC'}}
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'payment'">
+                                                <span *ngIf="item.payment === 1">
+                                                    Ngân lượng
+                                                </span>
+                                                <span *ngIf="item.payment === 2">
+                                                    Thủ công
+                                                </span>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'status'">
+                                                <span *ngIf="item.status === PointStatus.ChuaXuLy" class="vs-status vs-status-waiting">
+                                                    Chưa xử lý
+                                                </span>
+                                                <span *ngIf="item.status === PointStatus.ThanhCong" class="vs-status vs-status-valid">
+                                                    Thành công
+                                                </span>
+                                                <span *ngIf="item.status === PointStatus.KTDuyetThanhCong" class="vs-status vs-status-valid">
+                                                    KT duyệt thành công
+                                                </span>
+                                                <span *ngIf="item.status === PointStatus.AdminDuyetThanhCong" class="vs-status vs-status-valid">
+                                                    Admin duyệt thành công
+                                                </span>
+                                                <span *ngIf="item.status === PointStatus.KTDuyetThatBai" class="vs-status vs-status-cancel">
+                                                    KT duyệt thất bại
+                                                </span>
+                                                <span *ngIf="item.status === PointStatus.AdminDuyetThatBai" class="vs-status vs-status-cancel">
+                                                    Admin duyệt thất bại
+                                                </span>
+                                                <span *ngIf="item.status === PointStatus.DangXuLy" class="vs-status vs-status-info">
+                                                    Đang xử lý
+                                                </span>
+                                                <span *ngIf="item.status === PointStatus.Huy" class="vs-status vs-status-cancel">
+                                                    Đã hủy
+                                                </span>
+                                                <span *ngIf="item.status === PointStatus.Loi" class="vs-status vs-status-expire">
+                                                    Lỗi
+                                                </span>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'note'">
+                                                <div *ngIf="item.bankName">
+                                                    Tên ngân hàng: <b>{{ item.bankName }}</b>
+                                                </div>
+                                                <div *ngIf="item.bankBranch">
+                                                    Chi nhánh: <b>{{ item.bankBranch }}</b>
+                                                </div>
+                                                <div *ngIf="item.bankNumber">
+                                                    Số tài khoản: <b>{{ item.bankNumber }}</b>
+                                                </div>
+                                                <div *ngIf="item.bankFullName">
+                                                    Tên chủ tài khoản: <b>{{ item.bankFullName }}</b>
+                                                </div>
+                                                <!-- <div *ngIf="item.bankNote">
+                                                    Nội dung chuyển khoản: <b>{{ item.bankNote }}</b>
+                                                </div> -->
+                                                <div *ngIf="item.note">
+                                                    Ghi chú: <b>{{ item.note }}</b>
+                                                </div>
+                                            </ng-container>
+
+                                            <span class="ui-resizable-column" *ngSwitchDefault class="break-word">{{item[col.field]}}</span>
+                                        </td>
+                                    </ng-container>
+
+                                    <td class="vs-hidden-print" style="width: 120px;">
+                                        <button type="button" class="vs-btn vs-btn-icon-red" *ngIf="item.status === PointStatus.DangXuLy && item.dealType === 3 && item.payment === 1" (click)="onCheckPayment(item.id)" pTooltip="Kiểm tra">
+                                            <span class="__icon fa fa-search"></span>
+                                            <span class="__label">Kiểm tra</span>
+                                        </button>
+                                        <button [authorize]="{'dapfood.api': { pointsController: 2048 }}" type="button" class="vs-btn vs-btn-icon-blue" *ngIf="item.status === PointStatus.ChuaXuLy" (click)="onProcess(item.id)" [disabled]="isLoading" pTooltip="Đang xử lý">
+                                            <span class="__icon fa fa-recycle"></span>
+                                            <span class="__label">Đang xử lý</span>
+                                        </button>
+                                        <button [authorize]="{'dapfood.api': { pointsController: 4096 }}" type="button" class="vs-btn vs-btn-icon-green" *ngIf="item.status === PointStatus.DangXuLy" (click)="onProcessKT(item.id, PointStatus.KTDuyetThanhCong, '')" [disabled]="isLoading" pTooltip="Duyệt">
+                                            <span class="__icon fa fa-check"></span>
+                                            <span class="__label">Duyệt</span>
+                                        </button>
+
+                                        <button [authorize]="{'dapfood.api': { pointsController: 4096 }}" type="button" class="vs-btn vs-btn-icon-red" *ngIf="item.status === PointStatus.DangXuLy" (click)="onProcessKT(item.id, PointStatus.KTDuyetThatBai, '')" [disabled]="isLoading" pTooltip="Lỗi">
+                                            <span class="__icon fa fa-times"></span>
+                                            <span class="__label">Lỗi</span>
+                                        </button>
+                                        <button [authorize]="{'dapfood.api': { pointsController: 8192 }}" type="button" class="vs-btn vs-btn-icon-green" *ngIf="item.status === PointStatus.KTDuyetThanhCong" (click)="onProcessAdmin(item.id, PointStatus.AdminDuyetThanhCong, '')" [disabled]="isLoading"
+                                            pTooltip="Duyệt">
+                                            <span class="__icon fa fa-check"></span>
+                                            <span class="__label">Duyệt</span>
+                                        </button>
+
+                                        <button [authorize]="{'dapfood.api': { pointsController: 8192 }}" type="button" class="vs-btn vs-btn-icon-red" *ngIf="item.status === PointStatus.KTDuyetThanhCong" (click)="onProcessAdmin(item.id, PointStatus.AdminDuyetThatBai, '')" [disabled]="isLoading"
+                                            pTooltip="Lỗi">
+                                            <span class="__icon fa fa-times"></span>
+                                            <span class="__label">Lỗi</span>
+                                        </button>
+
+                                        <button [authorize]="{'dapfood.api': { pointsController: 16384 }}" type="button" class="vs-btn vs-btn-icon-green" *ngIf="item.status === PointStatus.AdminDuyetThanhCong" (click)="onProcessFinish(item.id, PointStatus.ThanhCong, '')" pTooltip="Duyệt" [disabled]="isLoading">
+                                            <span class="__icon fa fa-check"></span>
+                                            <span class="__label">Thành công</span>
+                                        </button>
+
+                                        <button [authorize]="{'dapfood.api': { pointsController: 16384 }}" type="button" class="vs-btn vs-btn-icon-red" *ngIf="item.status === PointStatus.AdminDuyetThanhCong" (click)="onProcessFinish(item.id, PointStatus.Loi, '')" [disabled]="isLoading" pTooltip="Lỗi">
+                                            <span class="__icon fa fa-times"></span>
+                                            <span class="__label">Lỗi</span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </ng-template>
+
+                            <ng-template pTemplate="paginatorleft" let-state>
+                                <div class="vs-table-paginator">
+                                    Hiển thị
+
+                                    <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" (onChange)="onChangeRowLimit()" [options]="listItemNumberPerPage" [(ngModel)]="limit">
+                                    </p-dropdown>
+                                    / trang
+                                    <span class="__total-record"> - Có {{total}} mục trong danh sách</span>
+                                </div>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-point-error-edit (closePopup)="onCloseForm()"></app-point-error-edit>
+<app-point-deposit-admin-edit (closePopup)="onCloseForm()"></app-point-deposit-admin-edit>

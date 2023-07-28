@@ -1,0 +1,162 @@
+<p-dialog #dialog [header]="'Thêm/sửa banner'" styleClass="vs-modal force-full-width" positionTop="50" [(visible)]="isShow" [style]="{'max-width': '1100px'}" [contentStyle]="{'max-height': getMaxDialogHeight()}" [modal]="true" appendTo="body">
+    <div class="vs-form-container default-control-label-width vs-modal-content-panel">
+
+        <div class="vs-form-container default-control-label-width">
+            <div class="ui-g row">
+                <form action="" [formGroup]="formGroup">
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Tên</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8 required">
+                                <div class="__input-wrapper">
+                                    <input type="text" [(ngModel)]="modelEdit.name" formControlName="name" placeholder="Tên" />
+                                    <div class="form-control-feedback" *ngIf="formGroup.controls['name'].hasError('name') && formGroup.controls['name'].touched">
+                                        Trường thông tin này là bắt buộc!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Loại</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <p-dropdown [baseZIndex]="15000" formControlName="type" [(ngModel)]="modelEdit.type" [showClear]="true" filter="true" placeholder="-- Loại banner --" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="type_options" [style]="{'width':'100%', 'min-width':'0'}"
+                                        appendTo="body"></p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12" *ngIf="modelEdit.type==='promotion' || modelEdit.type==='promotionUser'">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Khuyến mại</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <p-autoComplete [(ngModel)]="selectedPromotion" formControlName="promotion" [suggestions]="results" (completeMethod)="autoCompletePromotion($event)" field="name" [size]="30" placeholder="Nhập tên hoặc mã khuyến mại" [minLength]="1" (onSelect)="onSelect($event)">
+                                    </p-autoComplete>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12" *ngIf="modelEdit.type==='food'">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Món ăn</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <p-autoComplete [(ngModel)]="selectedFood" formControlName="food" [suggestions]="results" (completeMethod)="autoCompleteFood($event)" field="name" [size]="30" placeholder="Nhập tên hoặc mã món ăn" [minLength]="1" (onSelect)="onSelect($event)">
+                                    </p-autoComplete>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12" *ngIf="modelEdit.type==='product'">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Sản phẩm</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <p-autoComplete [(ngModel)]="selectedProduct" formControlName="product" [suggestions]="results" (completeMethod)="autoCompleteProduct($event)" field="name" [size]="30" placeholder="Nhập tên hoặc mã sản phẩm" [minLength]="1" (onSelect)="onSelect($event)">
+                                    </p-autoComplete>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12" *ngIf="modelEdit.type==='link'">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Link</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <input type="text" [(ngModel)]="modelEdit.url" formControlName="url" placeholder="Nhập link" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-3">
+                                Vị trí</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-3">
+                                <div class="__input-wrapper" style="position: relative;">
+                                    <p-dropdown [baseZIndex]="15000" formControlName="idcategory" [(ngModel)]="modelEdit.idCategory" [showClear]="true" filter="true" placeholder="-- Vị trí --" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="cate_options" [style]="{'width':'100%', 'min-width':'0'}"
+                                        appendTo="body"></p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Ảnh mobile</div>
+                            <div class="__input-wrapper required">
+                                <vs-single-fsfile-upload [chooseLabel]="'Chọn ảnh'" formControlName="image" [(ngModel)]="modelEdit.image"></vs-single-fsfile-upload>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Ảnh web</div>
+                            <div class="__input-wrapper">
+                                <vs-single-fsfile-upload [chooseLabel]="'Chọn ảnh'" formControlName="imageWeb" [(ngModel)]="modelEdit.imageWeb"></vs-single-fsfile-upload>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Mô tả</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <textarea type="text" [(ngModel)]="modelEdit.description" rows="3" formControlName="description" placeholder="Ghi chú"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Thứ tự</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <input type="text" [(ngModel)]="modelEdit.sort" formControlName="sort" placeholder="Thứ tự" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4"></div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <p-checkbox [(ngModel)]="modelEdit.isActive" formControlName="isActive" binary="true" label="Kích hoạt">
+                                    </p-checkbox>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4"></div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <p-checkbox [(ngModel)]="modelEdit.isShowHome" formControlName="isShowHome" binary="true" label="Hiển thị trang chủ">
+                                    </p-checkbox>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <p-footer>
+        <div class="ui-g row">
+            <div class="ui-g-12">
+                <button class="vs-btn vs-modal-btn vs-btn-action-edit" [disabled]="!formGroup.valid" (click)="save()" type="button">
+                    <span class="__icon fa fa-floppy-o"></span>
+                    <span class="__label">Lưu</span>
+                </button>
+                <button type="button" (click)="closePopupMethod(null)" class="vs-btn vs-modal-btn vs-btn-action-back">
+                    <span class="__icon fa fa-times"></span>
+                    <span class="__label">Đóng</span>
+                </button>
+            </div>
+        </div>
+    </p-footer>
+</p-dialog>

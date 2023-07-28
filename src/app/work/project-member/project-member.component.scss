@@ -1,0 +1,20 @@
+.user_link {
+    position: relative;
+    padding: 10px 0 10px 0;
+    .popup_user {
+        cursor: default;
+        position: absolute;                     
+        left: 0px;
+        background-color: #fff;
+        padding: 15px;
+        border: 1px solid #d6d6d6;
+        border-radius: 8px;
+        z-index: 2;
+        &.popup_top{
+            bottom: 25px;
+        }
+        &.popup_bottom{
+            top: 25px;
+        }
+    }
+}

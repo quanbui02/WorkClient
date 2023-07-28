@@ -1,0 +1,178 @@
+<div class="vs-page-content app-banner-index">
+  <div class="vs-page-content-header-area">
+    <div class="ui-g">
+      <div class="ui-g-12 ui-md-7 ui-lg-9 __page-title-wrapper">
+        <h1 class="__page-title">Quản lý dự án</h1>
+      </div>
+      <div class="ui-g-12 ui-md-5 ui-lg-3 __search-box-wrapper">
+        <div class="__search-box">
+          <input type="search" placeholder="Nhập từ khóa" name="search" class="__input vs-input" (keyup.enter)="onSearch()" [(ngModel)]="searchModel.key">
+
+          <span class="__toggle-search-adv" (click)="toggleSearch()">
+            <span [hidden]="openSearchAdv" class="fa fa-angle-double-down"></span>
+            <span [hidden]="!openSearchAdv" class="fa fa-angle-double-up "></span>
+          </span>
+
+          <span class="__search-btn" (click)="onSearch()">
+            <i class="fa fa-search"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui-g" [hidden]="!openSearchAdv">
+      <div class="ui-g-12 __search-filter-wrapper">
+
+        <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" filter="true" [style]="{'width':'100%'}" [(ngModel)]="searchModel.isActive" [options]="active_options">
+        </p-dropdown>
+
+        <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" filter="true" [style]="{'width':'100%'}" [(ngModel)]="searchModel.isDelete" [options]="delete_options">
+        </p-dropdown>
+
+        <button class="vs-btn vs-modal-btn vs-btn-action-edit" type="button" (click)="onSearch()">
+          <span class="__icon fa fa-search"></span>
+          <span class="__label">Tìm kiếm</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="vs-page-content-body-area">
+    <div class="ui-g-12 vs-data-table-area">
+      <div class="ui-g vs-data-table-area-inner">
+        <div class="__main-table-area">
+
+          <div class="ui-g __top-table-action">
+            <div class="ui-g-6 __left-content">
+              <button type="button" class="vs-btn vs-top-table-btn vs-btn-action-edit" (click)="onEditProject(0)">
+                <span class="__icon fa fa-plus"></span>
+                <span class="__label">Tạo mới project</span>
+              </button>
+            </div>
+
+            <div class="ui-g-6 __right-content">
+              <ul class="__action-tabs">
+                <li #columnListContainer class="__tab-item-wrapper __toggle-column-wrapper">
+                  <div class="__tab-item" (click)="toggleColumnList()">
+                    <span class="__icon pi pi-th-large"></span>
+                    <span class="__label">Chọn cột</span>
+                  </div>
+                  <div class="__column-list" [hidden]="!openColumnList">
+                    <div *ngFor="let col of cols" class="__column-item">
+                      <p-checkbox binary="true" [(ngModel)]="col.visible" name="groupname" label="{{col.header}}"></p-checkbox>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="ui-g vs-table-wrapper" id="table">
+            <p-treeTable [columns]="cols" selectionMode="multiple" [rows]="limit" [scrollable]="true" scrollHeight="auto" [value]="dataSource" [(selection)]="selectedItems" [totalRecords]="total" class="vs-table responsive-table" [customSort]="true" (onSort)="onSort($event)" [paginator]="true" [loading]="isLoading" [lazy]="true" (onPage)="onPage($event)" [resizableColumns]="true" dataKey="id">
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <ng-container *ngFor="let col of columns;">
+                    <th [style.width]="col.width" class="ui-resizable-column" [hidden]="!col.visible" ttResizableColumn [ttSortableColumn]="col.sort ? col.field : ''" class="ui-resizable-column">
+                      {{col.header}}
+                      <span *ngIf="col.sort">
+                        <p-treeTableSortIcon [field]="col.field"></p-treeTableSortIcon>
+                      </span>
+                    </th>
+                  </ng-container>
+                  <th style="width: 7%;">Thao tác</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
+                <tr>
+                  <ng-container *ngFor="let col of columns;let i = index;" [ngSwitch]="col.field">
+                    <td [style.width]="col.width" class="ui-resizable-column" [hidden]="!col.visible" [class.align-left]="!col.align || col.align === 'left'" [class.align-center]="col.align === 'center'" [class.align-right]="col.align === 'right'">
+                      <ng-container *ngSwitchCase="'name'">
+                        <div class="display_name_project">
+                          <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+                          <div class="name_img_prj" *ngIf="!rowData.children">
+                            <img src="{{getAvatar(rowData.image)}}" alt="{{rowData.name}}">
+                            <span>{{rowData.name}}</span>
+                          </div>
+                          <div class="name_img_prj" *ngIf="rowData.children">
+                            <img src="{{getAvatar(rowNode.node.data.image)}}" alt="{{rowNode.node.data.name}}">
+                            <span>{{rowNode.node.data.name}}</span>
+                          </div>
+                        </div>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'userCreated'">
+                        <div class="user_created_prj" *ngIf="rowData.children">
+                          <img src="{{getAvatarUser(rowNode.node.data.userCreated.avatar)}}" alt="{{rowNode.node.data.userCreated.name ? rowNode.node.data.userCreated.name : rowNode.node.data.userCreated.userName}}">
+                          <span>{{rowNode.node.data.userCreated.name ? rowNode.node.data.userCreated.name : rowNode.node.data.userCreated.userName}}</span>
+                        </div>
+                        <div class="user_created_prj" *ngIf="!rowData.children">
+                          <img src="{{getAvatarUser(rowData.userCreated.avatar)}}" alt="{{rowData.userCreated.name ? rowData.userCreated.name : rowData.userCreated.userName}}">
+                          <span>{{rowData.userCreated.name ? rowData.userCreated.name : rowData.userCreated.userName}}</span>
+                        </div>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'createdDate'">
+                        <span *ngIf="rowData.children">{{rowNode.node.data.createdDate | date :'HH:mm dd/MM/yyyy':'UTC'}}</span>
+                        <span *ngIf="!rowData.children">{{rowData.createdDate | date :'HH:mm dd/MM/yyyy':'UTC'}}</span>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'description'">
+                        <span *ngIf="rowData.children">{{rowNode.node.data.description}}</span>
+                        <span *ngIf="!rowData.children">{{rowData.description}}</span>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'sort'"> 
+                        <span>{{rowData.sort}}</span>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'isActived'">
+                        <p-inputSwitch *ngIf="rowData.children" [(ngModel)]="rowNode.node.data.isActived" pTooltip="Hoạt động" (click)="changeActiveProject(rowNode.node.data.id)">
+                        </p-inputSwitch>
+                        <p-inputSwitch *ngIf="!rowData.children" [(ngModel)]="rowData.isActived" pTooltip="Hoạt động" (click)="changeActiveProject(rowData.id)">
+                        </p-inputSwitch>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'isWorkFolow'">
+                        <p-inputSwitch *ngIf="rowData.children" [(ngModel)]="rowNode.node.data.isWorkFolow" pTooltip="Hoạt động" (click)="changeActiveProject(rowNode.node.data.id)">
+                        </p-inputSwitch>
+                        <p-inputSwitch *ngIf="!rowData.children" [(ngModel)]="rowData.isWorkFolow" pTooltip="Hoạt động" (click)="changeActiveProject(rowData.id)">
+                        </p-inputSwitch>
+                      </ng-container>
+                    </td>
+                  </ng-container>
+                  <td class="vs-hidden-print" style="width: 7%;">
+                    <div class="vs-table-row-actions ui-text-center" *ngIf="rowData.children && !rowData.isDeleted">
+                      <button *ngIf="!rowData.isDeleted" type="button" class="vs-btn vs-btn-blue" pTooltip="Cập nhật" (click)="onEditProject(rowNode.node.data.id)">
+                        <i class="__icon fa fa-pencil"></i>
+                      </button>
+                      <button *ngIf="!rowData.isDeleted" type="button" class="vs-btn vs-btn-red" pTooltip="Xoá" (click)="onDeleteProject(rowNode.node.data.id)">
+                        <span class="__icon fa fa-times"></span>
+                      </button>
+                    </div>
+                    <div class="vs-table-row-actions ui-text-center" *ngIf="!rowData.children">
+                      <button type="button" class="vs-btn vs-btn-blue" pTooltip="Cập nhật" (click)="onEditProject(rowData.id)">
+                        <i class="__icon fa fa-pencil"></i>
+                      </button>
+                      <button *ngIf="!rowData.isDeleted" type="button" class="vs-btn vs-btn-red" pTooltip="Xoá" (click)="onDeleteProject(rowData.id)">
+                        <span class="__icon fa fa-times"></span>
+                      </button>
+                      <button *ngIf="rowData.isDeleted" type="button" class="vs-btn vs-btn-green" (click)="BackToDeleteProject(rowData.id)" pTooltip="Hoàn lại">
+                        <span class="__icon fa fa-undo"></span>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="paginatorleft" let-state>
+                <div class="vs-table-paginator">
+                  Hiển thị
+
+                  <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" (onChange)="onChangeRowLimit()" [options]="listItemNumberPerPage" [(ngModel)]="limit">
+                  </p-dropdown>
+                  / trang
+                  <span class="__total-record"> - Có {{total}} mục trong danh sách</span>
+                </div>
+              </ng-template>
+            </p-treeTable>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-project-edit (closePopup)="onCloseForm()"></app-project-edit>

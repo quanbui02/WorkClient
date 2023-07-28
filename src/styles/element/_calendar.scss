@@ -1,0 +1,36 @@
+// body .ui-calendar.ui-calendar-w-btn .ui-inputtext,
+// body .ui-calendar.ui-calendar-w-btn .ui-inputtext:enabled:hover:not(.ui-state-error),
+// body .ui-calendar.ui-calendar-w-btn .ui-inputtext:enabled:focus:not(.ui-state-error) {
+//     border-right: 1px solid #ddd;
+//     padding-right: 28px;
+// }
+p-calendar {
+    .ui-calendar {
+        // width: 100%;
+        .ui-inputtext {
+            // width: 100%;
+            border-radius: 0px;
+            box-shadow: none;
+            float: left;
+        }
+        .ui-button {
+            border-radius: 0px;
+        }
+    }
+}
+
+// p-calendar.vs-date-picker {
+//     .ui-calendar-w-btn {
+//         position: relative;
+//         .ui-button {
+//             border-radius: 0;
+//             position: absolute;
+//             background-color: transparent;
+//             right: 0;
+//             color: #aaa;
+//         }
+//         .ui-button.ui-button-icon-only .ui-button-text {
+//             display: none;
+//         }
+//     }
+// }

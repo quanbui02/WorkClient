@@ -1,0 +1,87 @@
+<p-dialog #dialog [header]="'Cập nhật trạng thái xử lý'" styleClass="vs-modal force-full-width" positionTop="50" [(visible)]="isShow" [style]="{'max-width': '1100px'}" [contentStyle]="{'max-height': getMaxDialogHeight()}" [modal]="true" appendTo="body">
+  <div class="vs-form-container default-control-label-width vs-modal-content-panel app-foods-edit">
+
+    <div class="vs-form-container default-control-label-width">
+      <div class="ui-g row">
+        <form action="" [formGroup]="formGroup">
+          <!-- <p-fieldset legend="Thông tin phản hồi"> -->
+          <!-- <div class="ui-g row"> -->
+          <!-- <div class="ui-g-12 ui-lg-12">
+                <div class="vs-form-control ui-g">
+                  <div class="__form-control-label ui-g-12 ui-md-4">Mã đơn hàng</div>
+                  <div class="__form-control-inputs ui-g-12 ui-md-8">
+                    <div class="__input-wrapper ">
+                      {{modelEdit.idOrder}}
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+          <!-- <div class="ui-g-12 ui-lg-12">
+              <div class="vs-form-control ui-g">
+                <div class="__form-control-label ui-g-12 ui-md-4">Nội dung phản hồi</div>
+                <div class="ui-g-12 ui-md-8">
+                  <div class="">
+                    {{modelEdit.content}}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ui-g-12 ui-lg-12">
+              <div class="vs-form-control ui-g">
+                <div class="__form-control-label ui-g-12 ui-md-12">Danh sách ảnh</div>
+                <div class="__form-control-inputs ui-g-12 ui-md-12">
+                  <div class="__input-wrapper">
+                    <app-multi-file-upload2 style="width: 100%;" [(ngModel)]="modelEdit.images" formControlName="images" [chooseLabel]="'Chọn ảnh'" [viewOnly]="true">
+                    </app-multi-file-upload2>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+          <!-- </div> -->
+          <!-- </p-fieldset> -->
+          <!-- <br /> -->
+          <p-fieldset legend="Xử lý phản hồi">
+            <div class="ui-g row">
+              <div class="ui-g-12 ui-lg-12">
+                <div class="vs-form-control ui-g">
+                  <div class="__form-control-label ui-g-12 ui-md-4">Trạng thái xử lý</div>
+                  <div class="__form-control-inputs ui-g-12 ui-md-8">
+                    <div class="__input-wrapper required">
+                      <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" filter="true" formControlName="idStatus" [style]="{'width':'100%'}" [(ngModel)]="modelEdit.idStatus" [options]="status_options">
+                      </p-dropdown>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="ui-g-12 ui-lg-12">
+                <div class="vs-form-control ui-g">
+                  <div class="__form-control-label ui-g-12 ui-md-4">Ghi chú</div>
+                  <div class="__form-control-inputs ui-g-12 ui-md-8">
+                    <div class="__input-wrapper required">
+                      <textarea type="text" [(ngModel)]="modelEdit.note" rows="3" formControlName="note" placeholder="Ghi chú"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </p-fieldset>
+        </form>
+
+      </div>
+    </div>
+  </div>
+  <p-footer>
+    <div class="ui-g row">
+      <div class="ui-g-12">
+        <button class="vs-btn vs-modal-btn vs-btn-action-edit" [disabled]="!formGroup.valid" (click)="save()" type="button">
+          <span class="__icon fa fa-floppy-o"></span>
+          <span class="__label">Lưu</span>
+        </button>
+        <button type="button" (click)="closePopupMethod(null)" class="vs-btn vs-modal-btn vs-btn-action-back">
+          <span class="__icon fa fa-times"></span>
+          <span class="__label">Đóng</span>
+        </button>
+      </div>
+    </div>
+  </p-footer>
+</p-dialog>

@@ -1,0 +1,256 @@
+<p-button label="Modal Content" (onClick)="showModal()"></p-button>
+<p-button label="Modal Thông Báo" (onClick)="showModalInfo()"></p-button>
+<p-dialog [header]="'Thông tin chi tiết học phần: [Mã học phần]'" class="normal-form vs-modal" [(visible)]="display" [modal]="true" [responsive]="true" [styleClass]="'vs-modal force-full-width'" [style]="{'max-width': '1300px'}" [minHeight]="400" [maximizable]="true"
+    [contentStyle]="{'max-height': getMaxDialogHeight()}" [autoZIndex]="true">
+    <div style="height: 700px"></div>
+    <p-tabView class="vs-modal-tab">
+        <p-tabPanel header="Thông tin học phần">
+            <div class="vs-form-container default-control-label-width">
+                <div class="ui-g row">
+                    <div class="ui-g-12 ui-lg-6">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4" title="Hệ đào tạo">Hệ đào tạo</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <input type="text" class="__input" value="Đại học chính quy" [readOnly]="true" placeholder="Username">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-6">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Ngành đào tạo</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="khoa" class="__input" [style]="{'width': '100%'}"></p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g row">
+                    <div class="ui-g-12 ui-lvg-6">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Đơn vị phụ trách</div>
+
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper required">
+                                    <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" [style]="{'width': '100%'}" [options]="khoa" class="ui-g-nopad"></p-dropdown>
+                                </div>
+                                <div class="__input-wrapper">
+                                    <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" [style]="{'width': '100%'}" [options]="bo_mon">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-6">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Nhóm học phần</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" [style]="{'width': '100%'}" [options]="khoa" class="ui-g-nopad"></p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g row">
+                    <div class="ui-g-12 ui-lg-6">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Khối kiến thức</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" [style]="{'width': '100%'}" [options]="khoa" class="ui-g-nopad"></p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-6">
+                        <div class="ui-g row">
+                            <div class="vs-form-control ui-g-12 ui-lg-6">
+                                <div class="__form-control-label ui-g-12 ui-md-4 ui-lg-8">
+                                    Lần điều chỉnh</div>
+                                <div class="__form-control-inputs ui-g-12 ui-md-8 ui-lg-4">
+                                    <div class="__input-wrapper">
+                                        <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" [style]="{'width': '100%'}" [options]="khoa" class="ui-g-nopad">
+                                        </p-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="vs-form-control ui-g-12 ui-lg-6">
+                                <div class="__form-control-label ui-g-12 ui-md-4 ui-lg-8">Thứ tự trong lĩnh vực KT</div>
+                                <div class="__form-control-inputs ui-g-12 ui-md-8 ui-lg-4">
+                                    <div class="__input-wrapper">
+                                        <input type="number" class="__input">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g row">
+                    <div class="ui-g-12 ui-lg-6">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Phân tiết mặc định</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <input type="text" class="" placeholder="Lý thuyết">
+                                </div>
+                                <div class="__input-wrapper">
+                                    <input type="text" class="" placeholder="Lý thuyết">
+                                </div>
+                                <div class="__input-wrapper">
+                                    <input type="text" class="" placeholder="Lý thuyết">
+                                </div>
+                                <div class="__input-wrapper">
+                                    <input type="text" class="" placeholder="Lý thuyết">
+                                </div>
+                                <div class="__input-wrapper">
+                                    <input type="text" class="" placeholder="Lý thuyết">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-6">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Áp dụng miễn/giảm HP</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper __radio-wrapper">
+                                    <p-radioButton name="groupname2" class="mr-5 ml-5" value="val1" label="Có áp dụng">
+                                    </p-radioButton>
+                                    <p-radioButton name="groupname2" value="val2" label="Không áp dụng"></p-radioButton>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g row">
+                    <div class="ui-g-12 ui-lg-6">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Mô tả</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <textarea name="description" cols="30" rows="5"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-6">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Hệ số HP mặc định</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <input type="text" class="" placeholder="Lý thuyết">
+                                </div>
+                                <div class="__input-wrapper">
+                                    <input type="text" class="" placeholder="Lý thuyết">
+                                </div>
+                                <div class="__input-wrapper">
+                                    <input type="text" class="" placeholder="Lý thuyết">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </p-tabPanel>
+        <p-tabPanel header="Giảng viên phụ trách">
+            Giảng viên phụ trách
+        </p-tabPanel>
+        <p-tabPanel header="Đề cương chi tiết" [disabled]="true">
+        </p-tabPanel>
+    </p-tabView>
+
+    <p-footer>
+        <div class="ui-g row">
+            <div class="ui-g-2">
+                <div class="vs-custom-dropdown-wrapper vs-modal-more-action-btn-wrapper">
+                    <button class="vs-btn vs-modal-more-action-btn" (click)="togglePopupDelete()">
+                        <span class="fa fa-caret-down"></span>
+                    </button>
+                    <div class="vs-custom-dropdown top-right delete-action" [hidden]="!openPopupDelete">
+                        <a href="javascript:void(0)" class="__action">Xóa dữ liệu vĩnh viễn</a>
+                    </div>
+                </div>
+            </div>
+            <div class="ui-g-10">
+                <button type="button" class="vs-btn vs-modal-btn vs-btn-action-lock">
+                    <span class="__icon fa fa-lock"></span>
+                    <span class="__label">Khóa dữ liệu</span>
+                </button>
+                <button type="button" class="vs-btn vs-modal-btn vs-btn-action-back">
+                    <span class="__icon fa fa-times"></span>
+                    <span class="__label">Đóng</span>
+                </button>
+            </div>
+        </div>
+    </p-footer>
+</p-dialog>
+
+<p-dialog [header]="'Thông tin chi tiết học phần: [Mã học phần]'" class="normal-form" [(visible)]="displayInfo" [modal]="true" [responsive]="true" [width]="1200" [minWidth]="600" [minHeight]="600" [autoZIndex]="true">
+    <div class="content">
+        <form action="">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <div class="ui-inputgroup ui-g">
+                        <span class="ui-inputgroup-addon ui-g-12 ui-lg-4 label-input">Tiêu đề</span>
+                        <div class="ui-g-12 ui-md-8 ui-g-nopad required">
+                            <input type="text" class="input-full-wh" placeholder="Tiêu đề thông báo">
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g-12">
+                    <div class="ui-g">
+                        <span class="ui-inputgroup-addon ui-g-12 ui-lg-4 label-input">Đơn vị nhận</span>
+                        <div class="ui-g-12 ui-md-8 ui-g-nopad required">
+                            <p-multiSelect [options]="cities2" optionLabel="name"></p-multiSelect>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g-12">
+                    <div class="ui-g">
+                        <span class="ui-inputgroup-addon ui-g-12 ui-lg-4 label-input">Nội dung thông báo</span>
+                        <div class="ui-g-12 ui-md-8 ui-g-nopad required">
+                            <textarea [rows]="5" class="input-full-wh" pInputTextarea autoResize="autoResize"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g-12">
+                    <div class="ui-g">
+                        <span class="ui-inputgroup-addon ui-g-12 ui-lg-4 label-input">Hình thức gửi thông báo</span>
+                        <div class="ui-g-12 ui-md-8 ui-g-nopad pt-02">
+                            <p-checkbox name="checkBox" value="val1" class="mr-5 ml-5" [label]="'Gửi qua email'">
+                            </p-checkbox>
+                            <p-checkbox name="checkBox" value="val2" [label]="'Gửi tin nhắn SMS'"></p-checkbox>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g-12">
+                    <div class="ui-g">
+                        <div class="ui-g-12 ui-md-offset-4 ui-g-nopad">
+                            <p-fileUpload name="myfile[]" url="./upload.php" [showUploadButton]="false" [showCancelButton]="false" [auto]="true">
+                                <ng-template pTemplate="content">
+                                    <div class="text-center">
+                                        <b>Kéo file vào đây</b>
+                                        <span class="pr-10 pl-10">hoặc</span>
+                                        <button class="choose-file" onClick="document.querySelector('.ui-fileupload-choose input').click();">
+                                            Chọn file
+                                        </button>
+                                    </div>
+                                </ng-template>
+                            </p-fileUpload>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <p-footer>
+        <button type="button" pButton [label]="'Lưu dữ liệu'" class="btn-save"></button>
+        <button class="btn-copy" type="button" pButton [label]="'Sao chép môn khác'"></button>
+        <button class="btn-cancel" type="button" pButton [label]="'Hủy'"></button>
+    </p-footer>
+</p-dialog>

@@ -1,0 +1,34 @@
+<div *ngIf="apiUrl == ''">
+    <span>Vui lòng cấu hình địa chỉ file upload từ module</span>
+</div>
+<div *ngIf="apiUrl != ''">
+    <!-- <div *ngIf="!uploading"> -->
+    <div *ngIf="isNullValued">
+        <p-fileUpload (onBeforeUpload)="onBeforeUpload()" [ngStyle]="{'display': showIconOnly? 'none' : ''}" id="single-file-upload"
+            #fileControl [disabled]="disabled" [multiple]="false" (onSelect)="onSelect($event)" (onError)="onError($event)" (onBeforeSend)="onBeforeSend($event)"
+            [chooseLabel]="chooseLabel" (onUpload)="onUploadEvent($event)" mode="basic" name="files" url="{{apiUrl}}" maxFileSize="maxFileSize"
+            auto="false">
+            <!-- 10 MB -->
+        </p-fileUpload>
+        <div *ngIf="showIconOnly">
+            <a (click)="selectFileUpload()">
+                <i class="{{icon}}"></i>
+            </a>
+        </div>
+    </div>
+    <div *ngIf="!isNullValued">
+        <div *ngIf="!showIconOnly">
+            <i class="fa fa-file"></i>
+            <a title="{{rawFileName}}" (click)="downLoadFile()">{{rawFileName}}</a>
+            <a class="text text-danger" (click)="deleteFile()" *ngIf="!disabled">Xóa</a>
+        </div>
+        <div *ngIf="showIconOnly">
+            <a title="{{rawFileName}}" pTooltip="{{rawFileName}}" (click)="downLoadFile()">
+                <i class="fa fa-file"></i>
+            </a>
+            <a class="text text-danger" (click)="deleteFile()" *ngIf="!disabled">
+                <i class="fa fa-remove"></i>
+            </a>
+        </div>
+    </div>
+</div>

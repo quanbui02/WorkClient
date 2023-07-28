@@ -1,0 +1,9 @@
+.img150 img{width: 150px !important;}
+.record-picker li {
+    min-height: 25px;
+    line-height: 25px;
+}
+.record-picker li.selected {
+    background-color: #0095da !important;
+    color: #fff !important;
+}

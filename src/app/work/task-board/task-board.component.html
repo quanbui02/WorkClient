@@ -1,0 +1,88 @@
+<app-task-header></app-task-header>
+<div class="task_screen_body">
+  <div class="task-tab-content">
+    <div class="ui-g task-tab-content-toolbar">
+      <div class="ui-g-8 search_task">
+        <!-- <div class="search_name" id="search_name" (click)="openSearchName()">
+          <i class="fa fa-search" aria-hidden="true"></i>
+          <input (blur)="closeSearchName()" id="input_search_name" type="search" placeholder="Tìm kiếm" name="search" class="__input vs-input" (keyup.enter)="onSearch()" [(ngModel)]="searchModel.key">
+        </div> -->
+        <div class="search_name" id="search_name" (click)="openSearchName()" [ngClass]="{'search_active': isSearch}">
+          <i class="fa fa-search" aria-hidden="true"></i>
+          <input (blur)="isSearch=false;searchModel.key = ''" id="input_search_name" type="search" placeholder="Tìm kiếm" name="search" class="__input vs-input" (keyup.enter)="onSearch()" [(ngModel)]="searchModel.key">
+        </div>
+        <div class="vs-overlay" vsOverlay>
+          <a class="vs-overlay-btn">
+            <svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20" aria-hidden="true" class="icon_component filter-item-icon-component icon_component--no-focus-style">
+              <path d="M17.8571 2.87669C18.107 3.41157 18.0246 4.04275 17.6457 4.49555L12.4892 10.6589V15.3856C12.4892 16.0185 12.097 16.5852 11.5048 16.8082L9.56669 17.5381C9.09976 17.7139 8.57627 17.6494 8.16598 17.3655C7.75569 17.0816 7.51084 16.6144 7.51084 16.1155V10.6589L2.35425 4.49555C1.97542 4.04275 1.89302 3.41157 2.14291 2.87669C2.39279 2.34182 2.92977 2 3.52013 2H16.4799C17.0702 2 17.6072 2.34182 17.8571 2.87669ZM16.4799 3.52012H3.52013L8.91611 9.96964C8.99036 10.0584 9.03096 10.1698 9.03096 10.2848V16.1155L10.969 15.3856V10.2848C10.969 10.1698 11.0096 10.0584 11.0839 9.96964L16.4799 3.52012Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+            Lọc
+          </a>
+          <div class="vs-overlay-popup">
+            <div class="overlay_search_dropdown">
+              <p-dropdown (onHide)="onSearch()" appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" [style]="{'width':'100%'}" [(ngModel)]="searchModel.type" [options]="type_options">
+                <ng-template let-item pTemplate="selectedItem">
+                  <span *ngIf="item.value == 2" class="custom_i_bug"><i class="fa fa-circle" aria-hidden="true"></i></span>
+                  <span *ngIf="item.value == 1" class="custom_i_task"><i class="fa fa-check" aria-hidden="true"></i></span>
+                  <span>{{item.label}}</span>
+                </ng-template>
+                <ng-template let-type pTemplate="item">
+                  <span *ngIf="type.value == 2" class="custom_i_bug"><i class="fa fa-circle" aria-hidden="true"></i></span>
+                  <span *ngIf="type.value == 1" class="custom_i_task"><i class="fa fa-check" aria-hidden="true"></i></span>
+                  <span>{{type.label}}</span>
+                </ng-template>
+              </p-dropdown>
+
+              <p-dropdown (onHide)="onSearch()" appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" [style]="{'width':'100%'}" [(ngModel)]="searchModel.priority" [options]="priority_options">
+                <ng-template let-item pTemplate="selectedItem">
+                  <i *ngIf="item.value == 5" class="fa fa-angle-double-up color_red option_custom" aria-hidden="true"></i>
+                  <i *ngIf="item.value == 4" class="fa fa-angle-up color_red option_custom" aria-hidden="true"></i>
+                  <span *ngIf="item.value == 3" class="color_yellow option_custom">=</span>
+                  <i *ngIf="item.value == 2" class="fa fa-angle-down color_blue option_custom" aria-hidden="true"></i>
+                  <i *ngIf="item.value == 1" class="fa fa-angle-double-down color_blue option_custom" aria-hidden="true"></i>
+                  <span>{{item.label}}</span>
+                </ng-template>
+                <ng-template let-priority pTemplate="item">
+                  <i *ngIf="priority.value == 5" class="fa fa-angle-double-up color_red option_custom" aria-hidden="true"></i>
+                  <i *ngIf="priority.value == 4" class="fa fa-angle-up color_red option_custom" aria-hidden="true"></i>
+                  <span *ngIf="priority.value == 3" class="color_yellow option_custom">=</span>
+                  <i *ngIf="priority.value == 2" class="fa fa-angle-down color_blue option_custom" aria-hidden="true"></i>
+                  <i *ngIf="priority.value == 1" class="fa fa-angle-double-down color_blue option_custom" aria-hidden="true"></i>
+                  <span>{{priority.label}}</span>
+                </ng-template>
+              </p-dropdown>
+              <p-dropdown (onHide)="onSearch()" appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" [style]="{'width':'100%'}" [(ngModel)]="searchModel.star" [options]="star_options">
+              </p-dropdown>
+            </div>
+          </div>
+        </div>
+        <div class="filter_member">
+          <a *ngFor="let item of users_options; let i = index" class="user_filter" (click)="filterMemberProject(i, item.value)">
+            <img class="avatar_user" [ngClass]="{'active': activeUser[i]}" src="{{getAvatarById(item.value)}}" pTooltip="{{item.label}}" />
+          </a>
+        </div>
+      </div>
+
+      <div class="ui-g-4">
+        <a [routerLink]="buildUrl('/work/group-task/config/')" style="float: right;color: #000;align-items: center;display: flex;gap: 5px;" pTooltip="Thiết lập">
+          <span role="img" aria-label="View settings" class="css-snhnyn" style="--icon-primary-color:currentColor; --icon-secondary-color:var(--ds-surface, #FFFFFF);"><svg width="24" height="24" viewBox="0 0 24 24" role="presentation">
+              <g fill="currentColor" fill-rule="evenodd">
+                <path d="M3 7h3v2H3zm0 8h11v2H3zm7-8h11v2H10zm8 8h3v2h-3z"></path>
+                <path d="M11 8a3 3 0 11-5.999.001A3 3 0 0111 8zM9 8a1 1 0 10-1.999-.001A1 1 0 009 8zm10 8a3 3 0 11-5.999.001A3 3 0 0119 16zm-2 0a1 1 0 10-1.999-.001A1 1 0 0017 16z"></path>
+              </g>
+            </svg></span>
+          <span> Thiết lập</span>
+        </a>
+      </div>
+
+    </div>
+    <div class="task-tab-content-body">
+      <div class="board-task">
+        <div class="board-group" cdkDropListGroup>
+          <div class="board-list" app-board-column (changeData)="changeData($event)" [hideBtnDetail]="checkHide(i)" [idProject]="idProject" [taskList]="item" *ngFor="let item of dataSource; let i = index">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

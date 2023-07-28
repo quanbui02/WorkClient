@@ -1,0 +1,95 @@
+/* Add your customizations of the theme here */
+.button-group button {
+    margin-right: .5em;
+}
+.button-group button:last-child {
+    margin-right: 0;
+}
+.button-group .ui-splitbutton.ui-buttonset .ui-button:last-child{border-left: 0;}
+.paginator-table .ui-paginator {
+    background: transparent;
+    border          : none!important;
+    float           : right;
+}
+.ui-toolbar-group-center{
+    text-align: center;
+}
+.no-border .ui-button,.no-border .danger-btn.ui-button {
+    color: #0095da;
+    background: transparent;
+    border: 0;
+    box-shadow:none;
+}
+.no-border .ui-button:hover,.no-border .ui-button:enabled:active,.no-border .ui-button:enabled:hover,
+.no-border .danger-btn.ui-button:enabled:hover,.no-border .danger-btn.ui-button:enabled:active{
+    background: transparent;
+    color: #579cd8;
+    box-shadow:none;
+}
+
+.text-underline {
+    :hover {
+        text-decoration: underline;
+    }
+}
+
+// Đánh dấu label cho field bắt buộc
+input.rq,
+.ui-autocomplete input.rq,
+textarea.rq,
+div.rq,
+body .ui-inputtext:enabled:focus:not(.ui-state-error).rq,
+.ui-autocomplete .ui-inputtext:enabled:focus:not(.ui-state-error).rq,
+body textarea:focus.rq,body div:focus.rq,
+body .ui-editor-container.rq
+{
+    border-left: $rq-border;
+}
+
+body .rq:enabled:focus:not(.ui-state-error) {
+	border-left: $rq-border;
+}
+
+.ui-autocomplete .ui-autocomplete-multiple-container  {
+    input.rq {
+        border-left: none;
+
+        &:enabled:focus {
+            border-left: none;
+        }
+    }
+}
+
+.ui-autocomplete.rq ul {
+	 border-left: $rq-border;
+}
+
+.search-item .ui-inputtext:enabled:focus:not(.ui-state-error){
+    border-left: 0;
+    border-right: 0;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+body .splash-screen {
+	background-color: $splash-background-color;
+}
+
+body .ui-table .ui-sortable-column.ui-state-highlight {
+	background: #eaf5ff;
+	color: #666;
+	border-top-color:#ddd;
+}
+
+body .ui-table .ui-sortable-column.ui-state-highlight .ui-sortable-column-icon {
+	color:#666;
+}
+
+.ui-blockui {
+    opacity   : 0.1 !important;
+    background: #a2a0a0 !important;
+}
+.editerReadOnly
+{
+    background: #eeeeee;
+}

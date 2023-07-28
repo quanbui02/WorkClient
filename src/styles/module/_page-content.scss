@@ -1,0 +1,198 @@
+.vs-page-content {
+    height: calc(100vh - 50px);
+    display: flex;
+    flex-direction: column;
+}
+.vs-page-wrapper .vs-page-content-area {
+    padding: 50px 0 0 0;
+}
+
+@media (min-width: 1025px) {
+    .layout-wrapper.menu-layout-static .layout-main {
+        margin-left: $vs-left-menu-width;
+    }
+}
+
+// page conttent header
+.vs-page-content-header-area {
+    background-color: #fff;
+    padding: 7.5px 0 0;
+    margin-bottom: 7.5px;
+    .__page-title {
+        font-size: 16px;
+        margin-top: 0;
+        margin-bottom: 5px;
+        line-height: 30px;
+    }
+    .__search-box {
+        position: relative;
+        margin-bottom: 7.5px;
+        width: calc(100% - 40px);
+        .__input {
+            padding-right: 47px;
+            width: 100%;
+        }
+        .__toggle-search-adv,
+        .__search-btn {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 33px;
+            height: 100%;
+            top: 0;
+            cursor: pointer;
+        }
+        .__toggle-search-adv {
+            right: -40px;
+            font-size: 16px;
+        }
+        .__search-btn {
+            right: 0;
+        }
+    }
+    .__search-filter-wrapper {
+        display: flex;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        >* {
+            margin-left: 5px;
+            margin-bottom: 5px;
+        }
+        .ui-dropdown,
+        .ui-multiselect {
+            min-width: 180px;
+        }
+        // p-calendar > .ui-calendar-w-btn {
+        //     input:hover, input:focus {
+        //         border-right: 1px solid #ddd !important;
+        //     }
+        // }
+    }
+}
+
+.vs-data-table-area { 
+    &.no-padding {
+        padding: 0;
+    }
+    .__left-table-sidebar,
+    .__right-table-sidebar {
+        background: #fff;
+        .__sidebar-header {
+            background-color: $vs-base-color;
+            color: #fff;
+            line-height: 16px;
+            padding: 4px 10px;
+        }
+    }
+    .__top-table-action {
+        background-color: #fff;
+        .__left-content {
+            padding-left: 0;
+            >* {
+                vertical-align: top;
+                .__icon {
+                    padding-top: 0px;
+                }
+            }
+            .ui-dropdown {
+                min-width: 180px;
+            }
+        }
+        .__change-view {
+            text-align: right;
+            .vs-btn {
+                margin-left: 5px;
+                margin-bottom: 5px;
+                color: #fff;
+                background: #aaa;
+                border: 0;
+                padding-left: 10px;
+                padding-right: 10px;
+                @include easing-animation();
+                &:hover,
+                &.activated {
+                    background-color: $vs-view-color;
+                }
+            }
+        }
+        .__right-content {
+            padding-right: 0;
+        }
+        // tabs
+        .__action-tabs {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            float: right;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            height: 30px;
+        }
+        .__tab-item-wrapper {
+            height: 24px;
+        }
+        .__tab-item {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            padding-left: 5px;
+            padding-right: 5px;
+            .__icon {
+                font-size: 18px;
+                margin-right: 5px;
+                line-height: 30px;
+            }
+            &.activated,
+            &:hover {
+                background-color: #ddd;
+            }
+        }
+        .__toggle-column-wrapper {
+            position: relative;
+        }
+        .__column-list {
+            position: absolute;
+            max-height: 400px;
+            overflow: auto;
+            width: 250px;
+            top: 100%;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            right: 0;
+            z-index: 5;
+            background: #fff;
+            color: $vs-text-color;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .3);
+            .__column-item {
+                padding: 5px 10px;
+                &:hover {
+                    background-color: #ddd;
+                }
+            }
+        }
+    }
+}
+
+// tree list at the left of table
+.vs-data-tree-container {
+    .__data-tree-tools-area {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+        .__expanse-tree-node-btn {
+            margin-right: 5px;
+            border: 0;
+            font-size: 12px;
+            color: #fff;
+            background-color: #aaa;
+            padding-left: 10px;
+            padding-right: 10px;
+            @include easing-animation();
+            &:hover,
+            &.activated {
+                background-color: $vs-view-color;
+            }
+        }
+    }
+}

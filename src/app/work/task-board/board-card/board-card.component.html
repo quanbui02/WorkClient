@@ -1,0 +1,29 @@
+<div class="issue-wrap" [ngClass]="{'bl-red': task.endDate && curDate > task.endDate, 
+  'bl-green': task.idStatus == statusType.Done || (!task.project.isWorkFolow && task.percent == 100), 
+  'bl-yellow': task.idStatus == statusType.InProgress || (!task.project.isWorkFolow && task.percent > 0 && task.percent < 100), 
+  'bl-grey': task.idStatus == statusType.ToDo || (!task.project.isWorkFolow && task.percent == 0)}">
+  <div class="issue">
+    <div class="pb-3 text-15 text-textDarkest task_name">
+      <span *ngIf="task.type == 2" class="custom_i_bug text_id_task"><i class="fa fa-circle" aria-hidden="true"></i></span>
+      <span *ngIf="task.type == 1" class="custom_i_task text_id_task"><i class="fa fa-check" aria-hidden="true"></i></span>
+      <span>{{ task.name }}</span>
+    </div>
+    <div class="image_task" *ngIf="task.attachment">
+      <img src="{{getImageTask(task.attachment)}}" alt="">
+    </div>
+    <div class="date_task">
+    </div>
+    <div class="task_info_other">
+      <span class=""><i class="fa fa-comment-o color_gray" aria-hidden="true"></i> {{task.countComment}}</span>
+      <div class="task_ident_pri">
+        <span *ngIf="task.priority == 5" class="task_pri"><i class="fa fa-angle-double-up color_red option_custom" aria-hidden="true"></i></span>
+        <span *ngIf="task.priority == 4" class="task_pri"><i class="fa fa-angle-up color_red option_custom" aria-hidden="true"></i></span>
+        <span *ngIf="task.priority == 3" class="color_yellow option_custom task_pri">=</span>
+        <span *ngIf="task.priority == 2" class="task_pri"><i class="fa fa-angle-down color_blue option_custom" aria-hidden="true"></i></span>
+        <span *ngIf="task.priority == 1" class="task_pri"><i class="fa fa-angle-double-down color_blue option_custom" aria-hidden="true"></i></span>
+        <img class="avatar_user task_ident" src="{{getAvatar(task.assignee?.avatar)}}" pTooltip="{{task.assignee?.name ? task.assignee?.name : task.assignee?.userName}}" />
+        <!-- <img *ngIf="task.avatar" class="avatar_user" src="{{getImageAvatar(task.avatar)}}" /> -->
+      </div>
+    </div>
+  </div>
+</div>

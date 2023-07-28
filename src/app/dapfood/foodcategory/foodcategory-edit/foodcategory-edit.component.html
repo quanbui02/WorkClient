@@ -1,0 +1,113 @@
+<p-dialog #dialog [header]="'Thêm/sửa'" styleClass="vs-modal force-full-width" positionTop="50" [(visible)]="isShow" [style]="{'max-width': '1100px'}" [contentStyle]="{'max-height': getMaxDialogHeight()}" [modal]="true" appendTo="body">
+    <div class="vs-form-container default-control-label-width vs-modal-content-panel">
+
+        <div class="vs-form-container default-control-label-width">
+            <div class="ui-g row">
+                <form action="" [formGroup]="formGroup">
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Tên</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <input type="text" [(ngModel)]="modelEdit.name" formControlName="name" placeholder="Tên" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-12">Danh mục</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-12">
+                                <div class="__input-wrapper required">
+                                    <p-dropdown [baseZIndex]="15000" formControlName="idParent" [(ngModel)]="modelEdit.idParent" [showClear]="true" filter="true" placeholder="-- Chọn danh mục --" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="dropdownCategories" [style]="{'width':'100%', 'min-width':'0'}"
+                                        appendTo="body"></p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Ảnh đại diện</div>
+                            <div class="__input-wrapper">
+                                <vs-single-fsfile-upload [chooseLabel]="'Chọn ảnh'" formControlName="image" [(ngModel)]="modelEdit.image"></vs-single-fsfile-upload>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Ảnh menu</div>
+                            <div class="__input-wrapper">
+                                <vs-single-fsfile-upload [chooseLabel]="'Chọn ảnh'" formControlName="avatar" [(ngModel)]="modelEdit.avatar"></vs-single-fsfile-upload>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Mô tả</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-12">
+                                <div class="__input-wrapper">
+                                    <textarea autosize type="text" formControlName="description" [(ngModel)]="modelEdit.description" rows="3" placeholder=""></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Thứ tự</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <input type="text" [(ngModel)]="modelEdit.sort" formControlName="sort" placeholder="Thứ tự" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-6">
+                        <div class="vs-form-control ui-g">
+                            <div class="ui-g-12">
+                                <b>
+                                    <p-checkbox [(ngModel)]="modelEdit.isActive" formControlName="isActive" label="Sử dụng" binary="true">
+                                    </p-checkbox>
+                                </b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-6">
+                        <div class="vs-form-control ui-g">
+                            <div class="ui-g-12">
+                                <b>
+                                    <p-checkbox [(ngModel)]="modelEdit.isPrivate" formControlName="isPrivate" label="Tạm ẩn" binary="true">
+                                    </p-checkbox>
+                                </b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-6">
+                        <div class="vs-form-control ui-g">
+                            <div class="ui-g-12">
+                                <b>
+                                    <p-checkbox [(ngModel)]="modelEdit.iShowPrivate" formControlName="iShowPrivate" label="Hiển thị riêng" binary="true">
+                                    </p-checkbox>
+                                </b>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <p-footer>
+        <div class="ui-g row">
+            <div class="ui-g-12">
+                <button class="vs-btn vs-modal-btn vs-btn-action-edit" [disabled]="!formGroup.valid" (click)="save()" type="button">
+                    <span class="__icon fa fa-floppy-o"></span>
+                    <span class="__label">Lưu</span>
+                </button>
+                <button type="button" (click)="closePopupMethod(null)" class="vs-btn vs-modal-btn vs-btn-action-back">
+                    <span class="__icon fa fa-times"></span>
+                    <span class="__label">Đóng</span>
+                </button>
+            </div>
+        </div>
+    </p-footer>
+</p-dialog>

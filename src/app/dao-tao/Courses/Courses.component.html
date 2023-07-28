@@ -1,0 +1,210 @@
+<div class="app-category-index">
+  <div class="vs-page-content-header-area">
+    <div class="ui-g">
+      <div class="ui-g-12 ui-md-7 ui-lg-9 __page-title-wrapper">
+        <h1 class="__page-title">Quản lý Khóa học</h1>
+      </div>
+
+      <div class="ui-g-12 ui-md-5 ui-lg-3 __search-box-wrapper">
+      </div>
+    </div>
+  </div>
+
+  <div class="vs-page-content-body-area">
+    <div class="vs-data-table-area">
+      <div class="ui-g vs-data-table-area-inner">
+        <div class="ui-g-12 ui-lg-12 __main-table-area">
+
+          <div class="ui-g __top-table-action">
+            <div class="ui-g-6 __left-content">
+              <button type="button" class="vs-btn vs-top-table-btn vs-btn-action-data" (click)="exportExcel()">
+                <span class="__icon fa fa-download"></span>
+                <span class="__label">Xuất danh sách</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="ui-g vs-table-wrapper" style="background-color: #FFF;padding: 10px;">
+
+            <div class="ui-g" style="width: 100%;">
+              <div class="ui-g-5">
+                <p-contextMenu #treeContextMenu [model]="menuItems"></p-contextMenu>
+                <p-tree [value]="dataTree" [loading]="isLoading" selectionMode="single" [(selection)]="selectedTreeNode" [filter]="true" [style]="{'width': '100%'}" [contextMenu]="treeContextMenu" (onNodeSelect)="nodeSelect($event)" scrollHeight="20px" class="tree">
+                  <ng-template let-node pTemplate="default">
+                    <span style="width:100%">{{node.label}}</span>
+                  </ng-template>
+                </p-tree>
+              </div>
+              <div class="ui-g-7">
+                <div class="vs-form-container default-control-label-width vs-modal-content-panel">
+
+                  <div class="vs-form-container default-control-label-width">
+                    <div class="ui-g row">
+                      <form action="" [formGroup]="formGroup">
+                        <div class="ui-g-12 ui-lg-12">
+                          <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Tên</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                              <div class="__input-wrapper">
+                                <input type="text" [(ngModel)]="modelEdit.name" formControlName="name" placeholder="Tên" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- <div class="ui-g-12">
+                          <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-12">Danh mục</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-12">
+                              <div class="__input-wrapper required">
+                                <p-dropdown [disabled]="true" [baseZIndex]="15000" formControlName="idParent" [(ngModel)]="modelEdit.idParent" [showClear]="true" filter="true" placeholder="-- Chọn danh mục --" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="dropdownCategories" [style]="{'width':'100%', 'min-width':'0'}" appendTo="body"></p-dropdown>
+                              </div>
+                            </div>
+                          </div>
+                        </div> -->
+                        <!-- <div class="ui-g-12 ui-lg-12">
+                          <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Ảnh đại diện</div>
+                            <div class="__input-wrapper">
+                              <vs-single-fsfile-upload [chooseLabel]="'Chọn ảnh'" formControlName="image" [(ngModel)]="modelEdit.image">
+                              </vs-single-fsfile-upload>
+                            </div>
+                          </div>
+                        </div> -->
+                        <!-- <div class="ui-g-12 ui-lg-12">
+                          <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Ảnh menu</div>
+                            <div class="__input-wrapper">
+                              <vs-single-fsfile-upload [chooseLabel]="'Chọn ảnh'" formControlName="avatar" [(ngModel)]="modelEdit.avatar">
+                              </vs-single-fsfile-upload>
+                            </div>
+                          </div>
+                        </div> -->
+                        <div class="ui-g-12 ui-lg-12">
+                          <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Thứ tự</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                              <div class="__input-wrapper">
+                                <input type="text" [(ngModel)]="modelEdit.sort" formControlName="sort" placeholder="Thứ tự" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="ui-g-12 ui-lg-12">
+                          <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Bài giảng</div>
+                            <div class="ui-g-12 ui-md-12" style="padding: 0;">
+                              <div class="__input-wrapper required">
+                                <!-- <p-multiSelect formControlName="tags" [options]="tag_options" [(ngModel)]="modelEdit.tags" appendTo="body" dropdownIcon="fa fa-filter" defaultLabel="Chọn tag">
+                                </p-multiSelect> -->
+                                <p-multiSelect formControlName="lesson" [options]="lesson_options" [(ngModel)]="lessonIds" defaultLabel="" appendTo="body">
+                                  <ng-template let-value pTemplate="selectedItems">
+                                    <div *ngFor="let val of value; index as i" class="vs-multi-select-tag" [hidden]="i > 8">
+                                      <span>{{getSelectedItemLabel(lesson_options, val)}}</span>
+                                    </div>
+                                    <div class="vs-multi-select-tag" *ngIf="lessonIds?.length > 8">
+                                      <span>...</span>
+                                    </div>
+                                    <div *ngIf="!value || value.length === 0" class="vs-multi-select-placeholder">-- Bài giảng --
+                                    </div>
+                                  </ng-template>
+                                  <ng-template let-item pTemplate="item">
+                                    <span>{{item.label}}</span>
+                                  </ng-template>
+                                </p-multiSelect>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- <div class="ui-g-12 ui-lg-12">
+                          <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Tiêu đề SEO</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-12">
+                              <div class="__input-wrapper">
+                                <textarea autosize type="text" formControlName="titleSeo" [(ngModel)]="modelEdit.titleSeo" rows="3" placeholder=""></textarea>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="ui-g-12 ui-lg-12">
+                          <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Mô tả SEO</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-12">
+                              <div class="__input-wrapper">
+                                <textarea autosize type="text" formControlName="descriptionSeo" [(ngModel)]="modelEdit.descriptionSeo" rows="3" placeholder=""></textarea>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="ui-g-12 ui-lg-12">
+                          <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Nội dung SEO đầu trang</div>
+                            <div class="ui-g-12 ui-md-12 p-0">
+                              <div class="__input-wrapper">
+                                <p-editor formControlName="detailHeaderSeo" [(ngModel)]="modelEdit.detailHeaderSeo" [style]="{'height':'200px'}"></p-editor>
+                              </div>
+                              <br>
+                              <button class="btn_hide_show_html" (click)="ShowHideHtmlDetailHeader()">Ẩn/Hiện Html</button>
+                              <div class="__input-wrapper" [ngClass]="{'d-none': hideHtmlHeaderSeo == true}">
+                                <textarea autosize type="text" formControlName="detailHtmlHeaderSeo" [(ngModel)]="modelEdit.detailHeaderSeo" rows="11" placeholder="" style="width: 100%;"></textarea>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="ui-g-12 ui-lg-12">
+                          <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Nội dung SEO cuối trang</div>
+                            <div class="ui-g-12 ui-md-12 p-0">
+                              <div class="__input-wrapper">
+                                <p-editor formControlName="detailFooterSeo" [(ngModel)]="modelEdit.detailFooterSeo" [style]="{'height':'300px'}"></p-editor>
+                              </div>
+                              <br>
+                              <button class="btn_hide_show_html" (click)="ShowHideHtmlDetailFooter()">Ẩn/Hiện Html</button>
+                              <div class="__input-wrapper" [ngClass]="{'d-none': hideHtmlFooterSeo == true}">
+                                <textarea autosize type="text" formControlName="detailHtmlFooterSeo" [(ngModel)]="modelEdit.detailFooterSeo" rows="17" placeholder="" style="width: 100%;"></textarea>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="ui-g-12 ui-lg-12">
+                          <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4"></div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                              <div class="__input-wrapper">
+                                <p-checkbox [(ngModel)]="modelEdit.isPrivate" formControlName="isPrivate" label="Private" binary="true">
+                                </p-checkbox>
+                              </div>
+                            </div>
+                          </div>
+                        </div> -->
+                        <div class="ui-g-12 ui-lg-12">
+                          <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4"></div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                              <div class="__input-wrapper">
+                                <p-checkbox [(ngModel)]="modelEdit.isActive" formControlName="isActive" label="Sử dụng" binary="true">
+                                </p-checkbox>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+
+                      <div class="ui-g-12 align-center" style="margin-top: 10px;">
+                        <button class="vs-btn vs-modal-btn vs-btn-action-edit" (click)="save()" type="button">
+                          <span class="__icon fa fa-floppy-o"></span>
+                          <span class="__label">Lưu lại</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-Courses-lesson (closePopup)="onCloseForm()"></app-Courses-lesson>

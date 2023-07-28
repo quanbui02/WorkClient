@@ -1,0 +1,93 @@
+<app-task-header></app-task-header>
+
+<div class="task_screen_body">
+  <div class="vs-page-content_custom app-banner-index">
+    <!-- <div class="vs-page-content-header-area">
+      <div class="ui-g">
+        <div class="ui-g-12 ui-md-7 ui-lg-9 __page-title-wrapper">
+          <h1 class="__page-title">Quản lý Công việc</h1>
+        </div>
+      </div>
+    </div> -->
+
+    <div class="vs-page-content-body-area" id="body_board">
+      <!-- <div class="board_status_info" id="board_status_info">
+        <div class="btn_add_board">
+          <a (click)="onEdit(0, false)"><i class="fa fa-plus" aria-hidden="true"></i> Chưa làm</a>
+          <a (click)="onEdit(0, false)"><i class="fa fa-plus" aria-hidden="true"></i> Đang làm</a>
+          <a class="col_done" (click)="onEdit(0, true)"><i class="fa fa-plus" aria-hidden="true"></i> Hoàn thành</a>
+        </div>
+      </div> -->
+      <div class="board_status" id="board_status">
+        <div cdkDropList cdkDropListOrientation="horizontal" class="example-list" (cdkDropListDropped)="drop($event)">
+          <div [ngClass]="{'col_done': item.isDone}" class="example-box" *ngFor="let item of dataSource; let i = index;" cdkDrag>
+            <div class="block_action_board">
+              <a *ngIf="item.countTask > 0" (click)="onDeletePopup(item.id)"><i class="fa fa-trash" aria-hidden="true"></i></a>
+              <a *ngIf="item.countTask == 0" (click)="onDelete(item.id)"><i class="fa fa-trash" aria-hidden="true"></i></a>
+            </div>
+            <div class="board_content_all">
+              <div *ngIf="!isEditName[i]" class="name_board" (click)="openInputCol(item.id, i, 1)">{{item.name}}</div>
+              <input class="input_name" autofocus *ngIf="isEditName[i]" (keyup.enter)="save(i)" type="text" [(ngModel)]="modelEdit.name" (blur)="isEditName[i] = false">
+              <hr class="hr_board">
+              <div class="board_content">
+                <div class="bc_name">
+                  <span *ngIf="item.idStatus == 1" class="bg-status to-do">To-Do</span>
+                  <span *ngIf="item.idStatus == 2" class="bg-status in-progress">In-Progress</span>
+                  <span *ngIf="item.idStatus == 3" class="bg-status done">Done</span>
+                  <span *ngIf="!item.idStatus" class="bg-status to-do">Nhóm việc</span>
+                </div>
+                <div class="bc_count_task">
+                  {{item.countTask}} Công việc
+                </div>
+              </div>
+              <div class="board_content" (click)="openInputCol(item.id, i, 2)">
+                <div class="title_desc">Mô tả</div>
+                <div class="ct_desc" *ngIf="!isEditDesc[i]">{{item.description}}</div>
+                <textarea autofocus *ngIf="isEditDesc[i]" class="input_desc" autosize type="text" (keyup.enter)="save(i)" [(ngModel)]="modelEdit.description" (blur)="isEditDesc[i] = false"></textarea>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="isEdit" class="example-box input_board">
+            <div class="block_action_board">
+              <a (click)="isEdit = false"><i class="fa fa-trash" aria-hidden="true"></i></a>
+            </div>
+            <div class="board_content_all">
+              <input (keyup.enter)="save(-1)" type="text" pInputText [(ngModel)]="modelEdit.name">
+              <hr class="hr_board">
+              <div class="board_content">
+                <div class="bc_name">
+                  <p-dropdown *ngIf="isWorkFolow" [dropdownIcon]="'none'" [style]="{'border': 'none','width':'100%','box-shadow': 'unset'}" placeholder="Chọn tài khoản" appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" [(ngModel)]="modelEdit.idStatus" [options]="status_options">
+                    <ng-template let-item pTemplate="selectedItem">
+                      <span *ngIf="item.value == 1" class="bg-status selected-status to-do">To-Do</span>
+                      <span *ngIf="item.value == 2" class="bg-status selected-status in-progress">In-Progress</span>
+                      <span *ngIf="item.value == 3" class="bg-status selected-status done">Done</span>
+                    </ng-template>
+                    <ng-template let-item pTemplate="item">
+                      <span *ngIf="item.value == 1">To-Do</span>
+                      <span *ngIf="item.value == 2">In-Progress</span>
+                      <span *ngIf="item.value == 3">Done</span>
+                    </ng-template>
+                  </p-dropdown>
+                  <span *ngIf="!isWorkFolow" class="bg-status to-do">Nhóm việc</span>
+                </div>
+                <div class="bc_count_task">
+                  0 Công việc
+                </div>
+              </div>
+              <div class="board_content">
+                <div class="title_desc">Mô tả</div>
+                <textarea class="input_desc" autosize type="text" [(ngModel)]="modelEdit.description"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="btn_add_fast">
+            <a (click)="openInputSave()" pTooltip="Thêm cột"><i class="fa fa-plus" aria-hidden="true"></i></a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<app-project-cols-edit [idProject]="idProject" (closePopup)="onCloseForm()"></app-project-cols-edit>
+<app-delete-project-cols [idProject]="idProject" (closePopup)="onCloseForm()"></app-delete-project-cols>

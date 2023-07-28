@@ -1,0 +1,90 @@
+// body .ui-fileupload {
+//     border-top-left-radius: 4px;
+//     border-bottom-left-radius: 4px;
+// }
+ 
+
+body 
+
+body .ui-fileupload-choose:not(.ui-state-disabled):active {
+    background-color: #285f8f;
+}
+
+.ui-fileupload {
+    // .ui-fileupload-buttonbar {
+    //     display: none;
+    // }
+    .ui-fileupload-content {
+        background-color: #fff; 
+        text-align: center;
+        position: absolute;
+        padding: 0;
+        border: 0;
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
+    }
+    .choose-file {
+        background-color: #d9ebf7;
+        padding: 5px;
+        border-radius: 0;
+    }
+    .ui-progressbar {
+        top: 0;
+    }
+    .ui-fileupload-choose:not(.ui-state-disabled):hover,
+    .ui-fileupload-choose.ui-state-focus {
+        background-color: #2d6da3;
+    }
+    .ui-widget-header {
+        background-color: inherit; 
+        border: none; 
+    }
+}
+
+//p-fileupload.vs-file-upload.style-1 {
+    //.ui-fileupload {
+        // border-top-left-radius: 4px;
+        // border-bottom-left-radius: 4px;
+        // .ui-fileupload-buttonbar {
+        //     position: relative;
+        //     display: flex;
+        //     justify-content: center;
+        //     align-items: center;
+        //     flex-direction: row-reverse;
+        //     border: 1px dashed #bbb;
+        //     border-radius: 0;
+        //     background-color: transparent;
+        //     font-weight: 400;
+        //     font-size: 14px;
+        // }
+        // .ui-fileupload-choose {
+        //     position: static;
+        //     height: 30px;
+        //     line-height: 28px;
+        //     padding: 0 10px;
+        //     margin-right: 0;
+        //     margin-left: 5px;
+        //     border-radius: 0;
+        //     color: $vs-text-color;
+        //     background-color: rgba($vs-edit-color, 0.3);
+        //     border: 1px solid rgba($vs-edit-color, 0.6);
+        //     cursor: pointer;
+        //     width: auto;
+        //     input[type=file] {
+        //         width: 100%;
+        //         height: 100%;
+        //     }
+        //     .ui-button-icon-left {
+        //         display: none;
+        //     }
+        //     .ui-button-text {
+        //         padding: 0;
+        //         display: block;
+        //         line-height: inherit;
+        //     }
+        // }
+        // .ui-fileupload-content {
+        //     border: 0;
+        //     padding: 0px;
+        // }
+    //}
+//}

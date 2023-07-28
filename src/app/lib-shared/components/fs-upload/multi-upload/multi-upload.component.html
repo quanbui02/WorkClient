@@ -1,0 +1,12 @@
+<div class="col-md-12">
+    <div class="col-md-12" style="margin-top: 20px;">
+        <p-fileUpload [multiple]="true" (onError)="onError($event)" [uploadLabel]="'Tải file'" [cancelLabel]="'Hủy tải lên'" [chooseLabel]="chooseLabel"
+            [mode]="'basic'" (onProgress)="onProgress($event)" [auto]="auto" (onUpload)="onUploadEvent($event)" url="{{apiUrl}}"
+            allowTypes="/(\.|\/)(gif|jpe?g|png|doc|docx|pdf|xls|xlsx|ppt|pptx|rtf|rar|zip)$/"
+            [maxFileSize]="maxFileSize" name="files">
+        </p-fileUpload>
+    </div>
+    <div class="progress" style="margin-bottom: 10; margin-top: 10;">
+        <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': progressValue + '%' }"></div>
+    </div>
+</div>

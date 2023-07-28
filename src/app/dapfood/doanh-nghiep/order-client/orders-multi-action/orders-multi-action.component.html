@@ -1,0 +1,218 @@
+<p-dialog #dialog [header]="'Tác nghiệp nhiều đơn hàng'" styleClass="vs-modal force-full-width" [(visible)]="isShow" [maximizable]="true" [closeOnEscape]="false" [focusOnShow]="true" positionTop="50"  [style]="{'width': '100%','height': '90%','min-height':'500px'}" [contentStyle]="{'max-height': getMaxDialogHeight()}" [modal]="true"
+    appendTo="body">
+    <div class="vs-form-container default-control-label-width vs-modal-content-panel">
+        <div class="ui-g row">
+            <div class="ui-g-12 ui-lg-12">
+                <div class="ui-g-8 ui-lg-8">
+                    <div class="vs-page-content-body-area">
+                        <div class="vs-data-table-area">
+                            <div class="ui-g vs-data-table-area-inner">
+                                <div class="__main-table-area">
+                                    <div class="ui-g __top-table-header">
+                                    </div>
+                                    <div class="ui-g vs-table-wrapper" id="tablePopup">
+                                        <p-table #mainTablePopup [columns]="cols" scrollHeight="auto" [value]="dataSource" dataKey="id" class="vs-table responsive-table" [lazy]="false">
+                                            <ng-template pTemplate="colgroup" let-columns>
+                                                <colgroup>
+                                                    <ng-container *ngFor="let col of columns" [ngSwitch]="col.field">
+                                                        <ng-container *ngSwitchDefault>
+                                                            <col [hidden]="!col.visible" [style.width]="col.width">
+                                                        </ng-container>
+                                                    </ng-container>
+                                                </colgroup>
+                                            </ng-template>
+                
+                                            <ng-template pTemplate="header" let-columns>
+                                                <tr>
+                                                    <th class="align-center" [style.width]="'20px'"></th>
+                                                    <ng-container *ngFor="let col of columns;">
+                                                        <th [hidden]="!col.visible" [width]="col.width"> {{col.header}}</th>
+                                                    </ng-container>
+                                                    <th class="align-center" [style.width]="'50px'"></th>
+                                                </tr>
+                                            </ng-template>
+                
+                                            <ng-template pTemplate="body" let-item let-columns="columns" let-rowIndex="rowIndex" let-expanded="expanded">
+                                                <tr align="center" [pSelectableRow]="item" [pSelectableRowIndex]="rowIndex">
+                                                    <td>
+                                                        <a [pRowToggler]="item">
+                                                            <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
+                                                        </a>
+                                                    </td>
+                                                    <ng-container *ngFor="let col of columns;let i = index;" [ngSwitch]="col.field">
+                                                        <td class="ui-resizable-column" [hidden]="!col.visible" [class.align-left]="!col.align || col.align === 'left'" [class.align-center]="col.align === 'center'" [class.align-right]="col.align === 'right'">
+                
+                                                            <ng-container *ngSwitchCase="'listNameProduct'">
+                                                                <span style="white-space: pre;">{{item.listNameProduct}}</span>
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'createdDate'">
+                                                                <span>{{item.createdDate | date :'HH:mm dd/MM/yyyy':'UTC'}}</span>
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'completedDate'">
+                                                                <span>{{item.completedDate | date :'HH:mm dd/MM/yyyy':'UTC'}}</span>
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'total'">
+                                                                {{item.total | mask :'separator':'.'}}
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'ship'">
+                                                                {{item.ship | mask :'separator':'.'}}
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'discount'">
+                                                                <span style="color: red;">{{item.discount | mask :'separator':'.'}}</span>
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'totalBill'">
+                                                                <b>{{item.totalBill | mask :'separator':'.'}}</b>
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'name'">
+                                                                <div>{{item.name}}</div>
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'phone'">
+                                                                {{item.phone}}
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'paymentChannel'">
+                                                                <span *ngIf="item.paymentChannel === 0">COD</span>
+                                                                <span *ngIf="item.paymentChannel === 1">Ví Bapi</span>
+                                                                <span *ngIf="item.paymentChannel >= 2">Online</span>
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'isPrepay'">
+                                                                <span *ngIf="item.isPrepay == true" class="__icon fa fa-check" pTooltip="Đã thanh toán"></span>
+                                                                <div *ngIf="item.paymentChannel >= 1 && item.isPaid == true" class="alepay-success" [pTooltip]="item.alepayMessage">
+                                                                    <span *ngIf="item.paymentChannel == 1">Bapi</span>
+                                                                    <span *ngIf="item.paymentChannel == 2">Momo</span>
+                                                                    <span *ngIf="item.paymentChannel == 3">Zalo</span>
+                                                                    <span *ngIf="item.paymentChannel == 4">VnPay</span>
+                                                                </div>
+                                                                
+                                                                <div *ngIf="item.alepayCode">
+                                                                    {{item.alepayCode}}
+                                                                </div>
+                                                                <span *ngIf="item.paymentChannel >= 2 && item.isPaid == false" class="alepay-erorr" [pTooltip]="item.alepayMessage">(Pending)</span>
+                                                            </ng-container>
+                                                            <span class="ui-resizable-column" *ngSwitchDefault class="break-word">{{item[col.field]}}</span>
+                                                        </td>
+                                                    </ng-container>
+                                                    <td>
+                                                        <button type="button" class="vs-btn vs-btn-red" pTooltip="Xóa đơn hàng" (click)="onRemoveList(item)">
+                                                            <span class="__icon fa fa-times"></span>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="rowexpansion" let-item let-columns="columns">
+                                                <tr>
+                                                    <td [attr.colspan]="columns.length + 2">
+                                                        <div class="ui-g ui-fluid" style="font-size:16px;padding:20px">
+                                                            <div class="ui-g-12 ui-md-3" style="text-align:center">
+                                                                <div><h2><i class="fa fa-user"></i> {{item.ctvName}}</h2></div>
+                                                                <div><i class="fa fa-phone"></i> {{item.ctvPhone}}</div>
+                                                            </div>
+                                                            <div class="ui-g-12 ui-md-9">
+                                                                <div class="ui-g">
+                                                                    <div class="ui-g-6">
+                                                                        <span style="white-space: pre;">{{item.listNameProduct}}</span>
+                                                                    </div>
+                                                                    <div class="ui-g-3">
+                                                                        <i class="fa fa-refresh"></i> <span class=" " [innerHTML]="GetStatus(item)" [pTooltip]="item.reason"></span>
+                                                                    </div>
+                                                                    <div class="ui-g-3">
+                                                                        <i class="fa fa-volume-control-phone"></i> <span class=" " [innerHTML]="GetActions(item)" [pTooltip]="item.reason"></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="footer">
+                                                <tr>
+                                                    <td colspan="7" style="text-align: center;"><b>Tổng</b></td>
+                                                    <td style="text-align: right;font-weight: bold;">{{this.totalMoneyProduct | mask :'separator':'.'}}</td>
+                                                    <td style="text-align: right;font-weight: bold;">{{this.totalMoneyShip | mask :'separator':'.'}}</td>
+                                                    <td style="text-align: right;font-weight: bold;color:red">{{this.totalDiscount | mask :'separator':'.'}}</td>
+                                                    <td style="text-align: right;font-weight: bold;">{{this.totalOrders | mask :'separator':'.'}}</td>
+                                                    <td></td>
+                                                </tr>
+                                            </ng-template>
+                                        </p-table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g-4 ui-lg-4">
+                    <div class="vs-form-container default-control-label-width">
+                        <form [formGroup]="formGroup" action="">
+                            <p-fieldset legend="Trạng thái tác nghiệp">
+                                <div class="ui-g row">
+                                    <div class="ui-g-12 ui-lg-12">
+                                        <div class="vs-form-control ui-g">
+                                            <div class="__form-control-label ui-g-12 ui-md-3">Tác nghiệp</div>
+                                            <div class="__form-control-inputs ui-g-12 ui-md-9">
+                                                <div class="__input-wrapper required" style="position: relative;">
+                                                    <p-dropdown [baseZIndex]="15000" formControlName="idActionPopup" [(ngModel)]="modelEdit.idActionPopup" [showClear]="true" placeholder="-- Tác nghiệp --" filter="true" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="actions_optionsPopup" [style]="{'width':'100%', 'min-width':'0'}"
+                                                        appendTo="body"></p-dropdown>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ui-g-12 ui-lg-12">
+                                        <div class="vs-form-control ui-g">
+                                            <div class="__form-control-label ui-g-12 ui-md-3">Ghi chú</div>
+                                            <div class="__form-control-inputs ui-g-12 ui-md-9">
+                                                <div class="__input-wrapper" style="position: relative;">
+                                                    <textarea type="text" [(ngModel)]="modelEdit.namePopup" rows="3" formControlName="namePopup" placeholder="Ghi chú tác nghiệp"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </p-fieldset>
+                            <br/>
+                            <p-fieldset legend="Trạng thái đơn hàng">
+                                <div class="ui-g row">
+                                    <div class="ui-g-12 ui-lg-12">
+                                        <div class="vs-form-control ui-g">
+                                            <div class="__form-control-label ui-g-12 ui-md-3">Trạng thái</div>
+                                            <div class="__form-control-inputs ui-g-12 ui-md-9">
+                                                <div class="__input-wrapper required" style="position: relative;">
+                                                    <p-dropdown [baseZIndex]="15000" formControlName="idStatusPopup" [(ngModel)]="modelEdit.idStatusPopup" [showClear]="true" filter="true" placeholder="-- Trạng thái --" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="status_optionsPopup" [style]="{'width':'100%', 'min-width':'0'}"
+                                                        appendTo="body"></p-dropdown>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ui-g-12 ui-lg-12">
+                                        <div class="vs-form-control ui-g">
+                                            <div class="__form-control-label ui-g-12 ui-md-3">Ghi chú</div>
+                                            <div class="__form-control-inputs ui-g-12 ui-md-9">
+                                                <div class="__input-wrapper" style="position: relative;">
+                                                    <textarea type="text" [(ngModel)]="modelEdit.notePopup" rows="3" formControlName="notePopup" placeholder="Ghi chú trạng thái"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </p-fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p-footer>
+        <div class="ui-g row">
+            <div class="ui-g-12">
+                <button class="vs-btn vs-modal-btn vs-btn-action-edit" (click)="onSave()" type="button">
+                    <span class="__icon fa fa-floppy-o"></span>
+                    <span class="__label">Cập nhật</span>
+                </button>
+                <button type="button" (click)="closePopupMethod(null)" class="vs-btn vs-modal-btn vs-btn-action-back">
+                    <span class="__icon fa fa-times"></span>
+                    <span class="__label">Đóng</span>
+                </button>
+            </div>
+        </div>
+    </p-footer>
+</p-dialog>

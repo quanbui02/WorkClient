@@ -1,0 +1,33 @@
+<p-dialog #dialog [header]="'Thêm thành viên vào nhóm'" styleClass="vs-modal force-full-width" positionTop="50" [(visible)]="isShow" [style]="{'max-width': '1100px'}" [contentStyle]="{'max-height': getMaxDialogHeight()}" [modal]="true" appendTo="body">
+    <div class="vs-form-container default-control-label-width vs-modal-content-panel">
+        <div class="vs-form-container default-control-label-width">
+            <div class="ui-g row">
+                <div class="ui-g-12 ui-lg-12">
+                    <div class="vs-form-control ui-g">
+                        <div class="__form-control-label ui-g-12 ui-md-4">Tên thành viên</div>
+                        <div class="__form-control-inputs ui-g-12 ui-md-8">
+                            <div class="__input-wrapper required">
+                                <p-autoComplete [(ngModel)]="user" [suggestions]="users" appendTo="body" (completeMethod)="autoComplete($event)" field="fullDisplayName" [size]="30" placeholder="Nhập tài khoản thành viên" [minLength]="1" (onSelect)="onSelect($event)">
+                                </p-autoComplete>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p-footer>
+        <div class="ui-g row">
+            <div class="ui-g-12">
+                <button class="vs-btn vs-modal-btn vs-btn-action-edit" (click)="save()" type="button">
+                    <span class="__icon fa fa-floppy-o"></span>
+                    <span class="__label">Lưu</span>
+                </button>
+                <button type="button" (click)="closePopupMethod(null)" class="vs-btn vs-modal-btn vs-btn-action-back">
+                    <span class="__icon fa fa-times"></span>
+                    <span class="__label">Đóng</span>
+                </button>
+            </div>
+        </div>
+    </p-footer>
+</p-dialog>

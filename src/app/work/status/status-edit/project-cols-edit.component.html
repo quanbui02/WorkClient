@@ -1,0 +1,81 @@
+<p-dialog #dialog [header]="'Cập nhật trạng thái'" styleClass="vs-modal force-full-width" positionTop="50" [(visible)]="isShow" [style]="{'max-width': '1100px'}" [contentStyle]="{'max-height': getMaxDialogHeight()}" [modal]="true" appendTo="body">
+  <div class="vs-form-container default-control-label-width vs-modal-content-panel app-foods-edit">
+
+    <div class="vs-form-container default-control-label-width">
+      <div class="ui-g row">
+        <form action="" [formGroup]="formGroup">
+          <!-- <p-fieldset legend="Thông tin phản hồi"> -->
+          <div class="ui-g row">
+            <div class="ui-g-12 ui-lg-12">
+              <div class="vs-form-control ui-g">
+                <div class="__form-control-label ui-g-12 ui-md-4">Hình ảnh</div>
+                <div class="__form-control-inputs ui-g-12 ui-md-12">
+                  <div class="__input-wrapper">
+                    <vs-single-fsfile-upload [chooseLabel]="'Chọn ảnh'" formControlName="image" [(ngModel)]="modelEdit.image"></vs-single-fsfile-upload>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ui-g-12 ui-lg-12">
+              <div class="vs-form-control ui-g">
+                <div class="__form-control-label ui-g-12 ui-md-4">Tên trạng thái</div>
+                <div class="__form-control-inputs ui-g-12 ui-md-12">
+                  <div class="__input-wrapper required">
+                    <textarea type="text" [(ngModel)]="modelEdit.name" rows="3" formControlName="name" placeholder="Tên trạng thái" style="width: 100%;"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ui-g-12 ui-lg-12">
+              <div class="vs-form-control ui-g">
+                <div class="__form-control-label ui-g-12 ui-md-12">Dự án</div>
+                <div class="__form-control-inputs ui-g-12 ui-md-12">
+                  <div class="__input-wrapper required ">
+                    <p-dropdown [disabled]="true" class="" appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" filter="true" formControlName="idProject" [style]="{'width':'100%'}" [(ngModel)]="modelEdit.idProject" [options]="project_options">
+                    </p-dropdown>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ui-g-12 ui-lg-12">
+              <div class="vs-form-control ui-g">
+                <div class="__form-control-label ui-g-12 ui-md-4">Mô tả</div>
+                <div class="__form-control-inputs ui-g-12 ui-md-12">
+                  <div class="__input-wrapper ">
+                    <textarea type="text" [(ngModel)]="modelEdit.description" rows="4" formControlName="description" placeholder="Mô tả" style="width: 100%;"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ui-g-12 ui-lg-12">
+              <div class="vs-form-control ui-g">
+                <div class="__form-control-label ui-g-12 ui-md-4">Hoạt động</div>
+                <div class="__form-control-inputs ui-g-12 ui-md-12">
+                  <div class="__input-wrapper">
+                    <p-inputSwitch formControlName="isActived" [(ngModel)]="modelEdit.isActived"></p-inputSwitch>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- </p-fieldset> -->
+        </form>
+
+      </div>
+    </div>
+  </div>
+  <p-footer>
+    <div class="ui-g row">
+      <div class="ui-g-12">
+        <button class="vs-btn vs-modal-btn vs-btn-action-edit" [disabled]="!formGroup.valid" (click)="save()" type="button">
+          <span class="__icon fa fa-floppy-o"></span>
+          <span class="__label">Lưu</span>
+        </button>
+        <button type="button" (click)="closePopupMethod(null)" class="vs-btn vs-modal-btn vs-btn-action-back">
+          <span class="__icon fa fa-times"></span>
+          <span class="__label">Đóng</span>
+        </button>
+      </div>
+    </div>
+  </p-footer>
+</p-dialog>

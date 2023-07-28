@@ -1,0 +1,409 @@
+<div class="ui-g row" style="margin: 0;">
+  <div class="ui-dialog-content ui-widget-content ui-g-12" style="padding: 0;">
+    <div class="vs-form-container default-control-label-width">
+      <div id="user_info" class="ui-g-3 ui-lg-3 vs-modal-content-panel" style="height: calc(100vh - 201px); overflow: auto;position: relative;">
+        <a id="btn_expand" class="btn_expand" (click)="openCloseInfo()"><i class="fa fa-angle-left"></i></a>
+        <div class="row ui-g-12" style="padding-left: 0;">
+          <div class="ui-g-5" style="width: 100px; margin-right: 20px; padding-left: 0;">
+            <vs-view-image style="border-radius: 75px;" [(file)]="modelEdit.avatar" [height]="'100'" [width]="'100'">
+            </vs-view-image>
+          </div>
+          <div class="ui-g-7" style="margin-top: 10px;font-size:20px;">
+            {{modelEdit.name}}
+          </div>
+          <div class="ui-g-7">
+            <a style="line-height: 30px;" (click)="callOmiCall(modelEdit.phone)">{{modelEdit.phone}}</a>
+          </div>
+          <div class="ui-g-7 color_ctv" *ngIf="modelEdit.isKol && modelEdit.isKol == true">
+            Cộng tác viên
+          </div>
+        </div>
+        <!-- <hr style=" border-top: 1px dashed #EEEEEE"> -->
+        <div class="row ui-g-12 bg_table_1" style="height: 50px; margin-top: 10px;padding: 0;">
+          <div class="__form-control-label ui-g-4 border_style w-25">Số điện thoại</div>
+          <div class="__form-control-inputs ui-g-8 border_style">
+            <div class="__input-wrapper ">
+              <a (click)="callOmiCall(modelEdit.phone)">{{modelEdit.phone}}</a>
+            </div>
+          </div>
+        </div>
+        <div class="row ui-g-12 bg_table_2" style="height: 50px;padding: 0;">
+          <div class="__form-control-label ui-g-4 border_style w-25">Email</div>
+          <div class="__form-control-inputs ui-g-8 border_style">
+            <div class="__input-wrapper ">
+              {{modelEdit.email}}
+            </div>
+          </div>
+        </div>
+        <div class="row ui-g-12 bg_table_1" style="height: 50px;padding: 0;">
+          <div class="__form-control-label ui-g-4 border_style w-25">Mã giới thiệu</div>
+          <div class="__form-control-inputs ui-g-8 border_style">
+            <div class="__input-wrapper ">
+              {{modelEdit.code}}
+            </div>
+          </div>
+        </div>
+        <div class="row ui-g-12 bg_table_2" style="height: 50px;padding: 0;">
+          <div class="__form-control-label ui-g-4 border_style w-25">Thứ hạng</div>
+          <div class="__form-control-inputs ui-g-8 border_style">
+            <div class="__input-wrapper ">
+
+            </div>
+          </div>
+        </div>
+        <div class="row ui-g-12 bg_table_1" style="height: 50px;padding: 0;">
+          <div class="__form-control-label ui-g-4 border_style w-25">CMND/Passport</div>
+          <div class="__form-control-inputs ui-g-8 border_style">
+            <div class="__input-wrapper ">
+              {{modelEdit.cmt}}
+            </div>
+          </div>
+        </div>
+        <div class="row ui-g-12 bg_table_2" style="height: 50px;padding: 0;">
+          <div class="__form-control-label ui-g-4 border_style w-25">Ngày sinh</div>
+          <div class="__form-control-inputs ui-g-8 border_style">
+            <div class="__input-wrapper ">
+              {{modelEdit.birthday | date :'dd/MM/yyyy':'UTC'}}
+            </div>
+          </div>
+        </div>
+        <div class="row ui-g-12 bg_table_1" style="height: 50px;padding: 0;">
+          <div class="__form-control-label ui-g-4 border_style w-25">Giới tính</div>
+          <div class="__form-control-inputs ui-g-8 border_style">
+            <div class="__input-wrapper ">
+              <span *ngIf="modelEdit.gender == 1">Nam</span>
+              <span *ngIf="modelEdit.gender == 0">Nữ</span>
+            </div>
+          </div>
+        </div>
+        <div class="row ui-g-12 bg_table_2" style="height: 50px;padding: 0;">
+          <div class="__form-control-label ui-g-4 border_style w-25" style="width: 25%;">Địa chỉ</div>
+          <div class="__form-control-inputs ui-g-8 border_style">
+            <div class="__input-wrapper ">
+              {{modelEdit.address}}
+            </div>
+          </div>
+        </div>
+        <div class="row ui-g-12 bg_table_1" style="height: 50px;padding: 0;">
+          <div class="__form-control-label ui-g-4 border_style w-25" style="width: 25%;">Tỉnh/Thành Phố</div>
+          <div class="__form-control-inputs ui-g-8 border_style">
+            <div class="__input-wrapper ">
+              {{modelEdit.provinceName}}
+            </div>
+          </div>
+        </div>
+        <div class="row ui-g-12 bg_table_2" style="height: 50px;padding: 0;">
+          <div class="__form-control-label ui-g-4 border_style w-25" style="width: 25%;">Quận/Huyện</div>
+          <div class="__form-control-inputs ui-g-8 border_style">
+            <div class="__input-wrapper ">
+              {{modelEdit.districtName}}
+            </div>
+          </div>
+        </div>
+        <div class="row ui-g-12 bg_table_1" style="height: 50px;padding: 0;">
+          <div class="__form-control-label ui-g-4 border_style w-25" style="width: 25%;">Xã/Phường</div>
+          <div class="__form-control-inputs ui-g-8 border_style">
+            <div class="__input-wrapper ">
+              {{modelEdit.wardName}}
+            </div>
+          </div>
+        </div>
+        <div class="row ui-g-12 bg_table_2" style="height: 50px;padding: 0;">
+          <div class="__form-control-label ui-g-4 border_style w-25">Mô tả</div>
+          <div class="__form-control-inputs ui-g-8 border_style">
+            <div class="__input-wrapper ">
+            </div>
+          </div>
+        </div>
+        <div class="row ui-g-12 bg_table_1" style="height: 50px;padding: 0;">
+          <div class="__form-control-label ui-g-4 border_style w-25">Doanh số</div>
+          <div class="__form-control-inputs ui-g-8 border_style">
+            <div class="__input-wrapper ">
+              {{(modelEdit.totalSales ? modelEdit.totalSales : 0) | mask :'separator':'.'}}
+            </div>
+          </div>
+        </div>
+        <div class="row ui-g-12 bg_table_2" style="height: 50px;padding: 0;">
+          <div class="__form-control-label ui-g-4 border_style w-25">Số dư</div>
+          <div class="__form-control-inputs ui-g-8 border_style">
+            <div class="__input-wrapper ">
+              {{modelEdit.balance | mask :'separator':'.'}} điểm
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div id="tab_user" class="ui-g-9 ui-lg-9 vs-modal-tab" style="padding-right: 0;">
+        <p-tabView [(activeIndex)]="index">
+          <p-tabPanel>
+            <ng-template pTemplate="header">
+              <div>
+                <span class="__icon fa fa-list-alt mr-5"></span>
+                Đơn hàng đã đặt
+              </div>
+            </ng-template>
+            <div class="vs-page-content" style="height: calc(100vh - 252px);margin: 0 -15px -15px -15px;">
+              <div class="vs-page-content-body-area">
+                <div class="vs-data-table-area">
+                  <div class="ui-g vs-data-table-area-inner">
+                    <div class="ui-g-12 ui-lg-12 __main-table-area">
+                      <div class="ui-g __top-table-action">
+                        <p-calendar class="maxWidth " [(ngModel)]="searchModel.fromDate" dateFormat="dd/mm/yy" [showIcon]="true" class="maxWidth mr-10" psDateOnly placeholder="Từ ngày" utc="true" [locale]="vi">
+                        </p-calendar>
+
+                        <p-calendar class="maxWidth" [(ngModel)]="searchModel.toDate" dateFormat="dd/mm/yy" [showIcon]="true" class="maxWidth mr-10" psDateOnly placeholder="Đến ngày" utc="true" [locale]="vi">
+                        </p-calendar>
+
+                        <button class="vs-btn vs-modal-btn vs-btn-action-edit" type="button" (click)="onSearch()">
+                          <span class="__icon fa fa-search"></span>
+                          <span class="__label">Tìm kiếm</span>
+                        </button>
+                      </div>
+                      <div class="ui-g __top-table-action">
+                        <p-selectButton [options]="list_statusType" [(ngModel)]="this.searchModel.statusType" (click)="onSearch()">
+                          <ng-template let-item>
+                            <div style="padding:.5em" class="box-show-count">
+                              <span>{{item.label}}</span>
+                            </div>
+                          </ng-template>
+                        </p-selectButton>
+                      </div>
+                      <div class="ui-g vs-table-wrapper" id="table">
+                        <p-table #mainTable [frozenValue]="dataTotal" [columns]="cols" selectionMode="multiple" [rows]="limit" [scrollable]="true" scrollHeight="auto" [value]="listOrder" [totalRecords]="total" class="vs-table responsive-table" [customSort]="true" [paginator]="true" [loading]="isLoading" [lazy]="true" (onPage)="onPage($event)" [resizableColumns]="true" dataKey="id">
+                          <ng-template pTemplate="colgroup" let-columns>
+                            <colgroup>
+                              <col [style.width]="'40px'">
+                              <ng-container *ngFor="let col of columns" [ngSwitch]="col.field">
+                                <ng-container *ngSwitchDefault>
+                                  <col [hidden]="!col.visible" [style.width]="col.width" pResizableColumn [pSortableColumn]="col.sort ? col.field : ''">
+                                </ng-container>
+                              </ng-container>
+                            </colgroup>
+                          </ng-template>
+
+                          <ng-template pTemplate="frozenrows" let-rowData let-columns="columns">
+                            <tr style="background-color:lightskyblue">
+                              <th></th>
+                              <td class="ui-text-right" *ngFor="let col of columns" [hidden]="!col.visible">
+                                <b>{{rowData[col.field] | mask :'separator':'.'}}</b>
+                              </td>
+                            </tr>
+                          </ng-template>
+
+                          <ng-template pTemplate="header" let-columns>
+                            <tr>
+                              <th class="align-center">STT</th>
+                              <ng-container *ngFor="let col of columns;">
+                                <th class="ui-resizable-column" [hidden]="!col.visible" pResizableColumn [pSortableColumn]="col.sort ? col.field : ''" class="ui-resizable-column">
+                                  {{col.header}}
+                                  <span *ngIf="col.sort">
+                                    <p-sortIcon [field]="col.field"></p-sortIcon>
+                                  </span>
+                                </th>
+                              </ng-container>
+                            </tr>
+                          </ng-template>
+
+                          <ng-template pTemplate="body" let-item let-columns="columns" let-rowIndex="rowIndex">
+                            <tr align="center" [pSelectableRow]="item">
+                              <td>{{rowIndex + 1}}</td>
+                              <ng-container *ngFor="let col of columns;let i = index;" [ngSwitch]="col.field">
+                                <td class="ui-resizable-column" [hidden]="!col.visible" [class.align-left]="!col.align || col.align === 'left'" [class.align-center]="col.align === 'center'" [class.align-right]="col.align === 'right'">
+                                  <ng-container *ngSwitchCase="'code'">
+                                    <div *ngIf="item.code">
+                                      <a [ngClass]="{'link_order': item.codeShip}" (click)="onShowPopup(item.id)">{{item.code}}</a>
+                                      <!-- <div *ngIf="item.codeShip" class="mt5 ui-button-raised ui-button-danger ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" (click)="onShipDetail(item.codeShip)"><span class="ui-button-text ui-clickable p2x">{{item.codeShip}}</span>
+                                      </div> -->
+                                    </div>
+                                    <div *ngIf="!item.code">
+                                      <a (click)="onShowPopup(item.id)">{{item.id}}</a>
+                                    </div>
+                                  </ng-container>
+                                  <ng-container *ngSwitchCase="'name'">
+                                    <b>{{item.name}}</b> - {{item.phone}}
+                                    <div style="margin-top:5px;"><b class="fa fa-map-marker"></b>
+                                      {{item.fullAddress}}</div>
+                                  </ng-container>
+                                  <ng-container *ngSwitchCase="'listNameProduct'">
+                                    <span style="white-space: break-spaces;">{{item.listNameProduct}}</span>
+                                  </ng-container>
+                                  <ng-container *ngSwitchCase="'deliveryDate'">
+                                    <span>{{item.deliveryDate | date :'HH:mm dd/MM/yyyy':'UTC'}}</span>
+                                  </ng-container>
+                                  <ng-container *ngSwitchCase="'totalBill'">
+                                    <div>Hàng: {{item.total | mask :'separator':'.'}}</div>
+                                    <div> +Ship: {{item.ship | mask :'separator':'.'}}</div>
+                                    <div *ngIf="item.discount" style="color:red ;"> -KM: {{item.discount |
+                                      mask :'separator':'.'}}</div>
+                                    <div><b>Tổng</b> = {{item.totalBill | mask :'separator':'.'}}</div>
+                                  </ng-container>
+                                  <ng-container *ngSwitchCase="'status'">
+                                    <div [innerHTML]="GetStatus(item)" [pTooltip]="item.reason">
+                                    </div>
+                                    <div *ngIf="item.idStatus === 31 && item.sumRate > 0" class="mt5">
+                                      <span><i class="fa fa-star" style="color: #ffeb3b;font-size: 13px;"></i> <i class="numberRate">({{item.sumRate}})</i></span>
+                                      <span *ngIf="item.idStatus === 31 && item.alertRate > 0" class="ml5" pTooltip="Có đánh giá xấu cho đơn hàng này."><i class="bell fa fa-bell" style="color:red"></i> <i class="numberRate"></i></span>
+                                    </div>
+                                    <div *ngIf="item.idStatus === 999 && item.userCancel === item.userId" class="mt5">
+                                      <span>Khách hủy</span>
+                                    </div>
+                                    <div *ngIf="item.idStatus === 999 && item.userCancel !== item.userId" class="mt5">
+                                      <span>Sale hủy</span>
+                                    </div>
+                                  </ng-container>
+                                  <ng-container *ngSwitchCase="'isPrepay'">
+                                    <span *ngIf="item.isPrepay == true" class="__icon fa fa-check" pTooltip="Đã thanh toán"></span>
+                                    <div *ngIf="item.paymentChannel >= 1 && item.isPaid == true" class="alepay-success" [pTooltip]="item.alepayMessage">
+                                      <span *ngIf="item.paymentChannel == 1">Bapi</span>
+                                      <span *ngIf="item.paymentChannel == 2">Momo</span>
+                                      <span *ngIf="item.paymentChannel == 3">Zalo</span>
+                                      <span *ngIf="item.paymentChannel == 4">VnPay</span>
+                                    </div>
+                                    <span *ngIf="item.paymentChannel >= 2 && item.isPaid == false" class="alepay-erorr" [pTooltip]="item.alepayMessage">(Pending)</span>
+                                  </ng-container>
+                                  <span class="ui-resizable-column" *ngSwitchDefault class="break-word">{{item[col.field]}}</span>
+                                </td>
+                              </ng-container>
+                            </tr>
+                          </ng-template>
+
+                          <ng-template pTemplate="paginatorleft" let-state>
+                            <div class="vs-table-paginator">
+                              Hiển thị
+
+                              <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" (onChange)="onChangeRowLimit()" [options]="listItemNumberPerPage" [(ngModel)]="limit">
+                              </p-dropdown>
+                              / trang
+                              <span class="__total-record"> - Có {{total}} mục trong danh sách</span>
+                            </div>
+                          </ng-template>
+                        </p-table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </p-tabPanel>
+          <p-tabPanel>
+            <ng-template pTemplate="header">
+              <div>
+                <span class="__icon fa fa-volume-control-phone mr-5"></span>
+                Lịch sử cuộc gọi
+              </div>
+            </ng-template>
+            <div class="vs-page-content" style="height: calc(100vh - 252px);margin: 0 -15px -15px -15px;">
+              <div class="vs-page-content-body-area">
+                <div class="vs-data-table-area">
+                  <div class="ui-g vs-data-table-area-inner">
+                    <div class="ui-g-12 ui-lg-12 __main-table-area">
+                      <div class="ui-g vs-table-wrapper" id="table">
+                        <p-table #mainTable [frozenValue]="dataTotalOmicall" selectionMode="multiple" [rows]="limitOmicall" [scrollable]="true" scrollHeight="auto" [value]="detailCall" [totalRecords]="totalOmicall" class="vs-table responsive-table" [customSort]="true" [paginator]="true" [loading]="isLoading" [lazy]="true" (onPage)="onPageOmicall($event)" [resizableColumns]="true" dataKey="id">
+                          <ng-template pTemplate="body" let-item let-columns="columns" let-rowIndex="rowIndex">
+                            <div class="vs-modal-p-0 omicalllog">
+                              <div class="ui-tabview-nav">
+                                <div class="row ui-g-12" style="margin-bottom: 5px;">
+                                  <div class="ui-g-8">
+                                    <div [ngSwitch]="item.directionTxt">
+                                      <div style="display: flex; gap: 10px;" *ngSwitchCase="'Cuộc gọi đi'">
+                                        <img *ngIf="item.endCause=='BYE'" src="/assets/images/ic_outbound.svg" class="filter-outbound" />
+                                        <img *ngIf="item.endCause!='BYE'" src="/assets/images/ic_outbound.svg" class="filter-missed" />
+                                        <div>
+                                          <p class="name-emp">{{item.startTime | date :'HH:mm:ss dd/MM/yyyy':'UTC'}}</p>
+                                          <p class="phone-emp" *ngIf="item.endCause=='BYE'">{{item.directionTxt}} / Trả
+                                            lời</p>
+                                          <p class="phone-emp" *ngIf="item.endCause!='BYE'">{{item.directionTxt}} /
+                                            Không trả lời</p>
+                                        </div>
+                                      </div>
+                                      <div style="display: flex; gap: 10px;" *ngSwitchCase="'Cuộc gọi đến'">
+                                        <img *ngIf="item.endCause=='BYE'" src="/assets/images/ic_inbound.svg" class="filter-inbound" />
+                                        <img *ngIf="item.endCause!='BYE'" src="/assets/images/ic_inbound_missed.svg" class="filter-missed" />
+                                        <div>
+                                          <p class="name-emp">{{item.startTime | date :'HH:mm:ss dd/MM/yyyy':'UTC'}}</p>
+                                          <p class="phone-emp" *ngIf="item.endCause=='BYE'">{{item.directionTxt}} / Trả
+                                            lời</p>
+                                          <p class="phone-emp" *ngIf="item.endCause!='BYE'">{{item.directionTxt}} /
+                                            Không trả lời
+                                          </p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="ui-g-4">
+                                    <div [ngSwitch]="item.directionTxt">
+                                      <div style="display: flex;gap: 10px;justify-content: flex-end;" *ngSwitchCase="'Cuộc gọi đi'">
+                                        <img style="border-radius: 30px;" width="25" height="25" src="/assets/images/avatar.jpg" />
+                                        <div>
+                                          <p class="name-emp">{{item.sipUserName}}</p>
+                                          <p class="phone-emp">{{item.sipNumber}} / {{item.remoteNumber}}</p>
+                                        </div>
+                                      </div>
+                                      <div style="display: flex; gap: 10px;justify-content: flex-end;" *ngSwitchCase="'Cuộc gọi đến'">
+                                        <img style="border-radius: 30px;" width="25" height="25" src="/assets/images/avatar.jpg" />
+                                        <div>
+                                          <p class="name-emp">{{item.sipUserName}}</p>
+                                          <p class="phone-emp">{{item.remoteNumber}} / {{item.sipNumber}}</p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <hr class="long_line_dashed">
+                                <div class="history_call_detail clearfix">
+                                  <div class="row">
+                                    <div *ngIf="item.note" class="ui-g-8 note_omicall_block mt-15">
+                                      <span pTooltip="Ghi chú" tooltipPosition="top" class="__icon fa fa-pencil-square-o" style="font-size: 20px; color: darkgreen; margin-right: 10px; margin-left: 7.5px;"></span>
+                                      <div>{{item.note}}</div>
+                                    </div>
+                                    <div *ngIf="item.callTransactions?.recordingFile" class="ui-g-4 mt-15">
+                                      <audio style="width: 100%; height: 35px; margin-bottom: 5px;" controls class="audio-call">
+                                        <source src="{{item.callTransactions?.recordingFile}}">
+                                      </audio>
+                                    </div>
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                          </ng-template>
+                          <ng-template pTemplate="paginatorleft" let-state>
+                            <div class="vs-table-paginator">Hiển thị
+                              <p-dropdown [emptyFilterMessage]="'Không tìm thấy kết quả'" (onChange)="onChangeRowLimitOmicall()" [options]="listItemNumberPerPage" [(ngModel)]="limitOmicall">
+                              </p-dropdown>
+                              / trang
+                              <span class="__total-record"> - Có {{totalOmicall}} mục trong danh sách</span>
+                            </div>
+                          </ng-template>
+                        </p-table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </p-tabPanel>
+          <p-tabPanel header="Thông tin" leftIcon="pi pi-user">
+            <div class="vs-page-content" style="height: calc(100vh - 267px);margin: 0 -15px 0 0; overflow: auto;">
+              <p>chưa có nội dung.</p>
+            </div>
+          </p-tabPanel>
+        </p-tabView>
+      </div>
+    </div>
+  </div>
+  <div class="ui-dialog-footer ui-widget-content ui-g-12" style="margin-left: -15px; position: fixed; bottom: 0;">
+    <p-footer>
+      <div class="ui-g row">
+        <div class="ui-g-12">
+          <button type="button" (click)="closeAndSelected()" class="vs-btn vs-modal-btn vs-btn-action-back">
+            <span class="__icon fa fa-times"></span>
+            <span class="__label">Đóng</span>
+          </button>
+        </div>
+      </div>
+    </p-footer>
+  </div>
+</div>
+<app-order-client-edit></app-order-client-edit>
+<app-orders-detail-ship></app-orders-detail-ship>

@@ -1,0 +1,68 @@
+<div class="add_cmt">
+  <img class="avatar" src="{{ getAvatarUser(crrUser?.avatar) }}" alt="avatar" />
+  <input *ngIf="!createComment" class="add_cmt_input" type="text" placeholder="Bình luận" (focus)="onActiveEditor()" />
+  <div class="add_cmt_input" *ngIf="createComment">
+    <p-editor [style]="{ height: '100px' }" [(ngModel)]="message"></p-editor>
+    <div class="add_cmt_btn">
+      <a class="save" (click)="onSave(0)">Lưu</a>
+      <a class="cancel" (click)="onActiveInput()">Hủy</a>
+    </div>
+  </div>
+</div>
+<div class="cmt_list">
+  <div class="cmt_item" *ngFor="let item of dataSource; let i = index">
+    <img class="avatar" src="{{ getAvatarUser(item.userCreated?.avatar) }}" alt="avatar" />
+    <div class="cmt_detail">
+      <div class="cmt_user">
+        <span class="cmt_name">{{
+          item.userCreated?.name
+          ? item.userCreated?.name
+          : item.userCreated?.userName
+          }}</span>
+        <span class="cmt_date">{{
+          item.createdDate
+          | date
+          : "HH:mm dd/MM/yyyy"
+          : "UTC"
+          }}</span>
+      </div>
+      <div *ngIf="!updateComment[i]" class="cmt_i_content" [innerHTML]="item.message"></div>
+      <div *ngIf="!updateComment[i]" class="cmt_i_btn">
+        <a (click)="
+                                                onActiveEditorUpdate(i, item.id)
+                                        " [class.disabled]="
+                                                crrUser?.userId !=
+                                                item.userCreated.userId
+                                        ">Sửa</a>
+        <a (click)="onDelete(item.id)" [class.disabled]="
+                                                crrUser?.userId !=
+                                                item.userCreated.userId
+                                        ">Xóa</a>
+        <a class="like link_popup" (click)="like(item.id, item.idTask)" (mouseenter)="showPopup[i] = true"
+          (mouseleave)="showPopup[i] = false">
+          <i *ngIf="!item.userLiked" class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+          <i *ngIf="item.userLiked" class="fa fa-thumbs-up" aria-hidden="true"></i>
+          <span>{{ item.countLike }}</span>
+          <div class="popup_user popup_top" *ngIf="
+                                                        item.likeUser?.length >
+                                                                0 &&
+                                                        showPopup[i]
+                                                ">
+            <div class="name_liked" *ngFor="
+                                                                let value of item.likeUser
+                                                        ">
+              {{ value.name }}
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="update_cmt add_cmt_input" *ngIf="updateComment[i]">
+        <p-editor [style]="{ height: '150px' }" [(ngModel)]="modelEdit.message"></p-editor>
+        <div class="add_cmt_btn">
+          <a class="save" (click)="onSave(1, i)">Lưu</a>
+          <a class="cancel" (click)="onCLoseEditorUpdate(i)">Hủy</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

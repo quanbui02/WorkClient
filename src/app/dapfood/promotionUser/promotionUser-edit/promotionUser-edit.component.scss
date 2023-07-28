@@ -1,0 +1,27 @@
+.app-promotion-edit {
+    .vs-table-wrapper-edit {
+        max-height: 200px;
+        overflow: auto;
+    }
+    p-calendar .ui-inputtext {
+        width: unset!important;
+    }
+    ul.flashtime {
+        padding-inline-start: 0;
+        margin-bottom: 0;
+        list-style-type: none;
+        li {
+            display: inline-block;
+        }
+    }
+    // [class^="ui-g-"], [class*=" ui-g-"], [class^="ui-md-"], [class*=" ui-md-"], [class^="ui-lg-"], [class*=" ui-lg-"], [class^="ui-xl-"], [class*=" ui-xl-"] {
+    //     padding: 7.5px 7.5px;
+    // }
+    .ui-float-label>label {
+        color: #333;
+        font-weight: bold;
+    }
+    p-dataview {
+        width: 100%;
+    }
+}

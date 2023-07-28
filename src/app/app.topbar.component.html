@@ -1,0 +1,182 @@
+<div class="topbar clearfix">
+    <div class="topbar-left">
+        <div class="topbar-logo-wrapper">
+            <a href="/" (click)="app.onSwitchModule(1)"><img src="{{environment.appMetadata.appDomain.logo}}" class="topbar-logo" /></a>
+        </div>
+        <!-- <div class="topbar-title">
+            <div class="topbar-description" style="font-size: 21px;    padding-left: 15px;">
+                {{environment.appMetadata.appDomain.title}}
+            </div>
+            <div class="topbar-owner">
+                {{environment.appMetadata.appDomain.owner}}
+            </div>
+        </div> -->
+    </div>
+
+    <div class="topbar-right">
+        <a id="menu-button" href="#" (click)="app.onMenuButtonClick($event)" [ngClass]="{'menu-button-rotate': app.rotateMenuButton}">
+            <i class="fa fa-angle-left"></i>
+        </a>
+
+        <a id="topbar-menu-button" href="#" (click)="app.onTopbarMenuButtonClick($event)">
+            <i class="fa fa-bars"></i>
+        </a>
+
+        <!-- <div class="breadcrumb breadcrumb-term">
+            <a class="breadcrumb-item" (click)="showDialog()">
+                <span class="text-xs"> {{mySetting.tenNamHoc}} / {{mySetting.khHocKy}} / {{mySetting.tenDotThi}}</span>
+                <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal">
+                    <i class="fa fa-caret-down"></i>
+                </button>
+            </a>
+        </div> -->
+
+        <ul class="topbar-items fadeInDown" [ngClass]="{'topbar-items-visible': _commonService.topbarMenuActive}">
+            <li #profile class="profile-item" *ngIf="app.profileMode==='top'||_commonService.isHorizontal()" [ngClass]="{'active-top-menu':_commonService.activeTopbarItem === profile}">
+
+                <a href="#" (click)="_commonService.onTopbarItemClick($event,profile)" class="profile-item-inner">
+                    <div class="profile-image-wrapper">
+                        <img class="profile-image" src="{{avatarUrl}}" pTooltip="Thông tin cá nhân" tooltipPosition="bottom" />
+                    </div>
+                    <div class="profile-info-wrapper">
+                        <div class="topbar-item-name-wrapper"><span class="topbar-item-name">{{crrUser?.displayName}}</span>
+                        </div>
+                        <!-- <div class="topbar-item-role-wrapper"><span class="topbar-item-role">{{position}}</span></div> -->
+                    </div>
+                </a>
+
+                <ul class="layout-menu fadeInDown">
+                    <li role="menuitem">
+                        <a href="#" (click)="app.onEditInfo($event)">
+                            <i class="fas fa-fw fa-user-edit"></i>
+                            <span>Thông tin cá nhân</span>
+                        </a>
+                    </li>
+                    <li role="menuitem">
+                        <a href="#" (click)="app.onChangePassword($event)">
+                            <i class="fa fa-fw fa-key"></i>
+                            <span>Đổi mật khẩu</span>
+                        </a>
+                    </li>
+                    <li role="menuitem">
+                        <a href="javascript:;" (click)="app.onTopbarLogout($event)">
+                            <i class="fa fa-fw fa-sign-out"></i>
+                            <span>Đăng xuất</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <!-- <li #messages pTooltip="Hướng dẫn sử dụng" tooltipPosition="bottom">
+                <a href="https://docs.dapfood.com" target="_blank" style="margin-right: 7px;">
+                    <i class="fa fa-question-circle" style="color: #FFF; font-size: 25px;"></i>
+                </a>
+            </li> -->
+            <li #messages [ngClass]="{'active-top-menu':_commonService.activeTopbarItem === messages}" vs-app-notification (openMenu)="_commonService.onTopbarItemClick($event,messages)" pTooltip="Thông báo" tooltipPosition="bottom">
+            </li>
+            <!-- <li pTooltip="Tin nhắn" tooltipPosition="bottom">
+                <a [routerLink]="['/cskh']" (click)="onMessagesClick()">
+                    <i class="topbar-icon animated swing fa fa-fw fa-comment-o"></i>
+                    <span class="topbar-badge animated rubberBand" *ngIf="mySetting.totalMessNotReaded > 0">{{mySetting.totalMessNotReaded}}</span>
+                </a>
+            </li> -->
+            <li pTooltip="Tin nhắn" tooltipPosition="bottom">
+                <a [routerLink]="['/chat']" (click)="onMessagesClick()">
+                    <svg viewBox="0 0 28 28" alt="" fill="currentColor" height="25" width="25" style="color: #FFF;">
+                        <path d="M14 2.042c6.76 0 12 4.952 12 11.64S20.76 25.322 14 25.322a13.091 13.091 0 0 1-3.474-.461.956 .956 0 0 0-.641.047L7.5 25.959a.961.961 0 0 1-1.348-.849l-.065-2.134a.957.957 0 0 0-.322-.684A11.389 11.389 0 0 1 2 13.682C2 6.994 7.24 2.042 14 2.042ZM6.794 17.086a.57.57 0 0 0 .827.758l3.786-2.874a.722.722 0 0 1 .868 0l2.8 2.1a1.8 1.8 0 0 0 2.6-.481l3.525-5.592a.57.57 0 0 0-.827-.758l-3.786 2.874a.722.722 0 0 1-.868 0l-2.8-2.1a1.8 1.8 0 0 0-2.6.481Z"></path>
+                    </svg>
+                    <span class="topbar-badge animated rubberBand" *ngIf="mySetting.totalMessNotReaded > 0">{{mySetting.totalMessNotReaded}}</span>
+                </a>
+            </li>
+            <!-- <li class="balance">Số xu đang xử lý: <b class="number">
+                    {{balanceBlock | mask :'separator':'.'}}
+                    xu</b></li>
+            <li class="balance">Số dư tài khoản: <b class="number"> {{balance | mask :'separator':'.'}}
+                    xu</b></li> -->
+            <li #modules [ngClass]="{'active-top-menu':_commonService.activeTopbarItem === modules}">
+                <a href="#" (click)="_commonService.onTopbarItemClick($event,modules)">
+                    <i class="topbar-icon fas fa-fw fa-th" pTooltip="Danh sách phân hệ" tooltipPosition="bottom"></i>
+                    <span class="topbar-item-name">Danh sách phân hệ</span>
+                </a>
+                <ul class="layout-menu subsystem fadeInDown">
+                    <li role="menuitem" style="text-align: center;">
+                        <a *ngFor="let item of app.listAppNav" target="_blank" href="{{item.url}}" class="subsystem-item">
+                            <span class="{{item.icon}}" style="font-size:40px"></span>
+                            <span>{{ item.text | translate}}</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li #search *ngIf="false" class="search-item" [hidden]="!_globalService.getSearchBoxState()" [ngClass]="{'active-top-menu':app.activeTopbarItem === search}" style="margin-right:10px;" (click)="_commonService.onTopbarItemClick($event,search)">
+                <div class="ui-inputgroup">
+                    <button (click)="onTopbarSearchClick($event, input)" pButton type="button" icon="fa fa-search" class="ui-button-secondary" style="border-right:0;color:#666"></button>
+                    <input #input (keyup.enter)="onTopbarSearchClick($event, input)" type="text" pInputText placeholder="Nhập từ khóa" style="height:35px" [(ngModel)]="searchKey">
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- 
+<p-dialog header="Thiết lập tham số hệ thống" [(visible)]="display" [modal]="true" [responsive]="true" [width]="500"
+    [closeOnEscape]="true" [dismissableMask]="true" [minY]="70" [baseZIndex]="1008" [closable]="true"
+    [dismissableMask]="true" [showHeader]="true" [resizable]="true">
+   
+
+    <div class="vs-form-container default-control-label-width vs-modal-content-panel">
+        <div class="vs-form-container default-control-label-width">
+
+            <div class="ui-g row">
+                <div class="ui-g-12 ui-lg12">
+                    <div class="vs-form-control ui-g">
+                        <div class="__form-control-label ui-g-12 ui-md-4">Năm học</div>
+                        <div class="__form-control-inputs ui-g-12 ui-md-8">
+                            <div class="__input-wrapper">
+                                <p-dropdown [baseZIndex]="15000" [(ngModel)]="mySettingEdit.idNamHoc"
+                                    (onChange)="onChangeNamHoc()"
+                                    [emptyFilterMessage]="'Không tìm thấy kết quả'"
+                                    [options]="namHoc_options" [style]="{'width':'100%', 'min-width':'0'}"
+                                    appendTo="body"></p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ui-g-12 ui-lg-12">
+                    <div class="vs-form-control ui-g">
+                        <div class="__form-control-label ui-g-12 ui-md-4">Học kỳ</div>
+                        <div class="__form-control-inputs ui-g-12 ui-md-8">
+                            <div class="__input-wrapper">
+                                <p-dropdown [baseZIndex]="15000" [(ngModel)]="mySettingEdit.idHocKy"
+                                    (onChange)="onChangeNamHoc()"
+                                    [emptyFilterMessage]="'Không tìm thấy kết quả'"
+                                    [options]="hocKy_options" [style]="{'width':'100%', 'min-width':'0'}"
+                                    appendTo="body"></p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ui-g-12 ui-lg-12">
+                    <div class="vs-form-control ui-g">
+                        <div class="__form-control-label ui-g-12 ui-md-4">Đợt thi</div>
+                        <div class="__form-control-inputs ui-g-12 ui-md-8">
+                            <div class="__input-wrapper">
+                                <p-dropdown [baseZIndex]="15000" [(ngModel)]="mySettingEdit.idDotThi"
+                                    [emptyFilterMessage]="'Không tìm thấy kết quả'"
+                                    [options]="dotThi_options" [style]="{'width':'100%', 'min-width':'0'}"
+                                    appendTo="body"></p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <p-footer>
+        <button type="button" class="ui-button-primary " pButton icon="pi pi-save" (click)="onSaveSettings()"
+            label="Lưu lại"></button>
+        <button type="button" pButton icon="pi pi-times" (click)="onReturn()" label="Đóng"
+            class="ui-button-secondary"></button>
+    </p-footer>
+</p-dialog> -->

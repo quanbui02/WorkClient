@@ -1,0 +1,16 @@
+<div class="link_box">
+  <div class="link_list">
+    <div class="link_ct" *ngFor="let item of dataSource">
+      <a href="{{item.link}}" target="_blank">{{ (item.name.length > 40)? (item.name | slice:0:40)+' ...':(item.name) }}</a>
+      <a (click)="onEdit(item.id)" class="btn_action">
+        <svg fill="#000000" width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20.7,5.2a1.024,1.024,0,0,1,0,1.448L18.074,9.276l-3.35-3.35L17.35,3.3a1.024,1.024,0,0,1,1.448,0Zm-4.166,5.614-3.35-3.35L4.675,15.975,3,21l5.025-1.675Z" />
+        </svg>
+      </a>
+    </div>
+  </div>
+  <div class="action_create">
+    <a (click)="onEdit(0)">Thêm mới</a>
+  </div>
+</div>
+<app-link-edit></app-link-edit>

@@ -1,0 +1,269 @@
+body .ui-dropdown-panel .ui-dropdown-filter-container .ui-dropdown-filter-icon {
+    top: 10px;
+    right: 15px;
+    font-size: 14px;
+}
+
+body .ui-dropdown-panel .ui-dropdown-items .ui-dropdown-item {
+    padding: 0 10px;
+    line-height: 28px;
+}
+
+body .ui-inputtext {
+    font-size: $vs-general-font-size;
+    padding: 4px 8px;
+    line-height: 20px;
+}
+
+body .ui-dropdown-panel .ui-dropdown-filter-container {
+    padding: 5px 10px;
+}
+
+body .ui-dropdown .ui-dropdown-trigger {
+    color: #cccccc;
+}
+
+body .ui-dropdown .ui-dropdown-clear-icon {
+    color: #868788;
+}
+
+p-dropdown {
+    .ui-dropdown .ui-dropdown-label {
+        padding-right: 24px;
+    }
+    .ui-corner-all,
+    .ui-inputtext {
+        border-radius: 0;
+        box-shadow: none;
+    }
+    .ui-placeholder {
+        color: $vs-input-placeholder-color;
+    }
+}
+
+p-multiselect {
+    .ui-corner-all,
+    .ui-inputtext {
+        border-radius: 0;
+    }
+    .ui-placeholder {
+        color: $vs-input-placeholder-color;
+    }
+}
+
+// custom drop down (Không sử dụng p-dropdown)
+.vs-custom-dropdown-wrapper {
+    position: relative;
+    z-index: 10;
+    &.inline {
+        display: inline-block;
+    }
+}
+
+.vs-custom-dropdown {
+    position: absolute;
+    width: 200px;
+    z-index: 10;
+    background: #fff;
+    border: 1px solid #eee;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3);
+    &.large-size {
+        width: 250px;
+    }
+    &.top-left {
+        bottom: 100%;
+        right: 0;
+    }
+    &.top-right {
+        bottom: 100%;
+        left: 0;
+    }
+    &.bottom-left {
+        top: 100%;
+        right: 0;
+    }
+    &.bottom-right {
+        top: 100%;
+        left: 0;
+    }
+    &.top-left,
+    &.top-right {
+        transform: translateY(-5px);
+    }
+    &.bottom-left,
+    &.bottom-right {
+        transform: translateY(5px);
+    }
+    &.style-1 {
+        padding: 10px;
+        .__action {
+            padding: 5px 10px;
+            color: $vs-text-color;
+            display: block;
+            @include easing-animation(background-color);
+            &:hover {
+                background-color: rgba($vs-info-color, 0.7);
+            }
+        }
+    }
+}
+
+// multi select
+body .ui-multiselect {
+    display: block;
+    border-radius: 0;
+}
+
+body .ui-multiselect-panel,
+body .ui-multiselect .ui-multiselect-panel {
+    min-width: 200px;
+}
+
+body .ui-multiselect-panel .ui-multiselect-header {
+    padding: 5px 20px 5px 10px;
+}
+
+body .ui-multiselect-panel .ui-multiselect-header .ui-multiselect-filter-container .ui-multiselect-filter-icon {
+    font-size: 14px;
+    top: 5px;
+    left: 5px;
+}
+
+.ui-multiselect-panel .ui-multiselect-item .ui-chkbox {
+    margin-right: 5px;
+}
+
+body .ui-multiselect-panel .ui-multiselect-items .ui-multiselect-item {
+    padding: 6px 10px;
+}
+
+body .ui-multiselect-label .vs-multi-select-tag {
+    display: inline-block;
+    font-size: $vs-general-font-size;
+    border-radius: 2px;
+    padding: 2px 20px 2px 6px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    background-color: #0095da;
+    color: #ffffff;
+}
+
+body .ui-multiselect-label .vs-multi-select-tag {
+    display: inline-block;
+    font-size: $vs-general-font-size;
+    border-radius: 2px;
+    padding: 2px 6px;
+    margin: 2px 3px 2px 0;
+    background-color: #0095da;
+    color: #ffffff;
+}
+
+body>.ui-multiselect-panel {
+    position: fixed;
+    display: block !important;
+}
+
+body .ui-multiselect-label .vs-multi-select-placeholder {
+    padding: 2px 6px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+// .ui-multiselect .ui-multiselect-label-container {
+// }
+//  angular-text-input-autocomplete style
+mwl-text-input-autocomplete-menu {
+    .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 1000;
+        display: none;
+        float: left;
+        min-width: 200px;
+        padding: 5px 0;
+        margin: 2px 0 0;
+        font-size: 14px;
+        text-align: left;
+        list-style: none;
+        background-color: #fff;
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;
+        border: 1px solid #ccc;
+        border: 1px solid rgba(0, 0, 0, .15);
+        border-radius: 4px;
+        -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    }
+    .dropdown-menu>.active>a,
+    .dropdown-menu>.active>a:focus,
+    .dropdown-menu>.active>a:hover {
+        color: #fff;
+        text-decoration: none;
+        background-color: #0095da;
+        outline: 0;
+    }
+    .dropdown-menu>li>a {
+        display: block;
+        padding: 3px 20px;
+        clear: both;
+        font-weight: 400;
+        line-height: 1.42857143;
+        color: #333;
+        white-space: nowrap;
+    }
+}
+
+.vs-custom-overlay-panel-wrapper {
+    .ui-overlaypanel-content {
+        padding: 10px;
+    }
+}
+
+.vs-custom-overlay-panel {
+    .__action {
+        padding: 5px 10px;
+        color: $vs-text-color;
+        display: block;
+        @include easing-animation(background-color);
+        &:hover {
+            background-color: rgba($vs-info-color, 0.7);
+        }
+    }
+}
+
+// dropdown with table
+.vs-dropdown-with-table {
+    ul.ui-dropdown-items,
+    .ui-th,
+    .ui-td {
+        border: 1px solid #ddd;
+    }
+    ul.ui-dropdown-items {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+        border-collapse: collapse;
+    }
+    .ui-th,
+    .ui-td {
+        display: table-cell;
+        padding: 6px;
+    }
+    li.ui-dropdown-item-group,
+    li.ui-dropdown-item {
+        display: table-row;
+    }
+    li.ui-dropdown-item-group {
+        background: #eee;
+    }
+    p-dropdownitem {
+        display: table-row-group;
+    }
+    .ui-dropdown-panel .ui-dropdown-filter-container {
+        padding: 10px;
+    }
+    .ui-dropdown-items-wrapper {
+        padding: 5px 10px 10px;
+    }
+}

@@ -1,0 +1,19 @@
+{
+  "hosting": [
+    {
+      "target": "firebase7",
+      "public": "dist/firebase7",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  ]
+}

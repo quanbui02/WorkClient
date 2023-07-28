@@ -1,0 +1,58 @@
+<div class="modal-header ">
+    <h6 class="modal-title text-uppercase ">Quản lý file cá nhân</h6>
+    <button type="button " class="close " aria-label="Close " (click)="onClose()">
+        <span aria-hidden="true ">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="box-notify">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <file-breadcrumb [folderChanged]="folderChanged" (selectFolder)="onSelectFolderFromBreadcrumb($event)"></file-breadcrumb>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <p-fileUpload [multiple]="true" (onError)="onError($event)" [uploadLabel]="'Tải file'" [cancelLabel]="'Hủy tải lên'" [chooseLabel]="chooseLabel" auto="true" (onProgress)="onProgress($event)" (onUpload)="onUploadEvent($event)" url="{{apiUrl}}" maxFileSize="{{maxFileSize}}"
+                        accept="{{dinhDangFile}}" name="files" auto="auto">
+                        <ng-template pTemplate="content">
+                            <ul *ngIf="uploadedFiles.length">
+                                <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+                            </ul>
+                        </ng-template>
+                    </p-fileUpload>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12" [hidden]="!isUploading">
+            <div class="progress" style="margin-bottom: 10; margin-top: 10;">
+                <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': progressValue + '%' }"></div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="card card-t">
+                <div class="grid ma4">
+                    <vs-fs-list-file [(ngModel)]="files" (onClick)="onFolderClick($event)" [isMngFile]="isMngFile" [isSingleFile]="true" (onSelectItem)="onSelectItem($event)" class="col-md-12">
+                    </vs-fs-list-file>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div stlye="flex:1;">
+        <div class="form-inline">
+            <button type="button" class="btn btn-primary" (click)="createFolder()">
+                <i class="fas fa-folder"></i> Tạo thư mục</button>
+            <input *ngIf="folderCreating" required [(ngModel)]="folderName" type="text" class="form-control" placeholder="Nhập tên thư mục" />
+            <button *ngIf="folderCreating" class="btn btn-info" (click)="onCreateFolder()" type="button">Lưu</button>
+        </div>
+    </div>
+    <div style="flex:1;text-align: right;">
+        <button type="button" class="btn btn-primary" (click)="onSelected()">
+            <i class="fa fa-arrow-down"></i> Chọn</button>
+    </div>
+</div>

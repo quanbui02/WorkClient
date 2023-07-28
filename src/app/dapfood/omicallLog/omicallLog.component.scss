@@ -1,0 +1,37 @@
+.name-emp{
+    margin-bottom: 5px;
+}
+.phone-emp{
+    color: rgb(173, 173, 173);
+    margin: 0;
+    font-size: 11px;
+}
+.audio-call {
+    width: 100%;
+}
+					  
+.filter-outbound{
+    width: 20px;
+    height: 20px;
+    filter: invert(50%) sepia(93%) saturate(3123%) hue-rotate(90deg) brightness(104%) contrast(95%);
+}
+.filter-inbound{
+    width: 20px;
+    height: 20px;
+    filter: invert(0.5) sepia(1) saturate(5) hue-rotate(175deg)
+}
+.filter-missed{
+    width: 20px;
+    height: 20px;
+    filter: invert(20%) sepia(97%) saturate(4132%) hue-rotate(357deg) brightness(93%) contrast(133%);
+}
+.image_name_user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    img {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+    }
+}

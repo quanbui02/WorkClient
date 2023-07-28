@@ -1,0 +1,185 @@
+<p-dialog #dialog [header]="'Tạo lệnh rút xu mới'" styleClass="vs-modal force-full-width" positionTop="50" [(visible)]="isShow" [style]="{'max-width': '800px'}" [contentStyle]="{'max-height': getMaxDialogHeight()}" [modal]="true" appendTo="body">
+    <div class="vs-form-container default-control-label-width vs-modal-content-panel">
+        <div class="vs-form-container default-control-label-width">
+            <div class="ui-g row">
+                <form action="" [formGroup]="formGroup">
+                    <div class="ui-g-6 ui-lg-6">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Số dư tài khoản</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper" style="position: relative;">
+                                    {{balance | mask :'separator':'.'}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-6 ui-lg-6">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Xu đang xử lý
+                            </div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper" style="position: relative;">
+                                    {{cashInTransit | mask :'separator':'.'}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-6 ui-lg-6">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Số xu được rút</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper" style="position: relative;">
+                                    {{soDuKhaDung | mask :'separator':'.'}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="ui-g-6 ui-lg-6">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Số xu cần rút</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper" style="position: relative;">
+                                    <input type="text" [(ngModel)]="modelEdit.deal" formControlName="deal" (change)="onChangeDeal()" mask="separator" thousandSeparator="." placeholder="Nhập số xu cần rút" />
+                                    <div class="form-control-feedback" *ngIf="formGroup.controls['deal'].hasError('required') && formGroup.controls['deal'].touched">
+                                        Trường thông tin này là bắt buộc!</div>
+                                    <div class="form-control-feedback" *ngIf="formGroup.controls['deal'].hasError('min') && formGroup.controls['deal'].touched">
+                                        Số xu rút phải lớn hơn hoặc bằng 100.000</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-6 ui-lg-6">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Số xu bị trừ</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper" style="position: relative;">
+                                    {{totalDeal | mask :'separator':'.'}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-6 ui-lg-6">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Phí rút xu</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper" style="position: relative;">
+                                    {{fee | mask :'separator':'.'}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-6 ui-lg-6">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Số xu thực nhận</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper" style="position: relative;">
+                                    {{lastDeal | mask :'separator':'.'}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-6 ui-lg-6">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Thuế thu nhập cá nhân
+                            </div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper" style="position: relative;">
+                                    {{tax | mask :'separator':'.'}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="ui-g-6 ui-lg-6">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Ngân hàng</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper" style="position: relative;">
+                                    {{modelEdit.bankName}}&nbsp;
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-6 ui-lg-6">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Tên chủ tài khoản</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                {{modelEdit.bankFullName}}&nbsp;
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-6 ui-lg-6">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Số tài khoản</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                {{modelEdit.bankNumber}}&nbsp;
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-6 ui-lg-6">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Số thẻ ATM</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                {{modelEdit.bankCardNumber}}&nbsp;
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Phương thức rút
+                            </div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <p-radioButton name="accountType" class="mr-5 ml-5" value="3" label="Qua tài khoản"
+                                    formControlName="isSupportBank" [disabled]="!isSupportBank"
+                                    [(ngModel)]="modelEdit.accountType"></p-radioButton>
+                                <p-radioButton name="accountType" class="mr-5 ml-5" value="2" label="Qua thẻ ATM"
+                                    formControlName="isSupportAtm" [disabled]="!isSupportAtm"
+                                    [(ngModel)]="modelEdit.accountType">
+                                </p-radioButton>
+                                <p-radioButton name="accountType" value="1" label="Thủ công" formControlName="payment"
+                                    [(ngModel)]="modelEdit.accountType">
+                                </p-radioButton>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="clearfix"></div>
+                    <div class="ui-g-6 ui-lg-6">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Nhập mã OTP</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper" style="position: relative;">
+                                    <input type="text" [(ngModel)]="code" formControlName="code" placeholder="Nhập mã OTP" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-6 ui-lg-6">
+                        <div class="vs-form-control ui-g">
+                            <button class="vs-btn vs-modal-btn vs-btn-action-edit" (click)="GetOTP()" type="button">
+                                <span class="__icon fa fa-floppy-o"></span>
+                                <span class="__label">Lấy OTP</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <p-footer>
+        <div class="ui-g row">
+            <div class="ui-g-12">
+                <button class="vs-btn vs-modal-btn vs-btn-action-edit" [disabled]="!formGroup.valid || isLoading" (click)="save()" type="button">
+                    <span class="__icon fa fa-floppy-o"></span>
+                    <span class="__label">Lưu</span>
+                </button>
+                <button type="button" (click)="closePopupMethod(null)" class="vs-btn vs-modal-btn vs-btn-action-back">
+                    <span class="__icon fa fa-times"></span>
+                    <span class="__label">Đóng</span>
+                </button>
+            </div>
+        </div>
+    </p-footer>
+</p-dialog>

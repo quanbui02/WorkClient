@@ -1,0 +1,40 @@
+body {
+    //font-family: 'Roboto Condensed';
+    font-size: $vs-general-font-size;
+}
+
+body.landing-body {
+    background-color: #fff;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+input,
+textarea,
+button,
+select {
+    outline: none;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+a {
+    outline: none;
+    text-decoration: none;
+}
+
+body .ui-widget,
+body .ui-widget .ui-widget {
+    font-family: inherit;
+}

@@ -1,0 +1,81 @@
+.multi-select-textarea {
+    .ui-multiselect {
+        width: 100%;
+        min-height: 120px;
+        border-radius: 0;
+        .ui-multiselect-trigger {
+            height: auto;
+            top: 16px;
+        }
+        .ui-multiselect-label.ui-corner-all {
+            display: flex;
+            flex-wrap: wrap;
+            .item-choose {
+                width: 48%;
+                color: #000;
+                background-color: #d9ebf7;
+                display: flex;
+                border: 1px solid #dddddd;
+                border-radius: 0;
+                margin-right: 10px;
+                line-height: 1.4;
+                margin-bottom: 10px;
+                align-items: center;
+                justify-content: space-between
+            }
+            .full-width {
+                width: 100%;
+                margin: 3px auto;
+                padding-left: 5px;
+            }
+        }
+        .ui-multiselect-panel {
+            display: none;
+        }
+    }
+}
+
+.vs-multi-select-with-modal {
+    .ui-multiselect {
+        width: 100%;
+        min-height: 80px;
+        border-radius: 0;
+    }
+    .ui-multiselect-trigger {
+        top: 0;
+        right: 0;
+    }
+    .ui-multiselect .ui-multiselect-trigger .ui-multiselect-trigger-icon {
+        top: 5px;
+        right: 5px;
+        left: auto;
+        margin: 0;
+        font-size: 16px;
+    }
+    .ui-multiselect-label.ui-corner-all {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .selected-item {
+        border: 1px solid $vs-base-color;
+        background-color: rgba($vs-base-color, 0.2);
+        padding: 0 25px 0 5px;
+        line-height: 20px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        align-items: center;
+        position: relative;
+        .__icon {
+            position: absolute;
+            width: 20px;
+            line-height: 20px;
+            top: 0;
+            text-align: center;
+            right: 0;
+            color: $vs-back-color;
+        }
+    }
+    .ui-multiselect-panel {
+        display: none;
+    }
+}

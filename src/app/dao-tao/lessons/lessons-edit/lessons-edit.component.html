@@ -1,0 +1,429 @@
+﻿<p-dialog #dialog [header]="'Thêm/sửa' | translate" styleClass="vs-modal force-full-width" positionTop="50"
+    [(visible)]="isShow" [style]="{'max-width': '80%'}" [contentStyle]="{'max-height': getMaxDialogHeight()}"
+    [modal]="true" appendTo="body">
+    <div class="vs-form-container default-control-label-width vs-modal-content-panel app-lessons-edit">
+
+        <div class="vs-form-container default-control-label-width">
+            <div class="ui-g row">
+                <form action="" [formGroup]="formGroup">
+                    <p-fieldset legend="Thiết lập thông tin bài giảng">
+                        <div class="ui-g-12 ui-lg-12">
+                            <div class="vs-form-control ui-g">
+                                <div class="__form-control-label ui-g-12 ui-md-4">Ảnh đại diện bài giảng</div>
+                                <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                    <div class="__input-wrapper" style="text-indent: 4px;">
+                                        <vs-single-fsfile-upload [chooseLabel]="'Chọn ảnh'" formControlName="image"
+                                            [(ngModel)]="modelEdit.image"></vs-single-fsfile-upload>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-lg-12">
+                            <div class="vs-form-control ui-g">
+                                <div class="__form-control-label ui-g-12 ui-md-4">Tiêu đề bài giảng</div>
+                                <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                    <div class="__input-wrapper required">
+                                        <input type="text" [(ngModel)]="modelEdit.name" formControlName="name"
+                                            placeholder="Tiêu đề bài giảng" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-lg-12">
+                            <div class="vs-form-control ui-g">
+                                <div class="__form-control-label ui-g-12 ui-md-4">Tổ chức</div>
+                                <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                    <div class="__input-wrapper">
+                                        <input type="text" [(ngModel)]="modelEdit.institution"
+                                            formControlName="institution" placeholder="Tổ chức" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-lg-12">
+                            <div class="vs-form-control ui-g">
+                                <div class="__form-control-label ui-g-12 ui-md-4">Giảng viên, người hướng dẫn</div>
+                                <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                    <div class="__input-wrapper">
+                                        <input type="text" [(ngModel)]="modelEdit.instructor"
+                                            formControlName="instructor" placeholder="giảng viên" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-lg-12">
+                            <div class="vs-form-control ui-g">
+                                <div class="__form-control-label ui-g-12 ui-md-4">Yêu cầu khóa học</div>
+                                <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                    <div class="__input-wrapper">
+                                        <textarea type="text" [(ngModel)]="modelEdit.prerequisites"
+                                            formControlName="prerequisites" placeholder="Yêu cầu khóa học"> </textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-lg-12">
+                            <div class="vs-form-control ui-g">
+                                <div class="__form-control-label ui-g-12 ui-md-4">Đối tượng tham gia khóa học</div>
+                                <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                    <div class="__input-wrapper">
+                                        <textarea type="text" [(ngModel)]="modelEdit.objects" formControlName="objects"
+                                            rows="3" placeholder="Đối tượng tham gia khóa học"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-lg-12">
+                            <div class="vs-form-control ui-g">
+                                <div class="__form-control-label ui-g-12 ui-md-4">Cấp độ, độ khó khóa học</div>
+                                <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                    <div class="__input-wrapper">
+                                        <textarea type="text" [(ngModel)]="modelEdit.difficultyLevel"
+                                            formControlName="difficultyLevel"
+                                            placeholder="Cấp độ, độ khó khóa học"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-lg-12">
+                            <div class="vs-form-control ui-g">
+                                <div class="__form-control-label ui-g-12 ui-md-4">Loại chứng nhận khi hoàn thành</div>
+                                <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                    <div class="__input-wrapper">
+                                        <textarea type="text" [(ngModel)]="modelEdit.certificate"
+                                            formControlName="certificate"
+                                            placeholder="Loại chứng nhận khi hoàn thành"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-lg-12">
+                            <div class="vs-form-control ui-g">
+                                <div class="__form-control-label ui-g-12 ui-md-4">Những gì bạn sẽ học</div>
+                                <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                    <div class="__input-wrapper">
+                                        <p-editor formControlName="achievements" [(ngModel)]="modelEdit.achievements"
+                                            [style]="{'height':'200px'}"></p-editor>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-lg-12">
+                            <div class="vs-form-control ui-g">
+                                <div class="__form-control-label ui-g-12 ui-md-4">Mô tả</div>
+                                <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                    <div class="__input-wrapper">
+                                        <p-editor formControlName="description" [(ngModel)]="modelEdit.description"
+                                            [style]="{'height':'500px'}"></p-editor>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g-12">
+                            <div class="vs-form-control ui-g">
+                                <div class="__form-control-label ui-g-12 ui-md-4">Số lượng</div>
+                                <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                    <div class="__input-wrapper">
+                                        <div class="ui-inputgroup">
+                                            <input type="number" formControlName="totalTimeVideo" maxlength="10"
+                                                [(ngModel)]="modelEdit.totalTimeVideo"
+                                                placeholder="Tổng thời gian của bài giảng"
+                                                pTooltip="Tổng thời gian của bài giảng" />
+                                            <span class="ui-inputgroup-addon">phút</span>
+                                        </div>
+                                    </div>
+                                    <div class="__input-wrapper">
+                                        <div class="ui-inputgroup">
+                                            <input type="number" formControlName="totalPart" maxlength="10"
+                                                [(ngModel)]="modelEdit.totalPart"
+                                                placeholder="Tổng số phần học bài giảng"
+                                                pTooltip="Tổng số phần học bài giảng" />
+                                            <span class="ui-inputgroup-addon">phần</span>
+                                        </div>
+                                    </div>
+                                    <div class="__input-wrapper">
+                                        <div class="ui-inputgroup">
+                                            <input type="number" formControlName="totalLesson" maxlength="10"
+                                                [(ngModel)]="modelEdit.totalLesson" placeholder="Tổng số bài học"
+                                                pTooltip="Tổng số bài học" />
+                                            <span class="ui-inputgroup-addon">bài</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </p-fieldset>
+                    <br>
+                    <p-fieldset legend="Thiết lập liên quan bài giảng">
+                        <div class="ui-g-12 ui-lg-12">
+                            <div class="vs-form-control ui-g">
+                                <div class="__form-control-label ui-g-12 ui-md-4">Khóa học</div>
+                                <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                    <div class="__input-wrapper">
+                                        <p-multiSelect [options]="courses_options" [(ngModel)]="lessionCourses"
+                                            formControlName="lessionCourses" defaultLabel="" appendTo="body">
+                                            <ng-template let-value pTemplate="selectedItems">
+                                                <div *ngFor="let val of value; index as i" class="vs-multi-select-tag"
+                                                    [hidden]="i > 2">
+                                                    <span>{{getSelectedItemLabel(courses_options, val)}}</span>
+                                                </div>
+                                                <div class="vs-multi-select-tag"
+                                                    *ngIf="lessionCourses && lessionCourses.length > 2">
+                                                    <span>...</span>
+                                                </div>
+                                                <div *ngIf="!value || value.length === 0"
+                                                    class="vs-multi-select-placeholder">-- Khóa học --
+                                                </div>
+                                            </ng-template>
+                                            <ng-template let-item pTemplate="item">
+                                                <span>{{item.label}}</span>
+                                            </ng-template>
+                                        </p-multiSelect>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-lg-12">
+                            <div class="vs-form-control ui-g">
+                                <div class="__form-control-label ui-g-12 ui-md-4">Sản phầm liên quan</div>
+                                <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                    <div class="__input-wrapper">
+                                        <p-multiSelect [options]="product_options" [(ngModel)]="lessionProducts"
+                                            formControlName="lessionProducts" defaultLabel="" appendTo="body">
+                                            <ng-template let-value pTemplate="selectedItems">
+                                                <div *ngFor="let val of value; index as i" class="vs-multi-select-tag"
+                                                    [hidden]="i > 2">
+                                                    <span>{{getSelectedItemLabel(product_options, val)}}</span>
+                                                </div>
+                                                <div class="vs-multi-select-tag"
+                                                    *ngIf="lessionProducts && lessionProducts.length > 2">
+                                                    <span>...</span>
+                                                </div>
+                                                <div *ngIf="!value || value.length === 0"
+                                                    class="vs-multi-select-placeholder">-- Sản phẩm --
+                                                </div>
+                                            </ng-template>
+                                            <ng-template let-item pTemplate="item">
+                                                <span>{{item.label}}</span>
+                                            </ng-template>
+                                        </p-multiSelect>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="ui-g-12 ui-lg-12">
+                            <div class="vs-form-control ui-g">
+                                <div class="__form-control-label ui-g-12 ui-md-4">Danh sách bệnh học</div>
+                                <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                    <div class="__input-wrapper">
+                                        <p-multiSelect [options]="Pathologies_options" [(ngModel)]="lessionPathologies"
+                                            formControlName="lessionPathologies" defaultLabel="" appendTo="body">
+                                            <ng-template let-value pTemplate="selectedItems">
+                                                <div *ngFor="let val of value; index as i" class="vs-multi-select-tag"
+                                                    [hidden]="i > 2">
+                                                    <span>{{getSelectedItemLabel(Pathologies_options, val)}}</span>
+                                                </div>
+                                                <div class="vs-multi-select-tag"
+                                                    *ngIf="lessionPathologies && lessionPathologies.length > 2">
+                                                    <span>...</span>
+                                                </div>
+                                                <div *ngIf="!value || value.length === 0"
+                                                    class="vs-multi-select-placeholder">-- Bệnh học --
+                                                </div>
+                                            </ng-template>
+                                            <ng-template let-item pTemplate="item">
+                                                <span>{{item.label}}</span>
+                                            </ng-template>
+                                        </p-multiSelect>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                    </p-fieldset>
+                    <br>
+                    <p-fieldset legend="Thiết lập nội dung bài giảng">
+                        <div class="ui-g-12 ui-lg-12">
+                            <div class="vs-form-control ui-g">
+                                <div class="__form-control-label ui-g-12 ui-md-4">Nội dung bài giảng</div>
+                                <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                    <form [formGroup]="formlessonDetails" class="ui-g-12 ui-lg-12">
+                                        <div *ngFor="let control of  lessonDetailsFieldAsFormArray.controls ;let i = index;"
+                                            formArrayName='lessonDetails' class="ui-g-12 ui-lg-12">
+                                            <div [formGroupName]="i" class="ui-g-12 ui-lg-12"
+                                                style="margin-bottom: 10px;">
+                                                <!-- <div class="input-field">
+                                                <input matInput type="text" placeholder="Role" formControlName="role">
+                                            </div> -->
+                                                <p-fieldset legend="Thêm nội dung bài giảng">
+                                                    <div class="ui-g-12 ui-lg-12">
+                                                        <div class="vs-form-control ui-g">
+                                                            <div class="__form-control-label ui-g-12 ui-md-4">Ảnh đại
+                                                                diện nội dung</div>
+                                                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                                                <div class="__input-wrapper" style="text-indent: 4px;">
+                                                                    <vs-single-fsfile-upload [chooseLabel]="'Chọn ảnh'"
+                                                                        formControlName="imageLessionDetail"></vs-single-fsfile-upload>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ui-g-12 ui-lg-12">
+                                                        <div class="vs-form-control ui-g">
+                                                            <div class="__form-control-label ui-g-12 ui-md-4">Tiêu đề
+                                                                nội
+                                                                dung</div>
+                                                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                                                <div class="__input-wrapper required">
+                                                                    <input type="text" formControlName="name"
+                                                                        placeholder="Tiêu đề" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ui-g-12 ui-lg-12">
+                                                        <div class="vs-form-control ui-g">
+                                                            <div class="__form-control-label ui-g-12 ui-md-4">Mô tả
+                                                            </div>
+                                                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                                                <div class="__input-wrapper">
+                                                                    <textarea type="text" formControlName="description"
+                                                                        rows="3" placeholder="Mô tả"></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ui-g-12 ui-lg-12">
+                                                        <div class="vs-form-control ui-g">
+                                                            <div class="__form-control-label ui-g-12 ui-md-4">Chi tiết
+                                                            </div>
+                                                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                                                <div class="__input-wrapper">
+                                                                    <p-editor formControlName="descriptionDetail"
+                                                                        [style]="{'height':'300px'}"></p-editor>
+                                                                    <!-- <textarea type="text" formControlName="description"
+                                                                        rows="3" placeholder="Description"></textarea> -->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ui-g-12 ui-lg-12">
+                                                        <div class="vs-form-control ui-g">
+                                                            <div class="__form-control-label ui-g-12 ui-md-4">Video nội
+                                                                dung
+                                                            </div>
+                                                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                                                <div class="__input-wrapper required">
+                                                                    <input type="text" formControlName="lessonVideo"
+                                                                        placeholder="Video nội dung" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ui-g-12 ui-lg-12">
+                                                        <div class="vs-form-control ui-g">
+                                                            <div class="__form-control-label ui-g-12 ui-md-4">Thời lượng
+                                                                video</div>
+                                                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                                                <div class="__input-wrapper">
+                                                                    <input type="text" formControlName="timeVideo"
+                                                                        placeholder="Thời lượng video" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ui-g-12 ui-lg-12">
+                                                        <div class="vs-form-control ui-g">
+                                                            <div class="__form-control-label ui-g-12 ui-md-4">Thứ tự
+                                                                hiển thị
+                                                            </div>
+                                                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                                                <div class="__input-wrapper">
+                                                                    <input formControlName="sort" type="number"
+                                                                        maxlength="10" placeholder="Thứ tự hiển thị" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ui-g-12 ui-lg-12">
+                                                        <div class="vs-form-control ui-g">
+                                                            <div class="__form-control-label ui-g-12 ui-md-4">File nội
+                                                                dung
+                                                            </div>
+                                                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                                                <div class="__input-wrapper required">
+                                                                    <app-multi-file-upload2 style="width: 100%;"
+                                                                        formControlName="lessonFile"
+                                                                        [chooseLabel]="'Chọn file'">
+                                                                    </app-multi-file-upload2>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ui-g-12 ui-lg-12">
+                                                        <button class="vs-btn vs-btn-blue" pTooltip="Xóa nội dung"
+                                                            type="button" (click)="remove(i)">Xóa nội dung</button>
+                                                    </div>
+                                                </p-fieldset>
+
+                                            </div>
+                                        </div>
+
+                                        <!-- <button class="button" type="submit" (click)="formValue()">
+                                        Login
+                                    </button> -->
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-lg-12">
+                            <div class="vs-form-control ui-g">
+                                <div class="__form-control-label ui-g-12 ui-md-4"></div>
+                                <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                    <div class="__input-wrapper">
+                                        <button type="button" class="vs-btn vs-btn-blue" pTooltip="Thêm nội dung mới"
+                                            (click)="addControl()">
+                                            <span class="__icon fa fa-plus" style="color:#fff;font-size: 13px;"> Thêm
+                                                nội dung
+                                                mới</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </p-fieldset>
+                    <br>
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Trạng thái sử dụng</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <p-inputSwitch [(ngModel)]="modelEdit.isActive" formControlName="isActive"
+                                        pTooltip="{{'Sử dụng' | translate}}">
+                                    </p-inputSwitch>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <p-footer>
+        <div class="ui-g row">
+            <div class="ui-g-12">
+                <button class="vs-btn vs-modal-btn vs-btn-action-edit" [disabled]="!formGroup.valid" (click)="save()"
+                    type="button">
+                    <span class="__icon fa fa-floppy-o"></span>
+                    <span class="__label">{{'Lưu' | translate}}</span>
+                </button>
+                <button type="button" (click)="closePopupMethod(null)" class="vs-btn vs-modal-btn vs-btn-action-back">
+                    <span class="__icon fa fa-times"></span>
+                    <span class="__label">{{'Đóng' | translate}}</span>
+                </button>
+            </div>
+        </div>
+    </p-footer>
+</p-dialog>
+
+<app-lessondetails-edit (closePopup)="onCloseForm()"></app-lessondetails-edit>

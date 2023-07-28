@@ -1,0 +1,14 @@
+.vs-table-scheduled-container {
+    .ui-table .ui-table-tbody>tr>td {
+        &.__item-tick {
+            cursor: pointer;
+        }
+        @each $name,
+        $value in (busy:$vs-table-scheduled-busy, click:$vs-table-scheduled-click, selected:$vs-table-scheduled-selected, suggested:$vs-table-scheduled-suggested, suggestions: $vs-table-scheduled-suggestions) {
+            &.__item-#{$name} {
+                background-color: $value;
+                position: relative;
+            }
+        }
+    }
+}

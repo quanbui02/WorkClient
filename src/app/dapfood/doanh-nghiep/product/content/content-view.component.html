@@ -1,0 +1,66 @@
+<p-dialog #dialog [header]="title | translate" styleClass="vs-modal force-full-width" positionTop="50" [(visible)]="isShow" [style]="{'max-width': '1100px'}" [contentStyle]="{'max-height': getMaxDialogHeight()}" [modal]="true" appendTo="body">
+    <div class="vs-form-container default-control-label-width vs-modal-content-panel app-content-view">
+        <!-- <form action="" [formGroup]="formGroup"> -->
+        <div class="vs-form-container default-control-label-width">
+            <!-- <div class="ui-g row">
+                <div class="ui-g-12 ui-lg-12">
+                    <div class="vs-form-control ui-g">
+                        <button type="button" *ngIf="viewdn && viewctv" class="vs-btn vs-modal-btn vs-btn-action-edit" style="padding-left: 10px;" (click)="viewdn = false;viewctv =false;getData();" pTooltip="Tất cả">
+                            <span class="__label">Tất cả</span>
+                        </button>
+                        <button type="button" *ngIf="!viewdn || !viewctv" class="vs-btn vs-modal-btn vs-btn-action-back" style="padding-left: 10px;" (click)="viewdn = true;viewctv =true;getData();" pTooltip="Tất cả">
+                            <span class="__label">Tất cả</span>
+                        </button>&nbsp; &nbsp;
+                        <button type="button" *ngIf="viewdn" class="vs-btn vs-modal-btn vs-btn-action-edit" style="padding-left: 10px;" (click)="viewdn = !viewdn;getData();" pTooltip="Doanh nghiệp">
+                            <span class="__label">Doanh nghiệp</span>
+                        </button>
+                        <button type="button" *ngIf="!viewdn" class="vs-btn vs-modal-btn vs-btn-action-back" style="padding-left: 10px;" (click)="viewdn = !viewdn;getData();" pTooltip="Doanh nghiệp">
+                            <span class="__label">Doanh nghiệp</span>
+                        </button>&nbsp; &nbsp;
+                        <button type="button" *ngIf="viewctv" class="vs-btn vs-modal-btn vs-btn-action-edit" style="padding-left: 10px;" (click)="viewctv = !viewctv;getData();" pTooltip="CTV">
+                            <span class="__label">CTV</span>
+                        </button>
+                        <button type="button" *ngIf="!viewctv" class="vs-btn vs-modal-btn vs-btn-action-back" style="padding-left: 10px;" (click)="viewctv = !viewctv;getData();" pTooltip="CTV">
+                            <span class="__label">CTV</span>
+                        </button>
+                    </div>
+                </div>
+            </div> -->
+            <div class="ui-g row">
+                <p-accordion [multiple]="true" class="accordion">
+                    <ng-container *ngFor="let item of dataSource; let i = index">
+                        <p-accordionTab [header]="'Nội dung ' + (i + 1)" [selected]="true">
+
+                            <div class="box-copy">
+                                <button type="button" *ngIf="item.isEdit != true" class="vs-btn icon-only vs-btn-action-edit" ngxClipboard (cbOnSuccess)="onCopy()" [cbContent]="item.content" pTooltip="Copy nội dung">
+                                    <span class="__icon fa fa-files-o"></span>
+                                </button>
+                            </div>
+
+                            <textarea autosize type="text" [readonly]="viewctv" [(ngModel)]="item.content" placeholder="" style="width: 100%;"></textarea>
+
+                            <app-multi-file-upload2 [viewOnly]="true" [(ngModel)]="item.images" [chooseLabel]="'Chọn ảnh'">
+                            </app-multi-file-upload2>
+
+                            <div style="clear: both;width: 100%;">
+                            </div>
+                        </p-accordionTab>
+                    </ng-container>
+                </p-accordion>
+
+            </div>
+        </div>
+        <!-- </form> -->
+    </div>
+
+    <p-footer>
+        <div class="ui-g row">
+            <div class="ui-g-12">
+                <button type="button" (click)="closePopupMethod(null)" class="vs-btn vs-modal-btn vs-btn-action-back">
+                    <span class="__icon fa fa-times"></span>
+                    <span class="__label">Đóng</span>
+                </button>
+            </div>
+        </div>
+    </p-footer>
+</p-dialog>

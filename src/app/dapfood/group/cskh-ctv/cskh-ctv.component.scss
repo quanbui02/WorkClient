@@ -1,0 +1,19 @@
+.is_ctv{
+    color: #14b545;
+    font-weight: bold;
+}
+ 
+.image_name_user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    img {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+    }
+}
+.LastCall{
+    font-weight: bold;
+    font-size: 16px;
+}

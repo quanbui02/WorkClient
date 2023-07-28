@@ -1,0 +1,6 @@
+/* Add your variable customizations of layout here */
+$fontFamily          : -apple-system, BlinkMacSystemFont, "Open Sans", Helvetica, Arial, sans-serif;
+$left-sidebar-width  : 285px;                                                                         // raw: 235px
+$left-menu-width     : $left-sidebar-width + 18px;                                                    // raw: 253px
+$collapse-button-size: 26px;                                                                          // raw: 32px
+$input-border        : 1px solid #ccc;

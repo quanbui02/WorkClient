@@ -1,0 +1,676 @@
+{
+    "ERROR": {
+        "404": {
+            "TITLE_1": "Địa chỉ bạn truy cập không còn tồn tại",
+            "TITLE_2": "Vui lòng liên hệ với quản trị hệ thống để biết thêm chi tiết",
+            "RETURN_HOME": "Về trang chủ"
+        }
+    },
+    "TEMPLATE": {
+        "TEST_LIST": {
+            "NAME": "Tên",
+            "DESCRIPTION": "Mô tả",
+            "ENABLED": "Sử dụng",
+            "POPUP_EDIT": "Sửa test item"
+        },
+        "TEST_DETAIL": {}
+    },
+    "DASHBOARD": {
+        "MENU": {
+            "DASHBOARD": "Bàn làm việc",
+            "TASK": "Quản lý công việc",
+            "DOCUMENT": "Quản lý văn bản",
+            "WORKFLOW": "Quản lý quy trình",
+            "E-FORM": "Quản lý E-Form",
+            "USER": "Quản lý người dùng",
+            "REPORT": "Quản lý báo cáo",
+            "ADMIN": "Quản lý danh mục",
+            "ROLE": "Quản lý vai trò",
+            "TEMPLATE-FORM": "Quản lý biểu mẫu",
+            "ORGANIZATION": "Quản lý cơ cấu tổ chức",
+            "INDICATOR": "Quản lý chỉ tiêu"
+        }
+    },
+    "FILE_EXPLORER": {
+        "POPUP_TITLE": "Duyệt file",
+        "TAB_HEADER_MY_FILE": "Tài liệu của tôi",
+        "TAB_HEADER_MY_SHARED": "Tài liệu chia sẻ với tôi",
+        "TAB_HEADER_GLOBAL": "Tài liệu dùng chung",
+        "BUTTON_NEW_FOLDER": "Tạo thư mục",
+        "POPUP_NEW_FOLDER": "Tạo thư mục mới",
+        "BUTTON_SAVE_NEW_FOLDER": "Tạo",
+        "DEFAULT_NEW_FOLDER": "Thư mục chưa đặt tên",
+        "COL_FILE_SIZE": "Kích thước",
+        "COL_CREATED": "Ngày tạo",
+        "COL_CREATED_BY": "Người tạo",
+        "COL_CURRENT_VERSION": "Phiên bản",
+        "CONFIRM_HEADER": "Xác nhận",
+        "CONFIRM_DELETE_FOLDER": "Bạn có chắc chắn muốn xóa thư mục này?",
+        "CONFIRM_DELETE_FILE": "Bạn có chắc chắn muốn xóa file này?",
+        "CONFIRM_EDIT_FILE": "Hệ thống sẽ tạo mới một phiên bản để bạn chỉnh sửa, nhấn ok để đồng ý.",
+        "MESSAGE_ERROR_HEADER": "Có lỗi xảy ra",
+        "MESSAGE_ERROR_DETAIL": "Lỗi không xác định, vui lòng liên hệ với quản trị hệ thống để biết thêm chi tiết",
+        "MESSAGE_SUCCESS_HEADER": "Thành công",
+        "MESSAGE_DELETE_FOLDER_SUCCESS": "Xóa thư mục thành công",
+        "MESSAGE_NOT_FOUND_ROOT_FOLDER": "Không tìm thấy thư mục gốc",
+        "MESSAGE_RENAME_FOLDER_SUCCESS": "Đổi tên thư mục thành công",
+        "MESSAGE_DELETE_FILE_SUCCESS": "Xóa file thành công",
+        "MESAGE_DELETE_FILE_NOT_FOUND": "File cần xóa không tồn tại",
+        "MESSAGE_DELETE_FILE_FAILED": "Xóa file thất bại",
+        "BREADCRUMBS_MY_FILES": "Danh sách tài liệu",
+        "MENU_RENAME_FOLDER": "Đổi tên thư mục",
+        "MENU_DELETE_FOLDER": "Xóa thư mục",
+        "MENU_RENAME_FILE": "Đổi tên file",
+        "MENU_DELETE_FILE": "Xóa file",
+        "BUTTON_UPLOAD": "Tải file lên",
+        "BUTTON_RE_CONNECT": "Thử kết nối lại",
+        "DOWNLOAD_CLIENT": "Tải ứng dụng hỗ trợ chỉnh sửa",
+        "FOLDER_NAME_INVALID": "Tên thư mục không hợp lệ",
+        "POPUP_RENAME_FILE": "Đổi tên file",
+        "FILE_NAME_INVALID": "Tên file không hợp lệ",
+        "BUTTON_SAVE_RENAME_FILE": "Lưu",
+        "MESSAGE_RENAME_FILE_SUCCESS": "Đổi tên file thành công",
+        "TOOLTIP": {},
+        "FILE_VERSION": {
+            "POPUP_TITLE": "Danh sách phiên bản",
+            "CONFIRM_DELETE": "Bạn có chắc chắn muốn xóa phiên bản này?",
+            "MESSAGE_DELETE_SUCCESS": "Xóa phiên bản thành công",
+            "CONFIRM_SET_VERSION_TO_MAJOR": "Bạn có chắc chắn muốn đặt phiên bản {0} thành bản chính {1}",
+            "MESSAGE_SET_MAJOR_SUCCESS": "Đặt phiên bản {0} thành bản chính {1} thành công",
+            "MENU_VIEW_ONLINE": "Xem file trực tuyến",
+            "MENU_EDIT": "Sửa trực tuyến",
+            "MENU_SET_MAJOR_VERSION": "Đặt làm phiên bản chính",
+            "MENU_DELETE": "Xóa phiên bản hiện tại"
+        },
+        "FILE_VIEWER": {
+            "POPUP_TITLE": "Xem file trực tuyến"
+        }
+    },
+    "QLDT_COMMON_PLACEHOLDER_SEARCH": "Tìm kiếm",
+    "TASK": {
+        "MENU": {
+            "DASHBOARD": "Bàn làm việc",
+            "PROJECTS": "Quản lý dự án",
+            "PROJECT_IN_PROGRESS": "Dự án đang thực hiện",
+            "PROJECT_COMPLETED": "Dự án đã hoàn thành",
+            "PROJECT_STATS": "Thống kê báo cáo",
+            "TASKS": "Quản lý công việc",
+            "ALL_TASK": "Tất cả công việc",
+            "MY_TASK": "Công việc của tôi",
+            "MY_RELATED_TASK": "Công việc tôi liên quan",
+            "MY_PROPOSE_TASK": "Công việc tôi đề xuất",
+            "TASK_STATS": "Thống kê báo cáo",
+            "MASTER_DATA": "Quản lý danh mục",
+            "MATER_DATA_TASK_CATEGORY": "Danh mục loại công việc",
+            "INTEGRATIONS_MANAGEMENT": "Danh mục dịch vụ tích hợp",
+            "INDICATOR_DATA": "Quản lý chỉ tiêu",
+            "INDICATOR_GROUP_CATEGORY": "Quản lý bộ chỉ tiêu",
+            "INDICATOR_DATA_CATEGORY": "Quản lý tiêu chí",
+            "INDICATOR_TYPE_CATEGORY": "Quản lý đơn vị tiêu chí",
+            "MATER_DATA_PROJECT_CATEGORY": "Danh mục loại dự án",
+            "TASK_IN_PROGRESS_TITLE": "Chờ xử lý",
+            "TASK_PROCESSED_TITLE": "Đã xử lý",
+            "TASK_RELATED_TITLE": "Có liên quan",
+            "TASK_SEARCH_TITLE": "Tìm kiếm công việc",
+            "SCHEDULE": "Lập lịch công việc lặp lại"
+        },
+        "MASTERDATA": {
+            "TASKCATEGORY": {
+                "POPUP_EDIT": "Sửa loại công việc",
+                "TITLE": "Danh sách loại công việc",
+                "EXPORT_FILE": "danh-sach-loai-cong-viec",
+                "EXPORT_BUTTON": "Xuất danh sách"
+            },
+            "PROJECTCATEGORY": {
+                "POPUP_EDIT": "Sửa loại dự án",
+                "TITLE": "Danh sách loại dự án",
+                "EXPORT_FILE": "danh-sach-loai-du-an",
+                "EXPORT_BUTTON": "Xuất danh sách"
+            }
+        },
+        "MANAGEMENT": {
+            "TASK_SHARE": "Xin ý kiến",
+            "TASK_TITLE": "Công việc",
+            "TASK_FORWARD": "Chuyển tiếp",
+            "TASK_ACTIVITIES": "Quá trình xử lý",
+            "MY_TASK_TITLE": "Công việc của tôi",
+            "MY_RELATED_TASK_TITLE": "Công việc tôi liên quan",
+            "MY_PORPOSE_TASK_TITLE": "Công việc tôi đề xuất",
+            "ALL_TASK_TITLE": "Tất cả công việc",
+            "CREATE_TASK_TITLE": "Thêm mới công việc",
+            "EDIT_TASK_TITLE": "Xem chi tiết công việc",
+            "SELECT_WORKFLOW": "Chọn quy trình",
+            "TRANSFER_PROCESSING_TITLE": "Chuyển xử lý",
+            "APPROVE_TITLE": "Chuyển phê duyệt",
+            "APPROVE_REJECT_TITLE": "Ký duyệt",
+            "WORKFLOW_LABEL_FORMAT": "{0} - Phiên bản {1}",
+            "TAB_TASK_MORE_INFO": "Nội dung công việc",
+            "TAB_TASK_ATTACHMENT": "Đính kèm",
+            "BUTTON_SHOW_DETAIL_TASK": "Chi tiết công việc",
+            "TASK": {
+                "ID": "#",
+                "NAME": "Tên công việc",
+                "CREATEDBY": "Người tạo",
+                "RELATEDUSER": "Người liên quan",
+                "ASSIGNEE": "Người phụ trách",
+                "ASSIGNER": "Người tạo",
+                "CATEGORY": "Phân loại công việc",
+                "STARTDATE": "Ngày bắt đầu",
+                "DUEDATE": "Ngày kết thúc",
+                "PRIORITY": "Độ ưu tiên",
+                "PARENTTASK": "Từ việc",
+                "BEFORETASK": "Việc hoàn thành trước",
+                "AFTERTASK": "Việc hoàn thành sau",
+                "TASKTAG": "Nhãn",
+                "PERCENT_DONE": "Tiến độ",
+                "DESCRIPTION": "Nội dung công việc",
+                "WORKFLOW": "Quy trình",
+                "STATUS": "Trạng thái",
+                "CREATED": "Ngày tạo",
+                "ATTACHMENT": "Đính kèm",
+                "PERCENTDONE": "Tiến độ"
+            },
+            "TRANSFER_PROCESSING": {
+                "RECEIVER": "Chuyển xử lý cho",
+                "NOTE": "Tin nhắn",
+                "ACTION": "Chuyển xử lý",
+                "COMPLETED": "Kết thúc công việc",
+                "REQUEST_APPROVAL": "Chuyển phê duyệt",
+                "SELECT_ACTION": "Chọn hành động"
+            },
+            "SHARE_FORM": {
+                "RDO_NO_ACTION": "",
+                "RDO_SHARE": "Xin ý kiến",
+                "RDO_FORWARD": "Chuyển tiếp",
+                "SELECT_ACTION": "Chọn hành động",
+                "RECEIVER": "Tới",
+                "RECEIVERUSER": "Tới cán bộ",
+                "RECEIVERORGANIZATION": "Tới phòng ban",
+                "NOTE": "Tin nhắn"
+            },
+            "APPROVE": {
+                "RECEIVER": "Người ký",
+                "NOTE": "Ý kiến"
+            }
+        },
+        "ACTIVITYTYPE": {
+            "TYPE_0": "Thêm mới công việc",
+            "TYPE_1": "Cập nhật nội dung công việc",
+            "TYPE_2": "Chuyển tiếp",
+            "TYPE_3": "Xin ý kiến",
+            "TYPE_4": "Kết thúc công việc",
+            "TYPE_5": "Xử lý nghiệp vụ",
+            "TYPE_6": "Gửi ý kiến"
+        },
+        "ACTIVITYTYPE_ICON": {
+            "TYPE_0": "fa fa-map-signs",
+            "TYPE_1": "fa fa-star",
+            "TYPE_2": "fa fa-map",
+            "TYPE_3": "fa fa-comment",
+            "TYPE_4": "fa fa-history",
+            "TYPE_5": "fa fa-map",
+            "TYPE_6": "fa fa-comment"
+        },
+        "STATUS_1": "Mới tạo",
+        "STATUS_2": "Đã xử lý",
+        "STATUS_3": "Chờ xử lý",
+        "STATUS_4": "Đã trình ký",
+        "STATUS_5": "Chờ ký",
+        "STATUS_6": "Đã ký",
+        "STATUS_7": "Từ chối",
+        "STATUS_8": "Đã trả lại",
+        "MESSAGE_FORWARD_SUCCESS": "Chuyển xử lý thành công",
+        "MESSAGE_APPROVE_SUCCESS": "Ký duyệt thành công",
+        "MESSAGE_REJECT_SUCCESS": "Bạn đã từ chối",
+        "MESSAGE_RETURN_SUCCESS": "Trả lại người đề xuất thành công",
+        "BUTTON": {
+            "ADD_WITH_WORKFLOW": "Thêm công việc thuộc quy trình",
+            "SELECT_WORKFLOW": "Chọn quy trình",
+            "TRANSFER_PROCESSING": "Chuyển xử lý",
+            "SEND_APPROVE": "Trình ký",
+            "APPROVE": "Ký duyệt",
+            "REQUEST_APPROVE": "Trình ký",
+            "REJECT": "Từ chối",
+            "RETURN": "Trả lại"
+        },
+        "INDICATORS": {
+            "TASKINDICATORS": {
+                "POPUP_EDIT": "Sửa tiêu chí",
+                "TITLE": "Danh sách tiêu chí",
+                "EXPORT_FILE": "danh-sach-tieu-chi",
+                "EXPORT_BUTTON": "Xuất danh sách",
+                "DATA": "Dữ liệu"
+            }
+        },
+        "INDICATOR_TYPE": {
+            "TASKINDICATORS": {
+                "POPUP_EDIT": "Sửa loại tiêu chí",
+                "TITLE": "Danh sách loại tiêu chí",
+                "EXPORT_FILE": "danh-sach-loai-tieu-chi",
+                "EXPORT_BUTTON": "Xuất danh sách",
+                "DATA_TYPE": "Kiểu dữ liệu"
+            },
+            "DATATYPE": {
+                "STRING": "Văn bản",
+                "TEXTAREA": "Đoạn văn bản",
+                "RICHTEXT": "Văn bản có thể định dạng",
+                "NUMBER": "Số tự nhiên",
+                "DATE": "Ngày tháng",
+                "RADIO": "Chọn một",
+                "CHECKBOX": "Chọn nhiều",
+                "STAFF": "Cán bộ",
+                "STAFFS": "Cán bộ (chọn nhiều)",
+                "POSITION": "Chức vụ",
+                "POSITIONS": "Chức vụ (chọn nhiều)",
+                "ORGANIZATION": "Phòng ban",
+                "ORGANIZATIONS": "Phòng ban (chọn nhiều)",
+                "DYNAMIC": "Dữ liệu động"
+            }
+        },
+        "INDICATOR_GROUP": {
+            "TASKINDICATORS": {
+                "POPUP_EDIT": "Sửa bộ chỉ tiêu",
+                "TITLE": "Danh sách bộ chỉ tiêu",
+                "EXPORT_FILE": "danh-sach-bo-chi-tieu",
+                "EXPORT_BUTTON": "Xuất danh sách"
+            }
+        },
+        "TASK_ACTIVITY": {
+            "TASKACTIVITY": {
+                "TITLE": "Quá trình xử lý",
+                "EXPORT_FILE": "qua-trinh-xu-ly",
+                "EXPORT_BUTTON": "Xuất danh sách"
+            }
+        }
+    },
+    "INSPECTORATE": {
+        "TYPE": {
+            "TT": "Thanh tra",
+            "KN": "Khiếu nại",
+            "TC": "Tố cáo",
+            "KT": "Quy chế dân chủ"
+        },
+        "DECISIONTYPE": {
+            "0": "Chưa thực hiện",
+            "1": "Đã thực hiện"
+        },
+        "STATUS": {
+            "1": "Chưa thực hiện",
+            "2": "Đã thực hiện"
+        },
+        "INSPECTSTATUS": {
+            "1": "Đang tiến hành",
+            "2": "Dự thảo báo cáo",
+            "3": "Dự thảo kết luận",
+            "4": "Kết thúc"
+        },
+        "INTERIORSTATUS": {
+            "1": "Chưa kiểm tra",
+            "2": "Đã kiểm tra"
+        },
+        "ISPROCESSED": {
+            "1": "Chưa thực hiện",
+            "2": "Đã thực hiện một phần",
+            "3": "Đã thực hiện"
+        }
+    },
+    "DOCUMENT": {
+        "MENU": {
+            "DASHBOARD": "Bàn làm việc",
+            "DOCUMENT_SEARCH": "Tìm kiếm văn bản",
+            "DOCUMENT_INCOMING": "Văn bản đến",
+            "DOCUMENT_OUTGOING": "Văn bản đi",
+            "DOCUMENT_INTERNAL": "Văn bản nội bộ",
+            "MASTER_DATA": "Quản lý danh mục",
+            "MATER_DATA_SECURITY": "Danh mục độ mật",
+            "MATER_DATA_URGENCY": "Danh mục độ khẩn",
+            "MATER_DATA_FIELD": "Danh mục lĩnh vực",
+            "MATER_DATA_RECEIVE": "Danh mục hình thức tiếp nhận",
+            "DOCUMENT_BOOK": "Quản lý sổ công văn",
+            "MATER_DATA_DOCTYPE": "Quản lý sổ loại văn bản",
+            "MATER_DATA_PROFILE": "Quản lý hồ sơ",
+            "MATER_DATA_UNIT": "Quản lý cơ quan",
+            "REPORTS": "Thống kê báo cáo",
+            "LIST_STATISTICS": "Thống kê danh sách văn bản",
+            "QUANTITY_STATISTICS": "Thống kê số lượng văn bản"
+        },
+        "MASTERDATA": {
+            "SECURITY": {
+                "POPUP_EDIT": "Thông tin độ mật",
+                "TITLE": "Danh sách độ mật",
+                "EXPORT_FILE": "danh-sach-do-mat",
+                "EXPORT_BUTTON": "Xuất danh sách"
+            },
+            "URGENCY": {
+                "POPUP_EDIT": "Thông tin độ khẩn",
+                "TITLE": "Danh sách độ khẩn",
+                "EXPORT_FILE": "danh-sach-do-khan",
+                "EXPORT_BUTTON": "Xuất danh sách"
+            },
+            "FIELD": {
+                "POPUP_EDIT": "Thông tin lĩnh vực",
+                "TITLE": "Danh sách lĩnh vực",
+                "EXPORT_FILE": "danh-sach-linh-vuc",
+                "EXPORT_BUTTON": "Xuất danh sách"
+            },
+            "RECEIVE": {
+                "POPUP_EDIT": "Thông tin hình thức tiếp nhận",
+                "TITLE": "Danh sách hình thức tiếp nhận",
+                "EXPORT_FILE": "danh-sach-hinh-thuc-tiep-nhan",
+                "EXPORT_BUTTON": "Xuất danh sách"
+            },
+            "DOCTYPE": {
+                "POPUP_EDIT": "Thông tin loại văn bản",
+                "TITLE": "Danh sách loại văn bản",
+                "EXPORT_FILE": "danh-sach-loai-van-ban",
+                "EXPORT_BUTTON": "Xuất danh sách"
+            },
+            "PROFILE": {
+                "POPUP_EDIT": "Thông tin hồ sơ công việc",
+                "TITLE": "Danh sách hồ sơ công việc",
+                "EXPORT_FILE": "danh-sach-ho-so-cong-viec",
+                "EXPORT_BUTTON": "Xuất danh sách"
+            },
+            "UNIT": {
+                "POPUP_EDIT": "Thông tin cơ quan",
+                "TITLE": "Danh sách cơ quan",
+                "EXPORT_FILE": "danh-sach-co-quan",
+                "NAME": "Tên",
+                "CODE": "Mã",
+                "ENG_NAME": "Tên tiếng anh",
+                "SHORT_NAME": "Tên viết tắt",
+                "PHONE": "Điện thoại",
+                "FAX": "Fax",
+                "EMAIL": "Email",
+                "ADDRESS": "Địa chỉ"
+            }
+        },
+        "INCOMING_LIST": {
+            "TITLE": "Danh sách văn bản đến",
+            "BOOKNUMBER": "Số đến",
+            "DOCNUMBER": "Số và ký hiệu văn bản",
+            "ISSUEDDATE": "Ngày ban hành",
+            "DOCNAME": "Trích yếu",
+            "COMINGDATE": "Ngày đến",
+            "DEADLINE": "Hạn xử lý"
+        },
+        "INCOMING_EDIT": {
+            "POPUP_EDIT": "Thông tin văn bản đến"
+        },
+        "OUTGOING_LIST": {
+            "TITLE": "Danh sách văn bản đi",
+            "BOOKNUMBER": "Số đi",
+            "DOCNUMBER": "Số và ký hiệu văn bản",
+            "ISSUEDDATE": "Ngày ban hành",
+            "DOCNAME": "Trích yếu",
+            "GOINGDATE": "Ngày văn bản",
+            "DEADLINE": "Hạn xử lý"
+        },
+        "OUTGOING_EDIT": {
+            "POPUP_EDIT": "Thông tin văn bản đi"
+        },
+        "INTERNAL_LIST": {
+            "TITLE": "Danh sách văn bản nội bộ",
+            "BOOKNUMBER": "Số nội bộ",
+            "DOCNUMBER": "Số và ký hiệu văn bản",
+            "ISSUEDDATE": "Ngày ban hành",
+            "DOCNAME": "Trích yếu",
+            "COMINGDATE": "Ngày đến",
+            "DEADLINE": "Hạn xử lý"
+        },
+        "INTERNAL_EDIT": {},
+        "BOOK_LIST": {
+            "TITLE": "Danh sách sổ văn bản",
+            "NAME": "Ký hiệu",
+            "BOOK_NUMBER": "Số quyển",
+            "BOOK_TYPE": "Phân loại",
+            "CURRENT_NUMBER": "Số hiện tại",
+            "BOOK_DATE": "Ngày lập sổ"
+        },
+        "BOOK_EDIT": {
+            "POPUP_EDIT": "Thông tin sổ công văn"
+        },
+        "REPORTS": {
+            "TITLE": "Thống kê báo cáo",
+            "DOCNUMBER": "Số và ký hiệu văn bản",
+            "ISSUEDDATE": "Ngày ban hành",
+            "DOCNAME": "Trích yếu",
+            "ISSUEDUNIT": "Cơ quan phát hành"
+        }
+    },
+    "E-FORM": {
+        "LIST": {
+            "TITLE": "Danh sách e-form",
+            "NAME": "Tên",
+            "CODE": "Mã",
+            "DESCRIPTION": "Mô tả"
+        }
+    },
+    "WORKFLOW": {
+        "MENU": {
+            "DASHBOARD": "Bàn làm việc",
+            "CORE": "Quản lý quy trình",
+            "INTEGRATIONS": "Quản lý tích hợp"
+        },
+        "CORE_LIST": {
+            "TITLE": "Danh sách quy trình",
+            "CODE": "Mã",
+            "NAME": "Tên quy trình",
+            "VERSION": "Phiên bản",
+            "SERVICECODE": "Mã dịch vụ",
+            "CREATETIME": "Ngày tạo"
+        },
+        "CORE_EDIT": {
+            "TITLE": "Thông tin cấu hình",
+            "POPUP_SERVICE": "Thông tin dịch vụ",
+            "POPUP_TITLE": "Thông tin cấu hình"
+        },
+        "INTEGRATIONS": {
+            "TITLE": "Danh sách dịch vụ tích hợp",
+            "POPUP_EDIT": "Thông tin tích hợp",
+            "SERVICE": "Dịch vụ",
+            "ENTITY": "Thực thể",
+            "SERVICE_ENDPOINT": "Endpoint"
+        }
+    },
+    "PIPE": {
+        "BOOLEAN_FORMAT": {
+            "USE": "Sử dụng",
+            "NOT_USE": "Không sử dụng",
+            "DISPLAY": "Hiển thị",
+            "NOT_DISPLAY": "Không hiển thị"
+        }
+    },
+    "TEMPLATE-FORM": {
+        "LIST": {},
+        "EDIT": {}
+    },
+    "REPORT": {
+        "MENU": {
+            "DASHBOARD": "Bàn làm việc",
+            "FORM_REPORT_MAIN": "Tạo lập báo cáo",
+            "FORM_REPORT_SET": "Nhóm báo cáo",
+            "FORM_REPORT": "Báo cáo",
+            "SCHEDULE_REPORT": "Đợt báo cáo",
+            "REPORT": "Tổng hợp thống kê, báo cáo"
+        },
+        "REPORT_FORM": {
+            "LIST": {
+                "TITLE": "Danh sách biểu mẫu báo cáo",
+                "NAME": "Tên",
+                "CODE": "Mã",
+                "DESCRIPTION": "Mô tả"
+            },
+            "EDIT": {
+                "TITLE": "Sửa biểu mẫu báo cáo",
+                "ADD_INDICATOR": "Thêm",
+                "QUESTION": "Câu hỏi",
+                "INDICATOR": "Tiêu chí",
+                "ORDER_NO": "Thứ tự",
+                "FUNCTION": "Chức năng",
+                "DELETE": "Xóa"
+            }
+        },
+        "REPORT_FORM_SET": {
+            "LIST": {
+                "TITLE": "Danh sách tập biểu mẫu báo cáo",
+                "NAME": "Tên",
+                "CODE": "Mã",
+                "DESCRIPTION": "Mô tả"
+            },
+            "EDIT": {
+                "TITLE": "Sửa tập biểu mẫu báo cáo",
+                "ADD_REPORT": "Thêm báo cáo",
+                "REPORT": "Báo cáo",
+                "ORDER_NO": "Thứ tự",
+                "FUNCTION": "Chức năng",
+                "CONDITION": "Điều kiện",
+                "DELETE": "Xóa",
+                "SETUP_CONDITION": "Cài đặt điều kiện",
+                "SELECT_REPORT": "Chọn báo cáo",
+                "ADD_CONDITION": "Thêm điều kiện"
+            }
+        },
+        "SCHEDULE_REPORT": {
+            "LIST": {
+                "TITLE": "Danh sách đợt báo cáo",
+                "NAME": "Tên",
+                "CODE": "Mã",
+                "DESCRIPTION": "Mô tả"
+            },
+            "EDIT": {
+                "TITLE": "Sửa tập biểu mẫu báo cáo",
+                "ASSIGNEE": "Người thực hiện",
+                "REPORT": "Báo cáo",
+                "SCHEDULE": "Lịch thực hiện",
+                "DURATION": "Thời gian thực hiện (phút)",
+                "STARTDATE": "Ngày bắt đầu",
+                "ENDDATE": "Ngày kết thúc"
+            }
+        },
+        "REPORT_SUMMARY": {
+            "TITLE": "Danh sách báo cáo",
+            "EXPORT_FILE": "danh-sach-bao-cao",
+            "FULLNAME": "Họ và tên"
+        }
+    },
+    "ORGANIZATION": {
+        "TITLE": "Cơ cấu tổ chức",
+        "LIST": {
+            "TITLE": "Quản lý cơ cấu tổ chức"
+        },
+        "CREATE": {
+            "TITLE": "Thêm mới thông tin cơ cấu tổ chức",
+            "PARENT": "Cấp cha"
+        },
+        "EDIT": {
+            "TITLE": "Thay đổi thông tin cơ cấu tổ chức"
+        }
+    },
+    "SCHEDULE": {
+        "LIST": {
+            "TITLE": "Quản lý lập lịch công việc lặp lại",
+            "NAME": "Tên",
+            "DESCRIPTION": "Mô tả"
+        },
+        "EDIT": {
+            "TITLE": "Lập lịch công việc lặp lại",
+            "TYPE": "Loại lặp",
+            "TIME": "Thời gian",
+            "DAYOFWEEK": "Ngày trong tuần",
+            "DAYOFMONTH": "Ngày trong tháng",
+            "RECURRING": "Thời gian (ngày)"
+        }
+    },
+    "DayOfWeek": {
+        "Monday": "Thứ 2",
+        "Tuesday": "Thứ 3",
+        "Wednesday": "Thứ 4",
+        "Thursday": "Thứ 5",
+        "Friday": "Thứ 6",
+        "Saturday": "Thứ 7",
+        "Sunday": "Chủ nhật"
+    },
+    "CATEGORY": {
+        "MENU": {
+            "SERVICES": "Quản lý dịch vụ",
+            "CATEGORIES": "Quản lý danh mục",
+            "DASHBOARD": "Bàn làm việc",
+            "GENERAL_TITLE": "Danh mục chi tiết",
+            "VILLAGE_TITLE": "Danh mục xã/phường",
+            "DISTRICT_TITLE": "Danh mục quận/huyện",
+            "PROVINCE_TITLE": "Danh mục tỉnh/thành phố",
+            "POSITION_TITLE": "Danh mục chức vụ",
+            "GROUP_TITLE": "Nhóm",
+            "NATIONAL_TITLE": "Danh mục quốc gia",
+            "FILE_TITLE": "Danh mục TTHC"
+        }
+    },
+    "INSPECT": {
+        "MENU": {
+            "LETTER": "Đơn thư, phản ánh",
+            "INSPECT": "Thanh tra",
+            "COMPLAINTS": "Xử lý khiếu nại",
+            "DENOUNCE": "Xử lý tố cáo",
+            "CHECK": "Kiểm tra",
+            "AFTER_INSPECT": "Xử lý sau thanh tra",
+            "OTHER_JOBS": "Công việc khác",
+            "DOCUMENT_INTERNAL": "Văn bản nội bộ",
+            "REPORTS": "Báo cáo công việc"
+        },
+        "HANDLE_COMPLAINT": {
+            "TITLE": "Danh sách xử lý khiếu nại",
+            "Thông tin giải quyết khiếu nại": "Thông tin giải quyết khiếu nại"
+        }
+    },
+    "ROLE": {
+        "ID": "ID",
+        "NAME": "Mã vai trò",
+        "DISPLAYNAME": "Tên vai trò",
+        "ENABLED": "Bật",
+        "ASSIGNER": "Tự động gán"
+    },
+    "USER": {
+        "ID": "ID",
+        "FIRSTNAME": "Họ và tên đệm",
+        "LASTNAME": "Tên",
+        "USERNAME": "Tên tài khoản",
+        "EMAIL": "Thư điện tử",
+        "LOCKOUTENABLED": "Khóa tài khoản"
+    },
+    "RESULTDISCIPLINE": {
+        "ID": "ID",
+        "PEOPLENAME": "Họ và tên đối tượng",
+        "PEOPLEPOSITION": "Chức vụ",
+        "PEOPLETITLE": "Chức danh",
+        "DIVISION": "Cơ quan",
+        "FORMDISCIPLINE": "Hình thức kỷ luật",
+        "REASONDISCIPLINE": "Lý do bị kỷ luật",
+        "STATUS": "Trạng thái",
+        "TIMESTART": "Thời gian",
+        "NAME": "Tên",
+        "EMAIL": "Thư điện tử",
+        "CODE": "Mã",
+        "CREATED": "Ngày tạo",
+        "MODIFIED": "Ngày sửa",
+        "CREATEDBY": "Người tạo",
+        "MODIFIEDBY": "Người sửa",
+        "ISDELETED": "Đã xóa"
+    },
+    "NOTIFICATIONEXPERIENCE": {
+        "ID": "ID",
+        "CONTENTSUMMARY": "Tóm tắt nội dung",
+        "REQUEST": "Kiến nghị",
+        "PROBLEM": "Vấn đề rút kinh nghiệm",
+        "OFFERANDATTACH": "Đề xuất và đính kèm",
+        "DIVISIONISUED": "Đơn vị ban hành",
+        "NAME": "Tên",
+        "EMAIL": "Thư điện tử",
+        "CODE": "Mã",
+        "CREATED": "Ngày tạo",
+        "MODIFIED": "Ngày sửa",
+        "CREATEDBY": "Người tạo",
+        "MODIFIEDBY": "Người sửa",
+        "ISDELETED": "Đã xóa"
+    }
+}

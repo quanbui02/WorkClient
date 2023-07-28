@@ -1,0 +1,356 @@
+<div class="app-dashboard">
+    <div class="dashboard">
+        <div class="ui-g overview-boxes">
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <div class="ui-g overview-box overview-box-1">
+                    <div class="overview-box-title"><i class="fa fa-inbox ml10"></i><span> Số công việc</span></div>
+                    <div class="overview-box-count">{{data.totalSales | mask :'separator':'.'}}</div>
+                </div>
+            </div>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <div class="ui-g overview-box overview-box-4">
+                    <div class="overview-box-title"><i class="fa fa-user"></i><span> Đang thực hiện</span></div>
+                    <div class="overview-box-count">{{data.totalProfit | mask :'separator':'.'}}</div>
+                </div>
+            </div>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <div class="ui-g overview-box overview-box-2">
+                    <div class="overview-box-title"><i class="fa fa-map-pin"></i><span> Đã hoàn thành</span>
+                    </div>
+                    <div class="overview-box-count">{{data.totalProfitSuccess | mask :'separator':'.'}}</div>
+                </div>
+            </div>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <div class="ui-g overview-box overview-box-3">
+                    <div class="overview-box-title"><i class="fa fa-dollar-sign"></i><span> Quá hạn</span></div>
+                    <div class="overview-box-count">{{data.balance | mask :'separator':'.'}}</div>
+                </div>
+            </div>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <p-progressSpinner *ngIf="isLoading" [style]="{width: '30px', height: '30px', margin:'-11px 8px'}" strokeWidth="8" fill="#EEEEEE" animationDuration=".5s">
+                </p-progressSpinner>
+            </div>
+        </div>
+        <div class="ui-g-12 ui-md-12 ui-lg-12">
+            <!-- <div class="vs-data-table-area" style="margin-top: 20px;">
+                <div class="ui-g vs-data-table-area-inner">
+                    <div class="ui-g-12 ui-lg-12 __main-table-area">
+                        <h3>Đơn hàng gần nhất</h3>
+                        <div class="ui-g vs-table-wrapper" id="table">
+                            <p-table #mainTable [columns]="cols" [scrollable]="true" scrollHeight="auto" [value]="lstLastOrder" class="vs-table responsive-table" [loading]="isLoading" [lazy]="false" [resizableColumns]="true">
+                                <ng-template pTemplate="colgroup" let-columns>
+                                    <colgroup>
+                                        <ng-container *ngFor="let col of columns" [ngSwitch]="col.field">
+                                            <ng-container *ngSwitchDefault>
+                                                <col [hidden]="!col.visible" [style.width]="col.width">
+                                            </ng-container>
+                                        </ng-container>
+                                    </colgroup>
+                                </ng-template>
+    
+                                <ng-template pTemplate="header" let-columns>
+                                    <tr>
+                                        <ng-container *ngFor="let col of columns;">
+                                            <th class="ui-resizable-column" [hidden]="!col.visible" pResizableColumn class="ui-resizable-column"> {{col.header}}</th>
+                                        </ng-container>
+                                    </tr>
+                                </ng-template>
+    
+                                <ng-template pTemplate="body" let-item let-columns="columns" >
+                                    <tr align="center">
+                                        <ng-container *ngFor="let col of columns;let i = index;" [ngSwitch]="col.field">
+                                            <td class="ui-resizable-column" [hidden]="!col.visible" [class.align-left]="!col.align || col.align === 'left'" [class.align-center]="col.align === 'center'" [class.align-right]="col.align === 'right'">
+                                                <ng-container *ngSwitchCase="'infoCustomer'">
+                                                    <h3 class="ui-card-title ng-star-inserted">{{item.name}}</h3>
+                                                    <div class="ui-card-subtitle ng-star-inserted"><b class="fa fa-phone"></b> &nbsp;{{item.phone}}</div>
+                                                    <b class="fa fa-map-marker"></b> &nbsp;<i>{{item.fullAddress}}</i>
+                                                </ng-container>
+                                                <ng-container *ngSwitchCase="'infoStatus'">
+                                                    <span *ngIf="item.status !== null">
+                                                    <span style="font-size: 15px;margin-bottom: 10px;cursor: pointer;" [innerHTML]="GetStatus(item)" [pTooltip]="item.statusNoteUpdate"></span>
+                                                    <div class="ui-card-subtitle ng-star-inserted" style="margin-top: 5px;"><b class="fa fa-user"></b> &nbsp;{{item.statusUserUpdate}}</div>
+                                                    <i *ngIf="item.statusDateUpdate !== '0001-01-01T00:00:00Z'" [pTooltip]="getTimeAgo(item.statusDateUpdate)"><b class="fa fa-clock"></b> &nbsp;{{item.statusDateUpdate | date :'HH:mm dd/MM/yyyy':'UTC'}}</i><br/>
+                                                    </span>
+                                                </ng-container>
+                                                <ng-container *ngSwitchCase="'infoAction'">
+                                                    <span *ngIf="item.actions !== null">
+                                                        <span style="font-size: 15px;margin-bottom: 10px;cursor: pointer" [innerHTML]="GetActions(item)" [pTooltip]="item.actionNoteUpdate"></span>
+                                                        <div class="ui-card-subtitle ng-star-inserted" style="margin-top: 5px;"><b class="fa fa-user"></b> &nbsp;{{item.actionUserUpdate}}</div>
+                                                        <i *ngIf="item.actionDateUpdate !== '0001-01-01T00:00:00Z'" [pTooltip]="getTimeAgo(item.actionDateUpdate)"><b class="fa fa-clock"></b> &nbsp;{{item.actionDateUpdate | date :'HH:mm dd/MM/yyyy':'UTC'}}</i><br/>
+                                                    </span>
+                                                </ng-container>
+                                                <ng-container *ngSwitchCase="'createdDate'">
+                                                    <span [pTooltip]="getTimeAgo(item.createdDate)">{{item.createdDate | date :'HH:mm dd/MM/yyyy':'UTC'}}</span>
+                                                </ng-container>
+                                                <ng-container *ngSwitchCase="'totalBill'">
+                                                    <b>{{item.totalBill | mask :'separator':'.'}}</b>
+                                                </ng-container>
+                                                <ng-container *ngSwitchCase="'totalReward'">
+                                                    <b>{{item.totalReward | mask :'separator':'.'}}</b>
+                                                </ng-container>
+                                                <ng-container *ngSwitchCase="'updatedDate'">
+                                                    <span>{{this.timeAgo.format(formatDate(item.updatedDate.replace('T',' ').replace('Z','00')))}} </span>
+                                                </ng-container>
+                                                <span *ngSwitchDefault class="break-word">{{item[col.field]}}</span>
+                                            </td>
+                                        </ng-container>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>
+
+<div class="app-dashboard2" *ngIf="this.isDN">
+    <div class="vs-page-content-body-area">
+        <div class="ui-g-12 ui-lg-12">
+            <div class="dashboard mt-15">
+                <div class="ui-g overview-boxes">
+                    <div class="ui-g overview-boxes">
+                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+                        <div class="ui-g overview-box overview-box-1">
+                            <div class="overview-box-title"><i class="fa fa-inbox ml10"></i><span> Tổng doanh số</span></div>
+                            <div class="overview-box-count">{{data.totalSales | mask :'separator':'.'}}</div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+                        <div class="ui-g overview-box overview-box-4">
+                            <div class="overview-box-title"><i class="fa fa-user"></i><span> Tổng đang xử lý</span></div>
+                            <div class="overview-box-count">{{data.totalProfit | mask :'separator':'.'}}</div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+                        <div class="ui-g overview-box overview-box-3">
+                            <div class="overview-box-title"><i class="fa fa-dollar-sign"></i><span>Số dư hiện tại</span></div>
+                            <div class="overview-box-count">{{data.balance | mask :'separator':'.'}}</div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui-g-12 ui-md-12 ui-lg-12" style="padding-left: 0px;">
+                <div class="vs-data-table-area" style="margin-top: 20px;">
+                    <div class="ui-g vs-data-table-area-inner" style="padding-left: 0px;">
+                        <div class="ui-g-12 ui-lg-12">
+                            <div class="ui-g-12 ui-md-6 ui-lg-3" style="padding-left: 0px;">
+                                <div>
+                                    <p-dropdown appendTo="body" filter="true" [style]="{'width':'100%'}" [(ngModel)]="searchModel.dnTime" [options]="CSKHTime_options" (onChange)="loadStatusDN()">
+                                    </p-dropdown>
+                                </div>
+                                <ul class="lstStatus">
+                                    <li>
+                                        <span class="fa fa-refresh"></span>
+                                        <span class="lstStatusOrder"><a href="/{{linkOrder}};key=;status=1000;fromDate={{RfromDate}};toDate={{RtoDate}}" target="_blank" style="color:rgb(36, 35, 35);">Chờ xác nhận</a></span>
+                                        <span>{{this.sumChoDuyet}}</span>
+                                    </li>
+                                    <li>
+                                        <span class="fa fa-check-circle"></span>
+                                        <span class="lstStatusOrder"><a href="/{{linkOrder}};key=;status=1;fromDate={{RfromDate}};toDate={{RtoDate}}" target="_blank" style="color:rgb(36, 35, 35);">Đã xác nhận</a></span>
+                                        <span>{{this.sumDaDuyet}}</span>
+                                    </li>
+                                    <li>
+                                        <span class="fa fa-shopping-bag"></span>
+                                        <span class="lstStatusOrder"><a href="/{{linkOrder}};key=;status=3,22,33,34,40;fromDate={{RfromDate}};toDate={{RtoDate}}" target="_blank" style="color:rgb(36, 35, 35);">Cần lưu ý</a></span>
+                                        <span>{{this.sumCapNhat}}</span>
+                                    </li>
+                                    <li>
+                                        <span class="fa fa-cart-arrow-down"></span>
+                                        <span class="lstStatusOrder"><a href="/{{linkOrder}};key=;status=2,20;fromDate={{RfromDate}};toDate={{RtoDate}}" target="_blank" style="color:rgb(36, 35, 35);">Kho tác nghiệp</a></span>
+                                        <span>{{this.sumKho}}</span>
+                                    </li>
+                                    <li>
+                                        <span class="fa fa-motorcycle"></span>
+                                        <span class="lstStatusOrder"><a href="/{{linkOrder}};key=;status=21,23,30;fromDate={{RfromDate}};toDate={{RtoDate}}" target="_blank" style="color:rgb(36, 35, 35);">Ship tác nghiệp</a></span>
+                                        <span>{{this.sumShip}}</span>
+                                    </li>
+                                    <li>
+                                        <span class="fa fa-check-square-o"></span>
+                                        <span class="lstStatusOrder"><a href="/{{linkOrder}};key=;status=31;fromDate={{RfromDate}};toDate={{RtoDate}}" target="_blank" style="color:rgb(36, 35, 35);">Hoàn thành</a></span>
+                                        <span>{{this.sumHoanThanh}}</span>
+                                    </li>
+                                    <li>
+                                        <span class="fa fa-times-rectangle"></span>
+                                        <span class="lstStatusOrder"><a href="/{{linkOrder}};key=;status=999;fromDate={{RfromDate}};toDate={{RtoDate}}" target="_blank" style="color:rgb(36, 35, 35);">Đơn hủy</a></span>
+                                        <span>{{this.sumHuyDon}}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-3" style="padding-left: 0px;">
+                                <div style="height: 37px;line-height: 26px;background: #FFF;border: 1px solid #CCC;padding: 3px;padding-left: 10px;">
+                                    <a (click)="this.loadListLastStatusOrderDN()">Đơn hàng mới cập nhật <span class="fa fa-refresh"></span></a>
+                                </div>
+                                <ul class="lstStatusOrder" style="height: 335px;overflow-y: auto;">
+                                    <li *ngFor="let item of this.lstLastStatusOrder">
+                                        <div>
+                                            <span><a href="/{{linkOrder}};key={{item.code}};" target="_blank" style="padding: 3px;color: red;font-weight: bold;font-size: 12px;">{{item.code}}</a></span>
+                                            <span>{{item.name}} - {{item.phone}}</span>
+                                        </div>
+                                        <div class="show-status">
+                                            <div class="status-name">{{item.status}}
+                                                <i>{{item.note}}</i>
+                                            </div>
+                                            <div>
+                                                <i style="cursor: pointer ;" [pTooltip]="item.statusUserUpdate">{{getTimeAgo(item.statusDateUpdate)}}</i>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui-g-12 ui-md-12 ui-lg-12">
+                <div class="vs-data-table-area">
+                    <div class="ui-g vs-data-table-area-inner" *ngIf="1===2">
+                        <div class="ui-g-12 ui-lg-12 __main-table-area">
+                            <div style="font-size: 14px;font-weight: bold;margin-bottom: 10px;">Đơn hàng mới nhất</div>
+                            <div class="ui-g vs-table-wrapper" id="table">
+                                <p-table #mainTable [columns]="cols" [scrollable]="true" scrollHeight="auto" [value]="lstLastOrder" class="vs-table responsive-table" [loading]="isLoading" [lazy]="false" [resizableColumns]="true">
+                                    <ng-template pTemplate="colgroup" let-columns>
+                                        <colgroup>
+                                            <ng-container *ngFor="let col of columns" [ngSwitch]="col.field">
+                                                <ng-container *ngSwitchDefault>
+                                                    <col [hidden]="!col.visible" [style.width]="col.width">
+                                                </ng-container>
+                                            </ng-container>
+                                        </colgroup>
+                                    </ng-template>
+        
+                                    <ng-template pTemplate="header" let-columns>
+                                        <tr>
+                                            <ng-container *ngFor="let col of columns;">
+                                                <th class="ui-resizable-column" [hidden]="!col.visible" pResizableColumn class="ui-resizable-column"> {{col.header}}</th>
+                                            </ng-container>
+                                        </tr>
+                                    </ng-template>
+        
+                                    <ng-template pTemplate="body" let-item let-columns="columns" >
+                                        <tr align="center">
+                                            <ng-container *ngFor="let col of columns;let i = index;" [ngSwitch]="col.field">
+                                                <td class="ui-resizable-column" [hidden]="!col.visible" [class.align-left]="!col.align || col.align === 'left'" [class.align-center]="col.align === 'center'" [class.align-right]="col.align === 'right'">
+                                                    <ng-container *ngSwitchCase="'infoCustomer'">
+                                                        <h3 class="ui-card-title ng-star-inserted" style="color: #3a3a3a;"><b class="fa fa-user"></b> &nbsp;{{item.name}}</h3>
+                                                        <div class="ui-card-subtitle ng-star-inserted"><b class="fa fa-phone"></b> &nbsp;{{item.phone}}</div>
+                                                        <b class="fa fa-map-marker"></b> &nbsp;<i>{{item.fullAddress}}</i>
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchCase="'infoStatus'">
+                                                        <span *ngIf="item.status !== null">
+                                                        <span style="font-size: 13px;margin-bottom: 15px;cursor: pointer;" [innerHTML]="showStatusWithIcon(item)" [pTooltip]="item.statusNoteUpdate"></span>
+                                                        <div class="ui-card-subtitle ng-star-inserted" style="margin-top: 5px;"><b class="fa fa-user"></b> &nbsp;{{item.statusUserUpdate}}</div>
+                                                        <i *ngIf="item.statusDateUpdate !== '0001-01-01T00:00:00Z'" [pTooltip]="getTimeAgo(item.statusDateUpdate)"><b class="fa fa-clock"></b> &nbsp;{{item.statusDateUpdate | date :'HH:mm dd/MM/yyyy':'UTC'}}</i><br/>
+                                                        </span>
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchCase="'infoAction'">
+                                                        <span *ngIf="item.actions !== null">
+                                                            <span style="font-size: 13px;margin-bottom: 15px;cursor: pointer" [innerHTML]="GetActions(item)" [pTooltip]="item.actionNoteUpdate"></span>
+                                                            <div class="ui-card-subtitle ng-star-inserted" style="margin-top: 5px;"><b class="fa fa-user"></b> &nbsp;{{item.actionUserUpdate}}</div>
+                                                            <i *ngIf="item.actionDateUpdate !== '0001-01-01T00:00:00Z'" [pTooltip]="getTimeAgo(item.actionDateUpdate)"><b class="fa fa-clock"></b> &nbsp;{{item.actionDateUpdate | date :'HH:mm dd/MM/yyyy':'UTC'}}</i><br/>
+                                                        </span>
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchCase="'createdDate'">
+                                                        <span [pTooltip]="getTimeAgo(item.createdDate)">{{item.createdDate | date :'HH:mm dd/MM/yyyy':'UTC'}}</span>
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchCase="'totalBill'">
+                                                        <b>{{item.totalBill | mask :'separator':'.'}}</b>
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchCase="'code'">
+                                                       <div class="lstStatusOrder"><a href="/orders-clients;key={{item.code}};" target="_blank">{{item.code}}</a></div> 
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchCase="'totalReward'">
+                                                        <b>{{item.totalReward | mask :'separator':'.'}}</b>
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchCase="'updatedDate'">
+                                                        <span>{{this.timeAgo.format(formatDate(item.updatedDate.replace('T',' ').replace('Z','00')))}} </span>
+                                                    </ng-container>
+                                                    <span *ngSwitchDefault class="break-word">{{item[col.field]}}</span>
+                                                </td>
+                                            </ng-container>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="app-dashboard2" *ngIf="this.isCSKH">
+    <div class="vs-page-content-body-area">
+        <div class="ui-g-12 ui-lg-12">
+            <div class="dashboard mt-15">
+                <div class="ui-g overview-boxes">
+                    <div class="ui-g overview-boxes">
+                        <div class="ui-g-12 ui-md-12 ui-lg-12 mt-5">
+                            <div class="ui-g overview-box overview-box-4">
+                                <div class="overview-box-title"><i class="fa fa-user"></i><span> Số CTV đang chăm sóc</span></div>
+                                <div class="overview-box-count">{{data.totalUsers | mask :'separator':'.'}}</div>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3 mt-5">
+                            <div class="ui-g overview-box overview-box-1">
+                                <div class="overview-box-title"><i class="fa fa-inbox ml10"></i><span> Tổng doanh thu</span></div>
+                                <div class="overview-box-count">{{data.totalSales | mask :'separator':'.'}}</div>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3 mt-5">
+                            <div class="ui-g overview-box overview-box-1">
+                                <div class="overview-box-title"><i class="fa fa-inbox ml10"></i><span> Doanh thu tạm tính</span></div>
+                                <div class="overview-box-count">{{data.totalProfit | mask :'separator':'.'}}</div>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3 mt-5">
+                            <div class="ui-g overview-box overview-box-1">
+                                <div class="overview-box-title"><i class="fa fa-clock ml10"></i><span> Theo thời gian</span></div>
+                                <p-dropdown appendTo="body" filter="true" [style]="{'width':'100%'}" [(ngModel)]="searchModel.cSKHTime" [options]="CSKHTime_options" (onChange)="loadSatementCSKH()">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="app-dashboard2" *ngIf="this.isAdmin">
+    <div class="vs-page-content-body-area">
+        <div class="ui-g-12 ui-lg-12">
+            <div class="dashboard mt-15">
+                <div class="ui-g overview-boxes">
+                    <div class="ui-g overview-boxes">
+                        <div class="ui-g-12 ui-md-12 ui-lg-6 mt-5">
+                            <div class="ui-g overview-box">
+                                <p-progressSpinner *ngIf="isLoading" [style]="{width: '30px', height: '30px', margin:'-11px 8px'}" strokeWidth="8" fill="#EEEEEE" animationDuration=".5s">
+                                </p-progressSpinner>
+                                <!-- <button type="button" class="vs-btn vs-top-table-btn vs-btn-action-data mt-5 ml-5"
+                                    (click)="GetListOrdersNeedShip()">
+                                    <span class="__icon fa fa-download"></span>
+                                    <span class="__label">Gọi Ship đơn cần đi</span>
+                                </button>
+                                <button type="button" class="vs-btn vs-top-table-btn vs-btn-action-data mt-5 ml-5"
+                                    (click)="GetListOrdersWattingShip()">
+                                    <span class="__icon fa fa-download"></span>
+                                    <span class="__label">Gọi Ship đơn chờ đi</span>
+                                </button>
+                                <button type="button" class="vs-btn vs-top-table-btn vs-btn-action-data mt-5 ml-5"
+                                    (click)="GetIsSyn()">
+                                    <span class="__icon fa fa-download"></span>
+                                    <span class="__label">Đồng bộ địa chỉ</span>
+                                </button> -->
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

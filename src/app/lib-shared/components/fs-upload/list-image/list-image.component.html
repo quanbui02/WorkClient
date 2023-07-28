@@ -1,0 +1,97 @@
+<div class="no-more-tables maxHeight">
+    <div class="file-upload2">
+        <div *ngFor="let item of files" class="item">
+            <a (click)="onItemClick(item)" target="_blank">
+                <img *ngIf="item.typeId == 1" src="{{item.linkViewOnline}}" height="60" />
+            </a>
+        </div>
+
+        <div class="item-null">
+            <span class="fa fa-plus"></span>
+        </div>
+    </div>
+
+    <table class="table table-bordered mb-0 table-hover" *ngIf="files.length">
+        <thead style="background-color: #f2f2f2">
+            <tr>
+                <th style="width: 30px;"></th>
+                <!-- <th>Tên</th> -->
+                <th>Xem trước</th>
+                <!-- <th>Thông tin</th> -->
+                <th *ngIf="!viewOnly" colspan="2">Thao tác</th>
+            </tr>
+        </thead>
+        <tr *ngFor="let item of files">
+            <td class="vs-hidden-print">
+                <label class="vs-custom-checkbox">
+                    <input class="__checkbox" type="checkbox" (change)="checkItem(item)" [(ngModel)]="item.checked" value="{{item.id}}">
+                    <span class=" __mark"></span>
+                </label>
+            </td>
+
+            <!-- <td class="text-center tdcheck">
+                <label class="custom-checkbox ma3" *ngIf="item.typeId == 1">
+                    <input type="checkbox" (change)="checkItem(item)" [(ngModel)]="item.checked" value="{{item.id}}"
+                        class="custom-control-input">
+                    <span class="custom-control-indicator cust"></span>
+                </label>
+            </td> -->
+            <!-- <td>
+                <a (click)="onItemClick(item)" target="_blank">
+                    <i class="fa fa-folder" *ngIf="item.typeId == 2"></i>
+                    <i class="fa fa-file" *ngIf="item.typeId == 1"></i>
+            <img *ngIf="item.typeId == 1" src="/assets/images/file-ext/icon{{item.fileExt}}.png" height="15"
+                        width="15" /> {{item.rawFileName}}
+            {{item.rawFileName}}
+            </a>
+            </td> -->
+            <td>
+                <a (click)="onItemClick(item)" target="_blank">
+                    <img *ngIf="item.typeId == 1" src="{{item.linkViewOnline}}" height="60" />
+                </a>
+            </td>
+            <!-- <td>
+                <p>Ngày tạo: {{item.createdDate | date : 'dd/MM/yyyy HH:mm a':'UTC'}}</p>
+                <p *ngIf="item.typeId == 1">Kích cỡ tệp: {{item.size | psFileSize }} </p>
+            </td> -->
+            <td data-title="Open" class="numeric" *ngIf="!viewOnly" style="width: 20px;">
+                <a *ngIf="item.typeId == 1" (click)="downloadFile(item)" style="margin-right:10px;">
+                    <i class="fa fa-download" style="font-size: 1.2em"></i>
+                </a>
+            </td>
+            <td data-title="Open" class="numeric" *ngIf="!viewOnly" style="width: 30px;">
+                <span *ngIf="isMngFile">
+                    <a [hidden]="item.isvirtual" class="text text-danger" confirmSwal (confirm-click)="deleteFile(item)" confirm-text="{{item.rawFileName}}"
+                        confirm-title="Bạn có chắc chắn xóa không!" style="margin-right:10px;">
+                        <i class="fa fa-trash" style="font-size: 1.2em"></i>
+                    </a>
+                </span>
+                <span *ngIf="!isMngFile">
+                    <a [hidden]="item.isvirtual" class="text text-danger" confirmSwal (confirm-click)="deleteFileTemp(item)" confirm-text="{{item.rawFileName}}"
+                        confirm-title="Bạn có chắc chắn xóa không!" style="margin-right:10px;">
+                        <i class="fa fa-trash" style="font-size: 1.2em"></i>
+                    </a>
+                </span>
+            </td>
+        </tr>
+    </table>
+    <div class="alert ui-state-default" *ngIf="!files.length">
+        Không có file đính kèm
+    </div>
+</div>
+
+<file-viewer></file-viewer>
+
+
+<!-- <ng-template ngbModalContainer></ng-template>
+<ng-template #fileViewer let-c="close" let-d="dismiss">
+    <div class="modal-header ">
+        <h6 class="modal-title text-uppercase ">Xem nội dung file</h6>
+        <button type="button " class="close " aria-label="Close " (click)="onClose()">
+            <span aria-hidden="true ">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <file-viewer [FileName]="selectedFile.rawFileName" [FileUrl]="linkView"></file-viewer>
+    </div>
+</ng-template> -->

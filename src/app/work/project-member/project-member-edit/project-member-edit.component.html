@@ -1,0 +1,67 @@
+<p-dialog #dialog [header]="'Thêm/sửa' | translate" styleClass="vs-modal force-full-width" positionTop="50" [(visible)]="isShow" [style]="{'max-width': '1100px'}"
+    [contentStyle]="{'max-height': getMaxDialogHeight()}" [modal]="true" appendTo="body">
+    <div class="vs-form-container default-control-label-width vs-modal-content-panel app-wmprojectmembers-edit">
+
+        <div class="vs-form-container default-control-label-width">
+            <div class="ui-g row">
+                <form action="" [formGroup]="formGroup">     
+                  
+                  <div class="ui-g-12 ui-lg-12">
+                    <div class="vs-form-control ui-g">
+                        <div class="__form-control-label ui-g-12 ui-md-4">Tài khoản</div>
+                        <div class="__form-control-inputs ui-g-12 ui-md-8">
+                            <div class="__input-wrapper required">
+                                <p-autoComplete [(ngModel)]="user" [suggestions]="users" appendTo="body" formControlName="user" (completeMethod)="autoComplete($event)" field="fullDisplayName" [size]="30" placeholder="Nhập tài khoản" [minLength]="1" (onSelect)="onSelect($event)">
+                                </p-autoComplete>
+                                <!-- <div class="form-control-feedback" *ngIf="formGroup.controls['user'].hasError('required') && formGroup.controls['user'].touched">
+                                    Trường thông tin này là bắt buộc!</div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ui-g-12 ui-lg-12">
+                    <div class="vs-form-control ui-g">
+                        <div class="__form-control-label ui-g-12 ui-md-4">Vai trò</div>
+                        <div class="__form-control-inputs ui-g-12 ui-md-8">
+                            <div class="__input-wrapper"> 
+                            <p-dropdown [dropdownIcon]="'none'" appendTo="body" formControlName="role" [style]="{'width':'100%'}" [(ngModel)]="modelEdit.role" [options]="roles_options">
+                            </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                </div>                    
+                
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Là quản lý dự án</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <p-inputSwitch [(ngModel)]="modelEdit.isProjectManager" formControlName="isProjectManager" pTooltip="{{'Quản lý dự án' | translate}}">
+                                    </p-inputSwitch>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <p-footer>
+        <div class="ui-g row">
+            <div class="ui-g-12">
+                <button class="vs-btn vs-modal-btn vs-btn-action-edit" [disabled]="!formGroup.valid" (click)="save()" type="button">
+                    <span class="__icon fa fa-floppy-o"></span>
+                    <span class="__label">{{'Lưu' | translate}}</span>
+                </button>
+                <button type="button" (click)="closePopupMethod(null)" class="vs-btn vs-modal-btn vs-btn-action-back">
+                    <span class="__icon fa fa-times"></span>
+                    <span class="__label">{{'Đóng' | translate}}</span>
+                </button>
+            </div>
+        </div>
+    </p-footer>
+</p-dialog>
+
+

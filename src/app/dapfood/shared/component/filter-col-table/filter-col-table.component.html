@@ -1,0 +1,68 @@
+<div *ngIf="filterAdv" class="vs-table-filter-container" pTooltip="Lọc">
+    <span (click)="op.toggle($event)" class="__filter-icon fa fa-filter"></span>
+
+    <p-overlayPanel #op (onHide)="reset()" (onShow)="onShow()" styleClass="vs-table-filter-overlay-wrapper">
+        <div class="vs-table-filter-overlay">
+            <div class="__filter-area area-1">
+                <div class="__title">Lọc theo điều kiện:</div>
+
+                <div class="__content-block">
+                    <div class="__condition-block block-1">
+                        <p-dropdown [(ngModel)]="filterMatchMode1" [options]="operator_options" [style]="{'width':'100%'}" class="__operator">
+                        </p-dropdown>
+
+                        <input [(ngModel)]="valueCompare1" [hidden]="getShowInputValueCompare1()" class="__value" type="text">
+                    </div>
+
+                    <ng-container *ngIf="filterMatchMode1">
+                        <div class="__connective-block">
+                            <p-radioButton [(ngModel)]="operator" label="Và" name="filter" value="and"></p-radioButton>
+
+                            <p-radioButton [(ngModel)]="operator" label="Hoặc" name="filter" value="or">
+                            </p-radioButton>
+                        </div>
+
+                        <div class="__condition-block block-2">
+                            <p-dropdown [(ngModel)]="filterMatchMode2" [options]="operator_options" [style]="{'width':'100%'}" class="__operator">
+                            </p-dropdown>
+
+                            <input [(ngModel)]="valueCompare2" [hidden]="getShowInputValueCompare2()" class="__value" type="text">
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+
+            <div class="__filter-area area-2">
+                <div class="__title">Lọc theo giá trị:</div>
+
+                <div class="__content-block">
+                    <input [(ngModel)]="filter" class="__search-box" placeholder="Nhập từ khóa ..." type="text">
+
+                    <div class="__col-values-actions">
+                        <a (click)="selectAllDataFilter( true)" class="__action" href="javascript:void(0)">
+                            Chọn tất cả
+                        </a>
+
+                        <a (click)="selectAllDataFilter( false)" class="__action" href="javascript:void(0)">
+                            Bỏ chọn tất cả
+                        </a>
+                    </div>
+
+                    <div class="__col-value-items">
+                        <p-checkbox *ngFor="let val of getDataFilter() " [(ngModel)]="val.checked" binary="true" label="{{val['text']}}" name="data"></p-checkbox>
+                    </div>
+                </div>
+            </div>
+
+            <div class="__action-area">
+                <button (click)="onSearchFilter()" class="vs-btn vs-modal-btn vs-btn-action-edit no-icon" type="button">
+                    <span class="__label">Chọn</span>
+                </button>
+
+                <button (click)="cancel()" class="vs-btn vs-modal-btn vs-btn-action-back no-icon" type="button">
+                    <span class="__label">Đóng</span>
+                </button>
+            </div>
+        </div>
+    </p-overlayPanel>
+</div>

@@ -1,0 +1,258 @@
+body .ui-dialog .ui-dialog-titlebar .ui-dialog-title {
+    font-size: 16px;
+}
+
+.ui-dialog.ui-dialog-resizable {
+    height: auto !important;
+}
+
+.ui-dialog.ui-dialog-maximized {
+    max-width: none !important;
+    max-height: none !important;
+    .ui-dialog-content {
+        max-height: none!important;
+    }
+}
+
+.vs-modal {
+    &.force-full-width {
+        .ui-dialog,
+        &.ui-dialog {
+            width: 100% !important;
+        }
+    }
+    .ui-dialog,
+    &.ui-dialog {
+        background-color: #f5f5f5;
+    }
+    &.ui-dynamicdialog {
+        background-color: #fff;
+    }
+    .ui-dialog .ui-dialog-titlebar,
+    &.ui-dialog .ui-dialog-titlebar {
+        border-bottom: 0;
+        .ui-dialog-titlebar-icon {
+            font-size: 20px;
+        }
+    }
+    //modal tab
+    .vs-modal-tab {
+        margin-top: -15px;
+        display: block;
+        .ui-tabview {
+            .ui-tabview-nav {
+                background-color: transparent;
+            }
+            // tab header
+            .ui-tabview-nav li {
+                margin-right: -3px;
+                outline: none;
+                border: 3px solid #ccc;
+                border-radius: 0;
+                border-bottom-color: $vs-info-color;
+                a {
+                    font-weight: 700;
+                    color: $vs-text-color;
+                }
+                &:not(.ui-state-active) {
+                    background-color: #e6e6e6;
+                }
+                &.ui-state-active {
+                    border-width: 3px;
+                    border-color: $vs-info-color;
+                    border-bottom-color: #fff;
+                }
+                &.ui-state-active+li {
+                    border-left-color: $vs-info-color;
+                }
+                &.ui-state-disabled {
+                    color: #666;
+                }
+                &:first-of-type {
+                    border-left: 0;
+                }
+                &.ui-state-disabled {
+                    a {
+                        color: #aaa;
+                    }
+                }
+            }
+            // tab panel
+            .ui-tabview-panels {
+                background-color: #fff;
+                box-shadow: 0px 4px 5px #d9d9d9;
+                border-top: 3px solid $vs-base-color;
+                margin-top: -3px;
+            }
+        }
+    }
+    // modal footer area
+    &.ui-dialog .ui-dialog-footer,
+    .ui-dialog .ui-dialog-footer {
+        border: 0;
+        background-color: transparent; 
+    }
+    .vs-modal-content-panel {
+        background-color: #fff; 
+        padding: 15px;
+        margin-top: -15px;
+        &.no-bgc {
+            background-color: transparent;
+        }
+        &.no-drop-shadow {
+            box-shadow: none;
+        }
+        &:not(.vs-pick-list-container) {
+            &:before {
+                content: '';
+                display: block; 
+                position: sticky;
+                top: -15px;
+                z-index: 100;
+                margin: -15px -15px 15px;
+            }
+        }
+        &.vs-pick-list-container {
+            border-top: 3px solid $vs-base-color;
+        }
+        &.no-padding {
+            padding: 0;
+        }
+        &.no-padding:not(.vs-pick-list-container) {
+            &:before {
+                margin: 0;
+            }
+        }
+        form {
+            width: 100%;
+        }
+    }
+    // class này chỉ dùng khi contentStyle của p-dialog được set max-height
+    &.full-content-height {
+        .ui-dialog-content {
+            height: 100vh;
+            padding-top: 0;
+        }
+        .vs-modal-content-panel {
+            height: 100%;
+            margin-top: 0;
+            border-top: 3px solid $vs-base-color;
+            &:before {
+                display: none;
+            }
+        }
+    }
+    .vs-modal-content-panel .__flex-layout {
+        height: 100%;
+        display: flex;
+        &.wrap {
+            flex-wrap: wrap;
+        }
+        >div {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .__fx-sidebar-area {
+            flex: 1 1 280px;
+        }
+        .__fx-main-area {
+            flex: 5 1 500px;
+        }
+        .__fx-block-container {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        // .__fx-static-block {
+        // }
+        .__fx-expanded-block {
+            flex: 5;
+            overflow: auto;
+        }
+    }
+    p-footer {
+        .vs-modal-more-action-btn-wrapper {
+            text-align: left;
+            .vs-custom-dropdown.delete-action {
+                padding: 10px;
+                .__action {
+                    padding: 5px 10px;
+                    color: $vs-text-color;
+                    display: block;
+                    @include easing-animation(background-color);
+                    &:hover {
+                        background-color: $vs-remove-color;
+                    }
+                }
+            }
+        }
+        button.vs-modal-btn {
+            margin-right: 0;
+            margin-left: 5px;
+        }
+    }
+}
+
+.vs-modal-p-0 {
+    .vs-page-content-header-area {
+        box-shadow: 0px 0px 5px 0px #aaa;
+        z-index: 100000;
+        position: relative;
+        padding: 0;
+        margin: 0;
+    }
+    .__top-table-action {
+        padding-bottom: 0;
+    }
+    .vs-modal-tab .ui-tabview .ui-tabview-panel {
+        padding: 0;
+    }
+    .vs-modal-tab .ui-tabview .tab-panel-p .ui-tabview-panel {
+        padding: 15px;
+    }
+}
+
+.vs-modal-tree {
+    .vs-modal-content-panel {
+        padding: 0;
+    }
+    .ui-tree-selectable.ui-widget-content {
+        border: none;
+    }
+    .vs-page-content-header-area {
+        padding: 10px 7.5px 0;
+        background-color: #fff;
+        margin-bottom: 0;
+    }
+    .__top-table-header {
+        color: #000000;
+        background-color: #fff;
+    }
+    .vs-data-table-area-inner {
+        background-color: #dddddd;
+    }
+    .__left-table-sidebar-wrapper {
+        padding-left: 0;
+        overflow: hidden;
+    }
+    .__table-wrapper {
+        padding: 0;
+        border-left: 1px solid $vs-base-color;
+        ;
+    }
+    .list-tree {
+        background-color: #fff;
+        height: 445px;
+        overflow-y: auto;
+        .ui-tree-filter {
+            border-radius: 0;
+        }
+        ul.ui-tree-container {
+            height: 397px;
+        }
+    }
+    .w-20 {
+        min-width: 20%;
+    }
+}

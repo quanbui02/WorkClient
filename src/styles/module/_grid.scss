@@ -1,0 +1,155 @@
+$color-note-border-normal: #b0e2eb;
+$color-note-normal: #dcf2ff;
+$color-note-border-profession: #f9d1ae;
+$color-note-profession: #ffecde;
+$color-note-border-elective: #072e7b;
+$color-note-elective: #ffffff;
+$color-key: #ff390a;
+.content-grid {
+    background-color: white;
+    display: flex;
+    .new-grid-loading{
+        .ui-widget-overlay{
+            z-index: 30;
+            background-color: #fff;
+        }
+    }
+    .table-grid {
+        border-collapse: collapse;
+
+        td, th {
+            border: #dddddd solid 1px;
+        }
+
+        thead {
+            background: #eee;
+        }
+
+        tbody tr td:first-child {
+            border-left: none;
+        }
+
+        tbody tr td:last-child {
+            border-right: none;
+        }
+    }
+}
+
+.grid-note{
+    background-color: #fff;
+    padding-top: 30px;
+    padding-left: 50px;
+    padding-bottom: 50px;
+    .label-name{
+        vertical-align: super;
+        margin-left: 10px;
+    }
+}
+.term{
+    width: 7%;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    text-align: center;
+    z-index: 20;
+    flex-direction: column;
+    position: absolute;
+    color: black;
+    font-family: helvetica, sans-serif;
+    padding: 0.5em;
+    font-size: 0.9em;
+    -webkit-transition: -webkit-box-shadow 0.15s ease-in;
+    -moz-transition: -moz-box-shadow 0.15s ease-in;
+    -o-transition: -o-box-shadow 0.15s ease-in;
+    transition: box-shadow 0.15s ease-in;
+    &:hover{
+        box-shadow: 2px 2px 10px #444;
+        -o-box-shadow: 2px 2px 10px #444;
+        -webkit-box-shadow: 2px 2px 10px #444;
+        -moz-box-shadow: 2px 2px 10px #444;
+        opacity: 0.6;
+    }
+}
+@each $action, $value in (normal: $color-note-normal, profession: $color-note-profession, elective: $color-note-elective) {
+
+    // color
+    .status-note-#{$action} {
+        background-color: $value;
+        height: 20px;
+        width: 50px;
+        display: inline-block;
+    }
+    .term-#{$action}{
+        background-color: $value;
+    }
+}
+@each $action, $value in (normal: $color-note-border-normal, profession: $color-note-border-profession, elective: $color-note-border-elective) {
+
+    // color
+    .status-note-#{$action} {
+        border: 1px solid $value;
+    }
+    .term-#{$action} {
+        border: 1px solid $value;
+    }
+}
+.note-elective{
+    position: relative;
+    &:after{
+        content: " ";
+        width: 100%;
+        height: 4px;
+        background: $color-note-border-elective;
+        display: block;
+        position: absolute;
+        bottom: 0;
+    }
+}
+.note-key{
+    position: relative;
+    &:after{
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: block;
+        border: 6px solid $color-key;
+        width: 0;
+        height: 0;
+        border-bottom-color: transparent;
+        border-left-color: transparent;
+    }
+}
+.elective:after{
+    content: " ";
+    width: 100%;
+    height: 4px;
+    background: $color-note-border-elective;
+    display: block;
+    position: absolute;
+    bottom: 0;
+}
+.term-key:after{
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+    border: 6px solid $color-key;
+    width: 0;
+    height: 0;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+}
+.item-child{
+    left: 2%;
+    width: 83px;
+}
+.point{
+    position: absolute;
+    //width: 2px;
+    //height: 2px;
+    //background-color: red;
+}

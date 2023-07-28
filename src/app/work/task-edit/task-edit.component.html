@@ -1,0 +1,318 @@
+<div class="ui-g" style="margin: 0;">
+  <div class="ui-dialog-content ui-widget-content ui-g-12" style="padding: 0;">
+    <div class="vs-form-container default-control-label-width">
+      <div class="vs-modal-content-panel" style="height: calc(100vh - 104px); overflow: auto;position: relative;padding: 0px;">
+        <div class="ui-g" style="padding-top: 10px;">
+          <form action="" [formGroup]="formGroup">
+            <div class="ui-g-8 ui-lg-8" style="overflow: auto;height: calc(100vh - 114px);padding: 10px 0;">
+              <div class="ui-g-12 ui-lg-12">
+                <div class="vs-form-control ui-g">
+                  <!-- <div class="__form-control-label ui-g-12 ui-md-12">Tên công việc</div> -->
+                  <div class="__form-control-inputs ui-g-12 ui-md-12">
+                    <div class="__input-wrapper">
+                      <textarea autosize rows="1" class="name_task" type="text" [(ngModel)]="modelEdit.name" formControlName="name" placeholder="Tên công việc" (blur)="onSave()"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="ui-g-12 ui-lg-12">
+                <div class="form_input">
+                  <div class="ui-g">
+                    <div class="__form-control-label ui-g-12 ui-md-12">Mô tả</div>
+                    <div class="__form-control-inputs ui-g-12 ui-md-12">
+                      <div class="__input-wrapper">
+                        <textarea class="description_task" type="text" [(ngModel)]="modelEdit.description" rows="8" formControlName="description" placeholder="Mô tả" style="width: 100%;"></textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+              <div class="ui-g-12 ui-lg-12">
+                <div class="form_input">
+                  <div class="ui-g">
+                    <div class="__form-control-label ui-g-12 ui-md-12">Chi tiết</div>
+                    <div class="__form-control-inputs ui-g-12 ui-md-12">
+                      <div class="__input-wrapper">
+                        <div *ngIf="!isEdit && modelEdit.detail" class="dt_content box_html_content" [innerHtml]="modelEdit.detail" (click)="isEdit=true"></div>
+                        <div *ngIf="!isEdit && !modelEdit.detail" class="dt_content" (click)="isEdit=true" style="color: #ccc;border: 1px dashed #ccc;padding: 10px;">Nhập mô tả ...</div>
+                        <div class="dt_block" *ngIf="isEdit==true">
+                          <p-editor formControlName="detail" [(ngModel)]="modelEdit.detail" [style]="{'height':'200px'}"></p-editor>
+                          <div class="ui-g-12" style="margin-top: 10px;display: flex; gap: 10px;">
+                            <button class="vs-btn vs-modal-btn vs-btn-action-edit" [disabled]="!formGroup.valid" (click)="onSave()" type="button">
+                              <span class="__icon fa fa-floppy-o"></span>
+                              <span class="__label">Lưu</span>
+                            </button>
+                            <button class="vs-btn" (click)="isEdit=false" type="button">
+                              <span class="__icon fa fa-times"></span>
+                              <span class="__label">Hủy</span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ui-g-12 ui-lg-12">
+                <div class="form_input">
+                  <div class="ui-g">
+                    <div class="__form-control-label ui-g-12 ui-md-12">File đính kèm</div>
+                    <div class="__form-control-inputs ui-g-12 ui-md-12">
+                      <div class="__input-wrapper">
+                        <app-multi-file-upload2 (onItemSelected)="onSave()" style="width: 100%;" formControlName="attachment" [(ngModel)]="modelEdit.attachment" [chooseLabel]="'Chọn ảnh'" [viewOnly]="false">
+                        </app-multi-file-upload2>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ui-g-12 ui-lg-12">
+                <div class="activity">Hoạt động</div>
+                <div class="show_activity_block">
+                  <span class="show_activity">Hiển thị: </span>
+                  <a [ngClass]="{'active_activity': activityType == 1}" class="btn_activity" (click)="activityType = 1">Bình luận</a>
+                  <a [ngClass]="{'active_activity': activityType == 2}" class="btn_activity" (click)="activityType = 2">Lịch sử</a>
+                  <!-- <a [ngClass]="{'active_activity': activityType == 3}" class="btn_activity" id="history" (click)="activityType = 3">Lịch sử</a> -->
+                </div>
+                <div class="activity_content">
+                  <app-comment *ngIf="activityType == 1" [idTask]="modelEdit.id"></app-comment>
+                  <app-log-work *ngIf="activityType == 2" [idTask]="modelEdit.id" [idProject]="this.modelEdit.idProject" [myTask]="false"></app-log-work>
+                </div>
+              </div>
+            </div>
+            <div class="ui-g-4 ui-lg-4" style="overflow: auto;height: calc(100vh - 114px);padding: 10px;">
+              <div class="table_task_edit">
+                <!-- <div class="btn_action">
+                  <a class="btn_complete btn"><i class="fa fa-check" aria-hidden="true"></i> Hoàn thành</a>
+                </div> -->
+                <div class="detail_table_header" (click)="openDetail = !openDetail">
+                  <span>Chi tiết</span>
+                  <i *ngIf="!openDetail" class="fa fa-angle-down" aria-hidden="true"></i>
+                  <i *ngIf="openDetail" class="fa fa-angle-up" aria-hidden="true"></i>
+                </div>
+                <div *ngIf="openDetail" class="detail_table_content">
+                  <div class="ui-g">
+                    <div class="ui-g-12 ui-lg-12" *ngIf="!modelEdit.project?.isWorkFolow">
+                      <div class="vs-form-control ui-g">
+                        <div class="__form-control-label ui-g-4 ui-md-4">Công việc</div>
+                        <div class="__form-control-inputs ui-g-8 ui-md-8">
+                          <div class="__input-wrapper">
+                            <div class="btn_action">
+                              <a *ngIf="modelEdit.completed" class="btn_complete btn" (click)="onChangeComplete(modelEdit.id)"><i class="fa fa-check" aria-hidden="true"></i> Hoàn thành</a>
+                              <a *ngIf="!modelEdit.completed" class="btn_uncomplete btn" (click)="onChangeComplete(modelEdit.id)"><i class="fa fa-times" aria-hidden="true"></i> Chưa hoàn thành</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                      <div class="vs-form-control ui-g">
+                        <div class="__form-control-label ui-g-4 ui-md-4">Trạng thái</div>
+                        <div class="__form-control-inputs ui-g-8 ui-md-8">
+                          <div class="__input-wrapper">
+                            <p-dropdown [dropdownIcon]="'none'" (onChange)="onSave()" [style]="{'border': 'none','width':'100%'}" class="" appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" formControlName="idStatus" [style]="{'width':'100%'}" [(ngModel)]="modelEdit.idProjectCol" [options]="projectCol_options">
+                            </p-dropdown>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                      <div class="vs-form-control ui-g">
+                        <div class="__form-control-label ui-g-4 ui-md-4">Ưu tiên</div>
+                        <div class="__form-control-inputs ui-g-8 ui-md-8">
+                          <div class="__input-wrapper">
+                            <p-dropdown [dropdownIcon]="'none'" (onChange)="onSave()" [style]="{'border': 'none','width':'100%'}" class="" appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" formControlName="priority" [style]="{'width':'100%'}" [(ngModel)]="modelEdit.priority" [options]="priority_options">
+                              <ng-template let-item pTemplate="selectedItem">
+                                <i *ngIf="item.value == 5" class="fa fa-angle-double-up color_red option_custom" aria-hidden="true"></i>
+                                <i *ngIf="item.value == 4" class="fa fa-angle-up color_red option_custom" aria-hidden="true"></i>
+                                <span *ngIf="item.value == 3" class="color_yellow option_custom">=</span>
+                                <i *ngIf="item.value == 2" class="fa fa-angle-down color_blue option_custom" aria-hidden="true"></i>
+                                <i *ngIf="item.value == 1" class="fa fa-angle-double-down color_blue option_custom" aria-hidden="true"></i>
+                                <span>{{item.label}}</span>
+                              </ng-template>
+                              <ng-template let-priority pTemplate="item">
+                                <i *ngIf="priority.value == 5" class="fa fa-angle-double-up color_red option_custom" aria-hidden="true"></i>
+                                <i *ngIf="priority.value == 4" class="fa fa-angle-up color_red option_custom" aria-hidden="true"></i>
+                                <span *ngIf="priority.value == 3" class="color_yellow option_custom">=</span>
+                                <i *ngIf="priority.value == 2" class="fa fa-angle-down color_blue option_custom" aria-hidden="true"></i>
+                                <i *ngIf="priority.value == 1" class="fa fa-angle-double-down color_blue option_custom" aria-hidden="true"></i>
+                                <span>{{priority.label}}</span>
+                              </ng-template>
+                            </p-dropdown>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                      <div class="vs-form-control ui-g">
+                        <div class="__form-control-label ui-g-4 ui-md-4">Loại công việc</div>
+                        <div class="__form-control-inputs ui-g-8 ui-md-8">
+                          <div class="__input-wrapper">
+                            <p-dropdown [dropdownIcon]="'none'" (onChange)="onSave()" [style]="{'border': 'none','width':'100%'}" class="" appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" formControlName="type" [style]="{'width':'100%'}" [(ngModel)]="modelEdit.type" [options]="type_options">
+                              <ng-template let-item pTemplate="selectedItem">
+                                <span *ngIf="item.value == 2" class="custom_i_bug"><i class="fa fa-circle" aria-hidden="true"></i></span>
+                                <span *ngIf="item.value == 1" class="custom_i_task"><i class="fa fa-check" aria-hidden="true"></i></span>
+                                <span>{{item.label}}</span>
+                              </ng-template>
+                              <ng-template let-type pTemplate="item">
+                                <span *ngIf="type.value == 2" class="custom_i_bug"><i class="fa fa-circle" aria-hidden="true"></i></span>
+                                <span *ngIf="type.value == 1" class="custom_i_task"><i class="fa fa-check" aria-hidden="true"></i></span>
+                                <span>{{type.label}}</span>
+                              </ng-template>
+                            </p-dropdown>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                      <div class="vs-form-control ui-g">
+                        <div class="__form-control-label ui-g-4 ui-md-4">Tiến độ công việc (%)</div>
+                        <div class="__form-control-inputs ui-g-8 ui-md-8">
+                          <div class="__input-wrapper">
+                            <div class="percent_box">
+                              <input class="input_percent" type="number" min="0" max="100" [(ngModel)]="modelEdit.percent" rows="3" formControlName="percent" placeholder="(%)" (keyup.enter)="onSave()">
+                              <p-slider formControlName="percent" [(ngModel)]="modelEdit.percent" (onSlideEnd)="onSave()"></p-slider>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                      <div class="vs-form-control ui-g">
+                        <div class="__form-control-label ui-g-12 ui-md-12">Người tham gia</div>
+                        <div class="__form-control-inputs ui-g-12 ui-md-12">
+                          <div class="__input-wrapper">
+                            <p-multiSelect [dropdownIcon]="'none'" (onPanelHide)="onSave()" [style]="{'border': 'none','width':'100%'}" placeholder="Chọn tài khoản" [options]="users_options" formControlName="participant" [(ngModel)]="participant">
+                              <ng-template let-item pTemplate="selectedItems">
+                                <div *ngFor="let val of item" class="ui-multiselected-item-token ui-corner-all user_item_option user_multil_selected">
+                                  <img class="avatar_user" src="{{getAvatarById(val)}}" style="vertical-align:middle;margin-right:.5em" pTooltip="{{getUserNameById(val)}}" />
+                                  <!-- <span>{{getUserNameById(val)}}</span> -->
+                                </div>
+                                <span *ngIf="!item || item.length === 0" class="ui-multiselected-empty-token ui-corner-all empty_select">Chọn tài khoản</span>
+                              </ng-template>
+                              <ng-template let-user pTemplate="item">
+                                <img *ngIf="!user.avatar" class="avatar_user" src="/assets/images/avatar.jpg" style="display:inline-block;vertical-align:middle" />
+                                <img *ngIf="user.avatar" class="avatar_user" src="{{getImageAvatar(user.avatar)}}" style="display:inline-block;vertical-align:middle" />
+                                <div style="font-size:14px;float:right;margin-top:4px">{{user.label}}</div>
+                              </ng-template>
+                            </p-multiSelect>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                      <div class="vs-form-control ui-g">
+                        <div class="__form-control-label ui-g-12 ui-md-12">Người thực hiện</div>
+                        <div class="__form-control-inputs ui-g-12 ui-md-12">
+                          <div class="__input-wrapper">
+                            <p-dropdown [dropdownIcon]="'none'" (onChange)="onSave()" [style]="{'border': 'none','width':'100%'}" placeholder="Chọn tài khoản" formControlName="idAssignee" appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" filter="true" [style]="{'width':'100%'}" [(ngModel)]="modelEdit.idAssignee" [options]="users_options">
+                              <ng-template let-item pTemplate="selectedItem">
+                                <div class="asignee_option">
+                                  <img *ngIf="!item.avatar" class="avatar_user" src="/assets/images/avatar.jpg" />
+                                  <img *ngIf="item.avatar" class="avatar_user" src="{{getImageAvatar(item.avatar)}}" />
+                                  <span class="task_user_name_option"> {{item.label}}</span>
+                                </div>
+                              </ng-template>
+                              <ng-template let-user pTemplate="item">
+                                <div class="asignee_option">
+                                  <img *ngIf="!user.avatar" class="avatar_user" src="/assets/images/avatar.jpg" />
+                                  <img *ngIf="user.avatar" class="avatar_user" src="{{getImageAvatar(user.avatar)}}" />
+                                  <span class="task_user_name_option"> {{user.label}}</span>
+                                </div>
+                              </ng-template>
+                            </p-dropdown>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                      <div class="vs-form-control ui-g">
+                        <div class="__form-control-label ui-g-4 ui-md-4">Người tạo</div>
+                        <div class="__form-control-inputs ui-g-8 ui-md-8">
+                          <div class="__input-wrapper task_reporter">
+                            <img class="avatar_user task_ident" src="{{getAvatar(modelEdit.user?.avatar )}}" />
+                            <span>{{modelEdit.user?.name ? modelEdit.user?.name : modelEdit.user?.userName}}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="table_task_edit">
+                <div class="detail_table_header" (click)="openTime = !openTime">
+                  <span>Thời gian</span>
+                  <i *ngIf="!openTime" class="fa fa-angle-down" aria-hidden="true"></i>
+                  <i *ngIf="openTime" class="fa fa-angle-up" aria-hidden="true"></i>
+                </div>
+                <div *ngIf="openTime" class="detail_table_content">
+                  <div class="ui-g">
+                    <div class="ui-g-12 ui-lg-12">
+                      <div class="vs-form-control ui-g">
+                        <div class="__form-control-label ui-g-4 ui-md-4">Ngày bắt đầu</div>
+                        <div class="__form-control-inputs ui-g-8 ui-md-8">
+                          <div class="__input-wrapper">
+                            <p-calendar (onClose)="onSave()" psDateOnly [style]="{'width':'100%'}" [inputStyle]="{'width':'100%', 'border':'none'}" formControlName="startDate" class="maxWidth" [(ngModel)]="startDate" dateFormat="dd/mm/yy" [showIcon]="false" class="maxWidth" placeholder="Ngày bắt đầu" utc="true" [locale]="vi" showButtonBar="true">
+                            </p-calendar>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                      <div class="vs-form-control ui-g">
+                        <div class="__form-control-label ui-g-4 ui-md-4">Ngày kết thúc</div>
+                        <div class="__form-control-inputs ui-g-8 ui-md-8">
+                          <div class="__input-wrapper">
+                            <p-calendar (onClose)="onSave()" psDateOnly [style]="{'width':'100%'}" [inputStyle]="{'width':'100%', 'border':'none'}" formControlName="endDate" class="maxWidth" [(ngModel)]="endDate" dateFormat="dd/mm/yy" [showIcon]="false" class="maxWidth" placeholder="Ngày kết thúc" utc="true" [locale]="vi" showButtonBar="true">
+                            </p-calendar>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                      <div class="vs-form-control ui-g">
+                        <div class="__form-control-label ui-g-4 ui-md-4">Ngày hoàn thành</div>
+                        <div class="__form-control-inputs ui-g-8 ui-md-8">
+                          <div class="__input-wrapper">
+                            <p-calendar [disabled]="true" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%', 'border':'none'}" formControlName="completedDate" class="maxWidth" [(ngModel)]="modelEdit.completedDate" dateFormat="dd/mm/yy" [showIcon]="false" class="maxWidth" placeholder="" utc="true" [locale]="vi" showButtonBar="true">
+                            </p-calendar>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="create_update_time">
+                <p>Ngày tạo: {{modelEdit.createdDate | date :'dd/MM/yyyy HH:mm':'UTC'}}</p>
+                <p *ngIf="modelEdit.updatedDate">Ngày cập nhật: {{modelEdit.updatedDate | date :'dd/MM/yyyy HH:mm':'UTC'}}</p>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ui-dialog-footer ui-widget-content ui-g-12" style="margin-left: -15px; position: fixed; bottom: 0;background-color: whitesmoke;">
+    <p-footer>
+      <div class="ui-g">
+        <div class="ui-g-12">
+          <!-- <button class="vs-btn vs-modal-btn vs-btn-action-edit" [disabled]="!formGroup.valid" (click)="onSave()" type="button">
+            <span class="__icon fa fa-floppy-o"></span>
+            <span class="__label">Lưu</span>
+          </button> -->
+          <button *ngIf="modelEdit.id > 0" type="button" (click)="onDelete(modelEdit.id)" class="vs-btn vs-modal-btn vs-btn-action-remove" style="float: left;">
+            <span class="__icon fa fa-times"></span>
+            <span class="__label">Xóa</span>
+          </button>
+          <button type="button" (click)="closePopupMethod()" class="vs-btn vs-modal-btn vs-btn-action-back">
+            <span class="__icon fa fa-times"></span>
+            <span class="__label">Đóng</span>
+          </button>
+        </div>
+      </div>
+    </p-footer>
+  </div>
+</div>

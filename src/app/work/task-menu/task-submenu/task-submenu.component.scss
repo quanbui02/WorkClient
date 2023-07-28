@@ -1,0 +1,18 @@
+.icon_menu{
+    display: flex !important;
+    top: 50%;
+    transform: translate(5px, -50%);
+    position: absolute;
+    &_parent{
+        color: #ffb000;
+        left: 6px;
+    }
+    &_child{
+        left: 15px;
+        color: #ffb000;
+    }
+}
+.vs-main-menu .menuitem-level-0 > .ripplelink {
+    padding: 0 0 0 50px;
+    line-height: 60px;
+}

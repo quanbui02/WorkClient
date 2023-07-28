@@ -1,0 +1,59 @@
+::ng-deep .e-treecolumn-container {
+   display: inline-flex !important;
+}
+// ::ng-deep .ng-star-inserted{
+//    display:flex !important;
+//    align-items: center !important;
+// }
+::ng-deep .e-none {
+   width: 10px !important;
+}
+img.resource {
+   content: url("../../../assets/images/icons-gantt/Resources.png");
+}
+img.resource {
+   content: url("../../../assets/images/icons-gantt/ResourcesDark.png");
+}
+img.taskName {
+   content: url("../../../assets/images/icons-gantt/TaskName.png");
+}
+img.taskName {
+   content: url("../../../assets/images/icons-gantt/TaskNameDark.png");
+}
+img.startDate {
+   content: url("../../../assets/images/icons-gantt/StartDate.png");
+}
+img.startDate {
+   content: url("../../../assets/images/icons-gantt/StartDateDark.png");
+}
+img.endDate {
+   content: url("../../../assets/images/icons-gantt/StartDate.png");
+}
+img.endDate {
+   content: url("../../../assets/images/icons-gantt/StartDateDark.png");
+}
+img.duration {
+   content: url("../../../assets/images/icons-gantt/Duration.png");
+}
+img.duration {
+   content: url("../../../assets/images/icons-gantt/DurationDark.png");
+}
+img.progressTemplate {
+   content: url("../../../assets/images/icons-gantt/Progress.png");
+}
+img.progressTemplate {
+   content: url("../../../assets/images/icons-gantt/ProgressDark.png");
+}
+img.resource,
+img.taskName,
+img.startDate,
+img.endDate,
+img.duration,
+img.progressTemplate {
+   margin-right: 5px;
+}
+
+::ng-deep .subAvatarContainer{
+      display: flex !important;
+      align-items: center !important;
+   }

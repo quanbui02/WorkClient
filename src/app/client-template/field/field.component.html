@@ -1,0 +1,52 @@
+<div class="ui-g" style="background: #fff;">
+    <div class="ui-lg-12 normal-form">
+        <p class="ui-lg-4">Input Normal</p>
+        <div class="ui-lg-4 ui-g-nopad">
+            <input type="text" value="Đại học chính quy" class="input-full-wh" placeholder="Input normal">
+        </div>
+    </div>
+    <div class="ui-lg-12 normal-form">
+        <p class="ui-lg-4">Input required</p>
+        <div class="ui-lg-4 required ui-g-nopad">
+            <input type="text" value="Input required" class="input-full-wh" placeholder="Input required">
+        </div>
+    </div>
+    <div class="ui-lg-12 normal-form">
+        <p class="ui-lg-4">Input ReadOnly</p>
+        <div class="ui-lg-4 ui-g-nopad">
+            <input type="text" value="Input readonly" class="input-full-wh" [readOnly]="true" placeholder="Input normal">
+        </div>
+    </div>
+    <div class="ui-lg-12 normal-form">
+        <p class="ui-lg-4">Select</p>
+        <div class="ui-lg-4">
+            <div class="dropdown-fullwidth ui-g-6 ui-lg-4 pl-10 ui-g-nopad">
+                <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="bo_mon"></p-dropdown>
+            </div>
+        </div>
+    </div>
+    <div class="ui-lg-12 normal-form">
+        <p class="ui-lg-4">Radio </p>
+        <div class="ui-lg-4">
+            <p-radioButton name="groupname" class="mr-5 ml-5" value="val1" label="Có áp dụng" [(ngModel)]="selectRatio"></p-radioButton>
+            <p-radioButton name="groupname" value="val2" label="Không áp dụng" [(ngModel)]="selectRatio"></p-radioButton>
+        </div>
+    </div>
+    <div class="ui-lg-12 normal-form">
+        <div class="ui-g">
+            <span class="ui-inputgroup-addon ui-g-12 ui-lg-4 label-input">TextArea</span>
+            <div class="ui-g-12 ui-md-8 ui-g-nopad required">
+                <textarea [rows]="5" class="input-full-wh" pInputTextarea autoResize="autoResize"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="ui-lg-12 normal-form">
+        <div class="ui-g">
+            <span class="ui-inputgroup-addon ui-g-12 ui-lg-4 label-input">CheckBox</span>
+            <div class="ui-g-12 ui-md-8 ui-g-nopad pt-02">
+                <p-checkbox name="checkBox" value="val1" class="mr-5 ml-5" [label]="'Gửi qua email'"></p-checkbox>
+                <p-checkbox name="checkBox" value="val2" [label]="'Gửi tin nhắn SMS'"></p-checkbox>
+            </div>
+        </div>
+    </div>
+</div>

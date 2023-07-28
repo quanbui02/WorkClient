@@ -1,0 +1,122 @@
+<!--  -->
+<div class="app-product-index">
+    <div class="vs-page-content-header-area">
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-7 ui-lg-9 __page-title-wrapper">
+                <h1 class="__page-title">Gửi smsm hàng loạt cho khách hàng đã mua theo top CTV</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="vs-page-content-body-area" style="overflow: visible;">
+        <div class="vs-data-table-area">
+            <div class="ui-g vs-data-table-area-inner">
+                <div class="ui-g-12 ui-lg-12 __main-table-area">
+
+                    <div class="vs-form-container default-control-label-width vs-modal-content-panel" style="background-color: #FFF; padding: 10px 0;">
+                        <form action="" [formGroup]="formGroup">
+                            <div class="vs-form-container default-control-label-width">
+                                <div class="ui-g row">
+                                    <div class="ui-g-12">
+                                        <div class="ui-g-6 ui-lg-12">
+                                            <div class="vs-form-control ui-g">
+                                                <div class="__form-control-label ui-g-12 ui-md-5">Top CTV</div>
+                                                <div class="__form-control-inputs ui-g-12 ui-md-7">
+                                                    <div class="__input-wrapper">
+                                                        <input type="text" formControlName="topCtv" [(ngModel)]="modelEdit.topCtv" placeholder="Top CTV" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="ui-g-12">
+                                        <div class="ui-g-6 ui-lg-12">
+                                            <div class="vs-form-control ui-g">
+                                                <div class="__form-control-label ui-g-12 ui-md-5">Top khách hàng</div>
+                                                <div class="__form-control-inputs ui-g-12 ui-md-7">
+                                                    <div class="__input-wrapper">
+                                                        <input type="text" formControlName="topOrder" [(ngModel)]="modelEdit.topOrder" placeholder="Top khách hàng mới nhất" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="ui-g-12">
+                                        <div class="ui-g-6 ui-lg-12">
+                                            <div class="vs-form-control ui-g">
+                                                <div class="__form-control-label ui-g-12 ui-md-5">Tên sản phẩm cho tin nhắn</div>
+                                                <div class="__form-control-inputs ui-g-12 ui-md-7">
+                                                    <div class="__input-wrapper">
+                                                        <input type="text" formControlName="name" [(ngModel)]="modelEdit.name" placeholder="Tên sản phẩm cho tin nhắn" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="ui-g-12 ui-lg-12">
+                            <div class="vs-form-control ui-g">
+                                <div class="__form-control-label ui-g-12 ui-md-5">Sản phẩm lọc</div>
+                                <div class="__form-control-inputs ui-g-12 ui-md-7">
+                                    <div class="__input-wrapper required">
+                                        <!-- (onFocus)="!autocomplete.value && autocomplete.handleDropdownClick()" (onClear)="clearItem(autocomplete)" #autocomplete -->
+                                        <p-autoComplete [(ngModel)]="key" [suggestions]="results" (completeMethod)="autoComplete($event)" field="name" [size]="30" placeholder="Nhập tên hoặc mã sản phẩm" [minLength]="1" (onSelect)="onSelect($event)">
+                                        </p-autoComplete>
+                                        <div>
+                                            <ng-container *ngFor="let item of products">
+                                                <span> {{item.name}}</span>,
+                                            </ng-container>
+                                        </div>
+                                        <div style="color: red; margin-left: 20px; cursor: pointer;" (click)="onDelete()">Xóa</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ui-g-12 ui-lg-12">
+                            <div class="vs-form-control ui-g">
+                                <div class="__form-control-label ui-g-12 ui-md-7">Sản phẩm mời mua</div>
+                                <div class="__form-control-inputs ui-g-12 ui-md-7">
+                                    <div class="__input-wrapper required">
+                                        <!-- (onFocus)="!autocomplete.value && autocomplete.handleDropdownClick()" (onClear)="clearItem(autocomplete)" #autocomplete -->
+                                        <p-autoComplete [(ngModel)]="key" [suggestions]="results" (completeMethod)="autoComplete($event)" field="name" [size]="30" placeholder="Nhập tên hoặc mã sản phẩm" [minLength]="1" (onSelect)="onSelectChoose($event)">
+                                        </p-autoComplete>
+                                        <div>
+                                            <ng-container *ngFor="let item of productChoosed">
+                                                <span> {{item.name}}</span>,
+                                            </ng-container>
+                                        </div>
+                                        <div style="color: red; margin-left: 20px; cursor: pointer;" (click)="onDeleteChoose()">Xóa</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g row">
+                            <div class="ui-g-12 align-center">
+                                <p-progressSpinner *ngIf="isLoading" [style]="{width: '30px', height: '30px', margin:'-11px 8px'}" strokeWidth="8" fill="#EEEEEE" animationDuration=".5s">
+                                </p-progressSpinner>
+                                <button class="vs-btn vs-modal-btn vs-btn-action-edit" [disabled]="isLoading || !formGroup.valid" (click)="sendSms()" type="button">
+                                    <span class="__icon fa fa-floppy-o"></span>
+                                    <span class="__label">Gửi tin nhắn</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="ui-g row">
+                            <div class="ui-g-12 align-center">
+                                <div style="color: blue; margin-left: 20px; cursor: pointer;">{{message}}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

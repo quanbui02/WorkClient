@@ -1,0 +1,172 @@
+<app-task-header></app-task-header>
+
+<div class="task_screen_body">
+
+    <div class="vs-page-content app-wmprojectmembers-index">
+
+        <div class="vs-page-content-body-area">
+            <div class="vs-data-table-area">
+                <div class="ui-g vs-data-table-area-inner">
+                    <div class="ui-g-12 ui-lg-12 __main-table-area">
+
+                        <div class="ui-g __top-table-action">
+                            <div class="ui-g-6 __left-content">
+                                <button type="button" class="vs-btn vs-top-table-btn vs-btn-action-edit" (click)="onEdit(0)">
+                                    <span class="__icon fa fa-plus"></span>
+                                    <span class="__label">{{'Tạo mới' | translate }}</span>
+                                </button>
+
+                                <button type="button" class="vs-btn vs-top-table-btn vs-btn-action-data" (click)="exportExcel()">
+                                    <span class="__icon fa fa-download"></span>
+                                    <span class="__label">{{'Xuất danh sách' | translate}}</span>
+                                </button>
+
+                                <button type="button" class="vs-btn vs-top-table-btn vs-btn-action-print" [hidden]="!isMultiEdit">
+                                    <span class="__icon fa fa-print"></span>
+                                    <span class="__label">{{'In danh sách' | translate}}</span>
+                                </button>
+                            </div>
+
+                            <div class="ui-g-6 __right-content">
+                                <ul class="__action-tabs">
+                                    <li #columnListContainer class="__tab-item-wrapper __toggle-column-wrapper">
+                                        <div class="__tab-item" (click)="toggleColumnList()">
+                                            <span class="__icon pi pi-th-large"></span>
+                                            <span class="__label">{{'Chọn cột' | translate}}</span>
+                                        </div>
+                                        <div class="__column-list" [hidden]="!openColumnList">
+                                            <div *ngFor="let col of cols" class="__column-item">
+                                                <p-checkbox binary="true" [(ngModel)]="col.visible" name="groupname" label="{{col.header}}"></p-checkbox>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+
+                        <div class="ui-g vs-table-wrapper" id="table">
+                            <p-table #mainTable [columns]="cols" selectionMode="multiple" [rows]="limit" [scrollable]="true" scrollHeight="auto" [value]="dataSource" [(selection)]="selectedItems" [totalRecords]="total" class="vs-table responsive-table" [customSort]="true" (onSort)="onSort($event)" [paginator]="true" [loading]="isLoading" [lazy]="true" (onPage)="onPage($event)" [resizableColumns]="true" dataKey="id">
+                                <ng-template pTemplate="colgroup" let-columns>
+                                    <colgroup>
+                                        <col [style.width]="'40px'">
+                                        <ng-container *ngFor="let col of columns" [ngSwitch]="col.field">
+                                            <ng-container *ngSwitchDefault>
+                                                <col [hidden]="!col.visible" [style.width]="col.width" pResizableColumn>
+                                            </ng-container>
+                                        </ng-container>
+                                        <col [style.width]="'180px'">
+                                    </colgroup>
+                                </ng-template>
+
+                                <ng-template pTemplate="header" let-columns>
+                                    <tr>
+                                        <th class="align-center">STT</th>
+                                        <ng-container *ngFor="let col of columns;">
+                                            <th class="ui-resizable-column" [hidden]="!col.visible" pResizableColumn [pSortableColumn]="col.sort ? col.field : ''" class="ui-resizable-column">
+                                                {{col.header}}
+                                                <span *ngIf="col.sort">
+                                                    <p-sortIcon [field]="col.field"></p-sortIcon>
+                                                </span>
+                                            </th>
+                                        </ng-container>
+                                        <th class="ui-text-center">
+                                            {{ "Thao tác" | translate }}
+                                        </th>
+                                    </tr>
+                                </ng-template>
+
+                                <ng-template pTemplate="body" let-item let-columns="columns" let-rowIndex="rowIndex">
+                                    <tr align="center">
+                                        <td>{{rowIndex + 1}}</td>
+
+                                        <ng-container *ngFor="let col of columns;let i = index;" [ngSwitch]="col.field">
+                                            <td style="overflow: visible;" class="ui-resizable-column" [hidden]="!col.visible" [class.align-left]="!col.align || col.align === 'left'" [class.align-center]="col.align === 'center'" [class.align-right]="col.align === 'right'">
+
+                                                <ng-container *ngSwitchCase="'isProjectManager'">
+                                                    <span *ngIf="item.isProjectManager">Quản lý dự án</span>
+                                                </ng-container>
+                                                <ng-container *ngSwitchCase="'name'">
+                                                    <div class="avatar">
+                                                        <img src="{{getAvatar(item.avatar)}}" alt="">
+                                                        <!-- <span>{{item.name}}</span> -->
+                                                        <a class="user_link" (mouseenter)="showPopup[rowIndex] = true" (mouseleave)="showPopup[rowIndex] = false">{{item.name}}
+                                                            <div class="popup_user" *ngIf="showPopup[rowIndex]" [ngClass]="{'popup_top': rowIndex > 3, 'popup_bottom': rowIndex <= 3}">
+                                                                <app-user-view [userId]="item.userId" [showData]="showPopup[rowIndex]"></app-user-view>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                </ng-container>
+                                                <ng-container *ngSwitchCase="'endDate'">
+                                                    <span>{{item.endDate | date :'dd/MM/yyyy':'UTC'}}</span>
+                                                </ng-container>
+                                                <ng-container *ngSwitchCase="'isActived'">
+                                                    <span *ngIf="item.isActived == false" class="vs-status vs-status-waiting">
+                                                        {{ 'Không sử dụng' | translate }}
+                                                    </span>
+                                                    <span *ngIf="item.isActived == true" class="vs-status vs-status-valid">
+                                                        {{ 'Sử dụng' | translate }}
+                                                    </span>
+                                                </ng-container>
+                                                <ng-container *ngSwitchCase="'role'">
+                                                    <span *ngIf="item.role == 4" class="vs-status vs-status-waiting">
+                                                        Quản lý dự án
+                                                    </span>
+                                                    <span *ngIf="item.role == 3" class="vs-status vs-status-valid">
+                                                        Giám sát (Tạo/sửa)
+                                                    </span>
+                                                    <span *ngIf="item.role == 2" class="vs-status vs-status-valid">
+                                                        Theo dõi (Chỉ xem)
+                                                    </span>
+                                                </ng-container>
+                                                <!-- <ng-container *ngSwitchCase="'image'">
+                                                              <vs-view-image [(file)]="item[col.field]" [height]="'80'">
+                                                              </vs-view-image>
+                                                          </ng-container> -->
+                                                <span class="ui-resizable-column" *ngSwitchDefault class="break-word">{{item[col.field]}}</span>
+                                            </td>
+                                        </ng-container>
+
+                                        <!-- <td class="vs-hidden-print">
+                                                      <p-inputSwitch [(ngModel)]="item.isActived" (onChange)="onActive(item,$event)" pTooltip="{{'Kích hoạt' | translate}}">
+                                                      </p-inputSwitch>
+                                                  </td> -->
+
+                                        <td class="vs-hidden-print">
+                                            <div class="vs-table-row-actions ui-text-center">
+                                                <a class="vs-btn vs-btn-yellow" [routerLink]="'/chat/' + item.userId" routerLinkActive="active">
+                                                    <span class="__icon fa fa-commenting-o"></span>
+                                                </a>
+                                                <button type="button" class="vs-btn vs-btn-green" (click)="onEdit(item.id)" pTooltip="{{'Cấu hình sản phẩm' | translate}}">
+                                                    <span class="__icon fa fa-edit"></span>
+                                                </button>
+                                                <button type="button" class="vs-btn vs-btn-red" (click)="onDelete(item.id)" pTooltip="{{'Xoá' | translate}}">
+                                                    <span class="__icon fa fa-times"></span>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+
+                                <ng-template pTemplate="paginatorleft" let-state>
+                                    <div class="vs-table-paginator">
+                                        {{'Hiển thị' | translate}}
+
+                                        <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả' | translate" (onChange)="onChangeRowLimit()" [options]="listItemNumberPerPage" [(ngModel)]="limit">
+                                        </p-dropdown>
+                                        / {{'trang' | translate}}
+                                        <span class="__total-record"> - Có {{total}} mục trong danh sách</span>
+                                    </div>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <app-project-member-edit (closePopup)="onCloseForm()" [idProject]="searchModel.idProject"></app-project-member-edit>
+
+
+</div>

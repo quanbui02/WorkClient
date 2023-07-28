@@ -1,0 +1,190 @@
+<p-dialog #dialog [header]="'Danh sách thành viên của doanh nghiệp'" styleClass="vs-modal force-full-width" positionTop="50" [(visible)]="isShow" [style]="{'max-width': '1100px'}" [contentStyle]="{'max-height': getMaxDialogHeight()}" [modal]="true" appendTo="body">
+    <div class="vs-form-container default-control-label-width vs-modal-content-panel">
+        <div class="vs-page-content app-promotion-index">
+            <div class="vs-page-content-body-area">
+                <div class="vs-data-table-area">
+                    <div class="ui-g vs-data-table-area-inner">
+                        <div class="ui-g row" style="margin: 10px 10px;">
+                            <p-accordion>
+                                <p-accordionTab header="Thêm tài khoản doanh nghiệp">
+                                    <form action="" [formGroup]="formGroup">
+                                        <div class="vs-form-container default-control-label-width">
+                                            <div class="ui-g row" style="margin: 10px 0px;">
+                                                <div class="ui-g-9">
+                                                    <div class="ui-g-6 ui-lg-6">
+                                                        <div class="vs-form-control ui-g">
+                                                            <div class="__form-control-label ui-g-12 ui-md-3">Tài khoản</div>
+                                                            <div class="__form-control-inputs ui-g-12 ui-md-9">
+                                                                <div class="__input-wrapper required">
+                                                                    <input type="text" formControlName="userName" [(ngModel)]="modelEdit.userName" placeholder="Nhập tài khoản" />
+                                                                    <div class="form-control-feedback" *ngIf="formGroup.controls['userName'].hasError('required') && formGroup.controls['userName'].touched">
+                                                                        Trường thông tin này là bắt buộc!</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+            
+                                                    <div class="ui-g-12 ui-lg-6">
+                                                        <div class="vs-form-control ui-g">
+                                                            <div class="__form-control-label ui-g-12 ui-md-3">Tên hiển thị</div>
+                                                            <div class="__form-control-inputs ui-g-12 ui-md-9">
+                                                                <div class="__input-wrapper required">
+                                                                    <input type="text" formControlName="name" [(ngModel)]="modelEdit.name" placeholder="Tên hiển thị" />
+                                                                    <div class="form-control-feedback" *ngIf="formGroup.controls['name'].hasError('required') && formGroup.controls['name'].touched">
+                                                                        Trường thông tin này là bắt buộc!</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+            
+                                                    <div class="ui-g-12 ui-lg-6">
+                                                        <div class="vs-form-control ui-g">
+                                                            <div class="__form-control-label ui-g-12 ui-md-3">Số điện thoại</div>
+                                                            <div class="__form-control-inputs ui-g-12 ui-md-9">
+                                                                <div class="__input-wrapper required">
+                                                                    <input type="text" formControlName="phone" [(ngModel)]="modelEdit.phone" placeholder="Nhập số điện thoại" />
+                                                                    <div class="form-control-feedback" *ngIf="formGroup.controls['phone'].hasError('required') && formGroup.controls['phone'].touched">
+                                                                        Trường thông tin này là bắt buộc!</div>
+                                                                    <div class="form-control-feedback" *ngIf="formGroup.controls['phone'].hasError('pattern') && formGroup.controls['phone'].touched">
+                                                                        Số điện thoại không hợp lệ!</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                            
+                                                    <div class="ui-g-12 ui-lg-6">
+                                                        <div class="vs-form-control ui-g">
+                                                            <div class="__form-control-label ui-g-12 ui-md-3">Email</div>
+                                                            <div class="__form-control-inputs ui-g-12 ui-md-9">
+                                                                <div class="__input-wrapper required">
+                                                                    <input type="text" formControlName="email" [(ngModel)]="modelEdit.email" placeholder="Nhập email" />
+                                                                    <div class="form-control-feedback" *ngIf="formGroup.controls['email'].hasError('pattern') && formGroup.controls['email'].touched">
+                                                                        Email không hợp lệ!</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                            
+                                                    <div class="ui-g-12 ui-lg-6">
+                                                        <div class="vs-form-control ui-g">
+                                                            <div class="__form-control-label ui-g-12 ui-md-3">Mật khẩu</div>
+                                                            <div class="__form-control-inputs ui-g-12 ui-md-9">
+                                                                <div class="__input-wrapper required">
+                                                                    <input type="password" formControlName="password" [(ngModel)]="modelEdit.password" placeholder="Mật khẩu" />
+                                                                    <div class="form-control-feedback" *ngIf="formGroup.controls['password'].hasError('required') && formGroup.controls['password'].touched">
+                                                                        Trường thông tin này là bắt buộc!</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                            
+                                                    <div class="ui-g-12 ui-lg-6">
+                                                        <div class="vs-form-control ui-g">
+                                                            <div class="__form-control-label ui-g-12 ui-md-3">Phòng ban</div>
+                                                            <div class="__form-control-inputs ui-g-12 ui-md-9">
+                                                                <div class="__input-wrapper">
+                                                                    <p-dropdown [baseZIndex]="15000" formControlName="roles" [(ngModel)]="modelEdit.roles" [showClear]="true" filter="true" placeholder="-- Phòng ban --" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="listRolesGroup"
+                                                                        [style]="{'width':'100%', 'min-width':'0'}" appendTo="body">
+                                                                    </p-dropdown>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                            
+                                                </div>
+                                                <div class="ui-g-3">
+                                                    <div style="margin-bottom: 5px;">
+                                                        <button class="vs-btn vs-modal-btn vs-btn-action-edit" [disabled]="isLoading || !formGroup.valid" (click)="addNew()" type="button">
+                                                            <span class="__icon fa fa-floppy-o"></span>
+                                                            <span class="__label">Thêm người dùng</span>
+                                                        </button>
+                                                    </div>
+                                                    <button class="vs-btn vs-modal-btn vs-btn-red"  (click)="togglePopupDelete()" type="button">
+                                                        <span class="__icon fa fa-refresh"></span>
+                                                        <span class="__label">Làm lại</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </p-accordionTab>
+                            </p-accordion>
+                        </div>
+                        <div class="ui-g-12 ui-lg-12 __main-table-area">
+                            <div class="ui-g vs-table-wrapper" id="table">
+                                <p-table #mainTable [columns]="cols" selectionMode="multiple" [rows]="100" [scrollable]="true" scrollHeight="auto" [value]="dataSource"  [totalRecords]="total" class="vs-table responsive-table" [customSort]="true"
+                                    [paginator]="true" [loading]="isLoading" [lazy]="true" [resizableColumns]="true" dataKey="id">
+                                    <ng-template pTemplate="colgroup" let-columns>
+                                        <colgroup>
+                                            <col [style.width]="'50px'">
+                                            <ng-container *ngFor="let col of columns" [ngSwitch]="col.field">
+                                                <ng-container *ngSwitchDefault>
+                                                    <col [hidden]="!col.visible" [style.width]="col.width" pResizableColumn>
+                                                </ng-container>
+                                            </ng-container>
+                                        </colgroup>
+                                    </ng-template>
+        
+                                    <ng-template pTemplate="header" let-columns>
+                                        <tr>
+                                            <th class="align-center">STT</th>
+                                            <ng-container *ngFor="let col of columns;">
+                                                <th class="ui-resizable-column" [hidden]="!col.visible" pResizableColumn [pSortableColumn]="col.sort ? col.field : ''" class="ui-resizable-column">
+                                                    {{col.header}}
+                                                    <span *ngIf="col.sort">
+                                                        <p-sortIcon [field]="col.field"></p-sortIcon>
+                                                    </span>
+                                                </th>
+                                            </ng-container>
+                                        </tr>
+                                    </ng-template>
+        
+                                    <ng-template pTemplate="body" let-item let-columns="columns" let-rowIndex="rowIndex">
+                                        <tr align="center">
+                                            <td>{{rowIndex + 1}}</td>
+        
+                                            <ng-container *ngFor="let col of columns;let i = index;" [ngSwitch]="col.field">
+                                                <td class="ui-resizable-column" [hidden]="!col.visible" [class.align-left]="!col.align || col.align === 'left'" [class.align-center]="col.align === 'center'" [class.align-right]="col.align === 'right'">
+                                                    <ng-container *ngSwitchCase="'roleName'">
+                                                        {{item.roleName}}
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchCase="'userName'">
+                                                        {{item.userName}} <span *ngIf="item.isAdminClient" class="fa fa-star" style="color:red" pTooltip="Chủ doanh nghiệp"></span>
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchCase="'actions'">
+                                                        <div class="vs-table-row-actions ui-text-center">
+                                                            <button *ngIf="!item.isEdit && item.userId == 0" type="button" class="vs-btn vs-btn-blue" (click)="onEdit(item)" pTooltip="Thêm bản ghi">
+                                                                <span class="__icon fa fa-plus"></span>
+                                                            </button>
+                                                            <button *ngIf="!item.isEdit && item.userId > 0" type="button" class="vs-btn vs-btn-green" (click)="onEdit(item)" pTooltip="Sửa bản ghi">
+                                                                <span class="__icon fa fa-edit"></span>
+                                                            </button>
+                                                            <button *ngIf="item.isEdit" type="button" class="vs-btn vs-btn-green" (click)="onSave(item)" pTooltip="Lưu lại">
+                                                                <span class="__icon fa fa-floppy-o"></span>
+                                                            </button>
+                                                            <button *ngIf="item.isEdit" type="button" class="vs-btn vs-btn-red" (click)="item.isEdit = false">
+                                                                <span class="__icon fa fa-history"></span>
+                                                            </button>
+                                                            <button *ngIf="!item.isEdit && item.userId > 0 && !item.isAdminClient" type="button" class="vs-btn vs-btn-red" (click)="onDelete(item); item.isEdit = false" pTooltip="">
+                                                                <span class="__icon fa fa-times"></span>
+                                                            </button>
+                                                        </div>
+                                                    </ng-container>
+        
+                                                    <span class="ui-resizable-column" *ngSwitchDefault class="break-word">
+                                                        <span *ngIf="!item.isEdit">{{item[col.field]}}</span>
+                                                        <input *ngIf="item.isEdit" type="text" [(ngModel)]="item[col.field]" placeholder="..." style="width:100%" />
+                                                    </span>
+                                                </td>
+                                            </ng-container>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</p-dialog>

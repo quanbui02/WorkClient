@@ -1,0 +1,88 @@
+<p-dialog #dialog [header]="'Đánh giá đơn hàng'" styleClass="vs-modal force-full-width" positionTop="50" [(visible)]="isShow" [style]="{'max-width': '1100px'}" [contentStyle]="{'max-height': getMaxDialogHeight()}" [modal]="true" appendTo="body">
+    <div class="ui-g vs-table-wrapper" *ngFor="let item of modelEdit.orderDetails">
+        <div class="vs-form-container default-control-label-width vs-modal-content-panel vs-modal-content-panel-rating">
+            <div class="vs-form-container default-control-label-width">
+                <div class="ui-g row">
+                    <div class="ui-g-12 ui-lg-12 mb-10 mt-10">
+                        <div class="ui-g-12  __client-partner-panel ">
+                            <div class="ui-g-12 ui-lg-12">
+                                <div class="ui-g">
+                                    <div class="ui-g-12 ui-md-12 title">Tên sản phẩm</div>
+                                    <div class="__form-control-inputs ui-g-12 ui-md-12">
+                                        <div class="__input-wrapper">
+                                            <b>{{item.name}}</b>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-lg-12">
+                                <div class="ui-g">
+                                    <div class="ui-g-12 ui-md-12 title">Đánh giá</div>
+                                    <div class="__form-control-inputs ui-g-12 ui-md-12">
+                                        <div class="__input-wrapper">
+                                            <p-rating [(ngModel)]="item.rating">
+                                            </p-rating>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-lg-12">
+                                <div class="ui-g">
+                                    <div class="ui-g-12 ui-md-12 title">Nội dung đánh giá</div>
+                                    <div class="__form-control-inputs ui-g-12 ui-md-12">
+                                        <div class="__input-wrapper">
+                                            <textarea autosize type="text" [(ngModel)]="item.comment" rows="3" placeholder=""></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-lg-12">
+                                <div class="ui-g">
+                                    <div class="ui-g-12 ui-md-12 title">Ảnh</div>
+                                    <div class="__form-control-inputs ui-g-12 ui-md-12">
+                                        <div class="__input-wrapper">
+                                            <app-multi-file-upload2 style="width: 100%;" [(ngModel)]="item.commentImages" [chooseLabel]="'Chọn ảnh'">
+                                            </app-multi-file-upload2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <form action="" [formGroup]="formGroup">
+
+                </form> -->
+            </div>
+        </div>
+
+    </div>
+
+    <p-footer>
+        <div class="ui-g row">
+            <div class="ui-g-2 align-left">
+                <!-- <div class="vs-custom-dropdown-wrapper vs-modal-more-action-btn-wrapper">
+                    <button class="vs-btn vs-modal-more-action-btn" (click)="togglePopupDelete()">
+                        <span class="fa fa-caret-down"></span>
+                    </button>
+
+                    <div class="vs-custom-dropdown top-right delete-action" [hidden]="(!openPopupDelete)">
+                        <a href="javascript:void(0)" class="__action">Xóa dữ liệu</a>
+                    </div>
+                </div> -->
+            </div>
+
+            <div class="ui-g-10">
+                <button class="vs-btn vs-modal-btn vs-btn-action-edit" *ngIf="!isView" [disabled]="!formGroup.valid" (click)="save()" type="button">
+                    <span class="__icon fa fa-floppy-o"></span>
+                    <span class="__label">Lưu</span>
+                </button>
+
+                <button type="button" (click)="closePopupMethod(null)" class="vs-btn vs-modal-btn vs-btn-action-back">
+                    <span class="__icon fa fa-times"></span>
+                    <span class="__label">Đóng</span>
+                </button>
+            </div>
+        </div>
+    </p-footer>
+</p-dialog>

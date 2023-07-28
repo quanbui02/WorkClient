@@ -1,0 +1,42 @@
+.vs-thumbnail {
+    width: 150px;
+    height: 150px;
+    position: relative;
+    &:hover {
+        .vs-btn-thumbnail {
+            display: inline-block;
+        }
+    }
+}
+
+.vs-btn-thumbnail {
+    display: none;
+    position: absolute;
+    bottom: 0;
+    height: 30px;
+    width: 100%;
+    opacity: 0.5;
+    background: #000;
+    left: 0;
+    cursor: pointer;
+    span {
+        line-height: 30px;
+        color: #fff;
+    }
+}
+
+.text-center {
+    text-align: center!important;
+}
+
+a.text-danger {
+    color: #a20000!important;
+    font-weight: 600;
+    line-height: 28px;
+}
+
+a.text-danger:hover {
+    color: #a20000!important;
+    font-weight: 600;
+    line-height: 28px;
+}

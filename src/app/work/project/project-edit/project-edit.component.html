@@ -1,0 +1,121 @@
+<p-dialog #dialog [header]="'Thêm/Sửa dự án'" styleClass="vs-modal force-full-width" positionTop="50" [(visible)]="isShow" [style]="{'max-width': '1100px'}" [contentStyle]="{'max-height': getMaxDialogHeight()}" [modal]="true" appendTo="body">
+  <div class="vs-form-container default-control-label-width vs-modal-content-panel app-project-edit">
+
+    <div class="vs-form-container default-control-label-width">
+      <div class="ui-g row">
+        <form action="" [formGroup]="formGroup">
+          <!-- <p-fieldset legend="Thông tin phản hồi"> -->
+          <div class="ui-g row">
+            <div class="ui-g-12 ui-lg-12">
+              <div class="vs-form-control ui-g">
+                <div class="__form-control-label ui-g-12 ui-md-4">Ảnh đại diện</div>
+                <div class="__form-control-inputs ui-g-12 ui-md-12">
+                  <div class="__input-wrapper">
+                    <vs-single-fsfile-upload [chooseLabel]="'Chọn ảnh'" formControlName="image" [(ngModel)]="modelEdit.image"></vs-single-fsfile-upload>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ui-g-12 ui-lg-12">
+              <div class="vs-form-control ui-g">
+                <div class="__form-control-label ui-g-12 ui-md-4">Thuộc dự án</div>
+                <div class="__form-control-inputs ui-g-12 ui-md-12">
+                  <div class="__input-wrapper required">
+                    <textarea type="text" [(ngModel)]="modelEdit.name" rows="3" formControlName="name" placeholder="Tên dự án" style="width: 100%;"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 
+            <div class="ui-g-12 ui-lg-12">
+              <div class="vs-form-control ui-g">
+                <div class="__form-control-label ui-g-12 ui-md-4">Người tham gia</div>
+                <div class="__form-control-inputs ui-g-12 ui-md-12">
+                  <div class="__input-wrapper">
+                    <p-autoComplete field="name" formControlName="member" [(ngModel)]="projectMember" [suggestions]="results" (completeMethod)="autoComplete($event)" [multiple]="true" placeholder="Người tham gia">
+                      <ng-template let-user pTemplate="item">
+                        <div class="acp_users">
+                          <img *ngIf="!user.avatar" class="avatar_user" src="/assets/images/avatar.jpg" style="width:30px;" />
+                          <img *ngIf="user.avatar" class="avatar_user" src="{{getImageAvatar(user.avatar)}}" style="width:30px;" />
+                          <div style="font-size:14px;">{{user.name}}</div>
+                        </div>
+                      </ng-template>
+                    </p-autoComplete>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+
+            <div class="ui-g-12 ui-lg-12">
+              <div class="vs-form-control ui-g">
+                <div class="__form-control-label ui-g-12 ui-md-4">Tên dự án</div>
+                <div class="__form-control-inputs ui-g-12 ui-md-12">
+                  <div class="__input-wrapper">
+                    <p-dropdown class="" appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" filter="true" formControlName="idParent" [style]="{'width':'100%'}" [(ngModel)]="modelEdit.idParent" [options]="project_options">
+                    </p-dropdown>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ui-g-12 ui-lg-12">
+              <div class="vs-form-control ui-g">
+                <div class="__form-control-label ui-g-12 ui-md-4">Mô tả</div>
+                <div class="__form-control-inputs ui-g-12 ui-md-12">
+                  <div class="__input-wrapper">
+                    <textarea type="text" [(ngModel)]="modelEdit.description" rows="4" formControlName="description" placeholder="Mô tả" style="width: 100%;"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ui-g-12 ui-lg-12">
+              <div class="vs-form-control ui-g">
+                <div class="__form-control-label ui-g-12 ui-md-4">Quy trình</div>
+                <div class="__form-control-inputs ui-g-12 ui-md-12">
+                  <div class="__input-wrapper">
+                    <p-inputSwitch [(ngModel)]="modelEdit.isWorkFolow" formControlName="isWorkFolow" pTooltip="Quy trình">
+                    </p-inputSwitch>
+                    <div *ngIf="!modelEdit.isWorkFolow" class="desc_folow">
+                      Không có quy trình: Sau khi tạo dự án sẽ có sẵn cột "Nhóm việc" và không có trạng thái ToDo, In-Progress và Done
+                    </div>
+                    <div *ngIf="modelEdit.isWorkFolow" class="desc_folow">
+                      Có quy trình: Sau khi tạo dự án sẽ có sẵn 3 cột là "Chưa làm", "Đang làm" và "Hoàn thành" theo 3 trạng thái là ToDo, In-Progress và Done, khi hoàn thành dự án sẽ tự động chuyển công việc sang trạng thái Done, tiến dộ công việc được đặt thành 100%
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ui-g-12 ui-lg-12">
+              <div class="vs-form-control ui-g">
+                <div class="__form-control-label ui-g-12 ui-md-4">Thứ tự</div>
+                <div class="__form-control-inputs ui-g-12 ui-md-12">
+                  <div class="__input-wrapper required">
+                    <input type="text" [(ngModel)]="modelEdit.sort" formControlName="sort" placeholder="Thứ tự" style="width: 100%;">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <!-- </p-fieldset> -->
+        </form>
+
+      </div>
+    </div>
+  </div>
+  <p-footer>
+    <div class="ui-g row">
+      <div class="ui-g-12">
+        <button class="vs-btn vs-modal-btn vs-btn-action-edit" [disabled]="!formGroup.valid" (click)="save()" type="button">
+          <span class="__icon fa fa-floppy-o"></span>
+          <span class="__label">Lưu</span>
+        </button>
+        <button type="button" (click)="closePopupMethod(null)" class="vs-btn vs-modal-btn vs-btn-action-back">
+          <span class="__icon fa fa-times"></span>
+          <span class="__label">Đóng</span>
+        </button>
+      </div>
+    </div>
+  </p-footer>
+</p-dialog>

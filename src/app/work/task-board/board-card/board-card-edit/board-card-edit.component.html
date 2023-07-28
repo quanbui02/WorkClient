@@ -1,0 +1,18 @@
+<div class="issue-wrap bl-red">
+  <div class="issue">
+    <div class="pb-3 text-15 text-textDarkest task_name">
+      <!-- <span class="custom_i_task text_id_task"><i class="fa fa-check" aria-hidden="true"></i></span> -->
+      <textarea id="input_name" autosize type="text" [(ngModel)]="modelEdit.name" style="width: 100%;" rows="1" (keyup.enter)="save()" placeholder="Nhập công việc"></textarea>
+    </div>
+    <div class="date_task">
+    </div>
+    <div class="task_info_other">
+      <span class=""><i class="fa fa-comment-o color_gray" aria-hidden="true"></i> 0</span>
+      <div class="task_ident_pri">
+        <span class="color_yellow option_custom task_pri">=</span>
+        <img class="avatar_user task_ident" src="{{getAvatar(crrUser?.avatar)}}" pTooltip="{{crrUser?.displayName}}" />
+        <!-- <img *ngIf="item.avatar" class="avatar_user" src="{{getImageAvatar(item.avatar)}}" /> -->
+      </div>
+    </div>
+  </div>
+</div>

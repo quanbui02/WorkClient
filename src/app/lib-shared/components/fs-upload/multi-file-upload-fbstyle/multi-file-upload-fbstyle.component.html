@@ -1,0 +1,21 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="multi-file-upload2">
+            <div *ngFor="let item of filesUploaded; let i = index" class="item">
+                <a target="_blank">
+                    <img style="width: 680px;height: 450px;" *ngIf="i===0 && item.typeId == 1" src="{{item.linkViewOnline}}" />
+                    <img *ngIf="i>0 && i < 4 && item.typeId == 1" src="{{item.linkViewOnline}}" />
+                </a>
+                <div class="overlay" *ngIf="i===4">
+                    <button type="button" class="vs-btn icon-only download">
+                        <span style="font-size: 30px;">+1</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="item-download-all" *ngIf="filesUploaded.length > 0" [hidden]="!viewOnly">
+    <span (click)="downloadFileAll()" class="fa fa-download" pTooltip="Tải tất cả"></span>
+</div>

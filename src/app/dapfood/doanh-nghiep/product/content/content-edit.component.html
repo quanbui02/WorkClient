@@ -1,0 +1,159 @@
+<p-dialog #dialog [header]="'Danh sách bài đăng'" styleClass="vs-modal force-full-width" positionTop="50" [(visible)]="isShow" [style]="{'max-width': '735px'}" [contentStyle]="{'max-height': getMaxDialogHeight()}" [modal]="true" appendTo="body">
+    <div class="contents-modal">
+        <div class="contents-form">
+            <div class="ui-g row">
+                <div class="ui-g-6 ui-lg-6">
+                    <!-- <div class="vs-form-control ui-g">
+                        <button type="button" *ngIf="viewPublic" class="btn-tab-active" style="padding-left: 10px;" (click)="status = -1;getForView();">
+                            <span class="__label">Nội dung công bố</span>
+                        </button>
+                        <button type="button" *ngIf="!viewPublic" class="btn-tab" style="padding-left: 10px;"
+                            (click)="viewPublic = true;viewApproved = false;viewPrivate = false;status = -1;getForView();">
+                            <span class="__label">Nội dung công bố</span>
+                        </button>&nbsp;
+                        &nbsp;
+                        <button type="button" *ngIf="viewPrivate && !isView" class="btn-tab-active" style="padding-left: 10px;" (click)="status = -1;getData();">
+                            <span class="__label">Nội dung của tôi</span>
+                        </button>
+                        <button type="button" *ngIf="!viewPrivate && !isView" class="btn-tab" style="padding-left: 10px;"
+                            (click)="viewPrivate = true;viewPublic = false;viewApproved = false;status = -1;getData();">
+                            <span class="__label">Nội dung của tôi</span>
+                        </button>&nbsp;
+                        &nbsp;
+                        <button type="button" *ngIf="viewApproved && type === 1 && !isView" class="btn-tab-active" style="padding-left: 10px;" (click)="status = 1;getData();">
+                            <span class="__label">Phê duyệt</span>
+                            <span class="countUnapproved" *ngIf="countUnapproved > 0">{{countUnapproved}}</span>
+                        </button>
+                        <button type="button" *ngIf="!viewApproved && type === 1 && !isView" class="btn-tab" style="padding-left: 10px;"
+                            (click)="viewApproved = true;viewPublic = false; viewPrivate = false;status = 1;getData();">
+                            <span class="__label">Phê duyệt</span>
+                            <span class="countUnapproved" *ngIf="countUnapproved > 0">{{countUnapproved}}</span>
+                        </button>
+                    </div> -->
+                </div>
+                <div class="ui-g-6 ui-lg-6">
+                    <div class="vs-form-control ui-g pull-right">
+                        <!-- <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" (onChange)="getData()" filter="true" [style]="{'width':'100%'}"
+                            [(ngModel)]="status" [options]="trangThai_options">
+                        </p-dropdown>&nbsp;&nbsp; -->
+                        <button class="vs-btn vs-modal-btn vs-btn-action-edit" (click)="onAdd()" type="button">
+                            <span class="__icon fa fa-plus"></span>
+                            <span class="__label">Thêm mới</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="contents-body">
+                <div class="ui-g row contents-item" *ngFor="let item of dataSource; let i = index">
+                    <div class="ui-g-3">
+                        <!-- <div style="display: inline-block;"><img width="40" height="40" src="/assets/images/logo-chim.png"></div> -->
+
+                        <div class="item-header" style="display: inline-block;vertical-align: top;margin-left: 10px;">
+                            <p><b>{{'Nội dung ' + (i + 1)}}</b></p>
+                            <p>{{item.createdDate | date :'HH:mm dd/MM/yyyy':'UTC'}}</p>
+                        </div>
+                    </div>
+                    <div class="box-copy">
+                        <button type="button" class="vs-btn icon-only vs-btn-action-edit" ngxClipboard (cbOnSuccess)="onCopy()" [cbContent]="item.content" pTooltip="Copy nội dung">
+                            <span class="__icon fa fa-files-o"></span>Copy
+                        </button>
+                    </div>
+                    <textarea autosize type="text" [readonly]="!item.isEdit" [(ngModel)]="item.content" minRows="1" placeholder="" style="width: 100%;"></textarea>
+                    <!-- <app-multi-file-upload-fbstyle style="width: 100%;" [(ngModel)]="item.images" [chooseLabel]="'Chọn ảnh'">
+                    </app-multi-file-upload-fbstyle> -->
+                    <app-multi-file-upload2 [(ngModel)]="item.images" [viewOnly]="!item.isEdit" [chooseLabel]="'Chọn ảnh'">
+                    </app-multi-file-upload2>
+                    <div style="clear: both;width: 100%;">
+                    </div>
+                    <!-- <div class="ui-g-3" style="padding-left: 0;">
+                        <div *ngIf="!viewPublic">
+                            <span *ngIf="item.status === 0 && item.id > 0" class="vs-status vs-status-cancel">
+                                Cá nhân
+                            </span>
+                            <span *ngIf="item.status === 1 && item.id > 0" class="vs-status vs-status-waiting">
+                                Chờ duyệt
+                            </span>
+                            <span *ngIf="item.status == 2 && item.id > 0" class="vs-status vs-status-valid">
+                                Đã duyệt
+                            </span>
+                            <span *ngIf="item.status == 3 && item.id > 0" class="vs-status vs-status-expire">
+                                Từ chối
+                            </span>
+                        </div>
+                        &nbsp;
+                    </div> -->
+                    <div class="ui-g-12" style="text-align: right;">
+                        <!-- <button type="button" *ngIf="item.isEdit != true" class="vs-btn icon-only vs-btn-action-edit" ngxClipboard (cbOnSuccess)="onCopy()"
+                            [cbContent]="item.content" pTooltip="Copy nội dung">
+                            <span class="__icon fa fa-files-o"></span>
+                        </button> -->
+                        <!-- <button type="button" *ngIf="type === 2 && item.isEdit !== true && (item.status === 0 || item.status === 3)" class="vs-btn vs-modal-btn vs-btn-action-edit"
+                            (click)="onApproved(item, 1)" pTooltip="Gửi duyệt nội dung">
+                            <span class="__icon fa fa-check"></span>
+                            <span class="__label">Gửi duyệt</span>
+                        </button>
+                        <button type="button" *ngIf="type === 1 && item.status === 1" class="vs-btn vs-modal-btn vs-btn-action-edit btn-green" (click)="onApproved(item, 2)"
+                            pTooltip="Duyệt nội dung">
+                            <span class="__icon fa fa-check"></span>
+                            <span class="__label">Duyệt</span>
+                        </button>&nbsp;
+                        <button type="button" *ngIf="type === 1 && item.status === 1" class="vs-btn vs-modal-btn vs-btn-red" (click)="onApproved(item, 3)"
+                            pTooltip="Từ chối nội dung">
+                            <span class="__icon fa fa-times"></span>
+                            <span class="__label">Từ chối</span>
+                        </button>&nbsp; -->
+                        <button type="button" *ngIf="(type===1 || type===2&&(item.status===0||item.status===3)) && item.isEdit != true" class="vs-btn vs-modal-btn vs-btn-action-edit" (click)="onEdit(item)" pTooltip="Sửa nội dung">
+                            <span class="__icon fa fa-edit"></span>
+                            <span class="__label">Sửa</span>
+                        </button>
+
+                        <button type="button" *ngIf="item.isEdit" class="vs-btn vs-modal-btn vs-btn-action-edit" (click)="onSave(item)" pTooltip="Cập nhật nội dung">
+                            <span class="__icon fa fa-save"></span>
+                            <span class="__label">Lưu lại</span>
+                        </button>&nbsp;
+
+                        <button type="button" *ngIf="item.isEdit" class="vs-btn vs-modal-btn vs-btn-action-back" (click)="item.isEdit = false" pTooltip="Hủy">
+                            <span class="__icon fa fa-times"></span>
+                            <span class="__label">Hủy</span>
+                        </button>
+
+                        <button type="button" *ngIf="(type===1 || type===2&&item.status===0) && item.isEdit != true" class="vs-btn vs-modal-btn vs-btn-red" (click)="onDelete(item.id)" pTooltip="Xoá">
+                            <span class="__icon fa fa-trash"></span>
+                            <span class="__label">Xóa</span>
+                        </button>
+                    </div>
+                    <!-- <div class="ui-g-9" style="text-align: right;" *ngIf="viewPublic">
+                        <button type="button" class="vs-btn vs-modal-btn vs-btn-red"
+                            (click)="onDelete(item.id)" pTooltip="Xoá">
+                            <span class="__icon fa fa-trash"></span>
+                            <span class="__label">Xóa</span>
+                        </button>
+                    </div> -->
+                    <div class="ui-g-12" class="contents-share">
+                        <!-- <img src="/assets/images/contents-share.png"> -->
+                    </div>
+                    <div style="clear: both;width: 100%;">
+                    </div>
+                </div>
+                <!-- <p-accordion [multiple]="true" class="accordion">
+                    <ng-container>
+                        <p-accordionTab class="accordionTab-vs" [header]="'Nội dung ' + (i + 1)" [selected]="true">
+                            
+                        </p-accordionTab>
+                    </ng-container>
+                </p-accordion> -->
+            </div>
+        </div>
+    </div>
+
+    <p-footer>
+        <div class="ui-g row">
+            <div class="ui-g-12">
+                <button type="button" (click)="closePopupMethod(null)" class="vs-btn vs-modal-btn vs-btn-action-back">
+                    <span class="__icon fa fa-times"></span>
+                    <span class="__label">Đóng</span>
+                </button>
+            </div>
+        </div>
+    </p-footer>
+</p-dialog>

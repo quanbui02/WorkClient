@@ -1,0 +1,58 @@
+.vs-pick-list-container {
+    display: flex;
+    &.vs-modal-content-panel {
+        padding: 0;
+    }
+    .vs-pick-list-left-panel,
+    .vs-pick-list-right-panel {
+        padding: 0;
+        flex-grow: 1;
+        .__panel-content-header {
+            padding-top: 15px;
+            padding-left: 15px;
+            padding-right: 15px;
+            .__title {
+                margin-top: 0;
+                margin-bottom: 15px;
+            }
+        }
+        .__panel-content-body {
+            min-height: 200px;
+            overflow-y: auto;
+            height: 500px;
+        }
+    }
+    .vs-pick-list-left-panel {
+        border-right: 1px solid #67c8ec;
+    }
+    .vs-pick-list-right-panel {
+        border-left: 1px solid #67c8ec;
+    }
+    .vs-pick-list-middle-panel {
+        margin-top: 250px;
+        width: 90px;
+        min-width: 90px;
+        ul {
+            padding: 0;
+            li {
+                display: block;
+                .__transfer-button {
+                    margin: 1px;
+                    background: #ffffff;
+                    color: #387bb8;
+                    border: 1px solid #387bb8;
+                    padding: 0px 18px;
+                }
+                .__transfer-button:hover {
+                    color: #ffffff;
+                    background: #387bb8;
+                }
+            }
+        }
+    }
+}
+
+.vs-pick-list-ul-bottom>li {
+    display: inline;
+    padding-right: 10px;
+}

@@ -1,0 +1,262 @@
+<div class="ui-dialog-content ui-widget-content" style="padding: 0px !important;overflow: auto;">
+    <div class="vs-form-container default-control-label-width vs-modal-content-panel" style="margin-top: -10px !important;">
+        <form action="" [formGroup]="formGroup">
+            <div class="vs-form-container default-control-label-width">
+                <p-fieldset legend="Trạng thái tác nghiệp">
+                    <div class="ui-g row">
+
+                        <div *ngIf="crrUser?.isOmiCall" class="ui-g-12 ui-lg-12">
+                            <div class="vs-form-control ui-g">
+                                <div class="__form-control-label ui-g-12 ui-md-3"></div>
+                                <div class="__form-control-inputs ui-g-12 ui-md-3">
+                                    <div class="__input-wrapper" style="position: relative;">
+                                        <button class="vs-btn vs-modal-btn vs-btn-action-edit" (click)="callOmiCall()" type="button">
+                                            <span class="__icon fa fa-volume-control-phone"></span>
+                                            <span class="__label">Gọi</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-lg-12">
+                            <div class="vs-form-control ui-g">
+                                <div class="__form-control-label ui-g-12 ui-md-3">Tác nghiệp</div>
+                                <div class="__form-control-inputs ui-g-12 ui-md-9">
+                                    <div class="__input-wrapper required" style="position: relative;">
+                                        <p-dropdown [baseZIndex]="15000" formControlName="idAction" [(ngModel)]="modelEdit.idAction" [showClear]="true" placeholder="-- Tác nghiệp --" filter="true" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="actions_options" [style]="{'width':'100%', 'min-width':'0'}" appendTo="body"></p-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-lg-12">
+                            <div class="vs-form-control ui-g">
+                                <div class="__form-control-label ui-g-12 ui-md-3">Ghi chú</div>
+                                <div class="__form-control-inputs ui-g-12 ui-md-9">
+                                    <div class="__input-wrapper" style="position: relative;">
+                                        <textarea type="text" [(ngModel)]="modelEdit.name" rows="3" formControlName="name" placeholder="Ghi chú tác nghiệp"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ui-g-12 ui-lg-12" *ngIf="detailCall.length > 0">
+                            <div class="vs-form-control ui-g">
+                                <div class="__form-control-label ui-g-12 ui-md-3"></div>
+                                <div class="__form-control-inputs ui-g-12 ui-md-9">
+                                    <div class="__input-wrapper" style="position: relative;">
+                                        <div class="ui-table">
+                                            <table>
+                                                <thead class="ui-table-thead">
+                                                    <tr style="background-color: #1ca7ff;">
+                                                        <th width="20%">Thời lượng cuộc gọi</th>
+                                                        <th width="40%">Trạng thái</th>
+                                                        <th>Nội dung cuộc gọi</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="ui-table-tbody">
+                                                    <tr *ngFor="let item of detailCall">
+                                                        <td style="text-align: center;">{{item.durationTxt}}</td>
+                                                        <td *ngIf="item.endCause" [ngSwitch]="item.endCause">
+                                                            <span *ngSwitchCase="'BUSY'">Máy bận</span>
+                                                            <span *ngSwitchCase="'NO_ANSWER'">Hết thời gian đổ
+                                                                chuông</span>
+                                                            <span *ngSwitchCase="'TRIAL_REJECTIO'">Số điện thoại chưa
+                                                                gọi vào số tổng tài</span>
+                                                            <span *ngSwitchCase="'LIMITATION_DECLINE'">Quá thời lượng
+                                                                cho phép gọi ra</span>
+                                                            <span *ngSwitchCase="'ALLOTTED_TIMEOUT'">Cuộc gọi đạt giới
+                                                                hạn thời lượng</span>
+                                                            <span *ngSwitchCase="'CANCEL'">Cuộc gọi không thành
+                                                                công</span>
+                                                            <span *ngSwitchCase="'BYE'">Cuộc gọi thành công</span>
+                                                        </td>
+                                                        <td>
+                                                            <audio *ngIf="item.callTransactions?.recordingFile" style="width: 100%;" controls class="audio-call">
+                                                                <source src="{{item.callTransactions?.recordingFile}}">
+                                                            </audio>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- <audio *ngFor="let item of audioCall;" style="width: 100%;" controls class="audio-call">
+                                            <source src="{{item}}">
+                                        </audio> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p-accordion *ngIf="this.list_actions && this.list_actions.length > 0">
+                            <p-accordionTab header="{{this.list_actions[0].userAction}} - {{this.list_actions[0].name}} - {{this.list_actions[0].createdDate | date :'HH:mm dd/MM/yyyy':'UTC'}}">
+                                <div class="ui-table">
+                                    <table>
+                                        <thead class="ui-table-thead">
+                                            <tr style="background-color: #1ca7ff;">
+                                                <th style="width: 30px;"> STT</th>
+                                                <th width="150px"> Thành viên</th>
+                                                <th width="120px"> Tác nghiệp</th>
+                                                <th> Nội dung</th>
+                                                <th width="100px"> Thời gian</th>
+                                                <!-- <th width="40%"> Audio</th> -->
+                                                <th width="50px" *ngIf="crrUser?.isOmiCall">tác vụ</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="ui-table-tbody" *ngFor="let item of list_actions;let i = index">
+                                            <tr>
+                                                <td style="text-align: center;">{{i+1}}</td>
+                                                <td><span class="userAction">{{item.userAction}}</span></td>
+                                                <td>{{item.name}}</td>
+                                                <td>
+                                                    <div class="break-word" style="line-height: 20px;white-space: break-spaces;">
+                                                        {{item.note}}</div>
+                                                </td>
+                                                <td style="text-align: center;">{{item.createdDate | date :'HH:mm dd/MM/yyyy':'UTC'}}
+                                                </td>
+                                                <!-- <td>
+                                                    <p-accordionTab header="File ghi âm"></p-accordionTab>
+                                                </td> -->
+                                                <td align="center" *ngIf="crrUser?.isOmiCall">
+                                                    <a class="expand-row" *ngIf="!hideme[i]" (click)="showOmicallsLogOrderAction(i, item.id)">
+                                                        <span class="fa fa-angle-double-down icon_action_order"></span>
+
+                                                    </a>
+                                                    <a class="expand-row" *ngIf="hideme[i]" (click)="hideme[i] = !hideme[i]">
+                                                        <span class="fa fa-angle-double-up icon_action_order"></span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+
+                                            <tr [hidden]="!hideme[i]" class="" *ngIf="crrUser?.isOmiCall">
+                                                <td align="center"> </td>
+                                                <td colspan="5" class="p-0">
+                                                    <div class="ui-table">
+                                                        <table>
+                                                            <thead class="ui-table-thead">
+                                                                <tr style="background-color: #1ca7ff;">
+                                                                    <th width="20%">Thời lượng cuộc gọi</th>
+                                                                    <th width="40%">Trạng thái</th>
+                                                                    <th>Nội dung cuộc gọi</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody class="ui-table-tbody">
+                                                                <tr *ngFor="let itemOmicallLog of omicallLogs[i]">
+                                                                    <td style="text-align: center;">
+                                                                        {{itemOmicallLog.durationTxt}}</td>
+                                                                    <td *ngIf="itemOmicallLog.endCause" [ngSwitch]="itemOmicallLog.endCause">
+                                                                        <span *ngSwitchCase="'BUSY'">Máy bận</span>
+                                                                        <span *ngSwitchCase="'NO_ANSWER'">Hết thời gian
+                                                                            đổ chuông</span>
+                                                                        <span *ngSwitchCase="'TRIAL_REJECTIO'">Số điện
+                                                                            thoại chưa gọi vào số tổng tài</span>
+                                                                        <span *ngSwitchCase="'LIMITATION_DECLINE'">Quá
+                                                                            thời lượng cho phép gọi ra</span>
+                                                                        <span *ngSwitchCase="'ALLOTTED_TIMEOUT'">Cuộc
+                                                                            gọi đạt giới hạn thời lượng</span>
+                                                                        <span *ngSwitchCase="'CANCEL'">Cuộc gọi không
+                                                                            thành công</span>
+                                                                        <span *ngSwitchCase="'BYE'">Cuộc gọi thành
+                                                                            công</span>
+                                                                    </td>
+                                                                    <td>
+                                                                        <audio *ngIf="itemOmicallLog.callTransactions?.recordingFile" style="width: 100%;" controls class="audio-call">
+                                                                            <source src="{{itemOmicallLog.callTransactions?.recordingFile}}">
+                                                                        </audio>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+                                            <!-- <tr>
+                                                <td>
+                                                    <p-accordionTab header=""></p-accordionTab>
+                                                </td>
+                                            </tr> -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </p-accordionTab>
+                        </p-accordion>
+                    </div>
+                </p-fieldset>
+                <br />
+                <p-fieldset legend="Trạng thái đơn hàng">
+                    <div class="ui-g row">
+                        <div class="ui-g-12 ui-lg-12">
+                            <div class="vs-form-control ui-g">
+                                <div class="__form-control-label ui-g-12 ui-md-3">Trạng thái</div>
+                                <div class="__form-control-inputs ui-g-12 ui-md-9">
+                                    <div class="__input-wrapper required" style="position: relative;">
+                                        <p-dropdown [baseZIndex]="15000" formControlName="idStatus" [(ngModel)]="modelEdit.idStatus" [showClear]="true" filter="true" placeholder="-- Trạng thái --" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="status_options" [style]="{'width':'100%', 'min-width':'0'}" appendTo="body"></p-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-lg-12">
+                            <div class="vs-form-control ui-g">
+                                <div class="__form-control-label ui-g-12 ui-md-3">Ghi chú</div>
+                                <div class="__form-control-inputs ui-g-12 ui-md-9">
+                                    <div class="__input-wrapper" style="position: relative;">
+                                        <textarea type="text" [(ngModel)]="modelEdit.note" rows="3" formControlName="note" placeholder="Ghi chú trạng thái"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p-accordion *ngIf="this.list_status && this.list_status.length > 0">
+                            <p-accordionTab header="{{this.list_status[0].userAction}} - {{this.list_status[0].name}} - {{this.list_status[0].createdDate | date :'HH:mm dd/MM/yyyy':'UTC'}}">
+                                <div class="ui-table">
+                                    <table>
+                                        <thead class="ui-table-thead">
+                                            <tr style="background-color: #1ca7ff;">
+                                                <th style="width: 30px;"> STT</th>
+                                                <th width="150px"> Thành viên</th>
+                                                <th width="120px"> Tác nghiệp</th>
+                                                <th> Nội dung</th>
+                                                <th width="100px"> Thời gian</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="ui-table-tbody">
+                                            <tr *ngFor="let item of list_status;let i = index">
+                                                <td style="text-align: center;">{{i+1}}</td>
+                                                <td><span class="userAction">{{item.userAction}}</span></td>
+                                                <td>{{item.name}}</td>
+                                                <td>
+                                                    <div class="break-word" style="line-height: 20px;white-space: break-spaces;">
+                                                        {{item.note}}</div>
+                                                </td>
+                                                <td style="text-align: center;">{{item.createdDate | date :'HH:mm
+                                                    dd/MM/yyyy':'UTC'}}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </p-accordionTab>
+                        </p-accordion>
+                    </div>
+                </p-fieldset>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="ui-dialog-footer ui-widget-content" style="padding: 20px 0 0 0;">
+    <p-footer>
+        <div class="ui-g row">
+            <div class="ui-g-12 __right">
+                <p-progressSpinner *ngIf="isLoading" [style]="{width: '30px', height: '30px', margin:'-11px 8px'}" strokeWidth="8" fill="#EEEEEE" animationDuration=".5s">
+                </p-progressSpinner>
+                <button class="vs-btn vs-modal-btn vs-btn-action-edit" (click)="onSave()" type="button">
+                    <span class="__icon fa fa-floppy-o"></span>
+                    <span class="__label">Cập nhật</span>
+                </button>
+                <button type="button" (click)="closeAndSelected()" class="vs-btn vs-modal-btn vs-btn-action-back">
+                    <span class="__icon fa fa-times"></span>
+                    <span class="__label">Đóng</span>
+                </button>
+            </div>
+        </div>
+    </p-footer>
+</div>

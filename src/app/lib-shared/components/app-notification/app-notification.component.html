@@ -1,0 +1,31 @@
+<a href="#" (click)="openMenuEvent($event)">
+    <i class="topbar-icon animated swing fa fa-fw fa-bell-o"></i>
+    <span class="topbar-badge animated rubberBand" *ngIf="totalUnRead > 0">{{totalUnRead}}</span>
+    <span class="topbar-item-name">Messages</span>
+</a>
+<ul class="layout-menu fadeInDown custom-notification">
+    <li class="noti-header" (click)="headerClick($event)">
+        <a>Thông báo</a>
+    </li>
+    <!-- <p-scrollPanel [style]="{width: '100%', height: '350px'}"> -->
+    <div style="width:100%;height:350px;overflow:auto" infinite-scroll [infiniteScrollDistance]="infiniteScrollDistance" [infiniteScrollThrottle]="infiniteScrollThrottle" [scrollWindow]="false" (scrolled)="onScrollDown()">
+        <li role="menuitem" *ngFor="let item of notifications" class="noti-item {{getClassRead(item)}}">
+            <a href="javascript:" (click)="goToLink(item)" class="topbar-message">
+                <div class="noti-avatar">
+                    <img [src]="item.message.image" width="80" height="80" class="">
+                    <!-- <vs-view-image [(file)]="item.message.image"></vs-view-image> -->
+                </div>
+                <div class="noti-content">
+                    <div class="noti-title">{{item.message.title}}</div>
+                    <div class="noti-message">{{item.message.content | summary : 18}}</div>
+                    <div class="noti-time"><i class="fa fa-clock-o"></i> {{item.message.time | date:'HH:mm dd/MM/yyyy'}}
+                    </div>
+                </div>
+            </a>
+        </li>
+    </div>
+    <!-- </p-scrollPanel> -->
+    <li class="noti-footer">
+        <a href="javascript:;" (click)="readAll($event)">Đánh dấu tất cả là đã đọc</a>
+    </li>
+</ul>

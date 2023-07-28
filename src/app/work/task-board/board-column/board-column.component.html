@@ -1,0 +1,11 @@
+<div class="title_col">
+  <span> {{ taskList.name }}</span>
+
+  <a *ngIf="hideBtnDetail" (click)="hideOpenFormCreate(taskList.id)" class="add_task_btn"><i class="fa fa-plus" aria-hidden="true"></i></a>
+</div>
+<div class="status-list">
+  <app-board-card-edit *ngIf="createdIssue == taskList.id" [idProjectCol]="taskList.id" [idProject]="idProject" (created)="hideCreateIssue()"></app-board-card-edit>
+  <div class="app-board-card-container" cdkDropList [cdkDropListData]="taskList.wmTasks" [id]="taskList.id" (cdkDropListDropped)="drop($event, taskList.id)">
+    <app-board-card *ngFor="let task of taskList.wmTasks" [task]="task" [cdkDragData]="task" cdkDrag (click)="getDetail(task.id, task.idProjectCol)"></app-board-card>
+  </div>
+</div>

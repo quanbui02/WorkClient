@@ -1,0 +1,105 @@
+<!-- <div class="ui-g" [hidden]="viewOnly">
+    <div class="ui-g-6">
+        <a (click)="openFileViewer()" class="btn btn-sm btn-primary btn-control" tooltipPosition="bottom">
+            <i class="fa fa-edit"></i> Chọn file
+        </a>
+    </div>
+</div> -->
+<div class="ui-g">
+    <div class="ui-g-12">
+        <!-- <vs-fs-list-image [(ngModel)]="filesUploaded" (onRemoved)="onFileUploadRemoved($event)" [viewOnly]="viewOnly">
+        </vs-fs-list-image> -->
+
+        <div class="multi-file-upload2">
+            <div *ngFor="let item of filesUploaded" class="item">
+                <a>
+                    <img *ngIf="item.typeId == 1" src="{{item.linkViewOnline}}" />
+                </a>  
+                <div class="overlay" [hidden]="viewOnly"  (click)="viewFile(item)">
+                    <button type="button" (click)="deleteFile(item)" class="vs-btn icon-only vs-btn-red" pTooltip="Xóa ảnh">
+                        <span class="__icon fa fa-times"></span>
+                    </button>
+                </div>
+                <div class="overlay" [hidden]="!viewOnly">
+                    <button type="button" (click)="downloadFile(item)" class="vs-btn icon-only download" pTooltip="Tải ảnh">
+                        <span class="__icon fa fa-download"></span>
+                    </button>
+                </div>                 
+            </div>
+            <div class="item-null" (click)="GetRootFolder()" [hidden]="viewOnly">
+                <span class="fa fa-plus"></span>
+            </div>
+            <!-- <div class="item-download-all" *ngIf="filesUploaded.length > 0" [hidden]="!viewOnly">
+                <span (click)="downloadFileAll()" class="fa fa-download" pTooltip="Tải tất cả"></span>
+            </div> -->
+            <!-- <div class="item-download-all" [hidden]="!viewOnly">
+                <button type="button" (click)="downloadFile(item)" class="vs-btn icon-only download" pTooltip="Tải ảnh">
+                    <span class="__icon fa fa-download"></span>
+                </button>
+            </div> -->
+        </div>
+
+    </div>
+</div>
+
+<p-dialog #dialog [header]="'Quản lý file'" [showHeader]="false" styleClass="vs-modal force-full-width" positionTop="50" [(visible)]="showFileDialog" [style]="{'max-width': '1100px'}" [modal]="true" appendTo="body">
+    <div class="modal-body">
+        <div class="box-notify"> 
+            <div class="ui-g-12">
+                <p-fileUpload [multiple]="true" class="vs-file-upload style-1" (onError)="onError($event)" [uploadLabel]="'Tải file'" [cancelLabel]="'Hủy tải lên'" [chooseLabel]="chooseLabel" [auto]="auto" (onProgress)="onProgress($event)" (onUpload)="onUploadEvent($event)"
+                    url="{{apiUrl}}" maxFileSize="{{maxFileSize}}" accept="{{dinhDangFile}}" name="files">
+                    <ng-template pTemplate="content">
+                        <ul *ngIf="uploadedFiles.length">
+                            <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+                        </ul>
+                    </ng-template>
+                </p-fileUpload>
+            </div> 
+ 
+            <div class="ui-g-12">
+                <file-breadcrumb [folderChanged]="folderChanged" (selectFolder)="onSelectFolderFromBreadcrumb($event)"></file-breadcrumb>
+            </div>
+               
+            <div class="ui-g-12" [hidden]="!isUploading">
+                <div class="progress" style="margin-bottom: 10; margin-top: 10;">
+                    <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': progressValue + '%' }"></div>
+                </div>
+            </div>
+
+            <div class="ui-g-12"> 
+                <vs-fs-list-file [(ngModel)]="files" (onClick)="onFolderClick($event)" [isSingleFile]="isSingleFile" [isMngFile]="true" [currentIds]="currentIds" (onSelectItem)="onSelectItem($event)" class="ui-g-12">
+                </vs-fs-list-file>            
+            </div>
+        </div>
+    </div>
+
+    <p-footer>
+        <div class="ui-g ui-g">
+            <!-- <div stlye="flex:1;">
+                <div class="form-inline">
+                    
+                </div>
+            </div>
+            <div style="flex:1;text-align: right;">
+                
+            </div> -->
+            <div class="ui-g-10 text-left">
+                <button type="button" class="vs-btn vs-modal-btn vs-btn-action-edit" (click)="createFolder()">
+                    <i class="__icon fas fa-folder"></i> Tạo thư mục</button>
+                <input *ngIf="folderCreating" required [(ngModel)]="folderName" type="text" class="form-control" placeholder="Nhập tên thư mục" />
+                <button *ngIf="folderCreating" class="vs-btn vs-modal-btn vs-btn-action-edit" (click)="onCreateFolder()" type="button">
+                    <i class="__icon fa fa-floppy-o"></i> Lưu</button>
+            </div>
+            <div class="ui-g-2">
+                <button type="button" (click)="showFileDialog=false" class="vs-btn vs-modal-btn vs-btn-action-back">
+                    <span class="__icon fa fa-times"></span>
+                    <span class="__label">Đóng</span>
+                </button>
+                <button type="button" class="vs-btn vs-modal-btn vs-btn-action-edit" (click)="onSelected()">
+                    <i class="__icon fa fa-arui-g-down"></i> Chọn</button>
+            </div>
+        </div>
+    </p-footer>
+</p-dialog>
+
+<file-viewer></file-viewer>

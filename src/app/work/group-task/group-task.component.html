@@ -1,0 +1,34 @@
+<div class="vs-page-content app-group-task">
+   <div class="vs-page-content-body-area">
+      <div class="ui-g-2 vs-table-wrapper" style="background-color: #f1f3f4;padding: 0; height: calc(100vh - 51px); overflow: auto; position: relative;">
+         <div class="search_menu">
+            <input class="search" placeholder="Tìm kiếm dự án" style="width: 100%;" (input)="onSearchMenu()" [(ngModel)]="searchModel.key">
+            <a class="add_project" (click)="onCreateProject()" pTooltip="Thêm dự án">
+               <i class="fa fa-folder-o" aria-hidden="true"></i>
+            </a>
+            <!-- <a class="sort_project" (click)="onSortProject()" pTooltip="Sắp xếp {{titleSort()}}">
+               <svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20" aria-hidden="true" class="icon_component filter-item-icon-component icon_component--no-focus-style">
+                  <path d="M17.8571 2.87669C18.107 3.41157 18.0246 4.04275 17.6457 4.49555L12.4892 10.6589V15.3856C12.4892 16.0185 12.097 16.5852 11.5048 16.8082L9.56669 17.5381C9.09976 17.7139 8.57627 17.6494 8.16598 17.3655C7.75569 17.0816 7.51084 16.6144 7.51084 16.1155V10.6589L2.35425 4.49555C1.97542 4.04275 1.89302 3.41157 2.14291 2.87669C2.39279 2.34182 2.92977 2 3.52013 2H16.4799C17.0702 2 17.6072 2.34182 17.8571 2.87669ZM16.4799 3.52012H3.52013L8.91611 9.96964C8.99036 10.0584 9.03096 10.1698 9.03096 10.2848V16.1155L10.969 15.3856V10.2848C10.969 10.1698 11.0096 10.0584 11.0839 9.96964L16.4799 3.52012Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
+               </svg>
+            </a> -->
+            <!-- <a class="add_sprint" (click)="onCreateSprint()" pTooltip="Thêm sprint">
+               <i class="fa fa-file-text-o" aria-hidden="true"></i>
+            </a> -->
+         </div>
+         <div class="task_menu">
+            <app-task-menu [model]="datasource" (nodeSelect)="nodeSelect($event)"></app-task-menu>
+         </div>
+         <a class="lst_project" [routerLink]="['/work/project']">
+            <i class="main-icon fa fa-tasks"></i>
+            <span>Danh sách dự án</span>
+         </a>
+      </div>
+      <div class="ui-g-10">
+         <div class="task_screen">
+            <router-outlet></router-outlet>
+         </div>
+      </div>
+   </div>
+</div>
+
+<app-project-edit (closePopup)="onCloseForm()"></app-project-edit>

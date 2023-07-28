@@ -1,0 +1,26 @@
+<table class="table tablect table-nonhead mb-0 tablead">
+    <tr>
+        <th>Tên</th>
+        <th>Người đăng</th>
+        <th>Ngày đăng</th>
+        <th>Kích cỡ tệp</th>
+        <td></td>
+    </tr>
+    <tr *ngFor="let item of files">
+        <td>{{item.fileName | psGetRawFileName}}</td>
+        <td>{{item.createdByUser}}</td>
+        <td>{{item.createdDate | date : 'dd/MM/yyyy':'UTC'}} </td>
+        <td>{{item.size | psFileSize }}</td>
+        <td>
+            <a [ngbTooltip]="'Mở file'" *ngIf="canBeOpenOnline()" (click)="openFile(item)">
+                <i class="fa fa-eye"></i>
+            </a>
+            <a [ngbTooltip]="'Tải về'" (click)="downloadFile(item.fileName)">
+                <i class="fa fa-download"></i>
+            </a>
+            <a class="text text-danger" [ngbTooltip]="'Xóa'" (click)="deleteFile(item)">
+                <i class="fa fa-trash"></i>
+            </a>
+        </td>
+    </tr>
+</table>

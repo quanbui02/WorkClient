@@ -1,0 +1,38 @@
+.mb-40{
+    margin-bottom: 40px;
+}
+.omicalllog {
+    border: 1px solid #e6e6e6;
+    padding: 20px 10px;
+    margin: 0 10px 25px 0;
+}
+
+.long_line_dashed {
+    border-bottom: 1px dashed transparent;
+    border-image: 1 repeating-linear-gradient(90deg,#fff 0,#fff 1em,transparent 0,transparent 1em,#ededed 0,#ededed 3em,transparent 0,transparent 3em);
+}
+
+.line_dashed {
+    border-bottom: 1px dashed #e6e6e6;
+}
+
+.note_omicall_block {
+    display: flex;
+    div {
+        margin-top: 2px;
+    }
+}
+.image_name_user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    img {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+    }
+  }
+
+.t-center{
+    text-align: center;
+}

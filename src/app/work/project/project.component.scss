@@ -1,0 +1,43 @@
+.text{
+    &_blue{    
+        color:#1ca7ff ;
+        font-weight: bold;
+    }
+    &_black{
+        color:#000 ;
+        font-weight: bold;
+    }
+    &_green{
+        color:#14b545 ;
+        font-weight: bold;
+    }
+}
+
+.user_created_prj {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+    img {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+    }
+}
+
+.display_name_project {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    .name_img_prj {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        img {
+            width: 25px;
+            height: 25px;
+            object-fit: contain;
+            border-radius: 3px;
+        }
+    }
+}

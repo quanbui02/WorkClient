@@ -1,0 +1,114 @@
+<p-dialog #dialog [header]="'Thông tin người dùng'" styleClass="vs-modal force-full-width" positionTop="50"
+    [(visible)]="isShow" [style]="{'max-width': '1100px'}" [contentStyle]="{'max-height': getMaxDialogHeight()}"
+    [modal]="true" appendTo="body">
+    <div class="vs-form-container default-control-label-width vs-modal-content-panel">
+        <div class="vs-form-container default-control-label-width">
+            <div class="ui-g row">
+                <form action="" [formGroup]="formGroup">
+                    <div class="ui-g-3">
+                        <div style="width: 150px;">
+                            <vs-view-image [(file)]="modelEdit.avatar" [height]="'150'" [width]="'150'">
+                            </vs-view-image>
+                        </div>
+                    </div>
+                    <div class="ui-g-9">
+                        <div class="ui-g-12 ui-lg-6">
+                            <div class="vs-form-control ui-g">
+                                <div class="__form-control-label ui-g-12 ui-md-4">Tài khoản</div>
+                                <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                    {{modelEdit.userName}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-lg-6">
+                            <div class="vs-form-control ui-g">
+                                <div class="__form-control-label ui-g-12 ui-md-4">Họ và tên</div>
+                                <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                    <div class="__input-wrapper required">
+                                        {{modelEdit.name}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-lg-6">
+                            <div class="vs-form-control ui-g">
+                                <div class="__form-control-label ui-g-12 ui-md-4">Số điện thoại</div>
+                                <div class="__form-control-inputs ui-g-12 ui-md-4">
+                                    <div class="__input-wrapper ">
+                                        {{modelEdit.phone}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ui-g-12 ui-lg-6">
+                            <div class="vs-form-control ui-g">
+                                <div class="__form-control-label ui-g-12 ui-md-4">Email</div>
+                                <div class="__form-control-inputs ui-g-12 ui-md-4">
+                                    <div class="__input-wrapper ">
+                                        {{modelEdit.email}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-lg-6">
+                            <div class="vs-form-control ui-g">
+                                <div class="__form-control-label ui-g-12 ui-md-4">Số CMND</div>
+                                <div class="__form-control-inputs ui-g-12 ui-md-4">
+                                    <div class="__input-wrapper ">
+                                        {{modelEdit.cmt}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="ui-g-12 ui-lg-6">
+                            <div class="vs-form-control ui-g">
+                                <div class="__form-control-label ui-g-12 ui-md-12">CMND Mặt trước</div>
+                                <div class="__form-control-inputs ui-g-12 ui-md-12">
+                                    <vs-view-image [(file)]="modelEdit.cmtFront" [height]="'150'" [width]="'200'">
+                                    </vs-view-image>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-lg-6">
+                            <div class="vs-form-control ui-g">
+                                <div class="__form-control-label ui-g-12 ui-md-12">CMND Mặt sau</div>
+                                <div class="__form-control-inputs ui-g-12 ui-md-12">
+                                    <vs-view-image [(file)]="modelEdit.cmtBackside" [height]="'150'" [width]="'200'">
+                                    </vs-view-image>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-lg-12">
+                            <div class="vs-form-control ui-g">
+                                <div class="__form-control-label ui-g-12 ui-md-4">Mã giới thiệu</div>
+                                <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                    <div class="__input-wrapper">
+                                        <input type="text" [(ngModel)]="modelEdit.code" formControlName="code" placeholder="Mã giới thiệu" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <p-footer>
+        <div class="ui-g row">
+            <div class="ui-g-12">
+                <button class="vs-btn vs-modal-btn vs-btn-action-edit" [disabled]="isLoading || !formGroup.valid" (click)="save()" type="button">
+                    <span class="__icon fa fa-floppy-o"></span>
+                    <span class="__label">Lưu</span>
+                </button>
+
+                <button type="button" (click)="closePopupMethod(null)" class="vs-btn vs-modal-btn vs-btn-action-back">
+                    <span class="__icon fa fa-times"></span>
+                    <span class="__label">Đóng</span>
+                </button>
+            </div>
+        </div>
+    </p-footer>
+</p-dialog>

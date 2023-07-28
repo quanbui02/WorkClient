@@ -1,0 +1,30 @@
+.ui-tree{
+    max-height: 200px;
+    overflow: auto;
+    margin-bottom: 5px;
+}
+.accordion{
+    width: 100%;
+}
+.mr5{
+    margin-right: 5px;
+}
+.mt5{
+    margin-top: 5px;
+}
+.box-copy{
+    // position: absolute;
+    // right: 34px;
+    width: 34px;
+    float: right;
+    padding: 5px;
+    background-color: #e2e2e2;         
+} 
+pre{
+    white-space: break-spaces;
+    font-family: apple-system, BlinkMacSystemFont, "Open Sans", Helvetica, Arial, sans-serif;
+}
+.btn-thuong{
+    font-size: 11px!important;
+    width: 140px;
+}

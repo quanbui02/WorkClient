@@ -1,0 +1,240 @@
+<div class="ui-g" style="margin: 0;">
+  <div class="ui-dialog-content ui-widget-content ui-g-12" style="padding: 0;">
+    <div class="vs-form-container default-control-label-width">
+      <div class="vs-modal-content-panel" style="height: calc(100vh - 104px); overflow: auto;position: relative;padding: 0px;">
+        <div class="ui-g" style="padding-top: 10px;">
+          <form action="" [formGroup]="formGroup">
+            <div class="ui-g-8 ui-lg-8" style="overflow: auto;height: calc(100vh - 114px);padding: 10px 0;">
+              <div class="ui-g-12 ui-lg-12">
+                <div class="vs-form-control ui-g">
+                  <!-- <div class="__form-control-label ui-g-12 ui-md-12">Tên công việc</div> -->
+                  <div class="__form-control-inputs ui-g-12 ui-md-12">
+                    <div class="__input-wrapper">
+                      <div class="name_task">{{modelEdit.name}}</div>
+                      <!-- <textarea disabled autosize rows="1" class="name_task" type="text" [(ngModel)]="modelEdit.name" formControlName="name" placeholder="Tên công việc" (blur)="onSave()"></textarea> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="ui-g-12 ui-lg-12">
+                <div class="form_input">
+                  <div class="ui-g">
+                    <div class="__form-control-label ui-g-12 ui-md-12">Chi tiết</div>
+                    <div class="__form-control-inputs ui-g-12 ui-md-12">
+                      <div class="__input-wrapper">
+                        <div *ngIf="modelEdit.detail" class="dt_content box_html_content" [innerHtml]="modelEdit.detail"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ui-g-12 ui-lg-12">
+                <div class="form_input">
+                  <div class="ui-g">
+                    <div class="__form-control-label ui-g-12 ui-md-12">File đính kèm</div>
+                    <div class="__form-control-inputs ui-g-12 ui-md-12">
+                      <div class="__input-wrapper">
+                        <app-multi-file-upload2 style="width: 100%;" formControlName="attachment" [(ngModel)]="modelEdit.attachment" [chooseLabel]="'Chọn ảnh'" [viewOnly]="true">
+                        </app-multi-file-upload2>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ui-g-12 ui-lg-12">
+                <div class="activity">Hoạt động</div>
+                <div class="show_activity_block">
+                  <span class="show_activity">Hiển thị: </span>
+                  <a [ngClass]="{'active_activity': activityType == 1}" class="btn_activity" (click)="activityType = 1">Bình luận</a>
+                  <a [ngClass]="{'active_activity': activityType == 2}" class="btn_activity" (click)="activityType = 2">Lịch sử</a>
+                  <!-- <a [ngClass]="{'active_activity': activityType == 3}" class="btn_activity" id="history" (click)="activityType = 3">Lịch sử</a> -->
+                </div>
+                <div class="activity_content">
+                  <app-comment *ngIf="activityType == 1" [idTask]="config.data.id"></app-comment>
+                  <app-log-work *ngIf="activityType == 2" [idTask]="config.data.id" [idProject]="modelEdit.idProject" [myTask]="false"></app-log-work>
+                </div>
+              </div>
+            </div>
+            <div class="ui-g-4 ui-lg-4" style="overflow: auto;height: calc(100vh - 114px);padding: 10px;">
+              <div class="table_task_edit">
+                <div class="detail_table_header" (click)="openDetail = !openDetail">
+                  <span>Chi tiết</span>
+                  <i *ngIf="!openDetail" class="fa fa-angle-down" aria-hidden="true"></i>
+                  <i *ngIf="openDetail" class="fa fa-angle-up" aria-hidden="true"></i>
+                </div>
+                <div *ngIf="openDetail" class="detail_table_content">
+                  <div class="ui-g">
+                    <div class="ui-g-12 ui-lg-12">
+                      <div class="vs-form-control ui-g">
+                        <div class="__form-control-label ui-g-4 ui-md-4">Công việc</div>
+                        <div class="__form-control-inputs ui-g-8 ui-md-8">
+                          <div class="__input-wrapper">
+                            <div class="btn_action">
+                              <div *ngIf="modelEdit.completed" class="btn_complete btn"><i class="fa fa-check" aria-hidden="true"></i> Hoàn thành</div>
+                              <div *ngIf="!modelEdit.completed" class="btn_uncomplete btn"><i class="fa fa-times" aria-hidden="true"></i> Chưa hoàn thành</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                      <div class="vs-form-control ui-g">
+                        <div class="__form-control-label ui-g-4 ui-md-4">Trạng thái</div>
+                        <div class="__form-control-inputs ui-g-8 ui-md-8">
+                          <div class="__input-wrapper">
+                            {{modelEdit.projectCol.label}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                      <div class="vs-form-control ui-g">
+                        <div class="__form-control-label ui-g-4 ui-md-4">Ưu tiên</div>
+                        <div class="__form-control-inputs ui-g-8 ui-md-8">
+                          <div class="__input-wrapper">
+                            <span *ngIf="modelEdit.priority == 5"><i class="fa fa-angle-double-up color_red option_custom" aria-hidden="true"></i>Rất cao</span>
+                            <span *ngIf="modelEdit.priority == 4"><i class="fa fa-angle-up color_red option_custom" aria-hidden="true"></i>Cao</span>
+                            <span *ngIf="modelEdit.priority == 3"><span class="color_yellow option_custom">=</span>Trung bình</span>
+                            <span *ngIf="modelEdit.priority == 2"><i class="fa fa-angle-down color_blue option_custom" aria-hidden="true"></i>Thấp</span>
+                            <span *ngIf="modelEdit.priority == 1"><i class="fa fa-angle-double-down color_blue option_custom" aria-hidden="true"></i>Rất thấp</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                      <div class="vs-form-control ui-g">
+                        <div class="__form-control-label ui-g-4 ui-md-4">Loại công việc</div>
+                        <div class="__form-control-inputs ui-g-8 ui-md-8">
+                          <div class="__input-wrapper">
+                            <span *ngIf="modelEdit.type == 2" class=""><i class="fa fa-circle custom_i_bug" aria-hidden="true"></i> Bug</span>
+                            <span *ngIf="modelEdit.type == 1" class=""><i class="fa fa-check custom_i_task" aria-hidden="true"></i> Task</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                      <div class="vs-form-control ui-g">
+                        <div class="__form-control-label ui-g-4 ui-md-4">Tiến độ công việc (%)</div>
+                        <div class="__form-control-inputs ui-g-8 ui-md-8">
+                          <div class="__input-wrapper">
+                            <div class="percent_box">
+                              {{modelEdit.percent}} %
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                      <div class="vs-form-control ui-g">
+                        <div class="__form-control-label ui-g-12 ui-md-12">Người tham gia</div>
+                        <div class="__form-control-inputs ui-g-12 ui-md-12">
+                          <div class="__input-wrapper">
+                            <div *ngFor="let val of modelEdit.wmParticipants" class="ui-multiselected-item-token ui-corner-all user_item_option user_multil_selected">
+                              <img class="avatar_user" src="{{getAvatarById(val.userId)}}" style="vertical-align:middle;margin-right:.5em" pTooltip="{{getUserNameById(val.userId)}}" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                      <div class="vs-form-control ui-g">
+                        <div class="__form-control-label ui-g-12 ui-md-12">Người thực hiện</div>
+                        <div class="__form-control-inputs ui-g-12 ui-md-12">
+                          <div class="__input-wrapper">
+                            <div class="asignee_option">
+                              <img *ngIf="!modelEdit.assignee?.avatar && modelEdit.assignee?.value > 0" class="avatar_user" src="/assets/images/avatar.jpg" />
+                              <img *ngIf="modelEdit.assignee?.avatar" class="avatar_user" src="{{getImageAvatar(modelEdit.assignee.avatar)}}" />
+                              <span class="task_user_name_option"> {{modelEdit.assignee?.label}}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                      <div class="vs-form-control ui-g">
+                        <div class="__form-control-label ui-g-4 ui-md-4">Người tạo</div>
+                        <div class="__form-control-inputs ui-g-8 ui-md-8">
+                          <div class="__input-wrapper task_reporter">
+                            <img class="avatar_user task_ident" src="{{getAvatar(modelEdit.user?.avatar )}}" />
+                            <span>{{modelEdit.user?.name ? modelEdit.user?.name : modelEdit.user?.userName}}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="table_task_edit">
+                <div class="detail_table_header" (click)="openTime = !openTime">
+                  <span>Thời gian</span>
+                  <i *ngIf="!openTime" class="fa fa-angle-down" aria-hidden="true"></i>
+                  <i *ngIf="openTime" class="fa fa-angle-up" aria-hidden="true"></i>
+                </div>
+                <div *ngIf="openTime" class="detail_table_content">
+                  <div class="ui-g">
+                    <div class="ui-g-12 ui-lg-12">
+                      <div class="vs-form-control ui-g">
+                        <div class="__form-control-label ui-g-4 ui-md-4">Ngày bắt đầu</div>
+                        <div class="__form-control-inputs ui-g-8 ui-md-8">
+                          <div class="__input-wrapper">
+                            {{modelEdit.createdDate | date :'HH:mm dd/MM/yyyy':'UTC'}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                      <div class="vs-form-control ui-g">
+                        <div class="__form-control-label ui-g-4 ui-md-4">Ngày kết thúc</div>
+                        <div class="__form-control-inputs ui-g-8 ui-md-8">
+                          <div class="__input-wrapper">
+                            {{modelEdit.endDate | date :'HH:mm dd/MM/yyyy':'UTC'}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                      <div class="vs-form-control ui-g">
+                        <div class="__form-control-label ui-g-4 ui-md-4">Ngày hoàn thành</div>
+                        <div class="__form-control-inputs ui-g-8 ui-md-8">
+                          <div class="__input-wrapper">
+                            {{modelEdit.completedDate | date :'HH:mm dd/MM/yyyy':'UTC'}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="create_update_time">
+                <p>Ngày tạo: {{modelEdit.createdDate | date :'dd/MM/yyyy HH:mm':'UTC'}}</p>
+                <p *ngIf="modelEdit.updatedDate">Ngày cập nhật: {{modelEdit.updatedDate | date :'dd/MM/yyyy HH:mm':'UTC'}}</p>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ui-dialog-footer ui-widget-content ui-g-12" style="margin-left: -15px; position: fixed; bottom: 0;background-color: whitesmoke;">
+    <p-footer>
+      <div class="ui-g">
+        <div class="ui-g-12">
+          <!-- <button class="vs-btn vs-modal-btn vs-btn-action-edit" [disabled]="!formGroup.valid" (click)="onSave()" type="button">
+            <span class="__icon fa fa-floppy-o"></span>
+            <span class="__label">Lưu</span>
+          </button> -->
+          <!-- <button *ngIf="modelEdit.id > 0" type="button" (click)="onDelete(modelEdit.id)" class="vs-btn vs-modal-btn vs-btn-action-remove" style="float: left;">
+            <span class="__icon fa fa-times"></span>
+            <span class="__label">Xóa</span>
+          </button> -->
+          <button type="button" (click)="closePopupMethod()" class="vs-btn vs-modal-btn vs-btn-action-back">
+            <span class="__icon fa fa-times"></span>
+            <span class="__label">Đóng</span>
+          </button>
+        </div>
+      </div>
+    </p-footer>
+  </div>
+</div>

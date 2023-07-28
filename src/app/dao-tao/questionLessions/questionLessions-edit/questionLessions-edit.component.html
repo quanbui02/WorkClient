@@ -1,0 +1,85 @@
+<p-dialog #dialog [header]="'Thêm/Sửa bệnh học'" styleClass="vs-modal force-full-width" positionTop="50" [(visible)]="isShow" [style]="{'max-width': '1100px'}" [contentStyle]="{'max-height': getMaxDialogHeight()}" [modal]="true" appendTo="body">
+  <div class="vs-form-container default-control-label-width vs-modal-content-panel app-foods-edit">
+
+    <div class="vs-form-container default-control-label-width">
+      <div class="ui-g row">
+        <form action="" [formGroup]="formGroup">
+          <div class="ui-g row">
+            <div class="ui-g-12 ui-lg-12">
+              <div class="vs-form-control ui-g">
+                <div class="__form-control-label ui-g-12 ui-md-4">Bài giảng</div>
+                <div class="ui-g-12 ui-md-12">
+                  <div class="__input-wrapper required" style="position: relative;">
+                    <p-dropdown [baseZIndex]="15000" formControlName="idLesson" [(ngModel)]="modelEdit.idLession" [showClear]="true" filter="true" placeholder="-- Chọn bài giảng --" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="lesson_options" [style]="{'width':'100%', 'min-width':'0'}" appendTo="body"></p-dropdown>
+                    <div class="form-control-feedback" *ngIf="formGroup.controls['idLesson'].hasError('required') && formGroup.controls['idLesson'].touched">
+                      Trường thông tin này là bắt buộc!</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ui-g-12 ui-lg-12">
+              <div class="vs-form-control ui-g">
+                <div class="__form-control-label ui-g-12 ui-md-4">Tóm tắt</div>
+                <div class="ui-g-12 ui-md-12">
+                  <div class="__input-wrapper required">
+                    <textarea type="text" [(ngModel)]="modelEdit.summary" rows="5" formControlName="summary" placeholder="Tóm tắt" style="width: 100%;"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ui-g-12 ui-lg-12">
+              <div class="vs-form-control ui-g">
+                <div class="__form-control-label ui-g-12 ui-md-4">Nội dung câu hỏi</div>
+                <div class="ui-g-12 ui-md-12">
+                  <div class="__input-wrapper required">
+                    <textarea type="text" [(ngModel)]="modelEdit.contentQuestion" rows="7" formControlName="contentQuestion" placeholder="Nội dung câu hỏi" style="width: 100%;"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ui-g-12 ui-lg-12">
+              <div class="vs-form-control ui-g">
+                <div class="__form-control-label ui-g-12 ui-md-4">Thứ tự</div>
+                <div class="ui-g-12 ui-md-12">
+                  <div class="__input-wrapper required">
+                    <input type="number" [(ngModel)]="modelEdit.sort" formControlName="sort" placeholder="Thứ tự" style="width: 100%;">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="ui-g-12 ui-lg-12">
+              <div class="vs-form-control ui-g">
+                <div class="__form-control-label ui-g-12 ui-md-4">Chi tiết</div>
+                <div class="ui-g-12 ui-md-12">
+                  <div class="__input-wrapper required">
+                    <p-editor formControlName="detail" [(ngModel)]="modelEdit.detail" [style]="{'height':'500px'}"></p-editor>
+                    <br>
+                    <button class="btn_hide_show_html" (click)="ShowHideHtml()">Ẩn/Hiện Html</button>
+                    <div class="__input-wrapper" [ngClass]="{'d-none': hideHtml == true}">
+                      <textarea autosize type="text" formControlName="detailHtml" [(ngModel)]="modelEdit.detail" rows="20" placeholder="" style="width: 100%;"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+  <p-footer>
+    <div class="ui-g row">
+      <div class="ui-g-12">
+        <button class="vs-btn vs-modal-btn vs-btn-action-edit" [disabled]="!formGroup.valid" (click)="save()" type="button">
+          <span class="__icon fa fa-floppy-o"></span>
+          <span class="__label">Lưu</span>
+        </button>
+        <button type="button" (click)="closePopupMethod(null)" class="vs-btn vs-modal-btn vs-btn-action-back">
+          <span class="__icon fa fa-times"></span>
+          <span class="__label">Đóng</span>
+        </button>
+      </div>
+    </div>
+  </p-footer>
+</p-dialog>

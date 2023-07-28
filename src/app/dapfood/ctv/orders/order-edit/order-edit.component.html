@@ -1,0 +1,330 @@
+<p-dialog #dialog [header]="modelEdit.id > 0 ? 'Đơn hàng #' + modelEdit.id + ' - ' + (modelEdit.code ? modelEdit.code : '') + (modelEdit.idParent > 0 ? ' - Đơn cha: #' + modelEdit.idParent : '') : 'Tạo đơn mới'" styleClass="vs-modal force-full-width"
+    positionTop="50" [(visible)]="isShow" [style]="{'max-width': '1100px'}" [contentStyle]="{'max-height': getMaxDialogHeight()}" [modal]="true" appendTo="body">
+    <div class="vs-form-container default-control-label-width vs-modal-content-panel">
+
+        <div class="vs-form-container default-control-label-width">
+            <div class="ui-g row">
+                <form action="" [formGroup]="formGroup">
+                    <div class="ui-g-12 ui-lg-12" *ngIf="!isView">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4" style="font-weight: bold;"><span class="fa fa-map-marker" style="font-size: 15px;color:#0084ff"></span> Địa chỉ nhận hàng</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                   <div style="margin-bottom: 5px;">
+                                    <b [ngClass]="{'tab-selected': typeAddress == 0,'tab-address':typeAddress !== 10}"><p-radioButton name="typeAddress" formControlName="typeAddress" value="0" [(ngModel)]="typeAddress" [disabled]="isView" (onClick)="changeAddress()" label="Từ đơn hàng cũ của tôi"></p-radioButton></b>
+                                    <b [ngClass]="{'tab-selected': typeAddress == 1,'tab-address':typeAddress !== 10}"><p-radioButton name="typeAddress" formControlName="typeAddress" value="1" [(ngModel)]="typeAddress" [disabled]="isView" (onClick)="changeAddress()" label="Từ địa chỉ của tôi"></p-radioButton></b>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12" *ngIf="this.typeAddress == 1">
+                        <div class="vs-form-control ui-g" *ngIf="!isView">
+                            <div class="__form-control-label ui-g-12 ui-md-4"></div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                   <div *ngFor="let add of listDiaChi" style="margin-bottom: 8px;">
+                                    <b><p-radioButton name="idAddress" value="{{add.id}}" [(ngModel)]="idAddress" formControlName="idAddress" [disabled]="isView" (onClick)="changeAddress()" label="{{add.name}} {{add.phone}} "></p-radioButton></b> {{add.fullAddress}}
+                                    </div>
+                                </div>
+                                <div style="position: absolute; top: 15px; right: 30px;font-size: 13px;">
+                                    <button type="button" class="vs-btn vs-btn-blue" pTooltip="Thêm địa chỉ mới" style="margin-right: 10px;" (click)="showAddAddress()">
+                                        <span class="__icon fa fa-plus" style="color:#fff;font-size: 13px;"> Thêm địa chỉ mới</span>
+                                    </button>
+                                    <a href="/dia-chi" target="_blank"><span class="__icon fa fa-address-card" style="font-size: 13px;"> Quản lý địa chỉ</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12" *ngIf="!isView">
+                        <div class="vs-form-control ui-g" *ngIf="this.typeAddress == 0">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Chọn khách hàng</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper required">
+                                    <p-autoComplete [readonly]="isView" [(ngModel)]="khachCu" formControlName="khachCu" [suggestions]="listKhachCu" (completeMethod)="autoCompleteKhachCu($event)" field="fullInfo" [size]="30" placeholder="Nhập họ tên hoặc số điện thoại khách hàng cũ" [minLength]="1"
+                                        (onSelect)="onSelectKhachCu($event)">
+                                    </p-autoComplete>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 ui-lg-12" [ngClass]="{'hidden': !showAddress,'show': showAddress}">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Họ và tên</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper required" style="position: relative;">
+                                    <input type="text" [readonly]="isView" [(ngModel)]="modelEdit.name" formControlName="name" placeholder="Họ và tên" />
+                                    <div class="form-control-feedback" *ngIf="formGroup.controls['name'].hasError('required') && formGroup.controls['name'].touched">
+                                        Trường thông tin này là bắt buộc!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 ui-lg-12" [ngClass]="{'hidden': !showAddress,'show': showAddress}">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">SĐT</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper required" style="position: relative;">
+                                    <input type="text" [readonly]="isView" [(ngModel)]="modelEdit.phone" formControlName="phone" placeholder="Số điện thoại" maxlength="10" />
+                                    <div class="form-control-feedback" *ngIf="formGroup.controls['phone'].hasError('required') && formGroup.controls['phone'].touched">
+                                        Trường thông tin này là bắt buộc!</div>
+                                    <div class="form-control-feedback" *ngIf="formGroup.controls['phone'].hasError('pattern') && formGroup.controls['phone'].touched">
+                                        Số điện thoại không hợp lệ!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 ui-lg-12" [ngClass]="{'hidden': !showAddress,'show': showAddress}">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-3">
+                                Địa chỉ</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-3">
+                                <div class="__input-wrapper required" style="position: relative;">
+                                    <p-dropdown [disabled]="isView" [baseZIndex]="15000" formControlName="idProvince"  [(ngModel)]="modelEdit.idProvince" [showClear]="true" filter="true" placeholder="-- Tỉnh/TP --" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="province_options"
+                                        [style]="{'width':'100%', 'min-width':'0'}" appendTo="body" (onBlur)="onLoadDistricts()"></p-dropdown>
+                                    <div class="form-control-feedback" *ngIf="formGroup.controls['idProvince'].hasError('required') && formGroup.controls['idProvince'].touched">
+                                        Trường thông tin này là bắt buộc!</div>
+                                </div>
+                            </div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-3">
+                                <div class="__input-wrapper required" style="position: relative;">
+                                    <p-dropdown [disabled]="isView" [baseZIndex]="15000" formControlName="idDistrict" [(ngModel)]="modelEdit.idDistrict" [showClear]="true" filter="true" placeholder="-- Quận/Huyện --" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="distric_options"
+                                        [style]="{'width':'100%', 'min-width':'0'}" appendTo="body" (onBlur)="onLoadWards()"></p-dropdown>
+                                    <div class="form-control-feedback" *ngIf="formGroup.controls['idDistrict'].hasError('required') && formGroup.controls['idDistrict'].touched">
+                                        Trường thông tin này là bắt buộc!</div>
+                                </div>
+                            </div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-3">
+                                <div class="__input-wrapper required" style="position: relative;">
+                                    <p-dropdown [disabled]="isView" [baseZIndex]="15000" [(ngModel)]="modelEdit.idWard" formControlName="idWard" [showClear]="true" filter="true" placeholder="-- Xã/Phường --" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="ward_options" [style]="{'width':'100%', 'min-width':'0'}"
+                                        appendTo="body" (onChange)="GetShipFee()"></p-dropdown>
+                                    <div class="form-control-feedback" *ngIf="formGroup.controls['idWard'].hasError('required') && formGroup.controls['idWard'].touched">
+                                        Trường thông tin này là bắt buộc!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 ui-lg-12" [ngClass]="{'hidden': !showAddress,'show': showAddress}">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Số nhà</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper required" style="position: relative;">
+                                    <input type="text" [readonly]="isView" [(ngModel)]="modelEdit.address" formControlName="address" placeholder="Số nhà/đường/ngõ/nghách" />
+                                    <div class="form-control-feedback" *ngIf="formGroup.controls['address'].hasError('required') && formGroup.controls['address'].touched">
+                                        Trường thông tin này là bắt buộc!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Ghi chú giao hàng</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <textarea type="text" [readonly]="isView" [(ngModel)]="modelEdit.note" rows="2" formControlName="note" maxlength="4000" placeholder="Ghi chú"></textarea>
+                                    <div class="form-control-feedback" *ngIf="formGroup.controls['note'].hasError('maxlength') && formGroup.controls['note'].touched">
+                                        Nhập nội dung quá dài!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Thanh toán</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <!-- <p-radioButton name="isPrepay" value="1" [(ngModel)]="isVerified" formControlName="isPrepay" [disabled]="isView" (onClick)="changeOder()" label="Qua ví DapFood"></p-radioButton> -->
+                                    <p-radioButton name="isPrepay" value="0" [(ngModel)]="isVerified" formControlName="isPrepay" [disabled]="isView" (onClick)="changeOder()" label="Thanh toán khi nhận hàng" [style]="{'margin-left':'50px'}">
+                                    </p-radioButton>
+                                    <p-radioButton name="isPrepay" value="2" [(ngModel)]="isVerified" formControlName="isPrepay" [disabled]="isView" (onClick)="changeOder()" label="Ví Momo" [style]="{'margin-left':'50px'}">
+                                    </p-radioButton>
+                                    <p-radioButton name="isPrepay" value="3" [(ngModel)]="isVerified" formControlName="isPrepay" [disabled]="isView" (onClick)="changeOder()" label="Ví Zalo Pay" [style]="{'margin-left':'50px'}">
+                                    </p-radioButton>
+                                    <p-radioButton name="isPrepay" value="4" [(ngModel)]="isVerified" formControlName="isPrepay" [disabled]="isView" (onClick)="changeOder()" label="Ví VNPay" [style]="{'margin-left':'50px'}">
+                                    </p-radioButton>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="ui-g-12 ui-lg-12" *ngIf="!isView">
+                    <div class="vs-form-control ui-g">
+                        <div class="__form-control-label ui-g-12 ui-md-4">Thêm sản phẩm</div>
+                        <div class="__form-control-inputs ui-g-12 ui-md-8">
+                            <div class="__input-wrapper required">
+                                <p-autoComplete [readonly]="isView" [(ngModel)]="key" [suggestions]="results" (completeMethod)="autoComplete($event)" field="name" [size]="30" placeholder="Nhập tên hoặc mã sản phẩm" [minLength]="1" (onSelect)="onSelect($event)">
+                                </p-autoComplete>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ui-g-12 ui-lg-12">
+
+                    <div class="ui-g" id="table">
+                        <p-table #mainTable [columns]="cols" selectionMode="multiple" [rows]="limit" [scrollable]="false" scrollHeight="auto" [value]="dataSource" [(selection)]="selectedItems" [totalRecords]="total" class="vs-table responsive-table" [customSort]="false" [loading]="isLoading"
+                            [lazy]="false" [resizableColumns]="true" dataKey="id" [style]="{'min-height': '200px'}">
+                            <ng-template pTemplate="colgroup" let-columns>
+                                <colgroup>
+                                    <ng-container *ngFor="let col of columns" [ngSwitch]="col.field">
+                                        <ng-container *ngSwitchDefault>
+                                            <col [hidden]="!col.visible" [style.width]="col.width">
+                                        </ng-container>
+                                    </ng-container>
+                                </colgroup>
+                            </ng-template>
+
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <ng-container *ngFor="let col of columns;">
+                                        <th class="ui-resizable-column" [hidden]="!col.visible"> {{col.header}}</th>
+                                    </ng-container>
+                                    <th *ngIf="!isView" class="align-center" style="width: 10%;"></th>
+                                </tr>
+                            </ng-template>
+
+                            <ng-template pTemplate="body" let-item let-columns="columns" let-rowIndex="rowIndex">
+                                <tr align="center">
+                                    <ng-container *ngFor="let col of columns;let i = index;" [ngSwitch]="col.field">
+                                        <td class="ui-resizable-column" [hidden]="!col.visible" [class.align-left]="!col.align || col.align === 'left'" [class.align-center]="col.align === 'center'" [class.align-right]="col.align === 'right'">
+
+                                            <ng-container *ngSwitchCase="'image'">
+                                                <vs-view-image [(file)]="item.image" [height]="'80'">
+                                                </vs-view-image>
+                                            </ng-container>
+
+                                            <ng-container *ngSwitchCase="'price'">
+                                                {{item.price | mask :'separator':'.'}}
+                                            </ng-container>
+
+                                            <ng-container *ngSwitchCase="'quantity'">
+                                                <input [readonly]="isView" type="number" min="1" step="1" (change)="changeOder()" [(ngModel)]="item.quantity" style="width: 100%" />
+                                            </ng-container>
+
+                                            <ng-container *ngSwitchCase="'totalBill'">
+                                                {{item.price * item.quantity | mask :'separator':'.'}}
+                                            </ng-container>
+
+                                            <ng-container *ngSwitchCase="'reward'">
+                                                <div *ngIf="!isView">
+                                                    {{item.reward * item.quantity | mask :'separator':'.'}}
+                                                </div>
+                                                <div *ngIf="isView">
+                                                    {{item.reward| mask :'separator':'.'}}
+                                                </div>
+                                            </ng-container>
+
+                                            <span *ngSwitchDefault class="break-word">{{item[col.field]}}</span>
+                                        </td>
+                                    </ng-container>
+                                    <td *ngIf="!isView" style="width: 10%;">
+                                        <button type="button" class="vs-btn icon-only vs-btn-red" (click)="onRemove(rowIndex)" pTooltip="Xoá">
+                                            <span class="__icon fa fa-trash"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </ng-template>
+
+                            <ng-template pTemplate="footer">
+                                <tr align="right" style="line-height: 30px">
+                                    <th class="ui-resizable-column align-right" colspan="5">Tổng tiền hàng</th>
+                                    <th class="ui-resizable-column align-right" style="width: 10%;">
+                                        {{modelEdit.total | mask :'separator':'.'}}</th>
+                                    <th *ngIf="isVerified == 1" class="ui-resizable-column align-right" style="width: 10%;font-weight: normal;">
+                                        {{modelEdit.productReward + modelEdit.prepayReward | mask :'separator':'.'}}
+                                    </th>
+                                    <th *ngIf="isVerified == 0" class="ui-resizable-column align-right" style="width: 10%;font-weight: normal;">
+                                        {{modelEdit.productReward | mask :'separator':'.'}}</th>
+                                    <th class="ui-resizable-column align-right" style="width: 10%;" *ngIf="!isView">
+                                    </th>
+                                </tr>
+                                <tr align="right" style="line-height: 30px">
+                                    <th class="ui-resizable-column align-right" colspan="5" style="font-weight: normal;">Phí vận chuyển</th>
+                                    <th class="ui-resizable-column align-right" style="width: 10%;font-weight: normal;">
+                                        {{modelEdit.ship | mask :'separator':'.'}}</th>
+                                    <th class="ui-resizable-column align-right" style="width: 10%;"></th>
+                                    <th class="ui-resizable-column align-right" style="width: 10%;" *ngIf="!isView">
+                                    </th>
+                                </tr>
+                                <tr align="right" style="line-height: 30px">
+                                    <th class="ui-resizable-column align-right" colspan="5" style="font-weight: normal;">
+                                        Tổng hoa hồng
+                                    </th>
+                                    <th class="ui-resizable-column align-right" style="width: 10%;font-weight: normal;">
+                                        {{modelEdit.totalReward | mask :'separator':'.'}}</th>
+                                    <th class="ui-resizable-column align-right" style="width: 10%;"></th>
+                                    <th class="ui-resizable-column align-right" style="width: 10%;" *ngIf="!isView">
+                                    </th>
+                                </tr>
+                                <tr align="right" style="line-height: 30px">
+                                    <th class="ui-resizable-column align-right" colspan="5" style="font-weight: normal;">
+                                        Giảm giá
+                                    </th>
+                                    <th class="ui-resizable-column align-right" style="width: 10%;font-weight: normal;">
+                                        {{modelEdit.discount | mask :'separator':'.'}}</th>
+                                    <th class="ui-resizable-column align-right" style="width: 10%;"></th>
+                                    <th class="ui-resizable-column align-right" style="width: 10%;" *ngIf="!isView">
+                                    </th>
+                                </tr>
+                                <tr align="right" style="line-height: 30px">
+                                    <th class="ui-resizable-column align-right" colspan="5">Tổng tiền thanh toán</th>
+                                    <th class="ui-resizable-column align-right" style="width: 10%;">
+                                        {{modelEdit.total + modelEdit.ship - modelEdit.totalGift - modelEdit.discount | mask :'separator':'.'}}</th>
+                                    <th class="ui-resizable-column align-right" style="width: 10%;"></th>
+                                    <th class="ui-resizable-column align-right" style="width: 10%;" *ngIf="!isView">
+                                    </th>
+                                </tr>
+                            </ng-template>
+
+                        </p-table>
+                    </div>
+                </div>
+
+                <div class="ui-g-12 ui-lg-12">
+                    <div class="vs-form-control ui-g">
+                        <div class="__form-control-label ui-g-12 ui-md-4">Chương trình thưởng</div>
+                        <div class="__form-control-inputs ui-g-12 ui-md-8">
+                            <div class="__input-wrapper">
+                                <button *ngIf="!isView" type="button" (click)="showPromotions()" pButton icon="pi pi-info-circle" label="Chọn chương trình thưởng"></button> {{modelEdit.promotion?.name}}
+                                <button *ngIf="modelEdit.promotion != null && modelEdit.promotion.length > 0" type="button" class="vs-btn icon-only vs-btn-red" (click)="changeOder()" pTooltip="Xoá">
+                                    <span class="__icon fa fa-trash"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p-footer>
+        <div class="ui-g row">
+            <div class="ui-g-12">
+                <p-progressSpinner *ngIf="isLoading" [style]="{width: '30px', height: '30px', margin:'-11px 8px'}" strokeWidth="8" fill="#EEEEEE" animationDuration=".5s">
+                </p-progressSpinner>
+                <button class="vs-btn vs-modal-btn vs-btn-action-edit" [disabled]="!formGroup.valid || dataSource.length === 0" *ngIf="!isView && (crrUser?.idClient == null || crrUser?.idShop > 0)" (click)="save()" type="button">
+                    <span class="__icon fa fa-floppy-o"></span>
+                    <span class="__label">Tạo đơn</span>
+                </button>
+                <button class="vs-btn vs-modal-btn vs-btn-action-lock" *ngIf="(modelEdit.idStatus == enumOrderStatus.ChuaXacNhan || modelEdit.idStatus == enumOrderStatus.DaXacNhan) && modelEdit.isPrepay == false && crrUser?.idClient == null" (click)="Payment()" type="button">
+                    <span class="__icon fa fa-floppy-o"></span>
+                    <span class="__label">Thanh toán</span>
+                </button>
+                <button class="vs-btn vs-modal-btn vs-btn-red" *ngIf="(modelEdit.idStatus == enumOrderStatus.ChuaXacNhan || modelEdit.idStatus == enumOrderStatus.DaXacNhan) && crrUser?.idClient == null" (click)="CancelContact()" type="button">
+                    <span class="__icon fa fa-floppy-o"></span>
+                    <span class="__label">Hủy đơn</span>
+                </button>
+                <button type="button" (click)="closePopupMethod(null)" class="vs-btn vs-modal-btn vs-btn-action-back">
+                    <span class="__icon fa fa-times"></span>
+                    <span class="__label">Đóng</span>
+                </button>
+            </div>
+        </div>
+    </p-footer>
+</p-dialog>
+<app-dia-chi-edit (closePopup)="onCloseForm()"></app-dia-chi-edit>

@@ -1,0 +1,11 @@
+<nav class="vs-breadcrumb">
+    <ol class="breadcrumb">
+        <li [ngClass]="{'active': i == dataSource.length - 1}" class="breadcrumb-item" *ngFor="let item of dataSource; let i = index">
+            <a (click)="selectItem(item)" *ngIf="i != (dataSource.length - 1)">
+                {{item.name}}
+                <!-- <span class="fa fa-chevron-right"></span> -->
+            </a>
+            <span *ngIf="i == (dataSource.length - 1)">{{item.name}}</span>
+        </li>
+    </ol>
+</nav>

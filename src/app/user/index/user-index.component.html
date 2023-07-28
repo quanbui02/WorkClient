@@ -1,0 +1,316 @@
+<div>
+    <div class="vs-page-content-header-area">
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-7 ui-lg-9 __page-title-wrapper">
+                <h1 class="__page-title">Danh sách người dùng</h1>
+            </div>
+
+            <div class="ui-g-12 ui-md-5 ui-lg-3 __search-box-wrapper">
+                <div class="__search-box">
+                    <input type="search" placeholder="Nhập từ khóa" name="search" class="__input vs-input"
+                        (keyup.enter)="onSearch()" [(ngModel)]="searchModel.key">
+
+                    <span class="__toggle-search-adv" (click)="toggleSearch()">
+                        <span [hidden]="openSearchAdv" class="fa fa-angle-double-down"></span>
+                        <span [hidden]="!openSearchAdv" class="fa fa-angle-double-up "></span>
+                    </span>
+
+                    <span class="__search-btn" (click)="onSearch()">
+                        <i class="fa fa-search"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui-g" [hidden]="!openSearchAdv">
+            <div class="ui-g-12 __search-filter-wrapper">
+                <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" filter="true"
+                    [style]="{'width':'100%'}" [(ngModel)]="searchModel.trangThai" [options]="trangThai_options">
+                </p-dropdown>
+                <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" filter="true"
+                    [style]="{'width':'100%'}" [(ngModel)]="searchModel.isApproved" [options]="isApproved_options">
+                </p-dropdown>
+                <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" filter="true"
+                    [style]="{'width':'100%'}" [(ngModel)]="searchModel.idClient" [options]="idClient_options">
+                </p-dropdown>
+                <button class="vs-btn vs-modal-btn vs-btn-action-edit" type="button" (click)="onSearch()">
+                    <span class="__icon fa fa-search"></span>
+                    <span class="__label">Tìm kiếm</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="vs-page-content-body-area">
+        <div class="vs-data-table-area">
+            <div class="ui-g vs-data-table-area-inner">
+                <div class="ui-g-12 ui-lg-12 __main-table-area">
+
+                    <div class="ui-g __top-table-action">
+                        <div class="ui-g-6 __left-content">
+
+                            <!-- <button class="vs-btn vs-top-table-btn vs-btn-action-edit" type="button"
+                                (click)="onEdit(0)">
+                                <span class="__icon fa fa-plus"></span>
+                                <span class="__label">Thêm mới</span>
+                            </button> -->
+
+                            <button type="button" class="vs-btn vs-top-table-btn vs-btn-action-data"
+                                (click)="exportExcel()">
+                                <span class="__icon fa fa-download"></span>
+                                <span class="__label">Xuất danh sách</span>
+                            </button>
+
+                            <button type="button" class="vs-btn vs-top-table-btn vs-btn-action-print"
+                                [hidden]="!isMultiEdit">
+                                <span class="__icon fa fa-print"></span>
+                                <span class="__label">In danh sách</span>
+                            </button>
+                        </div>
+
+                        <div class="ui-g-6 __right-content">
+                            <ul class="__action-tabs">
+                                <li #columnListContainer class="__tab-item-wrapper __toggle-column-wrapper">
+                                    <div class="__tab-item" (click)="toggleColumnList()">
+                                        <span class="__icon pi pi-th-large"></span>
+                                        <span class="__label">Chọn cột</span>
+                                    </div>
+                                    <div class="__column-list" [hidden]="!openColumnList">
+                                        <div *ngFor="let col of cols" class="__column-item">
+                                            <p-checkbox binary="true" [(ngModel)]="col.visible" name="groupname"
+                                                label="{{col.header}}"></p-checkbox>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="ui-g vs-table-wrapper" id="table">
+                        <p-table #mainTable [columns]="cols" selectionMode="multiple" [rows]="limit" [scrollable]="true"
+                            (onPage)="onPage($event)" scrollHeight="auto" [value]="dataSource"
+                            [(selection)]="selectedItems" [totalRecords]="total" class="vs-table responsive-table"
+                            [customSort]="false" [paginator]="true" [loading]="isLoading" [lazy]="true"
+                            [resizableColumns]="true">
+                            <ng-template pTemplate="colgroup" let-columns>
+                                <colgroup>
+                                    <col [style.width]="'30px'">
+                                    <col [style.width]="'40px'">
+                                    <ng-container *ngFor="let col of columns" [ngSwitch]="col.field">
+                                        <ng-container *ngSwitchDefault>
+                                            <col [hidden]="!col.visible" [style.width]="col.width">
+                                        </ng-container>
+                                    </ng-container>
+
+                                    <col [style.width]="'90px'">
+                                </colgroup>
+                            </ng-template>
+
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th>
+                                        <label class="vs-custom-checkbox">
+                                            <input (change)="onCheckAll($event)" type="checkbox"
+                                                class="custom-control-input" [(ngModel)]="isCheckAll" />
+                                            <span class="__mark"></span>
+                                        </label>
+                                    </th>
+
+                                    <th class="align-center">
+                                        STT
+                                    </th>
+
+                                    <th *ngFor="let col of columns;let i = index" [hidden]="!col.visible"
+                                        [class.align-left]="!col.align || col.align === 'left'"
+                                        [class.align-center]="col.align === 'center'"
+                                        [class.align-right]="col.align === 'right'" pResizableColumn>
+
+                                        <div class="vs-header-cell">
+                                            <div class="__title">
+                                                {{col.header}}
+
+                                                <span *ngIf="col.sort" [pSortableColumn]="col.field">
+                                                    <p-sortIcon [field]="col.field"></p-sortIcon>
+                                                </span>
+                                            </div>
+
+                                            <div class="__filter" *ngIf="col.filterOptions" pTooltip="Lọc">
+                                                <p-multiSelect [options]="col.filterOptions" appendTo="body"
+                                                    dropdownIcon="fa fa-filter" defaultLabel=""
+                                                    (onChange)="mainTable.filter($event.value, col.field, col.matchMode ? col.matchMode : 'in')">
+                                                </p-multiSelect>
+                                            </div>
+                                        </div>
+                                    </th>
+
+                                    <th class="ui-text-center">
+                                        Thao tác
+                                    </th>
+                                </tr>
+                            </ng-template>
+
+                            <ng-template pTemplate="body" let-item let-columns="columns" let-rowIndex="rowIndex">
+                                <tr align="center">
+                                    <td class="vs-hidden-print">
+                                        <label class="vs-custom-checkbox">
+                                            <input class="__checkbox" type="checkbox" [(ngModel)]="item.checked"
+                                                [disabled]="true">
+                                            <span class="__mark"></span>
+                                        </label>
+                                    </td>
+
+                                    <td>{{rowIndex + 1}}</td>
+
+                                    <ng-container *ngFor="let col of columns;let i = index;" [ngSwitch]="col.field">
+                                        <td class="ui-resizable-column" [hidden]="!col.visible"
+                                            [class.align-left]="!col.align || col.align === 'left'"
+                                            [class.align-center]="col.align === 'center'"
+                                            [class.align-right]="col.align === 'right'">
+
+                                            <ng-container *ngSwitchCase="'name'">
+                                                {{item.name}}
+                                                <div *ngIf="item.clientName !== '' "
+                                                    style="background: #c2cbd3;color: #894d23;padding: 5px 2px;margin-top: 5px;">
+                                                    {{item.clientName}}</div>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'updatedDate'">
+                                                {{item.updatedDate | date :'dd/MM/yyyy'}}
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'ngayKetThuc'">
+                                                {{item.ngayKetThuc | date :'dd/MM/yyyy'}}
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'cmtBackside'">
+                                                <vs-view-image [(file)]="item.cmtBackside" [size]="'o'" [height]="'80'">
+                                                </vs-view-image>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'cmtFront'">
+                                                <vs-view-image [(file)]="item.cmtFront" [size]="'o'" [height]="'80'">
+                                                </vs-view-image>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'isApproved'">
+                                                <p-checkbox [(ngModel)]="item.isApproved" [keepHTML]="true"
+                                                    [authorize]="{'dapfood.api': { usersController: 8 }}"
+                                                    (onChange)="onAdminApprove(item,$event)" binary="true"
+                                                    pTooltip="Phê duyệt tài khoản">
+                                                </p-checkbox>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'isAdminClient'">
+                                                <p-checkbox *ngIf="item.idClient" [(ngModel)]="item.isAdminClient"
+                                                    [keepHTML]="true"
+                                                    [authorize]="{'dapfood.api': { usersController: 8 }}"
+                                                    (onChange)="onAdminClient(item,$event)" binary="true"
+                                                    pTooltip="Chủ doanh nghiệp">
+                                                </p-checkbox>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'isApproveCmt'">
+                                                <p-checkbox [(ngModel)]="item.isApproveCmt" [keepHTML]="true"
+                                                    [authorize]="{'dapfood.api': { usersController: 8 }}"
+                                                    (onChange)="onAdminApproveCmt(item,$event)" binary="true"
+                                                    pTooltip="Phê duyệt CMT">
+                                                </p-checkbox>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'isLogout'">
+                                                <p-checkbox [(ngModel)]="item.isLogout" [keepHTML]="true"
+                                                    [authorize]="{'dapfood.api': { usersController: 8 }}"
+                                                    (onChange)="onCheckLogout(item,$event)" binary="true"
+                                                    pTooltip="Bắt buộc Logout">
+                                                </p-checkbox>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'isKol'">
+                                                <p-checkbox [(ngModel)]="item.isKol" [keepHTML]="true"
+                                                    [authorize]="{'dapfood.api': { usersController: 4194304 }}"
+                                                    (onChange)="PickKol(item)" binary="true"
+                                                    pTooltip="Cập nhật cộng tác viên">
+                                                </p-checkbox>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'idSupport'">
+                                                {{item.supportPhone}}
+                                                <button type="button" *ngIf="!item.idSupport"
+                                                    class="vs-btn vs-btn-icon-green" (click)="PickSupportCTV(item)"
+                                                    pTooltip="Đăng ký">
+                                                    <span class="__icon fa fa-sign-in"></span>
+                                                    <span class="__label">Đăng ký</span>
+                                                </button>
+                                                <button type="button" *ngIf="item.idSupport"
+                                                    [authorize]="{'dapfood.api': { usersController: 8 }}"
+                                                    class="vs-btn vs-btn-icon-red" (click)="RemoveSupportCTV(item)"
+                                                    pTooltip="Hủy">
+                                                    <span class="__icon fa fa-times"></span>
+                                                    <span class="__label">Hủy</span>
+                                                </button>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'isOmiCall'">
+                                                <button type="button" *ngIf="!item.isOmiCall"
+                                                    class="vs-btn vs-btn-icon-green" (click)="onOmicall(item.userId)"
+                                                    pTooltip="Đồng bộ">
+                                                    <span class="__icon fa fa-sign-in"></span>
+                                                    <span class="__label">Đồng bộ</span>
+                                                </button>
+                                                <button type="button" *ngIf="item.isOmiCall"
+                                                    [authorize]="{'dapfood.api': { usersController: 8 }}"
+                                                    class="vs-btn vs-btn-icon-red" (click)="RemoveUserOmicall(item)"
+                                                    pTooltip="Hủy đồng bộ">
+                                                    <span class="__icon fa fa-times"></span>
+                                                    <span class="__label">Hủy đồng bộ</span>
+                                                </button>
+                                            </ng-container>
+                                            <span *ngSwitchDefault class="break-word">{{item[col.field]}}</span>
+                                        </td>
+                                    </ng-container>
+
+                                    <td class="vs-hidden-print">
+                                        <div class="vs-table-row-actions ui-text-right">
+                                            <div class="vs-table-row-actions ui-text-right">
+                                                <button type="button" class="vs-btn icon-only vs-btn-action-edit"
+                                                    [authorize]="{'dapfood.api': { usersController: 8 }}"
+                                                    (click)="onEdit(item.userId)" pTooltip="Chỉnh sửa">
+                                                    <span class="__icon fa fa-edit"></span>
+                                                </button>
+                                                <button type="button" class="vs-btn icon-only vs-btn-action-edit"
+                                                    [authorize]="{'dapfood.api': { usersController: 8 }}"
+                                                    (click)="onPhanQuyen(item)" pTooltip="Phân quyền">
+                                                    <span class="__icon fa fa-shield"></span>
+                                                </button>
+                                                <!-- 
+
+                                                <button type="button" class="vs-btn icon-only vs-btn-red"
+                                                    (click)="onDelete(item.roleId)" pTooltip="Xoá">
+                                                    <span class="__icon fa fa-times"></span>
+                                                </button>
+
+                                                
+
+                                                <button type="button" class="vs-btn icon-only vs-btn-red"
+                                                    (click)="changePwd(item)" pTooltip="Đổi mật khẩu">
+                                                    <span class="__icon fa fa-refresh"></span>
+                                                </button> -->
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-template>
+
+                            <ng-template pTemplate="paginatorleft" let-state>
+                                <div class="vs-table-paginator">
+                                    Hiển thị
+
+                                    <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'"
+                                        (onChange)="onChangeRowLimit()" [options]="listItemNumberPerPage"
+                                        [(ngModel)]="limit">
+                                    </p-dropdown>
+                                    / trang
+                                    <span class="__total-record"> - Có {{total}} mục trong danh sách</span>
+                                </div>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-user-edit (closePopup)="onCloseForm()"></app-user-edit>
+<app-user-role (closePopup)="onCloseForm()"></app-user-role>
+<app-user-changepwd (closePopup)="onCloseForm()"></app-user-changepwd>
+<app-user-omicall (closePopup)="onCloseForm()"></app-user-omicall>

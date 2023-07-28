@@ -1,0 +1,52 @@
+.vs-search-box {
+    &.style-1 {
+        position: relative;
+        padding-right: 30px;
+        border: 1px solid #ddd;
+        .__input {
+            border: 0;
+            width: 100%;
+        }
+        .__search-btn,
+        .__toggle-search-adv {
+            display: flex;
+            position: absolute;
+            top: 0;
+            width: 30px;
+            height: 100%;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+        }
+        .__toggle-search-adv {
+            right: 30px;
+        }
+        .__search-btn {
+            right: 0;
+            color: #fff;
+            background-color: #aaaaaa;
+        }
+    }
+    &.style-2 {
+        position: relative;
+        .__input {
+            padding-right: 29px;
+            width: 100%;
+        }
+        .__search-btn,
+        .__toggle-search-adv {
+            right: 0;
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 100%;
+            top: 0;
+            cursor: pointer;
+        }
+        .__toggle-search-adv {
+            right: 30px;
+        }
+    }
+}

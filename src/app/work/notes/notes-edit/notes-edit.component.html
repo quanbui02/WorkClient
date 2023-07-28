@@ -1,0 +1,35 @@
+<div class="ui-g" style="margin: 0;">
+  <div class="ui-dialog-content ui-widget-content ui-g-12" style="padding: 0;">
+    <div class="vs-form-container default-control-label-width">
+      <div class="vs-modal-content-panel" style="height: calc(100vh - 135px); overflow: auto;position: relative;padding: 0px;">
+        <div class="ui-g" style="padding-top: 10px;">
+          <div class="input_data_form">
+            <textarea autosize placeholder="Nhập tiêu đề..." autofocus [(ngModel)]="modelEdit.name" (blur)="onSave()"></textarea>
+            <div *ngIf="!isEdit" class="content_detail" [innerHtml]="modelEdit.detail" (click)="isEdit = true"></div>
+            <p-editor *ngIf="isEdit" [style]="{'height': 'calc(100vh - 270px)'}" placeholder="Nhập chi tiết..." [(ngModel)]="modelEdit.detail"></p-editor>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ui-dialog-footer ui-widget-content ui-g-12" style="margin-left: -15px; position: fixed; bottom: 0;background-color: whitesmoke;">
+    <p-footer>
+      <div class="ui-g">
+        <div class="ui-g-12">
+          <!-- <button class="vs-btn vs-modal-btn vs-btn-action-edit" [disabled]="!formGroup.valid" (click)="onSave()" type="button">
+            <span class="__icon fa fa-floppy-o"></span>
+            <span class="__label">Lưu</span>
+          </button> -->
+          <!-- <button *ngIf="modelEdit.id > 0" type="button" (click)="onDelete(modelEdit.id)" class="vs-btn vs-modal-btn vs-btn-action-remove" style="float: left;">
+            <span class="__icon fa fa-times"></span>
+            <span class="__label">Xóa</span>
+          </button> -->
+          <button type="button" (click)="closePopupMethod()" class="vs-btn vs-modal-btn vs-btn-action-back">
+            <span class="__icon fa fa-times"></span>
+            <span class="__label">Đóng</span>
+          </button>
+        </div>
+      </div>
+    </p-footer>
+  </div>
+</div>

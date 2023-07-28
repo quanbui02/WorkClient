@@ -1,0 +1,34 @@
+<div class="cmt_list">
+  <div class="cmt_item" *ngFor="let item of dataSource; let i = index">
+    <img class="avatar" src="{{getAvatarUser(item.userCreated?.avatar)}}" alt="avatar">
+    <div class="cmt_detail">
+      <div class="cmt_user">
+        <span class="cmt_name">{{item.userCreated?.name ? item.userCreated?.name : item.userCreated?.userName}}</span>
+        <span class="cmt_desc">{{item.description}} <a (click)="showTaskView(item.task.id)" class="cmt_name_task" *ngIf="!idTask">{{item.task.name}}</a></span>
+        <span class="cmt_date">{{item.createdDate | date :'HH:mm dd/MM/yyyy':'UTC'}}</span>
+      </div>
+      <div *ngIf="item.idAction != logActions.ThemCongViec && item.idAction != logActions.XoaCongViec" class="cmt_i_content">
+        <div *ngIf="item.idAction == logActions.CapNhatTrangThaiCongViec || (item.idAction == logActions.HoanThanhCongViec && !item.percent && item.idProjectCol)" class="cmt_text">
+          Cập nhật trạng thái công việc sang <span class="bg-col to-do" [ngClass]="{'to-do': item.idStatus == Status.ToDo || !item.idStatus, 'in-progress': item.idStatus == Status.InProgress, 'done': item.idStatus == Status.Done}">{{item.projectCol.name}}</span>
+        </div>
+        <div *ngIf="item.idAction == logActions.CapNhatTienDo || (item.idAction == logActions.HoanThanhCongViec && item.percent)" class="cmt_text">
+          Cập nhật tiến độ công việc thành <span class="percent">{{item.percent}}%</span>
+        </div>
+        <div *ngIf="item.idAction == logActions.CapNhatNguoiDuocGiao" class="cmt_text">
+          Công việc được giao cho <a class="user_link" (mouseenter)="showPopup[i] = true" (mouseleave)="showPopup[i] = false">@{{item.assignee.name}}
+            <div class="popup_user" *ngIf="showPopup[i]" [ngClass]="{'popup_top': i > 3, 'popup_bottom': i <= 3}">
+              <app-user-view [userId]="item.assignee.userId" [showData]="showPopup[i]"></app-user-view>
+            </div>
+          </a>
+        </div>
+        <div *ngIf="item.idAction == logActions.XoaNguoiDuocGiao" class="cmt_text">
+          <a class="user_link" (mouseenter)="showPopup[i] = true" (mouseleave)="showPopup[i] = false">@{{item.assignee.name}}
+            <div class="popup_user" *ngIf="showPopup[i]" [ngClass]="{'popup_top': i > 3, 'popup_bottom': i <= 3}">
+              <app-user-view [userId]="item.assignee.userId"></app-user-view>
+            </div>
+          </a> đã bị xóa khỏi công việc
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

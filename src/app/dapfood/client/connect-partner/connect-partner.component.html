@@ -1,0 +1,152 @@
+<!--  -->
+<div class="app-product-index">
+    <div class="vs-page-content-header-area">
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-7 ui-lg-9 __page-title-wrapper">
+                <h1 class="__page-title">Kết nối giao hàng</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="vs-page-content-body-area">
+        <div class="vs-data-table-area">
+            <div class="ui-g vs-data-table-area-inner">
+                <div class="ui-g-12 ui-lg-12 __main-table-area">
+
+                    <div class="vs-form-container default-control-label-width vs-modal-content-panel" style="background-color: #FFF; padding: 10px 0;">
+                        <form action="" [formGroup]="formGroup">
+                            <div class="vs-form-container default-control-label-width">
+
+                                <div class="ui-g row">
+                                    <div class="ui-g-12">
+                                        <div class="ui-g-12 ui-lg-12 hr-tile">
+                                            Đơn vị giao hàng mặc định
+                                        </div>
+
+                                        <div class="ui-g-12 ui-lg-12">
+                                            <div class="vs-form-control ui-g">
+                                                <div class="__form-control-label ui-g-12 ui-md-3">Đơn vị giao hàng</div>
+                                                <div class="__form-control-inputs ui-g-12 ui-md-3">
+                                                    <div class="__input-wrapper" style="position: relative;">
+                                                        <p-dropdown [baseZIndex]="15000" formControlName="idPhuongThucGiaoHang" [(ngModel)]="modelEdit.idPhuongThucGiaoHang" [showClear]="true" filter="true" placeholder="-- Đơn vị giao hàng --" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="listLogistics"
+                                                            [style]="{'width':'100%', 'min-width':'0'}" appendTo="body" (onChange)="onChangeDonViGiaoHang()">
+                                                        </p-dropdown>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="ui-g row">
+                                    <div class="ui-g-12 ui-lg-12 hr-tile">
+                                        Thiết lập kết nối đến các đơn vị giao hàng
+                                    </div>
+
+                                    <div class="ui-g-3 box-list-logictis-right">
+                                        <p-listbox formControlName="listLogistics" [options]="listLogistics" [(ngModel)]="modelEdit.idPhuongThucGiaoHang" (onChange)="onChangeDonViGiaoHang()"></p-listbox>
+                                    </div>
+
+                                    <div class="ui-g-9" style="border-left: 1px solid;">
+
+                                        <div class="ui-g-12 ui-lg-12">
+                                            <div class="vs-form-control ui-g">
+                                                <div class="__form-control-label ui-g-12 ui-md-3">Đơn vị giao hàng</div>
+                                                <div class="__form-control-inputs ui-g-12 ui-md-3">
+                                                    <div class="__input-wrapper required" style="position: relative;">
+                                                        <p-dropdown [baseZIndex]="15000" formControlName="idPhuongThucGiaoHang" [(ngModel)]="modelEdit.idPhuongThucGiaoHang" [showClear]="true" filter="true" placeholder="-- Đơn vị giao hàng --" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="listLogistics"
+                                                            [style]="{'width':'100%', 'min-width':'0'}" appendTo="body" (onChange)="onChangeDonViGiaoHang()">
+                                                        </p-dropdown>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="ui-g-12 ui-lg-12">
+                                            <div class="vs-form-control ui-g">
+                                                <div class="__form-control-label ui-g-12 ui-md-3">Giao hàng bằng mặc định</div>
+                                                <div class="__form-control-inputs ui-g-12 ui-md-3">
+                                                    <div class="__input-wrapper required" style="position: relative;">
+                                                        <p-dropdown [baseZIndex]="15000" formControlName="giaoHangTranspor" [(ngModel)]="modelEdit.giaoHangTranspor" [showClear]="true" filter="true" placeholder="-- Phương thức giao hàng --" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="listTranport"
+                                                            [style]="{'width':'100%', 'min-width':'0'}" appendTo="body" (onChange)="onShowDescription($event)">
+                                                        </p-dropdown>
+                                                        <div style="margin-top: 10px;" id="showDescription"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Ahamove -->
+                                        <div *ngIf="modelEdit.idPhuongThucGiaoHang == 1" class="ui-g-6 ui-lg-12">
+                                            <div class="vs-form-control ui-g">
+                                                <div class="__form-control-label ui-g-12 ui-md-4">Tài khoản (*)</div>
+                                                <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                                    <div class="__input-wrapper required">
+                                                        <input type="text" formControlName="ahamove_UserName" [(ngModel)]="modelEdit.ahamove_UserName" placeholder="..." />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div *ngIf="modelEdit.idPhuongThucGiaoHang == 1" class="ui-g-12 ui-lg-12">
+                                            <div class="vs-form-control ui-g">
+                                                <div class="__form-control-label ui-g-12 ui-md-3">Thời gian lấy hàng</div>
+                                                <div class="__form-control-inputs ui-g-12 ui-md-3">
+                                                    <div class="__input-wrapper required" style="position: relative;">
+                                                        <p-dropdown [baseZIndex]="15000" formControlName="ahamove_PickWorkShift" [(ngModel)]="modelEdit.ahamove_PickWorkShift" [showClear]="true" filter="true" placeholder="-- Thời gian lấy hàng --" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="ahamove_PickWorkShift"
+                                                            [style]="{'width':'100%', 'min-width':'0'}" appendTo="body">
+                                                        </p-dropdown>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div *ngIf="modelEdit.idPhuongThucGiaoHang == 1" class="ui-g-12 ui-lg-12">
+                                            <div class="vs-form-control ui-g">
+                                                <div class="__form-control-label ui-g-12 ui-md-3">Phương thức lấy hàng</div>
+                                                <div class="__form-control-inputs ui-g-12 ui-md-3">
+                                                    <div class="__input-wrapper required" style="position: relative;">
+                                                        <p-dropdown [baseZIndex]="15000" formControlName="ahamove_PickOption" [(ngModel)]="modelEdit.ahamove_PickOption" [showClear]="true" filter="true" placeholder="-- Phương thức lấy hàng --" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="ahamove_PickOption"
+                                                            [style]="{'width':'100%', 'min-width':'0'}" appendTo="body">
+                                                        </p-dropdown>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- END Ahamove -->
+
+                                        <div class="ui-g-12 ui-lg-12">
+                                            <div class="vs-form-control ui-g">
+                                                <div class="__form-control-label ui-g-12 ui-md-3"></div>
+                                                <div class="__form-control-inputs ui-g-12 ui-md-3">
+                                                    <div class="__input-wrapper required">
+                                                        <button class="vs-btn vs-modal-btn vs-btn-action-edit" [disabled]="isLoading || !formGroup.valid" (click)="save()" type="button">
+                                                            <span class="__icon fa fa-floppy-o"></span>
+                                                            <span class="__label">Lưu lại</span>
+                                                        </button>
+                                                        <p-progressSpinner *ngIf="isLoading" [style]="{width: '30px', height: '30px', margin:'-11px 8px'}" strokeWidth="8" fill="#EEEEEE" animationDuration=".5s">
+                                                        </p-progressSpinner>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div *ngIf="modelEdit.idPhuongThucGiaoHang == 1" class="ui-g row">
+                            <div class="ui-g-12 ">
+                                <div class="connect-partner-info">
+                                    <p-fieldset legend="Hướng dẫn kết nối">
+                                    </p-fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

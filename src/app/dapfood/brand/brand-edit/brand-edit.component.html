@@ -1,0 +1,136 @@
+<p-dialog #dialog [header]="'Thêm/sửa hướng dẫn'" styleClass="vs-modal force-full-width" positionTop="50" [(visible)]="isShow" [style]="{'max-width': '1100px'}" [contentStyle]="{'max-height': getMaxDialogHeight()}" [modal]="true" appendTo="body">
+    <div class="vs-form-container default-control-label-width vs-modal-content-panel">
+
+        <div class="vs-form-container default-control-label-width">
+            <div class="ui-g row">
+                <form action="" [formGroup]="formGroup">
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Mã</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper required">
+                                    <input type="text" [(ngModel)]="modelEdit.code" formControlName="code" placeholder="Mã" />
+                                    <div class="form-control-feedback" *ngIf="formGroup.controls['code'].hasError('required') && formGroup.controls['code'].touched">
+                                        Trường thông tin này là bắt buộc!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Tên</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper required">
+                                    <input type="text" [(ngModel)]="modelEdit.name" formControlName="name" placeholder="Tên" />
+                                    <div class="form-control-feedback" *ngIf="formGroup.controls['name'].hasError('required') && formGroup.controls['name'].touched">
+                                        Trường thông tin này là bắt buộc!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-3">
+                                Quốc gia</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-3">
+                                <div class="__input-wrapper" style="position: relative;">
+                                    <p-dropdown [baseZIndex]="15000" formControlName="idCountry" [(ngModel)]="modelEdit.idCountry" [showClear]="true" filter="true" placeholder="-- Loại hướng dẫn --" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="country_options" [style]="{'width':'100%', 'min-width':'0'}" appendTo="body"></p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Ảnh đại diện</div>
+                            <div class="__input-wrapper">
+                                <vs-single-fsfile-upload [chooseLabel]="'Chọn ảnh'" formControlName="image" [(ngModel)]="modelEdit.image"></vs-single-fsfile-upload>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Ảnh banner</div>
+                            <div class="__input-wrapper">
+
+
+                                <!-- <vs-single-fsfile-upload [chooseLabel]="'Chọn ảnh'" formControlName="imageBanner" [(ngModel)]="modelEdit.imageBanner"></vs-single-fsfile-upload> -->
+
+                                <vs-single-fsfile-upload [chooseLabel]="'Chọn ảnh'" formControlName="imageBanner" [(ngModel)]="modelEdit.imageBanner"></vs-single-fsfile-upload>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Mô tả</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <textarea formControlName="description" [(ngModel)]="modelEdit.description" rows="4"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-6">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Video giới thiệu</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <input type="text" formControlName="video" [(ngModel)]="modelEdit.video" placeholder="Nhập mã video" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-12">Giấy chứng nhận</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-12">
+                                <div class="__input-wrapper">
+                                    <app-multi-file-upload2 style="width: 100%;" [(ngModel)]="modelEdit.listImages" formControlName="listImages" [chooseLabel]="'Chọn ảnh'">
+                                    </app-multi-file-upload2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-12">Ảnh giới thiệu</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-12">
+                                <div class="__input-wrapper">
+                                    <app-multi-file-upload2 style="width: 100%;" [(ngModel)]="modelEdit.imageAbouts" formControlName="imageAbouts" [chooseLabel]="'Chọn ảnh'">
+                                    </app-multi-file-upload2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Thứ tự</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <input type="text" [(ngModel)]="modelEdit.sort" formControlName="sort" placeholder="Thứ tự" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <p-footer>
+        <div class="ui-g row">
+            <div class="ui-g-12">
+                <button class="vs-btn vs-modal-btn vs-btn-action-edit" [disabled]="!formGroup.valid" (click)="save()" type="button">
+                    <span class="__icon fa fa-floppy-o"></span>
+                    <span class="__label">Lưu</span>
+                </button>
+                <button type="button" (click)="closePopupMethod(null)" class="vs-btn vs-modal-btn vs-btn-action-back">
+                    <span class="__icon fa fa-times"></span>
+                    <span class="__label">Đóng</span>
+                </button>
+            </div>
+        </div>
+    </p-footer>
+</p-dialog>

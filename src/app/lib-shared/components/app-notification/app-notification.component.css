@@ -1,0 +1,195 @@
+
+.notifications {
+  min-width: 390px;
+  padding-top: 0;
+  padding-bottom: 0;
+  top:43px !important;
+  position: absolute;
+  right: 0px;
+  border: 1px solid #D5D5D5 !important;
+  -webkit-box-shadow: 0 1px 3px 0 rgba(0,0,0,.3);
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.3);
+    border-radius: 3px;
+}
+
+.notifications .notifications-wrapper {
+  display: block;
+  margin: 0;
+  outline: none;
+  position: relative;
+  text-decoration: none;
+  }
+  .notifications .notifications-wrapper .notifications-header
+  {
+    background-clip: padding-box;
+    background-color: #fff;
+    border-bottom: solid 1px #dddfe2;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    padding: 0px 12px 0px;
+    position: relative;
+    z-index: 100;
+    float: left;
+    width: 100%;
+    font-size: 11.5px;
+  }
+  .notifications .notifications-wrapper .notifications-body
+  {
+    display: block;
+    position: relative;
+    float: left;
+    width: 100%;
+    background-color: #fff
+  }
+  .notifications .notifications-wrapper .notifications-body img
+  {
+    float: left;
+    margin: 0px 5px;
+    border-radius: 50%;
+    overflow: hidden;
+    width: 38px;
+    height: 38px;
+  }
+  .notifications .notifications-wrapper .notifications-header span
+  {
+    color: #333 !important;
+    font-weight: bold
+  }
+  .notifications .notifications-wrapper .notifications-footer
+  {
+    background-color: #fff;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-top: 1px solid #dddfe2;
+    display: block;
+    font-weight: 600;
+    position: relative;
+    text-align: center;
+    z-index: 100;
+    float: left;
+    width: 100%;
+    font-size: 11.5px;
+  }
+  .notifications .notifications-wrapper .notifications-footer a
+  {
+    font-weight: bold;
+    text-align: center;
+    color: #365899 !important;
+    border: 0px solid;
+    padding-top: 3px;
+    padding-bottom: 3px;
+  }
+
+  .notifications a {
+    position: relative;
+    width: 100%;
+    float: left;
+    border-bottom: 1px solid #ccc;
+    text-decoration:none;
+    padding: 5px;
+    color: #1d2129;
+    background: #fff;
+  }
+  .notifications-body a:hover {
+    background-color:#edf2fa;
+    background-image: linear-gradient(rgba(29, 33, 41, .04), rgba(29, 33, 41, .04)) !important;
+  }
+  .notifications .un-read
+{
+   background-color: #edf2fa;
+}
+  .notifications .title {
+    font-weight: bold;
+    display: block;
+    font-size: 10.5px;
+  }
+  .notifications .time {
+    font-size: 9.5px;
+    display: block;
+  }
+  .navbar-nav .badge {
+    position: absolute;
+    border-radius: 50%;
+    min-height: 20px;
+    min-width: 20px;
+    top: 9px;
+    left: 10px;
+    cursor: pointer;
+}
+
+  .badge-danger {
+    color: #fff;
+    background-color: #d50000;
+    position: absolute;
+    right: -14px;
+    top: 10px;
+    cursor: pointer;
+}
+
+
+/*------------------------by ANH*/
+.notifications .notifications-wrapper .notifications-header .notifications-title {
+  float: left;
+  width: 30%;
+  margin-top: 6px;
+}
+
+.notifications-setting {
+  display: flex;
+  display: -webkit-flex;
+  float: right;
+  width: 60%;
+}
+
+.notifications-setting span {
+  font-weight: normal !important;
+}
+
+.notifications-setting a {
+  border-bottom: none;
+}
+
+.notifications-setting a:hover {
+  color: #3992e6;
+  background-color: #fff !important;
+}
+
+.notifications-body {
+  height: 300px;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.notifications-body a {
+  white-space: normal;
+}
+
+.notifications-content {
+    float: left;
+    width: 80%;
+    margin-left: 10px;
+}
+
+.content {
+      font-size: 10px;
+}

@@ -1,0 +1,29 @@
+<div class="modal-header ">
+    <h6 class="modal-title text-uppercase ">CHỌN FILE CÓ SẴN</h6>
+    <button type="button " class="close " aria-label="Close " (click)="onReturn()">
+        <span aria-hidden="true ">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="box-notify">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row mg-bt-1rem">
+                    <div class="col-md-12">
+                        <div class="search-wrapper active">
+                            <vs-fs-folder-picker class="col-md-9" [(ngModel)]="fsFolderId" (onChange)="onChangeFolder($event.value)"></vs-fs-folder-picker>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card card-t">
+                    <div class="grid ma4">
+                        <vs-fs-list-file [(ngModel)]="files" (onClick)="onFolderClick($event)">
+                        </vs-fs-list-file>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

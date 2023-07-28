@@ -1,0 +1,48 @@
+.user_info {
+    display: flex;
+    gap: 15px;
+    .avatar {
+        img {
+            width: 80px;
+            height: 80px;
+            border: 2px solid #eeeeee;
+            border-radius: 50%;
+        }
+    }
+    .info{
+        .name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #212529;
+        }
+        .other_info{
+            color: #000;
+            > div {
+                display: flex;
+                gap: 10px;
+                align-items: center;
+                margin-bottom: 7px;
+                span {
+                    font-size: 15px;
+                    font-weight: 500;
+                }
+            }
+        }
+    }
+}
+
+.user_btn {
+    margin-top: 5px;
+    .message {
+        display: flex;
+        padding: 8px 25px;
+        border-radius: 5px;
+        background-color: #0084ff;
+        color: #fff;
+        align-items: center;
+        gap: 5px;
+        font-size: 14px;
+        justify-content: center;
+    }
+}

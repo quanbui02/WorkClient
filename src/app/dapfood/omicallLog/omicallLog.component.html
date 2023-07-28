@@ -1,0 +1,251 @@
+<div class="vs-page-content app-banner-index">
+  <div class="vs-page-content-header-area">
+    <div class="ui-g">
+      <div class="ui-g-12 ui-md-7 ui-lg-9 __page-title-wrapper">
+        <h1 class="__page-title">Quản lý Log Omicall</h1>
+      </div>
+      <div class="ui-g-12 ui-md-5 ui-lg-3 __search-box-wrapper">
+        <div class="__search-box">
+          <input type="search" placeholder="Nhập số điện thoại" name="search" class="__input vs-input" (keyup.enter)="onSearch()" [(ngModel)]="searchModel.key">
+
+          <span class="__toggle-search-adv" (click)="toggleSearch()">
+            <span [hidden]="openSearchAdv" class="fa fa-angle-double-down"></span>
+            <span [hidden]="!openSearchAdv" class="fa fa-angle-double-up "></span>
+          </span>
+
+          <span class="__search-btn" (click)="onSearch()">
+            <i class="fa fa-search"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui-g" [hidden]="!openSearchAdv">
+      <div class="ui-g-12 __search-filter-wrapper">
+        <p-calendar class="maxWidth" [(ngModel)]="searchModel.fromDate" dateFormat="dd/mm/yy" [showIcon]="true" class="maxWidth" placeholder="Từ ngày" utc="true" [locale]="vi" showTime="true" hourFormat="12" showButtonBar="true">
+        </p-calendar>
+        <p-calendar class="maxWidth" [(ngModel)]="searchModel.toDate" dateFormat="dd/mm/yy" [showIcon]="true" class="maxWidth" placeholder="Đến ngày" utc="true" [locale]="vi" showTime="true" hourFormat="12" showButtonBar="true">
+        </p-calendar>
+        <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" filter="true" [style]="{'width':'100%'}" [(ngModel)]="searchModel.direction" [options]="direction_options">
+        </p-dropdown>
+        <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" filter="true" [style]="{'width':'100%'}" [(ngModel)]="searchModel.endCause" [options]="endCause_options">
+        </p-dropdown>
+        <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" filter="true" [style]="{'width':'100%'}" [(ngModel)]="searchModel.sipUser" [options]="sipUser_options">
+        </p-dropdown>
+        <button class="vs-btn vs-modal-btn vs-btn-action-edit" type="button" (click)="onSearch()">
+          <span class="__icon fa fa-search"></span>
+          <span class="__label">Tìm kiếm</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="vs-page-content-body-area">
+    <div class="vs-data-table-area">
+      <div class="ui-g vs-data-table-area-inner">
+        <div class="ui-g-12 ui-lg-12 __main-table-area">
+
+          <div class="ui-g __top-table-action">
+            <div class="ui-g-6 __left-content">
+              <button type="button" class="vs-btn vs-top-table-btn vs-btn-action-data" (click)="exportExcel()">
+                <span class="__icon fa fa-download"></span>
+                <span class="__label">Xuất danh sách</span>
+              </button>
+
+              <button type="button" class="vs-btn vs-top-table-btn vs-btn-action-data" (click)="SynMultiLogsOmicall()">
+                <span class="__icon fa fa-refresh"></span>
+                <span class="__label">Đồng bộ Omicall</span>
+              </button>
+            </div>
+
+            <div class="ui-g-6 __right-content">
+              <ul class="__action-tabs">
+                <li #columnListContainer class="__tab-item-wrapper __toggle-column-wrapper">
+                  <div class="__tab-item" (click)="toggleColumnList()">
+                    <span class="__icon pi pi-th-large"></span>
+                    <span class="__label">Chọn cột</span>
+                  </div>
+                  <div class="__column-list" [hidden]="!openColumnList">
+                    <div *ngFor="let col of cols" class="__column-item">
+                      <p-checkbox binary="true" [(ngModel)]="col.visible" name="groupname" label="{{col.header}}">
+                      </p-checkbox>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+
+          <div class="ui-g vs-table-wrapper" id="table">
+            <p-table #mainTable [frozenValue]="dataTotal" [columns]="cols" selectionMode="multiple" [rows]="limit" [scrollable]="true" scrollHeight="auto" [value]="dataSource" [(selection)]="selectedItems" [totalRecords]="total" class="vs-table responsive-table" [customSort]="true" (onSort)="onSort($event)" [paginator]="true" [loading]="isLoading" [lazy]="true" (onPage)="onPage($event)" [resizableColumns]="true" dataKey="id">
+              <ng-template pTemplate="colgroup" let-columns>
+                <colgroup>
+                  <col [style.width]="'40px'">
+                  <ng-container *ngFor="let col of columns" [ngSwitch]="col.field">
+                    <ng-container *ngSwitchDefault>
+                      <col [hidden]="!col.visible" [style.width]="col.width" pResizableColumn>
+                    </ng-container>
+                  </ng-container>
+                  <col [style.width]="'90px'">
+                </colgroup>
+              </ng-template>
+
+              <ng-template pTemplate="frozenrows" let-rowData let-columns="columns">
+                <tr style="background-color:lightskyblue">
+                  <th></th>
+                  <td class="ui-text-right" *ngFor="let col of columns" [hidden]="!col.visible">
+                    <b *ngIf="col.field == 'callOutPrice'">{{rowData[col.field] | number : '1.0-3'}} ₫</b>
+                  </td>
+                  <th></th>
+                </tr>
+              </ng-template>
+
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th>
+                    <label class="vs-custom-checkbox">
+                      <input (change)="onCheckAll($event)" type="checkbox" class="custom-control-input" [(ngModel)]="isCheckAll" />
+                      <span class="__mark"></span>
+                    </label>
+                  </th>
+                  <ng-container *ngFor="let col of columns;">
+                    <th class="ui-resizable-column" [hidden]="!col.visible" pResizableColumn [pSortableColumn]="col.sort ? col.field : ''" class="ui-resizable-column">
+                      {{col.header}}
+                      <span *ngIf="col.sort">
+                        <p-sortIcon [field]="col.field"></p-sortIcon>
+                      </span>
+                    </th>
+                  </ng-container>
+                  <th class="ui-text-center">
+                    Thao tác
+                  </th>
+                </tr>
+              </ng-template>
+
+              <ng-template pTemplate="body" let-item let-columns="columns" let-rowIndex="rowIndex">
+                <tr align="center">
+                  <td class="vs-hidden-print">
+                    <label class="vs-custom-checkbox">
+                      <input class="__checkbox" type="checkbox" [(ngModel)]="item.checked">
+                      <span class="__mark"></span>
+                    </label>
+                  </td>
+
+                  <ng-container *ngFor="let col of columns;let i = index;" [ngSwitch]="col.field">
+                    <td class="ui-resizable-column" [hidden]="!col.visible" [class.align-left]="!col.align || col.align === 'left'" [class.align-center]="col.align === 'center'" [class.align-right]="col.align === 'right'">
+                      <ng-container *ngSwitchCase="'directionTxt'">
+                        <div [ngSwitch]="item.directionTxt">
+                          <div style="display: flex; gap: 10px;" *ngSwitchCase="'Cuộc gọi đi'">
+                            <img *ngIf="item.endCause=='BYE'" src="/assets/images/ic_outbound.svg" class="filter-outbound" />
+                            <img *ngIf="item.endCause!='BYE'" src="/assets/images/ic_outbound.svg" class="filter-missed" />
+                            <div>
+                              <p class="name-emp">{{item.startTime | date :'HH:mm:ss dd/MM/yyyy':'UTC'}}</p>
+                              <p class="phone-emp" *ngIf="item.endCause=='BYE'">{{item.directionTxt}} / Trả lời</p>
+                              <p class="phone-emp" *ngIf="item.endCause!='BYE'">{{item.directionTxt}} / Không trả lời
+                              </p>
+                            </div>
+                          </div>
+                          <div style="display: flex; gap: 10px;" *ngSwitchCase="'Cuộc gọi đến'">
+                            <img *ngIf="item.endCause=='BYE'" src="/assets/images/ic_inbound.svg" class="filter-inbound" />
+                            <img *ngIf="item.endCause!='BYE'" src="/assets/images/ic_inbound_missed.svg" class="filter-missed" />
+                            <div>
+                              <p class="name-emp">{{item.startTime | date :'HH:mm:ss dd/MM/yyyy':'UTC'}}</p>
+                              <p class="phone-emp" *ngIf="item.endCause=='BYE'">{{item.directionTxt}} / Trả lời</p>
+                              <p class="phone-emp" *ngIf="item.endCause!='BYE'">{{item.directionTxt}} / Không trả lời
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'endCause'">
+                        <div [ngSwitch]="item.endCause">
+                          <span *ngSwitchCase="'BUSY'">Máy bận</span>
+                          <span *ngSwitchCase="'NO_ANSWER'">Hết thời gian đổ chuông</span>
+                          <span *ngSwitchCase="'TRIAL_REJECTIO'">Số điện thoại chưa gọi vào số tổng tài</span>
+                          <span *ngSwitchCase="'LIMITATION_DECLINE'">Quá thời lượng cho phép gọi ra</span>
+                          <span *ngSwitchCase="'ALLOTTED_TIMEOUT'">Cuộc gọi đạt giới hạn thời lượng</span>
+                          <span *ngSwitchCase="'CANCEL'">Cuộc gọi không thành công</span>
+                          <span *ngSwitchCase="'BYE'">Cuộc gọi thành công</span>
+                        </div>
+                      </ng-container>
+
+                      <ng-container *ngSwitchCase="'userDataStr'">
+                        <a *ngIf="item.callTransactions?.userDataStr" (click)="onShowLink(item.callTransactions?.userDataStr)">{{getLinkCall(item.callTransactions?.userDataStr)}}</a>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'customer'">
+                        <div *ngIf="item.customer" class="image_name_user">
+                          <img src="{{getAvatar(item.customer?.avatar)}}" alt="">
+                          <a (click)="onShowDetailUserCurr(item.customer?.userId)">
+                            <p class="name-emp">{{item.customer?.name}}</p>
+                            <p class="phone-emp">{{item.customer?.phone}}</p>
+                          </a>
+                        </div>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'endTime'">
+                        <span>{{item.endTime | date :'HH:mm:ss dd/MM/yyyy':'UTC'}}</span>
+                      </ng-container>
+
+                      <ng-container *ngSwitchCase="'phone'">
+                        <a (click)="callOmiCall(item)">{{item.phone}}</a>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'startTime'">
+                        <span>{{item.startTime | date :'HH:mm:ss dd/MM/yyyy':'UTC'}}</span>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'userSip'">
+                        <p class="name-emp">{{item.userSip?.name}}</p>
+                        <p class="phone-emp">{{item.sipNumber}}</p>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'callTransactions'">
+                        <audio *ngIf="item.callTransactions?.recordingFile" controls class="audio-call">
+                          <source src="{{item.callTransactions?.recordingFile}}">
+                        </audio>
+                      </ng-container>
+
+                      <ng-container *ngSwitchCase="'note'">
+                        <span>{{item.callTransactions?.note}}</span>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'callOutPrice'">
+                        <span>{{!item.callTransactions?.callOutPrice ? 0 : item.callTransactions?.callOutPrice | number
+                          : '1.0-3' }} ₫</span>
+                      </ng-container>
+                      <span class="ui-resizable-column" *ngSwitchDefault class="break-word">{{item[col.field]}}</span>
+                    </td>
+                  </ng-container>
+
+                  <td class="vs-hidden-print">
+                    <div class="vs-table-row-actions ui-text-center">
+                      <button type="button" *ngIf="item.callTransactions?.transactionId" class="vs-btn vs-btn-blue" (click)="onOmicalllog(item)" pTooltip="Đồng bộ">
+                        <i class="__icon fa fa-refresh"></i>
+                      </button>
+                      <!-- <button type="button" class="vs-btn vs-btn-red" (click)="onDelete(item.id)" pTooltip="Xoá">
+                        <span class="__icon fa fa-times"></span>
+                      </button> -->
+                    </div>
+                  </td>
+                </tr>
+              </ng-template>
+
+              <ng-template pTemplate="paginatorleft" let-state>
+                <div class="vs-table-paginator">
+                  Hiển thị
+
+                  <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" (onChange)="onChangeRowLimit()" [options]="listItemNumberPerPage" [(ngModel)]="limit">
+                  </p-dropdown>
+                  / trang
+                  <span class="__total-record"> - Có {{total}} mục trong danh sách</span>
+                </div>
+              </ng-template>
+            </p-table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <app-feedback-edit (closePopup)="onCloseForm()" [status_options]="status_options" [cate_options]="cate_options"></app-feedback-edit>-->
+<app-order-edit></app-order-edit>
+<!-- <app-order-client-edit (closePopup)="onCloseForm($event)"></app-order-client-edit> -->
+<app-order-client-edit></app-order-client-edit>

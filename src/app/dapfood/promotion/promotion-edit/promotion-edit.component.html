@@ -1,0 +1,311 @@
+<p-dialog #dialog [header]="'Thêm/sửa chương trình thưởng'" styleClass="vs-modal force-full-width" positionTop="50" [(visible)]="isShow" [style]="{'max-width': '1100px'}" [contentStyle]="{'max-height': getMaxDialogHeight()}" [modal]="true" appendTo="body">
+    <div class="vs-form-container default-control-label-width vs-modal-content-panel app-promotion-edit">
+
+        <div class="vs-form-container default-control-label-width">
+            <div class="ui-g row">
+                <form action="" [formGroup]="formGroup">
+
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-3">
+                                Hình thức thưởng</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-3">
+                                <div class="__input-wrapper required" style="position: relative;">
+                                    <p-dropdown [baseZIndex]="15000" formControlName="type" [(ngModel)]="modelEdit.type" [showClear]="true" filter="true" placeholder="-- Hình thức khuyến mãi --" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="type_options" [style]="{'width':'100%', 'min-width':'0'}"
+                                        appendTo="body"></p-dropdown>
+                                    <div class="form-control-feedback" *ngIf="formGroup.controls['type'].hasError('required') && formGroup.controls['type'].touched">
+                                        Trường thông tin này là bắt buộc!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="modelEdit.type===1 || modelEdit.type===5" class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Giá trị từ</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <input type="text" formControlName="fromValue" mask="separator" suffix=" VND" placeholder="Giá trị từ" thousandSeparator="." [(ngModel)]="modelEdit.fromValue" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="(modelEdit.type!==1 && modelEdit.type!==5)" class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Thêm sản phẩm</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper required">
+                                    <!-- (onFocus)="!autocomplete.value && autocomplete.handleDropdownClick()" (onClear)="clearItem(autocomplete)" #autocomplete -->
+                                    <p-autoComplete [(ngModel)]="key" formControlName="key" [suggestions]="results" (completeMethod)="autoComplete($event)" field="name" [size]="30" placeholder="Nhập tên hoặc mã sản phẩm" [minLength]="1" (onSelect)="onSelect($event)">
+                                    </p-autoComplete>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Ảnh đại diện</div>
+                            <div class="__input-wrapper">
+                                <vs-single-fsfile-upload [chooseLabel]="'Chọn ảnh'" formControlName="image" [(ngModel)]="modelEdit.image"></vs-single-fsfile-upload>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="(modelEdit.type!==1 && modelEdit.type!==5)" class="ui-g-12 ui-lg-12" style="margin-bottom: 15px;">
+                        <div class="ui-g vs-table-wrapper vs-table-wrapper-edit" id="table">
+                            <p-table #mainTable [columns]="cols" selectionMode="multiple" [rows]="limit" [scrollable]="false" scrollHeight="auto" [value]="selectedProduct" [(selection)]="selectedItems" [totalRecords]="total" class="vs-table responsive-table" [customSort]="false"
+                                [loading]="isLoading" [lazy]="false" [resizableColumns]="true" dataKey="id" [style]="{'min-height': '200px'}">
+                                <ng-template pTemplate="colgroup" let-columns>
+                                    <colgroup>
+                                        <col [style.width]="'40px'">
+                                        <ng-container *ngFor="let col of columns" [ngSwitch]="col.field">
+                                            <ng-container *ngSwitchDefault>
+                                                <col [hidden]="!col.visible" [style.width]="col.width">
+                                            </ng-container>
+                                        </ng-container>
+                                    </colgroup>
+                                </ng-template>
+
+                                <ng-template pTemplate="header" let-columns>
+                                    <tr>
+                                        <th class="align-center">STT</th>
+                                        <ng-container *ngFor="let col of columns;">
+                                            <th class="ui-resizable-column" [hidden]="!col.visible"> {{col.header}}</th>
+                                        </ng-container>
+                                        <th class="align-center" style="width: 10%;"></th>
+                                    </tr>
+                                </ng-template>
+
+                                <ng-template pTemplate="body" let-item let-columns="columns" let-rowIndex="rowIndex">
+                                    <tr align="center">
+                                        <td>{{rowIndex + 1}}</td>
+
+                                        <ng-container *ngFor="let col of columns;let i = index;" [ngSwitch]="col.field">
+                                            <td class="ui-resizable-column" [hidden]="!col.visible" [class.align-left]="!col.align || col.align === 'left'" [class.align-center]="col.align === 'center'" [class.align-right]="col.align === 'right'">
+
+                                                <!-- <ng-container *ngSwitchCase="'price'">
+                                                    {{item.price | mask :'separator':'.'}}
+                                                </ng-container>
+
+                                                <ng-container *ngSwitchCase="'quantity'">
+                                                    <input type="number" min="1" step="1" [(ngModel)]="item.quantity" style="width: 100%" />
+                                                </ng-container>
+
+                                                <ng-container *ngSwitchCase="'totalBill'">
+                                                    {{item.price * item.quantity | mask :'separator':'.'}}
+                                                </ng-container> -->
+
+                                                <span *ngSwitchDefault class="break-word">{{item[col.field]}}</span>
+                                            </td>
+                                        </ng-container>
+                                        <td style="width: 10%;">
+                                            <button type="button" class="vs-btn icon-only vs-btn-red" (click)="onRemove(rowIndex)" pTooltip="Xoá">
+                                                <span class="__icon fa fa-trash"></span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Tên</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper required">
+                                    <input type="text" [(ngModel)]="modelEdit.name" formControlName="name" placeholder="Tên" />
+                                    <div class="form-control-feedback" *ngIf="formGroup.controls['name'].hasError('required') && formGroup.controls['name'].touched">
+                                        Trường thông tin này là bắt buộc!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Điều kiện chưa hưởng</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+
+                                    <p-multiSelect formControlName="promotionNotIns" [options]="promotions_options" [(ngModel)]="selectedpromotionNotIns" defaultLabel="" appendTo="body">
+                                        <ng-template let-value pTemplate="selectedItems">
+                                            <div *ngFor="let val of value; index as i" class="vs-multi-select-tag">
+                                                <span>{{getSelectedItemLabel(promotions_options, val)}}</span>
+                                            </div>
+                                            <!-- <div class="vs-multi-select-tag" *ngIf="modelEdit.promotionNotIns.length > 2">
+                                                <span>...</span>
+                                            </div> -->
+                                            <div *ngIf="!value || value.length === 0" class="vs-multi-select-placeholder">-- Chọn chương trình thưởng --</div>
+                                        </ng-template>
+                                        <ng-template let-item pTemplate="item">
+                                            <span>{{item.label}}</span>
+                                        </ng-template>
+                                    </p-multiSelect>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 ui-lg-6">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Từ ngày</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <!-- <p-calendar class="maxWidth" [(ngModel)]="modelEdit.startDate" formControlName="startDate" dateFormat="dd/mm/yy" [showIcon]="true"
+                                        class="maxWidth" psDateOnly placeholder="Từ ngày" utc="true" psDateOnly [locale]="vi">
+                                    </p-calendar> -->
+
+                                    <p-calendar formControlName="startDate" [baseZIndex]="15000" [showIcon]="true" psDateOnly placeholder="Từ ngày" dateFormat="dd/mm/yy" appendTo="body" [(ngModel)]="modelEdit.startDate">
+                                    </p-calendar>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 ui-lg-6">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Đến ngày</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <p-calendar class="maxWidth" [(ngModel)]="modelEdit.endDate" formControlName="endDate" dateFormat="dd/mm/yy" [showIcon]="true" class="maxWidth" psDateOnly placeholder="Đến ngày" utc="true" psDateOnly [locale]="vi">
+                                    </p-calendar>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="ui-g-12 ui-lg-12" *ngIf="modelEdit.type!==1">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Khung giờ vàng</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <p-selectButton [options]="flashSaleTimes_options" [(ngModel)]="selectedFlashSaleTimes" formControlName="selectedFlashSaleTimes" multiple="multiple">
+                                        <ng-template let-item>
+                                            <div style="padding: .5em 1em">
+                                                <span>{{item.label}}</span>
+                                            </div>
+                                        </ng-template>
+                                    </p-selectButton> -->
+                                    <!-- <ul class="flashtime">
+                                        <li *ngFor="let item of flashSaleTimes_options;let i = index">
+                                            <p-radioButton name="flashSaleType" class="mr-5 ml-5" [value]="item.value"
+                                                formControlName="flashSaleType" [label]="item.label"
+                                                [(ngModel)]="flashSaleType">
+                                            </p-radioButton>
+                                        </li>
+                                    </ul> -->
+                                <!-- </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="ui-g-12 ui-lg-6">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Số lần áp dụng</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <input type="text" [(ngModel)]="modelEdit.quantity" formControlName="quantity" placeholder="Số lần áp dụng" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-6">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Loại thưởng</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <p-radioButton name="mode" value="1" [(ngModel)]="modelEdit.mode" formControlName="mode" label="theo %"></p-radioButton>
+                                    <p-radioButton name="mode" value="2" [(ngModel)]="modelEdit.mode" formControlName="mode" label="theo xu" [style]="{'margin-left':'50px'}">
+                                    </p-radioButton>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Giá trị thưởng</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper required">
+                                    <input type="number" [(ngModel)]="modelEdit.sale" formControlName="sale" placeholder="Giá trị thưởng" />
+                                    <div class="form-control-feedback" *ngIf="formGroup.controls['sale'].hasError('required') && formGroup.controls['sale'].touched">
+                                        Trường thông tin này là bắt buộc!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-5">
+                                Lần hưởng/user</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-7">
+                                <div class="__input-wrapper">
+                                    <input type="text" [(ngModel)]="modelEdit.numberPerUser" formControlName="numberPerUser" placeholder="Số lần được hưởng/mỗi tài khoản" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-5">
+                                Số lần hưởng/sản phẩm</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-7">
+                                <div class="__input-wrapper">
+                                    <input type="text" [(ngModel)]="modelEdit.numberProductPerUser" formControlName="numberProductPerUser" placeholder="Số sản phẩm được hưởng/mỗi tài khoản" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Mô tả</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <textarea type="text" [(ngModel)]="modelEdit.description" rows="3" formControlName="description" placeholder="Ghi chú"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Thứ tự</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <input type="text" [(ngModel)]="modelEdit.sort" formControlName="sort" placeholder="Thứ tự" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-12">
+                        <div class="vs-form-control ui-g">
+                            <div class="__form-control-label ui-g-12 ui-md-4">Trạng thái sử dụng</div>
+                            <div class="__form-control-inputs ui-g-12 ui-md-8">
+                                <div class="__input-wrapper">
+                                    <p-inputSwitch [(ngModel)]="modelEdit.isActive" formControlName="isActive" pTooltip="Sử dụng">
+                                    </p-inputSwitch>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <p-footer>
+        <div class="ui-g row">
+            <div class="ui-g-12">
+                <button class="vs-btn vs-modal-btn vs-btn-action-edit" [disabled]="!formGroup.valid" (click)="save()" type="button">
+                    <span class="__icon fa fa-floppy-o"></span>
+                    <span class="__label">Lưu</span>
+                </button>
+                <button type="button" (click)="closePopupMethod(null)" class="vs-btn vs-modal-btn vs-btn-action-back">
+                    <span class="__icon fa fa-times"></span>
+                    <span class="__label">Đóng</span>
+                </button>
+            </div>
+        </div>
+    </p-footer>
+</p-dialog>

@@ -1,0 +1,121 @@
+<p-dialog #dialog [header]="'Thông tin nạp/rút xu'" styleClass="vs-modal force-full-width" positionTop="50" [(visible)]="isShow" [style]="{'max-width': '800px'}" [contentStyle]="{'max-height': getMaxDialogHeight()}" [modal]="true" appendTo="body">
+    <div class="vs-form-container default-control-label-width vs-modal-content-panel">
+        <div class="vs-form-container default-control-label-width">
+            <div class="ui-g row">
+                <div class="ui-g-6 ui-lg-6">
+                    <div class="vs-form-control ui-g">
+                        <div class="__form-control-label ui-g-12 ui-md-4">Loại giao dịch:</div>
+                        <div class="__form-control-inputs ui-g-12 ui-md-8">
+                            <div class="__input-wrapper" style="position: relative;">
+                                {{ modelEdit.dealTypes === 3? 'Nạp xu' : modelEdit.dealTypes === 21 ? "Chuyển xu" : 'Rút xu' }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g-6 ui-lg-6">
+                    <div class="vs-form-control ui-g">
+                        <div class="__form-control-label ui-g-12 ui-md-4">Phương thức:</div>
+                        <div class="__form-control-inputs ui-g-12 ui-md-8">
+                            <div class="__input-wrapper" style="position: relative;">
+                                {{ modelEdit.payment === 1? 'Ngân lượng' : 'Thủ công' }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g-6 ui-lg-6">
+                    <div class="vs-form-control ui-g">
+                        <div class="__form-control-label ui-g-12 ui-md-4">Số xu:</div>
+                        <div class="__form-control-inputs ui-g-12 ui-md-8">
+                            <div class="__input-wrapper" style="position: relative;">
+                                {{ modelEdit.deal| mask :'separator':'.' }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g-6 ui-lg-6">
+                    <div class="vs-form-control ui-g">
+                        <div class="__form-control-label ui-g-12 ui-md-4">Trạng thái:</div>
+                        <div class="__form-control-inputs ui-g-12 ui-md-8">
+                            <div class="__input-wrapper" style="position: relative;">
+                                <span *ngIf="modelEdit.status === PointStatus.ChuaXuLy" class="vs-status vs-status-waiting">
+                                    Chưa xử lý
+                                </span>
+                                <span *ngIf="modelEdit.status === PointStatus.ThanhCong" class="vs-status vs-status-valid">
+                                    Thành công
+                                </span>
+                                <span *ngIf="modelEdit.status === PointStatus.DangXuLy || modelEdit.status === PointStatus.KTDuyetThanhCong  || modelEdit.status === PointStatus.AdminDuyetThanhCong" class="vs-status vs-status-info">
+                                    Đang xử lý
+                                </span>
+                                <span *ngIf="modelEdit.status === PointStatus.Huy" class="vs-status vs-status-cancel">
+                                    Đã hủy
+                                </span>
+                                <span *ngIf="modelEdit.status === PointStatus.Loi || modelEdit.status === PointStatus.AdminDuyetThatBai || modelEdit.status === PointStatus.KTDuyetThatBai" class="vs-status vs-status-expire">
+                                    Lỗi
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g-6 ui-lg-6">
+                    <div class="vs-form-control ui-g">
+                        <div class="__form-control-label ui-g-12 ui-md-4">Phí giao dịch:</div>
+                        <div class="__form-control-inputs ui-g-12 ui-md-8">
+                            <div class="__input-wrapper" style="position: relative;">
+                                {{ modelEdit.fee| mask :'separator':'.' }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g-6 ui-lg-6">
+                    <div class="vs-form-control ui-g">
+                        <div class="__form-control-label ui-g-12 ui-md-4">Thuế TNCN:</div>
+                        <div class="__form-control-inputs ui-g-12 ui-md-8">
+                            <div class="__input-wrapper" style="position: relative;">
+                                {{ modelEdit.tax| mask :'separator':'.' }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g-6 ui-lg-6">
+                    <div class="vs-form-control ui-g">
+                        <div class="__form-control-label ui-g-12 ui-md-4">Thông tin chi tiết:</div>
+                        <div class="__form-control-inputs ui-g-12 ui-md-8">
+                            <div *ngIf="modelEdit.bankName">
+                                Tên ngân hàng: <b>{{ modelEdit.bankName }}</b>
+                            </div>
+                            <div *ngIf="modelEdit.bankBranch">
+                                Chi nhánh: <b>{{ modelEdit.bankBranch }}</b>
+                            </div>
+                            <div *ngIf="modelEdit.cardNumber">
+                                Số tài khoản/Thẻ ATM: <b>{{ modelEdit.cardNumber }}</b>
+                            </div>
+                            <div *ngIf="!modelEdit.cardNumber && modelEdit.bankNumber">
+                                Số tài khoản: <b>{{ modelEdit.bankNumber }}</b>
+                            </div>
+                            <div *ngIf="modelEdit.cardFullname">
+                                Tên chủ tài khoản: <b>{{ modelEdit.cardFullname }}</b>
+                            </div>
+                            <div *ngIf="!modelEdit.cardFullname && modelEdit.bankFullName">
+                                Tên chủ tài khoản: <b>{{ modelEdit.bankFullName }}</b>
+                            </div>
+                            <div *ngIf="modelEdit.note">
+                                Ghi chú: <b>{{ modelEdit.note }}</b>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <p-footer>
+        <div class="ui-g row">
+            <div class="ui-g-12">
+                <button type="button" (click)="closePopupMethod(null)" class="vs-btn vs-modal-btn vs-btn-action-back">
+                    <span class="__icon fa fa-times"></span>
+                    <span class="__label">Đóng</span>
+                </button>
+            </div>
+        </div>
+    </p-footer>
+</p-dialog>

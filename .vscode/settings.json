@@ -1,0 +1,60 @@
+{
+    "javascript.preferences.quoteStyle": "single",
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/e2e": true,
+        "**/node_modules": true,
+        "**/.dockerignore": true,
+        "**/.editorconfig": true,
+        "**/.gitignore": true,
+        "**/debug.log": true,
+        "**/package-lock.json": true,
+        "**/karma*": true,
+        "**/projtractor*": true,
+        "**/Dockerfile": true,
+        "**/*.spec.ts": true
+    },
+    "svn.delete.ignoredRulesForDeletedFiles": [
+        "dist\\lib-shared",
+        "dist\\lib-shared\\bundles",
+        "dist\\lib-shared\\esm2015",
+        "dist\\lib-shared\\esm5",
+        "dist\\lib-shared\\fesm2015",
+        "dist\\lib-shared\\fesm5",
+        "dist\\lib-shared\\lib\\classes\\multi-translate-http-loader.d.ts",
+        "dist\\lib-shared\\lib\\components",
+        "dist\\lib-shared\\lib\\components\\app-logged-user-box",
+        "dist\\lib-shared\\lib\\components\\app-logged-user-box\\app-logged-user-box.component.d.ts",
+        "dist\\lib-shared\\lib\\configs",
+        "dist\\lib-shared\\lib\\configs\\module-config.d.ts",
+        "dist\\lib-shared\\lib\\models\\response-result.d.ts",
+        "dist\\lib-shared\\lib\\models\\ps-user.d.ts",
+        "dist\\lib-shared\\lib\\services\\authen.service.d.ts",
+        "dist\\lib-shared\\lib\\services\\base.service.d.ts",
+        "dist\\lib-shared\\lib\\services\\module-config.service.d.ts",
+        "dist\\lib-shared\\lib\\ps-component.module.d.ts",
+        "dist\\lib-shared\\lib\\ps-control.module.d.ts",
+        "dist\\lib-shared\\lib\\lib-shared.module.d.ts",
+        "dist\\lib-shared\\package.json",
+        "dist\\lib-shared\\public_api.d.ts",
+        "dist\\lib-shared\\lib-shared.d.ts",
+        "dist\\lib-shared\\lib-shared.metadata.json",
+        "dist\\lib-shared\\lib\\models",
+        "dist\\lib-shared\\lib\\services"
+    ],
+    "typescript.preferences.quoteStyle": "single",
+    "[scss]": {
+        "editor.formatOnSave": false
+    },
+    "editor.formatOnSave": true,
+    "alignment.exclude": [
+        "scss"
+    ],
+    "git.ignoreLimitWarning": true,
+    "explorerExclude.backup": {}
+}

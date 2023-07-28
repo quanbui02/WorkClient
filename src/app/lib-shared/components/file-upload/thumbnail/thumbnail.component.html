@@ -1,0 +1,24 @@
+<div *ngIf="apiUrl == ''">
+    <span>Vui lòng cấu hình địa chỉ file upload từ module</span>
+</div>
+<div *ngIf="apiUrl != ''">
+    <div *ngIf="fileUploaded == ''">
+        <div class="vs-thumbnail">
+            <img src="{{defaultNoImageUrl}}" width="150" height="150" />
+            <div class="vs-btn-thumbnail text-center" *ngIf="!disabled" (click)="onSelectThumbnailClick()">
+                <span class="text-center">{{chooseLabel}}</span>
+            </div>
+        </div>
+        <div *ngIf="!disabled" style="display:none;">
+            <p-fileUpload #fileControl (onBeforeUpload)="onBeforeUpload($event)" [multiple]="false" accept="image/*" [chooseLabel]="chooseLabel" (onUpload)="onUploadEvent($event)" mode="basic" name="files" url="{{apiUrl+'/Image'}}" maxFileSize="1000000" auto="true"></p-fileUpload>
+        </div>
+    </div>
+    <div *ngIf="fileUploaded != ''">
+        <div class="vs-thumbnail">
+            <img (error)="onError($event, this)" [src]="getImageMedium(fileUploaded)" width="150" height="150" />
+            <div class="vs-btn-thumbnail text-center" (click)="deleteFile()" *ngIf="!disabled">
+                <a class="text text-danger">Xóa</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,119 @@
+/* Add your customizations of layout here */
+.card {
+    padding: 8px;
+}
+
+.layout-wrapper {
+    .topbar  {
+        .topbar-left {
+            padding: 0px;
+            width  : $left-sidebar-width;
+
+            .topbar-logo {
+                float : left;
+                margin: 5px;
+                height: 40px;
+            }
+
+            .topbar-title {
+                text-transform: uppercase;
+                color         : #fff;
+                margin        : 13px;
+                .topbar-owner {
+                    font-size    : 1.1em;
+                    margin-bottom: 5px;
+                }
+
+                .topbar-description {
+                    font-size: 0.8em;
+                }
+            }
+        }
+    }
+}
+
+.layout-wrapper {
+    .topbar {
+        .topbar-right {
+            #menu-button {
+                i {
+                    font-size: $collapse-button-size;
+                }
+                left  : calc(#{$left-sidebar-width} - 13px);
+                left  : -webkit-calc(#{$left-sidebar-width} - 13px);
+                left  : -moz-calc(#{$left-sidebar-width} - 13px);
+                width : $collapse-button-size;
+                height: $collapse-button-size;
+            }
+        }
+    }
+}
+
+.layout-wrapper {
+    .layout-menu-container {
+        width: $left-sidebar-width;
+
+        .ui-scrollpanel {
+            .menu-scroll-content {
+                width: $left-menu-width;
+            }
+        }
+    }
+}
+
+@media (min-width: 1025px) {
+    .layout-wrapper.menu-layout-static {
+        .layout-main {
+            margin-left: $left-sidebar-width;
+        }
+
+        .layout-footer {
+            margin-left: $left-sidebar-width;
+        }
+    }
+}
+
+label[for] {
+    line-height: 30px;
+}
+
+.custom-autocomplete  {
+    .ui-autocomplete-input {
+        border-top-right-radius   : 0px;
+        border-bottom-right-radius: 0px;
+    }
+
+    .ui-inputtext {
+        border-top-right-radius   : 0px;
+        border-bottom-right-radius: 0px;
+    }
+}
+
+body .custom-button-search {
+    background   : none;
+    color        : #666;
+    border-top   : $input-border;
+    border-bottom: $input-border;
+    border-left: none;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+
+    &:enabled:hover {
+        background: none;
+        color     : #579cd8;
+    }
+}
+
+.custom-advance-search {
+    &:hover {
+        cursor: pointer;
+        color : #579cd8;
+    }
+}
+
+.layout-wrapper .layout-menu li ul li a i:first-child {
+	font-size:16px;
+}
+
+.layout-wrapper .topbar .topbar-right,.layout-wrapper .topbar .topbar-left{
+    background: #3192e1;
+}

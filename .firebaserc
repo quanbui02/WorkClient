@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "dapfoodauthen": {
+      "hosting": {
+        "firebase7": [
+          "dapfoodauthen"
+        ]
+      }
+    }
+  }
+}

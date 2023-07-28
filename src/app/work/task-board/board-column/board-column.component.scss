@@ -1,0 +1,51 @@
+.status-list {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border-radius: .125rem;
+    flex-shrink: 0;
+    padding: 10px 10px 10px 10px;
+    background-color: #fff;
+}
+
+.status-list .app-board-card-container {
+    height: 100%;
+}
+
+.status-list .cdk-drop-list-dragging {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.status-list .cdk-drop-list-dragging .cdk-drag:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.status-list .cdk-drag-placeholder .issue-wrap {
+    background-color: rgba(150, 150, 200, 0.1);
+    border: 1px dashed #abc;
+    margin: 5px;
+}
+
+.status-list .cdk-drag-placeholder .issue-wrap .issue {
+    opacity: 0;
+}
+
+.title_col {
+    padding: 15px;
+    font-size: 14px;
+    text-align: left;
+    color: #848484;
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    border-bottom: 2px solid #e0e0e091;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.border_title_board{
+    border-bottom: 2px solid #e0e0e091;
+}
+.add_task_btn {
+    color: #848484;
+}

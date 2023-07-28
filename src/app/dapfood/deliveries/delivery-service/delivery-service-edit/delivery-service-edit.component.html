@@ -1,0 +1,94 @@
+<p-dialog #dialog [header]="'Thêm/sửa' | translate" styleClass="vs-modal force-full-width" positionTop="50"
+  [(visible)]="isShow" [style]="{'max-width': '80%'}" [contentStyle]="{'max-height': getMaxDialogHeight()}"
+  [modal]="true" appendTo="body">
+  <div class="vs-form-container default-control-label-width vs-modal-content-panel app-lessondetails-edit">
+
+    <div class="vs-form-container default-control-label-width">
+      <div class="ui-g row">
+        <form action="" [formGroup]="formGroup">
+          <div class="ui-g-12 ui-lg-12">
+            <div class="vs-form-control ui-g">
+              <div class="__form-control-label ui-g-12 ui-md-4">Đơn vị vận chuyển</div>
+              <div class="__form-control-inputs ui-g-12 ui-md-12">
+                <div class="__input-wrapper required" style="position: relative;">
+                  <p-dropdown [baseZIndex]="15000" formControlName="idDeliveryCategory"
+                    [(ngModel)]="modelEdit.idDeliveryCategory" [showClear]="true" filter="true"
+                    placeholder="-- Chọn đơn vị vận chuyển --" [emptyFilterMessage]="'Không tìm thấy kết quả'"
+                    [options]="delivery_options" [style]="{'width':'100%', 'min-width':'300px'}"
+                    appendTo="body"></p-dropdown>
+                  <div class="form-control-feedback"
+                    *ngIf="formGroup.controls['idDeliveryCategory'].hasError('required') && formGroup.controls['idDeliveryCategory'].touched">
+                    Trường thông tin này là bắt buộc!</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-lg-12">
+            <div class="vs-form-control ui-g">
+              <div class="__form-control-label ui-g-12 ui-md-4">Tên hiển thị</div>
+              <div class="__form-control-inputs ui-g-12 ui-md-12">
+                <div class="__input-wrapper required">
+                  <input type="text" [(ngModel)]="modelEdit.name" formControlName="name" placeholder="Nhập tên hiển thị"
+                    style="width: 100%;">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-lg-12">
+            <div class="vs-form-control ui-g">
+              <div class="__form-control-label ui-g-12 ui-md-4">Token Key</div>
+              <div class="__form-control-inputs ui-g-12 ui-md-12">
+                <div class="__input-wrapper required">
+                  <textarea type="text" [(ngModel)]="modelEdit.token" rows="3" formControlName="token"
+                    placeholder="Token"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ui-g-12 ui-lg-12">
+            <div class="vs-form-control ui-g">
+              <div class="__form-control-label ui-g-12 ui-md-4">Cửa hàng</div>
+              <div class="__form-control-inputs ui-g-12 ui-md-8">
+                <div class="__input-wrapper">
+                  <p-multiSelect [options]="clientShop_options" [(ngModel)]="clientShops" formControlName="clientShops"
+                    defaultLabel="" appendTo="body">
+                    <ng-template let-value pTemplate="selectedItems">
+                      <div *ngFor="let val of value; index as i" class="vs-multi-select-tag" [hidden]="i > 2">
+                        <span>{{getSelectedItemLabel(clientShop_options, val)}}</span>
+                      </div>
+                      <div class="vs-multi-select-tag" *ngIf="clientShops && clientShops.length > 2">
+                        <span>...</span>
+                      </div>
+                      <div *ngIf="!value || value.length === 0" class="vs-multi-select-placeholder">-- Cửa hàng --
+                      </div>
+                    </ng-template>
+                    <ng-template let-item pTemplate="item">
+                      <span>{{item.label}}</span>
+                    </ng-template>
+                  </p-multiSelect>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+  <p-footer>
+    <div class="ui-g row">
+      <div class="ui-g-12">
+        <button class="vs-btn vs-modal-btn vs-btn-action-edit" [disabled]="!formGroup.valid" (click)="save()"
+          type="button">
+          <span class="__icon fa fa-floppy-o"></span>
+          <span class="__label">{{'Lưu' | translate}}</span>
+        </button>
+        <button type="button" (click)="closePopupMethod(null)" class="vs-btn vs-modal-btn vs-btn-action-back">
+          <span class="__icon fa fa-times"></span>
+          <span class="__label">{{'Đóng' | translate}}</span>
+        </button>
+      </div>
+    </div>
+  </p-footer>
+</p-dialog>

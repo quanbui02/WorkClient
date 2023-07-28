@@ -1,0 +1,68 @@
+<!-- <p-dialog #dialog [header]="'Thêm/Sửa từ khóa'" styleClass="vs-modal force-full-width" positionTop="50" [(visible)]="isShow" [style]="{'max-width': '1100px'}" [contentStyle]="{'max-height': getMaxDialogHeight()}" [modal]="true" appendTo="body">
+  <div class="vs-form-container default-control-label-width vs-modal-content-panel app-foods-edit"> -->
+<div class="ui-g row" style="margin: 0;">
+  <div class="ui-dialog-content ui-widget-content ui-g-12" style="padding: 0;">
+    <div class="vs-form-container default-control-label-width">
+      <div class="ui-g row">
+        <div class="ui-g-12 ui-lg-12">
+          <form action="" [formGroup]="formGroup">
+            <div class="ui-g row">
+              <div class="ui-g-12 ui-lg-12">
+                <div class="vs-form-control ui-g">
+                  <div class="__form-control-label ui-g-12 ui-md-4">Mã đơn vị</div>
+                  <div class="ui-g-12 ui-md-12">
+                    <div class="__input-wrapper required">
+                      <input type="text" [(ngModel)]="modelEdit.code" formControlName="code" placeholder="Nhập mã đơn vị vận chuyển" style="width: 100%;">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ui-g row">
+              <div class="ui-g-12 ui-lg-12">
+                <div class="vs-form-control ui-g">
+                  <div class="__form-control-label ui-g-12 ui-md-4">Tên đơn vị</div>
+                  <div class="ui-g-12 ui-md-12">
+                    <div class="__input-wrapper required">
+                      <input type="text" [(ngModel)]="modelEdit.name" formControlName="name" placeholder="Nhập đơn vị vận chuyển" style="width: 100%;">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ui-g row">
+              <div class="ui-g-12 ui-lg-12">
+                <div class="vs-form-control ui-g">
+                  <div class="__form-control-label ui-g-12 ui-md-4">Link kết nối dịch vụ</div>
+                  <div class="ui-g-12 ui-md-12">
+                    <div class="__input-wrapper required">
+                      <input type="text" [(ngModel)]="modelEdit.endPoint" formControlName="endPoint" placeholder="Nhập đơn link kết nối dịch vụ" style="width: 100%;">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui-dialog-footer ui-widget-content ui-g-12" style="margin-left: -15px; position: fixed; bottom: 0; background-color: whitesmoke;">
+    <p-footer>
+      <div class="ui-g row">
+        <div class="ui-g-12">
+          <button class="vs-btn vs-modal-btn vs-btn-action-edit" [disabled]="!formGroup.valid" (click)="save()" type="button">
+            <span class="__icon fa fa-floppy-o"></span>
+            <span class="__label">Lưu</span>
+          </button>
+          <button type="button" (click)="closeForm()" class="vs-btn vs-modal-btn vs-btn-action-back">
+            <span class="__icon fa fa-times"></span>
+            <span class="__label">Đóng</span>
+          </button>
+        </div>
+      </div>
+    </p-footer>
+  </div>
+</div>
+<!-- </p-dialog> -->

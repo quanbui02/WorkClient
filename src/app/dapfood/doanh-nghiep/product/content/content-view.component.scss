@@ -1,0 +1,22 @@
+.app-content-view{
+    padding: 10px !important;
+    background-color: whitesmoke!important;
+    box-shadow: none!important;
+
+    .accordion{
+        width: 100%; 
+    }
+    //.ui-accordion {
+        // .ui-accordion-content{
+        //     width: 100%!important; 
+        //     padding: 0!important;
+        // }
+    //}
+    .box-copy{
+        position: absolute;
+        right: 34px;
+        padding: 5px;
+        background-color: #e2e2e2;         
+    } 
+}
+

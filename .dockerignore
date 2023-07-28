@@ -1,0 +1,7 @@
+.idea
+.sass-cache
+.vscode
+e2e
+node_modules
+projects
+src

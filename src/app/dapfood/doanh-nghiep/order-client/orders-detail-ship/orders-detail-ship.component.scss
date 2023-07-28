@@ -1,0 +1,111 @@
+.listItem{
+  width: 100%;
+}
+.listItem ul{
+  width: 100%;
+}
+.listItem li{
+  list-style: none;
+  padding: 2px 5px;
+}
+.listItem li .main-text{
+  padding-left: 5px;
+}
+agm-map {
+  height: 300px;
+}
+.divf{
+  padding: 5px 2px;
+    font-size: 14px;
+}
+.lstPath{
+  box-shadow: #CCC 0px 2px 8px 0px;
+  padding: 15px;
+  margin-top: 10px;
+}
+.lstPath ul{
+  padding-left: 0px;
+}
+.lstPath ul li{
+  list-style: none;
+  padding-left: 17px;
+  margin-bottom: 10px;
+}
+.lstPath ul li .namehot {
+  font-weight: bold;
+  margin-bottom: 5px;
+  padding-left: 5px;
+  font-size: 13px;
+  line-height: 20px;
+}
+.hot-home .namehot{
+  font-size: 15px !important;
+}
+.lstPath ul li b{
+  font-size: 16px;
+}
+.lstPath ul li .fa{
+  font-size: 20px;
+  margin-left: -15px;
+  margin-right: 5px;
+}
+.lstInfo div {
+  color: #404040;
+  margin-top: 2px;
+}
+.lstInfo .moneyInfo {
+  color: #7e4040;
+  font-weight: 600;
+}
+.lstInfo ul{
+  padding-left: 0px;
+}
+.lstInfo li {
+  padding-left: 0px !important;
+  margin-top: 5px !important;
+  margin-left: 3px;
+  color: #5a5a5a;
+  font-size: 13px;
+}
+.hot-home {
+    border: 2px solid #CCC;
+    padding: 20px;
+    margin-left: -20px;
+    background: #cee8ff;
+}
+.hot-home li{
+  list-style: none !important;
+}
+.list-m{
+  margin-bottom: 10px;
+}
+.list-m div {
+  float: left;
+  width: 50%;
+  display: block;
+  height: 35px;
+  font-size: 13px;
+  color: #606060;
+}
+.list-m div:last-child {
+  text-align: right;
+  font-weight: bold;
+  color: #2c2c2c;
+}
+.list-m .line-h{
+  border-top: 1px solid #CCC;
+  padding-top: 10px;
+  height: 55px;
+  border-bottom: 1px solid #CCC;
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 16px;
+}
+.list-m .line-h i{
+  font-weight: 100;
+  font-size: 13px;
+}
+body .ui-table .ui-table-tfoot>tr>td {
+  color: #292b2c;
+  border: 1px solid #ddd;
+}

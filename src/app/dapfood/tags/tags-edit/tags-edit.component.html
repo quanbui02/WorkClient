@@ -1,0 +1,47 @@
+<!-- <p-dialog #dialog [header]="'Thêm/Sửa từ khóa'" styleClass="vs-modal force-full-width" positionTop="50" [(visible)]="isShow" [style]="{'max-width': '1100px'}" [contentStyle]="{'max-height': getMaxDialogHeight()}" [modal]="true" appendTo="body">
+  <div class="vs-form-container default-control-label-width vs-modal-content-panel app-foods-edit"> -->
+<div class="ui-g row" style="margin: 0;">
+  <div class="ui-dialog-content ui-widget-content ui-g-12" style="padding: 0;">
+    <div class="vs-form-container default-control-label-width">
+      <div class="ui-g row">
+        <div class="ui-g-12 ui-lg-12">
+          <form action="" [formGroup]="formGroup">
+            <!-- <p-fieldset legend="Thông tin phản hồi"> -->
+            <div class="ui-g row">
+              <div class="ui-g-12 ui-lg-12">
+                <div class="vs-form-control ui-g">
+                  <div class="__form-control-label ui-g-12 ui-md-4">Tên từ khóa</div>
+                  <div class="ui-g-12 ui-md-12">
+                    <div class="__input-wrapper required">
+                      <input type="text" [(ngModel)]="modelEdit.tagName" formControlName="tagName" placeholder="Nhập từ khóa" style="width: 100%;">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- </p-fieldset> -->
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui-dialog-footer ui-widget-content ui-g-12" style="margin-left: -15px; position: fixed; bottom: 0; background-color: whitesmoke;">
+    <p-footer>
+      <div class="ui-g row">
+        <div class="ui-g-12">
+          <button class="vs-btn vs-modal-btn vs-btn-action-edit" [disabled]="!formGroup.valid" (click)="save()" type="button">
+            <span class="__icon fa fa-floppy-o"></span>
+            <span class="__label">Lưu</span>
+          </button>
+          <button type="button" (click)="closeForm()" class="vs-btn vs-modal-btn vs-btn-action-back">
+            <span class="__icon fa fa-times"></span>
+            <span class="__label">Đóng</span>
+          </button>
+        </div>
+      </div>
+    </p-footer>
+  </div>
+</div>
+<!-- </p-dialog> -->

@@ -1,0 +1,274 @@
+button {
+    &:disabled {
+        cursor: not-allowed;
+    }
+}
+
+.btn {
+    outline: none;
+    cursor: pointer;
+    line-height: 30px;
+    font-size: inherit;
+    display: block;
+    background: #0095da;
+    color: white;
+    border-radius: 2px;
+    line-height: 30px;
+    border: 0;
+    padding: 0 15px;
+    i {
+        padding-right: 5px;
+    }
+}
+
+.vs-btn {
+    outline: none;
+    cursor: pointer;
+    line-height: 30px;
+    font-size: inherit;
+    font-weight: 600;
+    padding: 0 15px;
+    border: 0;
+    border-radius: 5px;
+    display: inline-block;
+    @include easing-animation(background-color);
+    .__icon {
+        font-size: 12px;
+        @include easing-animation();
+    }
+    .__label {
+        padding-left: 5px;
+    }
+    &.icon-only {
+        border: 0;
+        background-color: transparent;
+        padding: 0;
+        width: 24px;
+        .__icon {
+            display: block;
+            font-size: 16px;
+        }
+    }
+    &.easing {
+        @include easing-animation();
+    }
+    &.no-border {
+        border: 0;
+    }
+    &.default-border {
+        border: 1px solid #ddd;
+    }
+}
+
+td>.vs-table-row-actions {
+    margin-top: -5px;
+    margin-bottom: -5px;
+}
+
+.vs-table-row-actions {
+    .vs-btn {
+        margin: 1px;
+    }
+}
+
+.vs-btn.vs-top-table-btn,
+.vs-btn.vs-modal-btn {
+    position: relative;
+    border-radius: 5px;
+    &.no-icon {
+        padding-left: 10px;
+    }
+    &.middle-icon {
+        .__icon {
+            padding-top: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}
+
+.vs-btn.vs-top-table-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 0px;
+    @include easing-animation(border-color);
+    &.trigger-dropdown {
+        padding-right: 20px;
+    }
+    .__icon {
+        line-height: 28px;
+    }
+    .__dropdown-hint {
+        position: absolute;
+        top: 0;
+        height: 100%;
+        color: #888;
+        right: 0;
+        width: 20px;
+        padding-top: 6px;
+    }
+    &.right-icon {
+        padding-left: 10px;
+        padding-right: 26px;
+        .__icon {
+            right: 0;
+            left: auto;
+        }
+    }
+    &:hover {
+        background-color: #ddd;
+    }
+}
+
+.vs-btn.vs-modal-btn {
+    border: 0;
+    color: #fff;
+    @include easing-animation(background-color);
+}
+
+.vs-modal-more-action-btn,
+.vs-advance-actions-btn {
+    border: 1px solid #aaa;
+    background-color: #fff;
+    border-radius: 2px;
+    width: 24px;
+}
+.vs-btn-null {
+    background: #fff;
+    color: #9fa7bd !important;
+    &:hover {
+        background-color: darken(#9fa7bd, 10%);
+    }
+}
+
+@each $action, $value in (blue: $color-blue, green: $color-green, orange: $color-orange, red: $color-red, gray: $color-gray, yellow: $color-yellow, violet: $color-violet, theme-blue: $vs-theme-blue-color, base: $vs-base-color, info: $vs-info-color, danger: $vs-danger-color, edit: $vs-edit-color, remove: $vs-remove-color, restore: $vs-restore-color, back: $vs-back-color, lock: $vs-lock-color, unlock: $vs-unlock-color, print: $vs-print-color, config: $vs-config-color, report: $vs-report-color, validate: $vs-validate-color, view: $vs-view-color, data: $vs-data-color, light: #fff, auto: $vs-auto-color, scheduled: $vs-scheduled-color, prioritize: $vs-prioritize-color) {
+    .vs-btn-#{$action} {
+        background: $value !important;
+        color: #FFF !important;
+        &:hover {
+            background-color: darken($value, 10%);
+        }
+    }
+    .vs-btn-icon-#{$action} {
+        border: 0;
+        background-color: transparent;
+        .__icon {
+            color: $value;
+            font-size: 16px;
+        }
+        &:hover {
+            background-color: #ddd;
+            .__icon {
+                color: darken($value, 10%);
+            }
+        }
+    }
+    .vs-btn-action-#{$action}:not(.vs-modal-btn) {
+        .__icon {
+            color: $value;
+        }
+        &:hover {
+            .__icon {
+                color: darken($value, 10%);
+            }
+        }
+    }
+    .vs-btn-action-#{$action}.vs-modal-btn {
+        background-color: $value;
+        &:hover {
+            background-color: darken($value, 10%);
+        }
+    }
+    // .vs-#{$action}-color,
+    // .vs-#{$action}-hover-color.activated,
+    // .vs-#{$action}-hover-color:hover {
+    //     color: $value;
+    // }
+    // .vs-#{$action}-color-i,
+    // .vs-#{$action}-hover-color-i.activated,
+    // .vs-#{$action}-hover-color-i:hover {
+    //     color: $value !important;
+    // }
+    // .vs-#{$action}-color-lighter,
+    // .vs-#{$action}-hover-color-lighter.activated,
+    // .vs-#{$action}-hover-color-lighter:hover {
+    //     color: lighten($value, 10%);
+    // }
+    // .vs-#{$action}-color-lighter-i,
+    // .vs-#{$action}-hover-color-lighter-i.activated,
+    // .vs-#{$action}-hover-color-lighter-i:hover {
+    //     color: lighten($value, 10%) !important;
+    // }
+    // .vs-#{$action}-color-bolder,
+    // .vs-#{$action}-hover-color-bolder.activated,
+    // .vs-#{$action}-hover-color-bolder:hover {
+    //     color: darken($value, 10%);
+    // }
+    // .vs-#{$action}-color-bolder-i,
+    // .vs-#{$action}-hover-color-bolder-i.activated,
+    // .vs-#{$action}-hover-color-bolder-i:hover {
+    //     color: darken($value, 10%) !important;
+    // }
+    // // bgc
+    // .vs-#{$action}-bgc,
+    // .vs-#{$action}-hover-bgc.activated,
+    // .vs-#{$action}-hover-bgc:hover {
+    //     background-color: $value;
+    // }
+    // .vs-#{$action}-bgc-i,
+    // .vs-#{$action}-hover-bgc-i.activated,
+    // .vs-#{$action}-hover-bgc-i:hover {
+    //     background-color: $value !important;
+    // }
+    // .vs-#{$action}-bgc-lighter,
+    // .vs-#{$action}-hover-bgc-lighter.activated,
+    // .vs-#{$action}-hover-bgc-lighter:hover {
+    //     background-color: lighten($value, 10%);
+    // }
+    // .vs-#{$action}-bgc-lighter-i,
+    // .vs-#{$action}-hover-bgc-lighter-i.activated,
+    // .vs-#{$action}-hover-bgc-lighter-i:hover {
+    //     background-color: lighten($value, 10%) !important;
+    // }
+    // .vs-#{$action}-bgc-bolder,
+    // .vs-#{$action}-hover-bgc-bolder.activated,
+    // .vs-#{$action}-hover-bgc-bolder:hover {
+    //     background-color: darken($value, 10%);
+    // }
+    // .vs-#{$action}-bgc-bolder-i,
+    // .vs-#{$action}-hover-bgc-bolder-i.activated,
+    // .vs-#{$action}-hover-bgc-bolder-i:hover {
+    //     background-color: darken($value, 10%) !important;
+    // }
+}
+
+.vs-bulk-select-wrapper {
+    position: relative;
+    border: 1px solid #ddd;
+    display: inline-block;
+    padding-right: 22px;
+    height: 24px;
+    padding-top: 3px;
+    padding-left: 3px;
+    .vs-btn.vs-bulk-select-btn {
+        position: absolute;
+        height: 100%;
+        width: 22px;
+        font-size: 14px;
+        color: #666;
+        top: 0;
+        right: 0;
+        border: 0;
+        background-color: transparent;
+    }
+}
+
+body .custom-autocomplete-button {
+    font-size: 0.8em;
+    width: 22px;
+}
+
+.button-group button {
+    margin-bottom: 0.5em;
+}

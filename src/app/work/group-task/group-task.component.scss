@@ -1,0 +1,149 @@
+:host ::ng-deep .gfgStyling {
+    font-size: 14px !important;
+    font-family: Roboto, sans-serif !important;
+    width: 100%;
+ }
+ 
+ :host ::ng-deep .p-panelmenu .p-panelmenu-panel {
+    margin-bottom: 20px !important;
+ }
+ ::ng-deep .ui-tree-container {
+    color: black;
+  }
+  
+  ::ng-deep .fa-caret-right::before {
+     content: "\F067";
+  }
+  
+  ::ng-deep .fa-caret-down::before {
+     content: "\F068";
+  }
+
+ .node_tree{
+    &_custom {
+       display: flex;
+       align-items: center;
+       gap: 5px;
+    }
+    &_icon{
+       &_project{
+          color: #ffc11c;
+          display: inherit;
+          padding: 5px 0px;
+       }
+    }
+    &_name_edit{
+       border: none;
+       background-color: transparent;
+       color: #fff;
+       font-size: 14px;
+    }
+ }
+ 
+ .d-none{
+    display: none;
+ }
+ 
+ .search_menu {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 10px 10px 10px 20px;
+    a {
+       display: flex;
+       font-size: 20px;
+   }
+   .search {
+      font-size: 13px;
+      border: 1px solid #bebebe;
+      border-radius: 4px;
+      padding: 7px;
+   }
+   .add_project {
+      color: #ffb000;
+   }
+   .sort_project {
+      color: #000;
+   }
+   .add_sprint {
+      color: #00b5ff;
+   }
+ }
+ 
+ .lst_project {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    font-size: 15px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+    color: #000;
+    font-weight: bold;
+    height: 50px;
+ }
+ 
+ .task_menu{
+    height: calc(100vh - 155px);
+    overflow: auto;
+    padding: 0 0px 0 10px;
+ }
+
+ .dashboard_project {
+   list-style: none;
+   line-height: 45px;
+   &:hover{
+      background-color: #f4f4f4;
+      a {
+         color: #000;
+         svg {
+            color: #ffb000;
+         }
+      }
+   }
+   .link_dashboard{
+      padding: 0 0 0 51px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-weight: bold;
+      color: #000;
+      position: relative;
+      &:before {
+         content: "";
+         position: absolute;
+         width: 0;
+         height: 0;
+         top: 0;
+         left: 0;
+         transition: all 0.3s ease-in-out;
+     }
+      &.active{
+         background-color: #e8e8e8;
+         // border-left: 4px solid #0095da;
+         &:before {
+            content: "";
+            position: absolute;
+            width: 4px;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: #0095da;
+        }
+      }
+      svg {
+         color: #ffb000;
+      }
+      .icon {
+         position: absolute;
+         top: 50%;
+         transform: translate(-38px, -50%);
+         display: flex;
+     }
+   }
+}
